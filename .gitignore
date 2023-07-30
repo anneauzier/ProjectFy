@@ -2,7 +2,6 @@
 
 ## User settings
 xcuserdata/
-xcuserstate/
 
 ## Obj-C/Swift specific
 *.hmap
@@ -61,3 +60,4 @@ iOSInjectionProject/
 
 # Others
 .DS_Store
+
