@@ -15,7 +15,7 @@ tonly_rules:
   - custom_rules
 
 disabled_rules: 
-   - trailing_whitespace
+  - trailing_whitespace
 
 excluded:
   - Carthage
