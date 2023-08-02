@@ -13,14 +13,43 @@ struct User {
             name: "Iago",
             email: "mirandolaiago@gmail.com",
             description: nil,
-            avatar: "teste",
+            avatar: "teste1",
             region: "AM, Brasil",
             entryDate: Date(),
-            interestTags: [""],
+            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
             expertise: .beginner,
             groupsID: nil,
             applicationsID: nil,
-            available: true
+            available: true,
+            areaExpertise: "iOS Developer"
+        ),
+        User(
+            name: "Anne",
+            email: "anne@gmail.com",
+            description: nil,
+            avatar: "teste2",
+            region: "CE, Brasil",
+            entryDate: Date(),
+            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
+            expertise: .intermediary,
+            groupsID: nil,
+            applicationsID: nil,
+            available: false,
+            areaExpertise: "iOS Developer"
+        ),
+        User(
+            name: "Jade",
+            email: "jade@gmail.com",
+            description: nil,
+            avatar: "teste3",
+            region: "SC, Brasil",
+            entryDate: Date(),
+            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
+            expertise: .advanced,
+            groupsID: nil,
+            applicationsID: nil,
+            available: false,
+            areaExpertise: "iOS Developer"
         )
     ]
     
@@ -37,10 +66,11 @@ struct User {
     let groupsID: [String]?
     let applicationsID: [String]?
     let available: Bool
+    let areaExpertise: String
     
-    enum Expertise {
-        case beginner
-        case intermediary
-        case advanced
+    enum Expertise: String {
+        case beginner = "Iniciante"
+        case intermediary = "Intermediário"
+        case advanced = "Avançado"
     }
 }

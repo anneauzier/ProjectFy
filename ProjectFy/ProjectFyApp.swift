@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct ProjectFyApp: App {
+    @StateObject var viewModel = EditUserViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            UserView(viewModel: viewModel)
         }
     }
 }

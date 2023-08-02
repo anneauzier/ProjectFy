@@ -14,8 +14,8 @@ struct Advertisement {
     
     let title: String
     let description: String
-    let positions: [Group.Position]
-    let applicationsIDs: [String: Group.Position]?
+    let positions: [ProjectGroup.Position]
+    let applicationsIDs: [String: ProjectGroup.Position]?
     let weeklyWorkload: Double?
     let tags: [String]
 }
