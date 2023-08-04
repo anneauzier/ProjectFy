@@ -10,13 +10,15 @@ import Foundation
 struct User {
     static var mock: [User] = [
         User(
+            id: "1234",
             name: "Iago",
+            username: "@iagoM",
             email: "mirandolaiago@gmail.com",
             description: nil,
-            avatar: "teste1",
+            avatar: "Group1",
             region: "AM, Brasil",
             entryDate: Date(),
-            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
+            interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .beginner,
             groupsID: nil,
             applicationsID: nil,
@@ -24,53 +26,57 @@ struct User {
             areaExpertise: "iOS Developer"
         ),
         User(
+            id: "12345",
             name: "Anne",
+            username: "@anneB",
             email: "anne@gmail.com",
             description: nil,
-            avatar: "teste2",
+            avatar: "Group2",
             region: "CE, Brasil",
             entryDate: Date(),
-            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
+            interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .intermediary,
             groupsID: nil,
             applicationsID: nil,
-            available: false,
+            available: true,
             areaExpertise: "iOS Developer"
         ),
         User(
+            id: "123456",
             name: "Jade",
+            username: "@arrudaJade",
             email: "jade@gmail.com",
             description: nil,
-            avatar: "teste3",
+            avatar: "Group3",
             region: "SC, Brasil",
             entryDate: Date(),
-            interestTags: ["Level Design", "Design", "Game Design", "Programação"],
-            expertise: .advanced,
+            interestTags: "Level Design, Design, Game Design, Programação",
+            expertise: .beginner,
             groupsID: nil,
             applicationsID: nil,
-            available: false,
+            available: true,
             areaExpertise: "iOS Developer"
         )
     ]
     
-    let id = UUID().uuidString
-    
+    let id: String
     var name: String
+    var username: String
     let email: String
     let description: String?
     let avatar: String
-    let region: String
+    var region: String
     let entryDate: Date
-    let interestTags: [String]
-    let expertise: Expertise
-    let groupsID: [String]?
+    var interestTags: String
+    var expertise: Expertise
+    var groupsID: [String]?
     let applicationsID: [String]?
-    let available: Bool
-    let areaExpertise: String
+    var available: Bool
+    var areaExpertise: String
     
-    enum Expertise: String {
-        case beginner = "Iniciante"
-        case intermediary = "Intermediário"
-        case advanced = "Avançado"
+    enum Expertise: String, CaseIterable {
+        case beginner = "Beginner"
+        case intermediary = "Intermediary"
+        case advanced = "Advanced"
     }
 }

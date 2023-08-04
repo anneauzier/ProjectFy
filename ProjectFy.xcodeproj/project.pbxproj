@@ -11,7 +11,7 @@
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* ProjectGroup.swift */; };
 		9F8F29C52A7977610030958B /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C42A7977610030958B /* EditUserView.swift */; };
-		9F8F29CA2A7984730030958B /* EditUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* EditUserViewModel.swift */; };
+		9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* UserViewModel.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
 		9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */; };
 		9FFECDED2A71EBEF0053F29D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFECDEC2A71EBEF0053F29D /* ContentView.swift */; };
@@ -24,7 +24,7 @@
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
 		9F8F29C42A7977610030958B /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
-		9F8F29C92A7984730030958B /* EditUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewModel.swift; sourceTree = "<group>"; };
+		9F8F29C92A7984730030958B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		9FFECDE72A71EBEF0053F29D /* ProjectFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFyApp.swift; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		9F8F29C82A7984520030958B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				9F8F29C92A7984730030958B /* EditUserViewModel.swift */,
+				9F8F29C92A7984730030958B /* UserViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 				67A531ED2A7831FA00EBD022 /* User.swift in Sources */,
 				9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */,
 				9FFECDED2A71EBEF0053F29D /* ContentView.swift in Sources */,
-				9F8F29CA2A7984730030958B /* EditUserViewModel.swift in Sources */,
+				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,

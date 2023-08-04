@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ProjectFyApp: App {
-    @StateObject var viewModel = EditUserViewModel()
+    @StateObject var viewModel = UserViewModel(user: User.mock[0])
     var body: some Scene {
         WindowGroup {
             UserView(viewModel: viewModel)

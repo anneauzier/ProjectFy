@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct UserView: View {
-
     @State private var goEditUserView = false
-    @ObservedObject var viewModel: EditUserViewModel
-
+    @ObservedObject var viewModel: UserViewModel
+    
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -19,54 +18,51 @@ struct UserView: View {
                     goEditUserView.toggle()
                 } label: {
                     Text("Editar")
-                        .font(.subheadline)
+                        .font(.headline)
                         .foregroundColor(.gray)
-                        .bold()
-                        .padding(.leading, 300)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+
                 }.sheet(isPresented: $goEditUserView, content: {
                     EditUserView(viewModel: viewModel)
                 })
-
-                Circle()
-                    .frame(width: 96)
-                    .foregroundColor(.gray)
+                Image("\(viewModel.user.avatar)")
+                    .aspectRatio(contentMode: .fit)
             }
             
             Divider()
                 .padding(.top, -20)
             
             Group {
-                Text("Disponível")
+                Text("\(viewModel.availability)")
                     .foregroundColor(.gray)
-                    .bold()
-                    .font(.caption)
-                    .padding(.leading, 280)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 HStack {
-                    Text("\(viewModel.oldUsername)")
+                    Text("\(viewModel.user.name)")
                         .font(.title)
                         .bold()
-                    Text("@arrudajade")
+                    Text("\(User.mock[0].username)")
                         .foregroundColor(.gray)
                         .bold()
                 }
                 
                 HStack {
-                    Text("\(viewModel.areaExpertise)")
+                    Text("\(viewModel.user.areaExpertise)")
                         .bold()
                     
                     Circle()
                         .frame(width: 5)
                         .foregroundColor(.gray)
                     
-                    Text("\(User.Expertise.beginner.rawValue)")
+                    Text("\(viewModel.user.expertise.rawValue)")
                         .foregroundColor(.gray)
                         .bold()
                 }
                 
                 HStack {
                     Image(systemName: "mappin")
-                    Text("\(User.mock[0].region)")
+                    Text("\(viewModel.user.region)")
                         .foregroundColor(.gray)
                         .bold()
                 }
@@ -78,10 +74,12 @@ struct UserView: View {
                 Text("Interesses:")
                     .foregroundColor(.gray)
                     .bold()
-
+                
                 HStack(spacing: 8) {
-//                    ForEach(viewModel.interests, id: \.self) { interest in
-                    Text("\(viewModel.interests)")
+                    let splitInterests = viewModel.user.interestTags.split(separator: ",")
+                    
+                    ForEach(splitInterests, id: \.self) { interest in
+                        Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
                             .font(.caption)
                             .padding(7)
                             .foregroundColor(.white)
@@ -89,32 +87,23 @@ struct UserView: View {
                             .background(Capsule().fill(.gray))
                     }
                 }
-
-            Divider()
-            
-            Text("Meus anúncios")
-                .foregroundColor(.black)
-                .bold()
-            
-            Spacer()
-            
+                
+                Divider()
+                
+                Text("Meus anúncios")
+                    .foregroundColor(.black)
+                    .bold()
+                
+                Spacer()
+                
+            }
         }.padding(.horizontal, 20)
     }
 }
 
- struct UserView_Previews: PreviewProvider {
+struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = EditUserViewModel()
+        let viewModel = UserViewModel(user: User.mock[0])
         UserView(viewModel: viewModel)
     }
- }
-
-//   Button(action: {
-//           print("Circular Button tapped")
-//            }) {
-//        Text("Tap me")
-//                .frame(width: 130, height: 130)
-//                .foregroundColor(Color.white)
-//                .background(Color.green)
-//                .clipShape(Circle())
-//        }
+}
