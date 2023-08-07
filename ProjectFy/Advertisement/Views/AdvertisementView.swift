@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AdvertisementView: View {
+struct AdvertisementsView: View {
     @EnvironmentObject var viewModel: AdvertisementsViewModel
     
     @State var isLinkActive = false
