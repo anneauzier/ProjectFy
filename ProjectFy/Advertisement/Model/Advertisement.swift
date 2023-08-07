@@ -7,15 +7,14 @@
 
 import Foundation
 
-struct Advertisement {
-    let id = UUID().uuidString
-    
+struct Advertisement: Hashable {
+    let id: String
     let ownerID: String
-    
-    let title: String
-    let description: String
-    let positions: [Group.Position]
-    let applicationsIDs: [String: Group.Position]?
-    let weeklyWorkload: Double?
-    let tags: [String]
+    var title: String
+    var description: String
+    var positions: [Group.Position]
+    var applicationsIDs: [String: Group.Position]?
+    var weeklyWorkload: Double?
+    var ongoing: Bool
+    var tags: [String]
 }
