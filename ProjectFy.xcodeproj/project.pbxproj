@@ -13,6 +13,8 @@
 		6783837C2A7C4A7F00E459F1 /* View+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */; };
 		678383812A7F623D00E459F1 /* NewAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383802A7F623D00E459F1 /* NewAdvertisement.swift */; };
 		678383832A7F63EA00E459F1 /* AdvertisementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383822A7F63EA00E459F1 /* AdvertisementsViewModel.swift */; };
+		678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383852A814A0600E459F1 /* AdvertisementProtocol.swift */; };
+		678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */; };
 		67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531E92A7831D500EBD022 /* Advertisement.swift */; };
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* Group.swift */; };
@@ -30,6 +32,8 @@
 		6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+removePadding.swift"; sourceTree = "<group>"; };
 		678383802A7F623D00E459F1 /* NewAdvertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAdvertisement.swift; sourceTree = "<group>"; };
 		678383822A7F63EA00E459F1 /* AdvertisementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementsViewModel.swift; sourceTree = "<group>"; };
+		678383852A814A0600E459F1 /* AdvertisementProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementProtocol.swift; sourceTree = "<group>"; };
+		678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementMockupService.swift; sourceTree = "<group>"; };
 		67A531E92A7831D500EBD022 /* Advertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertisement.swift; sourceTree = "<group>"; };
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -79,9 +83,26 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		678383842A81496B00E459F1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				678383852A814A0600E459F1 /* AdvertisementProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		678383872A814A8D00E459F1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		67A531E82A7831B400EBD022 /* Advertisement */ = {
 			isa = PBXGroup;
 			children = (
+				678383872A814A8D00E459F1 /* Services */,
 				678383722A7C275300E459F1 /* ViewModel */,
 				67A531F42A78409E00EBD022 /* Views */,
 				67A531EF2A78322200EBD022 /* Model */,
@@ -157,6 +178,7 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
+				678383842A81496B00E459F1 /* Protocols */,
 				6783837A2A7C4A7100E459F1 /* Extensions */,
 				67A531F02A78326500EBD022 /* Group */,
 				67A531EB2A7831EE00EBD022 /* User */,
@@ -279,6 +301,8 @@
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */,
 				67A531F32A78327600EBD022 /* Group.swift in Sources */,
+				678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */,
+				678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */,
 				67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,30 +8,37 @@
 import Foundation
 
 extension AdvertisementView {
-    class ViewModel: ObservableObject {
-        @Published var advertisements: [Advertisement] = Advertisement.mock
+    final class ViewModel: ObservableObject {
+        @Published var advertisements: [Advertisement]
+        
+        private let service: AdvertisementProtocol
+        
+        init(service: AdvertisementProtocol) {
+            self.service = service
+            self.advertisements = service.getAdvertisements()
+        }
         
         func createAdvertisement(_ advertisement: Advertisement) {
-            Advertisement.mock.append(advertisement)
-            advertisements = Advertisement.mock
+            service.createAdvertisement(advertisement)
+            updateAdvertisements()
         }
         
         func getAdvertisement(by id: String) -> Advertisement? {
-            return advertisements.first(where: { $0.id == id })
+            return service.getAdvertisement(by: id)
         }
         
         func editAdvertisement(_ advertisement: Advertisement) {
-            guard let index = Advertisement.mock.firstIndex(where: { $0.id == advertisement.id }) else { return }
-            
-            Advertisement.mock[index] = advertisement
-            self.advertisements = Advertisement.mock
+            service.updateAdvertisement(advertisement)
+            updateAdvertisements()
         }
         
         func deleteAdvertisement(by id: String) {
-            guard let index = Advertisement.mock.firstIndex(where: { $0.id == id }) else { return }
-            
-            Advertisement.mock.remove(at: index)
-            self.advertisements = Advertisement.mock
+            service.deleteAdvertisement(by: id)
+            updateAdvertisements()
+        }
+        
+        private func updateAdvertisements() {
+            advertisements = service.getAdvertisements()
         }
     }
 }

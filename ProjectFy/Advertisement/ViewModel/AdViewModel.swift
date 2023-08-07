@@ -8,7 +8,7 @@
 import Foundation
 
 extension AdView {
-    class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject {
         @Published var owner: User?
         @Published var advertisement: Advertisement?
         

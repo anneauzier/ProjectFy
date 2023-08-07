@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var advertisementViewModel = AdvertisementView.ViewModel()
+    @StateObject var advertisementViewModel = AdvertisementView.ViewModel(service: AdvertisementMockupService())
     
     var body: some View {
         NavigationView {
