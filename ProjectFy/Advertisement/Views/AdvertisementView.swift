@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AdvertisementView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: AdvertisementsViewModel
     
     @State var isLinkActive = false
     @State var editingID: String? = nil
@@ -19,7 +19,7 @@ struct AdvertisementView: View {
                 Divider()
                 
                 ForEach(viewModel.advertisements, id: \.self) { advertisement in
-                    let viewModel = AdView.ViewModel(
+                    let viewModel = AdViewModel(
                         service: AdvertisementMockupService(),
                         advertisementID: advertisement.id
                     )
@@ -53,7 +53,7 @@ struct AdvertisementView: View {
 }
 
 struct AdView: View {
-    @EnvironmentObject var viewModel: AdvertisementView.ViewModel
+    @EnvironmentObject var viewModel: AdvertisementsViewModel
     
     let owner: User
     let advertisement: Advertisement

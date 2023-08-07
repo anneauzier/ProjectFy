@@ -10,7 +10,7 @@ import SwiftUI
 
 extension AdvertisementView {
     struct NewAdvertisement: View {
-        @EnvironmentObject var viewModel: ViewModel
+        @EnvironmentObject var viewModel: AdvertisementsViewModel
         
         @Binding var popToRoot: Bool
         var editingID: String?
@@ -70,7 +70,7 @@ extension AdvertisementView {
     }
     
     private struct Positions: View {
-        @EnvironmentObject var viewModel: ViewModel
+        @EnvironmentObject var viewModel: AdvertisementsViewModel
         
         @Binding var advertisement: Advertisement
         @Binding var popToRoot: Bool
