@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var advertisementViewModel = AdvertisementView.ViewModel()
+    
     var body: some View {
-        List {
+        NavigationView {
             AdvertisementView()
+                .environmentObject(advertisementViewModel)
         }
-        .listStyle(.plain)
     }
 }
 

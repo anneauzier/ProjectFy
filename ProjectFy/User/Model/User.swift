@@ -9,24 +9,26 @@ import Foundation
 
 struct User {
     static var mock: [User] = [
-        User(
-            name: "Iago",
-            email: "mirandolaiago@gmail.com",
-            description: nil,
-            avatar: "teste",
-            region: "AM, Brasil",
-            entryDate: Date(),
-            interestTags: [""],
-            expertise: .beginner,
-            groupsID: nil,
-            applicationsID: nil,
-            available: true
+        User(id: "1234",
+             name: "Iago Ramos",
+             username: "@iagoramoss",
+             email: "mirandolaiago@gmail.com",
+             description: nil,
+             avatar: "teste",
+             region: "AM, Brasil",
+             entryDate: Date(),
+             interestTags: [""],
+             expertise: .beginner,
+             groupsID: nil,
+             applicationsID: nil,
+             available: true,
+             areaExpertise: "iOS Developer"
         )
     ]
     
-    let id = UUID().uuidString
-    
+    let id: String
     var name: String
+    let username: String
     let email: String
     let description: String?
     let avatar: String
@@ -37,8 +39,9 @@ struct User {
     let groupsID: [String]?
     let applicationsID: [String]?
     let available: Bool
+    let areaExpertise: String
     
-    enum Expertise {
+    enum Expertise: String {
         case beginner
         case intermediary
         case advanced
