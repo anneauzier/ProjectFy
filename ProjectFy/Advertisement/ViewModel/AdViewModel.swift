@@ -12,14 +12,15 @@ extension AdView {
         @Published var owner: User?
         @Published var advertisement: Advertisement?
         
-        init(advertisementID: String) {
+        private let service: AdvertisementProtocol
+        
+        init(service: AdvertisementProtocol, advertisementID: String) {
+            self.service = service
             self.setupAdvertisement(id: advertisementID)
         }
         
         private func setupAdvertisement(id: String) {
-            guard let advertisement = Advertisement.mock.first(where: { $0.id == id }) else {
-                return
-            }
+            guard let advertisement = service.getAdvertisement(by: id) else { return }
             
             guard let user = User.mock.first(where: { $0.id == advertisement.ownerID }) else {
                 return

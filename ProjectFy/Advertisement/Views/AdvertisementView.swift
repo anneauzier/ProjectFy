@@ -19,7 +19,10 @@ struct AdvertisementView: View {
                 Divider()
                 
                 ForEach(viewModel.advertisements, id: \.self) { advertisement in
-                    let viewModel = AdView.ViewModel(advertisementID: advertisement.id)
+                    let viewModel = AdView.ViewModel(
+                        service: AdvertisementMockupService(),
+                        advertisementID: advertisement.id
+                    )
                     
                     if let owner = viewModel.owner, let advertisement = viewModel.advertisement {
                         AdView(
