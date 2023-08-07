@@ -11,7 +11,7 @@ struct AdvertisementsView: View {
     @EnvironmentObject var viewModel: AdvertisementsViewModel
     
     @State var isLinkActive = false
-    @State var editingID: String? = nil
+    @State var editingID: String?
     
     var body: some View {
         ScrollView {
