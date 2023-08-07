@@ -8,25 +8,47 @@
 import Foundation
 
 final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject {
+    private var advertisements = [
+        Advertisement(
+            id: "1234",
+            ownerID: "1234",
+            title: "Primeiro Anuncio",
+            description: "mock1",
+            positions: [
+                Group.Position(
+                    id: "1234",
+                    title: "Level designer",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
+                    vacancies: 3,
+                    joined: []
+                )
+            ],
+            applicationsIDs: nil,
+            weeklyWorkload: nil,
+            ongoing: true,
+            tags: ["Level Design", "Game Design", "Design"]
+        )
+    ]
+    
     func getAdvertisements() -> [Advertisement] {
-        return Advertisement.mock
+        return advertisements
     }
     
     func createAdvertisement(_ advertisement: Advertisement) {
-        Advertisement.mock.append(advertisement)
+        advertisements.append(advertisement)
     }
     
     func updateAdvertisement(_ advertisement: Advertisement) {
-        guard let index = Advertisement.mock.firstIndex(where: { $0.id == advertisement.id }) else { return }
-        Advertisement.mock[index] = advertisement
+        guard let index = advertisements.firstIndex(where: { $0.id == advertisement.id }) else { return }
+        advertisements[index] = advertisement
     }
     
     func deleteAdvertisement(by id: String) {
-        guard let index = Advertisement.mock.firstIndex(where: { $0.id == id }) else { return }
-        Advertisement.mock.remove(at: index)
+        guard let index = advertisements.firstIndex(where: { $0.id == id }) else { return }
+        advertisements.remove(at: index)
     }
     
     func getAdvertisement(by id: String) -> Advertisement? {
-        return Advertisement.mock.first(where: { $0.id == id })
+        return advertisements.first(where: { $0.id == id })
     }
 }
