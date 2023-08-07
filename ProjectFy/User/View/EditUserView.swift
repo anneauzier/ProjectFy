@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct EditUserView: View {
-    @Environment(\.dismiss) var dismiss
 
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: UserViewModel
     @State var editingUser: User = User.mock[0]
 
@@ -79,7 +79,7 @@ struct EditUserView: View {
                     Text("Interesses")
                         .font(.headline)
                         .foregroundColor(.gray)
-                    TextField("Seus interesses", text: $editingUser.interestTags)
+                    TextField("Seus interesses", text: $editingUser.interestTags, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
                         .accessibilityLabel("Digite seus interesses")
                     

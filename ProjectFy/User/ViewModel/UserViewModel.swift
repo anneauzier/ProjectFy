@@ -18,6 +18,8 @@ class UserViewModel: ObservableObject {
     }
 
     func saveChanges(editedUser: User) {
+        guard !editedUser.name.isEmpty && !editedUser.areaExpertise.isEmpty &&
+                !editedUser.interestTags.isEmpty && !editedUser.region.isEmpty else { return }
         user = editedUser
 
         guard let index = User.mock.firstIndex(where: { $0.id == user.id }) else { return }
