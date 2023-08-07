@@ -11,6 +11,9 @@
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* ProjectGroup.swift */; };
 		9F4390C92A81376500A3A393 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* TabBarView.swift */; };
+		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
+		9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F412A816F4600D64192 /* UserMockupService.swift */; };
+		9F553F442A8178A400D64192 /* SettingsUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F432A8178A400D64192 /* SettingsUserViewModel.swift */; };
 		9F8F29C52A7977610030958B /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C42A7977610030958B /* EditUserView.swift */; };
 		9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* UserViewModel.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
@@ -25,6 +28,9 @@
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
+		9F553F412A816F4600D64192 /* UserMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMockupService.swift; sourceTree = "<group>"; };
+		9F553F432A8178A400D64192 /* SettingsUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUserViewModel.swift; sourceTree = "<group>"; };
 		9F8F29C42A7977610030958B /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		9F8F29C92A7984730030958B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -57,6 +63,7 @@
 		67A531EB2A7831EE00EBD022 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				9F553F402A816F2700D64192 /* Services */,
 				9F8F29C82A7984520030958B /* ViewModel */,
 				9FD721602A7842C7007A1BA6 /* View */,
 				67A531EE2A78321A00EBD022 /* Model */,
@@ -105,10 +112,27 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		9F553F3D2A816D7900D64192 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9F553F3E2A816D9200D64192 /* UserProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9F553F402A816F2700D64192 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9F553F412A816F4600D64192 /* UserMockupService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		9F8F29C82A7984520030958B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				9F8F29C92A7984730030958B /* UserViewModel.swift */,
+				9F553F432A8178A400D64192 /* SettingsUserViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -141,6 +165,7 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
+				9F553F3D2A816D7900D64192 /* Protocols */,
 				9F4390C82A81376500A3A393 /* TabBarView.swift */,
 				9F4390C52A81316C00A3A393 /* Resources */,
 				67A531F02A78326500EBD022 /* ProjectGroup */,
@@ -257,8 +282,11 @@
 				9FFECDED2A71EBEF0053F29D /* ContentView.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
+				9F553F442A8178A400D64192 /* SettingsUserViewModel.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,
+				9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */,
+				9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */,
 				67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

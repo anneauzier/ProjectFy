@@ -25,9 +25,9 @@ struct UserView: View {
                         .accessibilityLabel("Edital Perfil")
 
                 }.sheet(isPresented: $goEditUserView, content: {
-                    EditUserView(viewModel: viewModel)
+                    EditUserView(viewModel: viewModel, editingID: viewModel.users[0].id)
                 })
-                Image("\(viewModel.user.avatar)")
+                Image("\(viewModel.users[0].avatar)")
                     .aspectRatio(contentMode: .fit)
                     .accessibilityLabel("Foto de perfil")
             }
@@ -42,38 +42,38 @@ struct UserView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 HStack {
-                    Text("\(viewModel.user.name)")
+                    Text("\(viewModel.users[0].name)")
                         .font(.title)
                         .bold()
-                        .accessibilityLabel("Username \(viewModel.user.name)")
+                        .accessibilityLabel("Username \(viewModel.users[0].name)")
 
-                    Text("\(User.mock[0].username)")
+                    Text("\(viewModel.users[0].username)")
                         .foregroundColor(.gray)
                         .bold()
-                        .accessibilityLabel("@\(User.mock[0].username)")
+                        .accessibilityLabel("@\(viewModel.users[0].username)")
                 }
                 
                 HStack {
-                    Text("\(viewModel.user.areaExpertise)")
+                    Text("\(viewModel.users[0].areaExpertise)")
                         .bold()
                     
                     Circle()
                         .frame(width: 5)
                         .foregroundColor(.gray)
                     
-                    Text("\(viewModel.user.expertise.rawValue)")
+                    Text("\(viewModel.users[0].expertise.rawValue)")
                         .foregroundColor(.gray)
                         .bold()
-                        .accessibilityLabel("Nível de Conhecimento \(viewModel.user.expertise.rawValue)")
+                        .accessibilityLabel("Nível de Conhecimento \(viewModel.users[0].expertise.rawValue)")
                 }
                 
                 HStack {
                     Image(systemName: "mappin")
-                    Text("\(viewModel.user.region)")
+                    Text("\(viewModel.users[0].region)")
                         .foregroundColor(.gray)
                         .bold()
                 }.accessibilityElement(children: .combine)
-                .accessibilityLabel("Região \(viewModel.user.region)")
+                .accessibilityLabel("Região \(viewModel.users[0].region)")
             }
             
             Divider()
@@ -84,7 +84,7 @@ struct UserView: View {
                     .bold()
                 
                 HStack(spacing: 8) {
-                    let splitInterests = viewModel.user.interestTags.split(separator: ",")
+                    let splitInterests = viewModel.users[0].interestTags.split(separator: ",")
                     
                     ForEach(splitInterests, id: \.self) { interest in
                         Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
@@ -112,7 +112,7 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = UserViewModel(user: User.mock[0])
+        let viewModel = UserViewModel(service: UserMockupService())
         UserView(viewModel: viewModel)
     }
 }

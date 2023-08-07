@@ -26,8 +26,8 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = UserViewModel(user: User.mock[0])
+        let viewModel = UserViewModel(service: UserMockupService())
         TabBarView(viewModel: viewModel)
-            .environmentObject(UserViewModel(user: User.mock[0]))
+            .environmentObject(viewModel)
     }
 }

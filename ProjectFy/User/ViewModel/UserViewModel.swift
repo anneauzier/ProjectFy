@@ -7,29 +7,40 @@
 
 import SwiftUI
 
-class UserViewModel: ObservableObject {
-
-    @Published var user: User
+final class UserViewModel: ObservableObject {
+    
+    @Published var users: [User]
     @Published var availability: String
-
-    init(user: User) {
-        self.user = user
+    
+    private let service: UserProtocol
+    
+    init(service: UserProtocol) {
+        self.service = service
         self.availability = "Disponível"
+        self.users = service.getUsers()
     }
-
-    func saveChanges(editedUser: User) {
-        guard !editedUser.name.isEmpty && !editedUser.areaExpertise.isEmpty &&
-                !editedUser.interestTags.isEmpty && !editedUser.region.isEmpty else { return }
-        user = editedUser
-
-        guard let index = User.mock.firstIndex(where: { $0.id == user.id }) else { return }
-        User.mock[index] = user
-        
+    
+    func createUser (_ user: User) {
+        service.createUser(user)
+        updateUsers()
+    }
+    
+    func getUser(id: String) -> User? {
+        return service.getUser(id: id)
+    }
+    
+    func editUser(_ user: User) {
+        service.updateUser(user)
         availability = user.available ? "Disponível" : "Indisponível"
+        updateUsers()
     }
-
-//    private func setupUser(id: String) {
-//        guard let user = User.mock.first(where: {$0.id == id}) else { return }
-//    }
-
+    
+    func deleteUser(id: String) {
+        service.deleteUser(id: id)
+        updateUsers()
+    }
+    
+    private func updateUsers() {
+        users = service.getUsers()
+    }
 }

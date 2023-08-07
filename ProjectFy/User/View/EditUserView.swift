@@ -11,12 +11,30 @@ struct EditUserView: View {
 
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: UserViewModel
-    @State var editingUser: User = User.mock[0]
 
-    init(viewModel: UserViewModel) {
-        self.viewModel = viewModel
-        self.editingUser = viewModel.user
+    let editingID: String
+    
+    // Verify all textfields are filled
+    var textFieldsFilled: Bool {
+        !editingUser.name.isEmpty
+        && !editingUser.areaExpertise.isEmpty
+        && !editingUser.region.isEmpty
+        && !editingUser.interestTags.isEmpty
     }
+    
+    @State var editingUser = User(id: "",
+                                  name: "",
+                                  username: "",
+                                  email: "",
+                                  description: nil,
+                                  avatar: "",
+                                  region: "",
+                                  entryDate: Date(),
+                                  interestTags: "",
+                                  expertise: .beginner,
+                                  applicationsID: nil,
+                                  available: true,
+                                  areaExpertise: "")
     
     var body: some View {
         ScrollView {
@@ -39,14 +57,14 @@ struct EditUserView: View {
                     Spacer()
                     
                     Button {
-                        viewModel.saveChanges(editedUser: editingUser)
+                        viewModel.editUser(editingUser)
                         dismiss()
                     } label: {
                         Text("Salvar")
                             .font(.subheadline)
                             .foregroundColor(.black)
                             .bold()
-                    }
+                    }.disabled(!textFieldsFilled)
                 }.padding(.top, 20)
                 
                 Group {
@@ -95,15 +113,21 @@ struct EditUserView: View {
                 
             }.padding(.horizontal, 20)
         }
+        
+        .onAppear {
+            if let user = viewModel.getUser(id: editingID) {
+                editingUser = user
+            }
+        }
     }
 }
 
-struct EditUserView_Previews: PreviewProvider {
+ struct EditUserView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = UserViewModel(user: User.mock[0])
-        EditUserView(viewModel: viewModel)
+        let viewModel = UserViewModel(service: UserMockupService())
+        EditUserView(viewModel: viewModel, editingID: "")
     }
-}
+ }
 
 struct DropDownButton: View {
     @ObservedObject var viewModel: UserViewModel
