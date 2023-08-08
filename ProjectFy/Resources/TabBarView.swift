@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @ObservedObject var viewModel: UserViewModel
-
     var body: some View {
         TabView {
-            ContentView()
+            AdvertisementsView()
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            UserView(viewModel: viewModel)
+            
+            UserView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
@@ -26,8 +25,6 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = UserViewModel(service: UserMockupService())
-        TabBarView(viewModel: viewModel)
-            .environmentObject(viewModel)
+        TabBarView()
     }
 }

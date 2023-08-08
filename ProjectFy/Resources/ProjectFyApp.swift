@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct ProjectFyApp: App {
-    @StateObject var viewModel = UserViewModel(service: UserMockupService())
+    @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementMockupService())
+    @StateObject var userViewModel = UserViewModel(service: UserMockupService())
 
     var body: some Scene {
         WindowGroup {
-            TabBarView(viewModel: viewModel)
+            TabBarView()
+                .environmentObject(advertisementsViewModel)
+                .environmentObject(userViewModel)
         }
     }
 }

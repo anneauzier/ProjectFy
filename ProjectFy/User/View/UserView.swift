@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct UserView: View {
+    @EnvironmentObject var viewModel: UserViewModel
     
     @State private var goEditUserView = false
-    @ObservedObject var viewModel: UserViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -112,7 +112,7 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = UserViewModel(service: UserMockupService())
-        UserView(viewModel: viewModel)
+        UserView()
+            .environmentObject(UserViewModel(service: UserMockupService()))
     }
 }

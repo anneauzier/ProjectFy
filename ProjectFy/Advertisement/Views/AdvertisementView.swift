@@ -8,45 +8,45 @@
 import SwiftUI
 
 struct AdvertisementsView: View {
-    @EnvironmentObject var viewModel: AdvertisementsViewModel
+    @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     
     @State var isLinkActive = false
     @State var editingID: String?
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Divider()
-                
-                ForEach(viewModel.advertisements, id: \.self) { advertisement in
-                    let viewModel = AdViewModel(
-                        service: AdvertisementMockupService(),
-                        advertisementID: advertisement.id
-                    )
+        NavigationView {
+            ScrollView {
+                VStack {
+                    Divider()
                     
-                    if let owner = viewModel.owner, let advertisement = viewModel.advertisement {
-                        AdView(
-                            owner: owner,
-                            advertisement: advertisement,
-                            editingID: $editingID,
-                            editAdvertisement: $isLinkActive
-                        )
+                    ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
+                        let owner = userViewModel.getUser(id: advertisement.ownerID)
+                        
+                        if let owner = owner {
+                            AdView(
+                                owner: owner,
+                                advertisement: advertisement,
+                                editingID: $editingID,
+                                editAdvertisement: $isLinkActive
+                            )
+                        }
                     }
                 }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-        }
-        
-        .onAppear {
-            editingID = nil
-        }
-        
-        .toolbar {
-            NavigationLink(isActive: $isLinkActive) {
-                NewAdvertisement(popToRoot: $isLinkActive, editingID: editingID)
-                    .environmentObject(viewModel)
-            } label: {
-                Label("Criar anúncio", systemImage: "plus")
+            
+            .onAppear {
+                editingID = nil
+            }
+            
+            .toolbar {
+                NavigationLink(isActive: $isLinkActive) {
+                    NewAdvertisement(popToRoot: $isLinkActive, editingID: editingID)
+                        .environmentObject(advertisementsViewModel)
+                } label: {
+                    Label("Criar anúncio", systemImage: "plus")
+                }
             }
         }
     }
