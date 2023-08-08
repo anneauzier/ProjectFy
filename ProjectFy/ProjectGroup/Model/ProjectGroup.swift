@@ -18,12 +18,13 @@ struct ProjectGroup {
     let link: String
     let tasks: [Task]
     
-    struct Position {
-        let id = UUID().uuidString
+    struct Position: Hashable {
+        let id: String
         
-        let title: String
-        let vacancies: Int
-        var vacanciesFilled: Int
+        var title: String
+        var description: String
+        var vacancies: Int
+        var joined: [String] // Array of IDs of people that joined that position
     }
     
     struct Task {
