@@ -15,7 +15,7 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
             title: "Primeiro Anuncio",
             description: "mock1",
             positions: [
-                Group.Position(
+                ProjectGroup.Position(
                     id: "1234",
                     title: "Level designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",

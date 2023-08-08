@@ -95,7 +95,7 @@ extension AdView {
     }
     
     private struct Position: View {
-        let position: Group.Position
+        let position: ProjectGroup.Position
         
         var body: some View {
             HStack(spacing: -20) {

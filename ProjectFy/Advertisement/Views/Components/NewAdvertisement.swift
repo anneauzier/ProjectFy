@@ -20,6 +20,8 @@ extension AdvertisementsView {
                                                  title: "",
                                                  description: "",
                                                  positions: [],
+                                                 applicationsIDs: nil,
+                                                 weeklyWorkload: nil,
                                                  ongoing: false,
                                                  tags: [])
         
@@ -132,7 +134,7 @@ extension AdvertisementsView {
         
         private func newPosition() {
             advertisement.positions.append(
-                Group.Position(
+                ProjectGroup.Position(
                     id: UUID().uuidString,
                     title: "",
                     description: "",
@@ -144,7 +146,7 @@ extension AdvertisementsView {
     }
     
     private struct Position: View {
-        @Binding var position: Group.Position
+        @Binding var position: ProjectGroup.Position
         
         var body: some View {
             RoundedRectangleContent(cornerRadius: 20, fillColor: .mint) {
@@ -175,7 +177,7 @@ extension AdvertisementsView {
     }
     
     private struct VacancyButton: View {
-        @Binding var position: Group.Position
+        @Binding var position: ProjectGroup.Position
         let isPlusButton: Bool
         
         var body: some View {

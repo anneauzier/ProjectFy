@@ -1,5 +1,5 @@
 //
-//  Group.swift
+//  ProjectGroup.swift
 //  ProjectFy
 //
 //  Created by Iago Ramos on 31/07/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Group {
+struct ProjectGroup {
     let id = UUID().uuidString
     
     let name: String
