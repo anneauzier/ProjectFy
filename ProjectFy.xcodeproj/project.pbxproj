@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
 		678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383762A7C4A3800E459F1 /* UserInfo.swift */; };
 		678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383782A7C4A5600E459F1 /* AdInfo.swift */; };
 		6783837C2A7C4A7F00E459F1 /* View+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		678383762A7C4A3800E459F1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		678383782A7C4A5600E459F1 /* AdInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdInfo.swift; sourceTree = "<group>"; };
 		6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+removePadding.swift"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		678383872A814A8D00E459F1 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				678383852A814A0600E459F1 /* AdvertisementProtocol.swift */,
 				678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */,
 			);
 			path = Services;
@@ -169,6 +172,7 @@
 				9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */,
 				9F4390C82A81376500A3A393 /* TabBarView.swift */,
 				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
+				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -176,7 +180,6 @@
 		9F553F3D2A816D7900D64192 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				678383852A814A0600E459F1 /* AdvertisementProtocol.swift */,
 				9F553F3E2A816D9200D64192 /* UserProtocol.swift */,
 			);
 			path = Protocols;
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				674982702A82C1CB00A1C98E /* Haptics.swift in Sources */,
 				67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */,
 				67A531ED2A7831FA00EBD022 /* User.swift in Sources */,
 				9F4390C92A81376500A3A393 /* TabBarView.swift in Sources */,

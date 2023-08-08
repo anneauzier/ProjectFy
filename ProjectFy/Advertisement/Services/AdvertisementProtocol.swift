@@ -14,4 +14,7 @@ protocol AdvertisementProtocol {
     func deleteAdvertisement(by id: String)
     
     func getAdvertisement(by id: String) -> Advertisement?
+    
+    func apply(userID: String, for position: ProjectGroup.Position)
+    func unapply(userID: String, from position: ProjectGroup.Position)
 }

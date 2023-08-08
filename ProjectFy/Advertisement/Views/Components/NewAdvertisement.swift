@@ -20,7 +20,7 @@ extension AdvertisementsView {
                                                  title: "",
                                                  description: "",
                                                  positions: [],
-                                                 applicationsIDs: nil,
+                                                 applicationsIDs: [:],
                                                  weeklyWorkload: nil,
                                                  ongoing: false,
                                                  tags: [])
@@ -67,6 +67,10 @@ extension AdvertisementsView {
                 } label: {
                     Text("Avançar")
                 }
+                
+                .simultaneousGesture(TapGesture().onEnded({ _ in
+                    Haptics.shared.selection()
+                }))
             }
         }
     }
@@ -92,6 +96,7 @@ extension AdvertisementsView {
                     HStack {
                         Button {
                             newPosition()
+                            Haptics.shared.selection()
                         } label: {
                             ZStack {
                                 Circle()
@@ -121,10 +126,13 @@ extension AdvertisementsView {
                         viewModel.editAdvertisement(advertisement)
                         popToRoot.toggle()
         
+                        Haptics.shared.notification(.success)
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
+                    
+                    Haptics.shared.notification(.success)
                     popToRoot.toggle()
                 } label: {
                     Text(isEditing ? "Editar" : "Publicar")

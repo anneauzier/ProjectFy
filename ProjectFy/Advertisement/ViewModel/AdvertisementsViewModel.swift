@@ -36,6 +36,16 @@ final class AdvertisementsViewModel: ObservableObject {
         updateAdvertisements()
     }
     
+    func apply(userID: String, for position: ProjectGroup.Position) {
+        service.apply(userID: userID, for: position)
+        updateAdvertisements()
+    }
+    
+    func unapply(userID: String, from position: ProjectGroup.Position) {
+        service.unapply(userID: userID, from: position)
+        updateAdvertisements()
+    }
+    
     private func updateAdvertisements() {
         advertisements = service.getAdvertisements()
     }

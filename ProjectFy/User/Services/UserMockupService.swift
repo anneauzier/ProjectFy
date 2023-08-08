@@ -22,7 +22,7 @@ final class UserMockupService: UserProtocol, ObservableObject {
             interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .beginner,
             groupsID: nil,
-            applicationsID: nil,
+            applicationsID: [],
             available: true,
             areaExpertise: "iOS Developer"
         )
@@ -48,5 +48,19 @@ final class UserMockupService: UserProtocol, ObservableObject {
     func deleteUser(id: String) {
         guard let index = users.firstIndex(where: {$0.id == id}) else { return }
         users.remove(at: index)
+    }
+    
+    func apply(to positionID: String) {
+        guard var user = users.first else { return }
+        
+        user.applicationsID.append(positionID)
+        updateUser(user)
+    }
+    
+    func unapply(from positionID: String) {
+        guard var user = users.first else { return }
+        
+        user.applicationsID.removeAll(where: { $0 == positionID })
+        updateUser(user)
     }
 }

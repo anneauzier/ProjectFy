@@ -31,7 +31,7 @@ struct EditUserView: View {
                                   entryDate: Date(),
                                   interestTags: "",
                                   expertise: .beginner,
-                                  applicationsID: nil,
+                                  applicationsID: [],
                                   available: true,
                                   areaExpertise: "")
     
@@ -57,6 +57,8 @@ struct EditUserView: View {
                     
                     Button {
                         viewModel.editUser(editingUser)
+                        
+                        Haptics.shared.notification(.success)
                         dismiss()
                     } label: {
                         Text("Salvar")

@@ -40,6 +40,16 @@ final class UserViewModel: ObservableObject {
         updateUsers()
     }
     
+    func apply(to positionID: String) {
+        service.apply(to: positionID)
+        updateUsers()
+    }
+    
+    func unapply(from positionID: String) {
+        service.unapply(from: positionID)
+        updateUsers()
+    }
+    
     private func updateUsers() {
         users = service.getUsers()
     }

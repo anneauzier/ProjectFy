@@ -20,7 +20,7 @@ struct User: Hashable {
     var interestTags: String
     var expertise: Expertise
     var groupsID: [String]?
-    let applicationsID: [String]?
+    var applicationsID: [String]
     var available: Bool
     var areaExpertise: String
     

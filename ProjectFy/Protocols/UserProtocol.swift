@@ -15,5 +15,8 @@ protocol UserProtocol {
     func createUser(_ user: User)
     func updateUser(_ user: User)
     func deleteUser(id: String)
+    
+    func apply(to positionID: String)
+    func unapply(from positionID: String)
 
 }

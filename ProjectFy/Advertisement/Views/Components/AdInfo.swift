@@ -10,8 +10,12 @@ import SwiftUI
 
 extension AdView {
     struct AdInfo: View {
+        @EnvironmentObject var userViewModel: UserViewModel
+        
         let advertisement: Advertisement
-        @State var presentSheet: Bool = false
+        
+        @Binding var presentSheet: Bool
+        @Binding var selectedPosition: ProjectGroup.Position?
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -53,24 +57,23 @@ extension AdView {
                 VStack {
                     ForEach(advertisement.positions, id: \.self) { position in
                         Button {
-                            presentSheet = true
+                            selectedPosition = position
+                            Haptics.shared.selection()
                         } label: {
                             Position(position: position)
-                                .sheet(isPresented: $presentSheet) {
-                                    VStack(alignment: .leading) {
-                                        Text(position.title)
-                                            .font(.title)
-                                        
-                                        Text("\(position.vacancies - position.joined.count) vagas restantes")
-                                        
-                                        Text(position.description)
-                                        
-                                        Text("Pessoas ingressadas")
-                                    }
-                                    .padding(.horizontal, 16)
-                                }
                         }
-
+                        
+                        .onChange(of: selectedPosition, perform: { _ in
+                            presentSheet = true
+                        })
+                        
+                        .sheet(isPresented: $presentSheet) {
+                            if let position = selectedPosition {
+                                PositionDetails(advertisement: advertisement, position: position)
+                            } else {
+                                Text("Posição não encontrada!")
+                            }
+                        }
                     }
                 }
             }
@@ -118,6 +121,78 @@ extension AdView {
                 .frame(width: 269)
             }
             .frame(height: 60)
+        }
+    }
+    
+    private struct PositionDetails: View {
+        @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+        @EnvironmentObject var userViewModel: UserViewModel
+        
+        let advertisement: Advertisement
+        let position: ProjectGroup.Position
+        
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text(position.title)
+                    .font(.title)
+                
+                Text("\(position.vacancies - position.joined.count) vagas restantes")
+                    .foregroundColor(.gray)
+                    .removePadding()
+                
+                Text(position.description)
+                    .padding(.top, -5)
+                
+                Text("Pessoas ingressadas")
+                    .font(.title)
+                    .removePadding()
+                    .padding(.top, 37)
+                
+                Spacer()
+                
+                let applicationIDs = advertisement.applicationsIDs
+                let userID = userViewModel.users[0].id
+
+                let hasApplied = applicationIDs.keys.contains(userID)
+                let hasAppliedForThisPosition = hasApplied && applicationIDs[userID]?.id == position.id
+                
+                let buttonText = hasAppliedForThisPosition ? "Retirar solicitação" : "Solicitar ingresso"
+                let isDisabled = hasApplied && !hasAppliedForThisPosition
+                
+                Button {
+                    if !hasApplied {
+                        advertisementsViewModel.apply(userID: userID, for: position)
+                        userViewModel.apply(to: position.id)
+                        
+                        Haptics.shared.notification(.success)
+                        return
+                    }
+                    
+                    advertisementsViewModel.unapply(userID: userID, from: position)
+                    userViewModel.unapply(from: position.id)
+                    
+                    Haptics.shared.notification(.success)
+                } label: {
+                    RoundedRectangleContent(cornerRadius: 5, fillColor: .gray) {
+                        Text(buttonText)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxHeight: 60)
+                    .padding(.top, 20)
+                }
+                .disabled(isDisabled)
+                
+                .simultaneousGesture(TapGesture().onEnded({ _ in
+                    if isDisabled {
+                        Haptics.shared.notification(.error)
+                    }
+                }))
+            }
+            
+            .foregroundColor(.black)
+            .padding(.horizontal, 25)
+            .padding(.top, 30)
         }
     }
 }
