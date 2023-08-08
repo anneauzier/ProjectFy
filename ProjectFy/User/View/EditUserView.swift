@@ -13,8 +13,7 @@ struct EditUserView: View {
     @ObservedObject var viewModel: UserViewModel
 
     let editingID: String
-    
-    // Verify all textfields are filled
+
     var textFieldsFilled: Bool {
         !editingUser.name.isEmpty
         && !editingUser.areaExpertise.isEmpty
@@ -64,6 +63,7 @@ struct EditUserView: View {
                             .font(.subheadline)
                             .foregroundColor(.black)
                             .bold()
+                            .opacity(!textFieldsFilled ? 0.2: 1)
                     }.disabled(!textFieldsFilled)
                 }.padding(.top, 20)
                 
