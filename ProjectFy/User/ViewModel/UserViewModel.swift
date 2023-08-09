@@ -12,12 +12,18 @@ final class UserViewModel: ObservableObject {
     @Published var users: [User]
     @Published var availability: String
     
+    let user: User
+    
     private let service: UserProtocol
     
     init(service: UserProtocol) {
         self.service = service
         self.availability = "Disponível"
-        self.users = service.getUsers()
+        
+        let users = service.getUsers()
+        
+        self.users = users
+        self.user = users[0]  // TODO: Remover quando implementar o banco de dados
     }
     
     func createUser (_ user: User) {

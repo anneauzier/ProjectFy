@@ -78,7 +78,7 @@ struct AdView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                UserInfo(user: owner)
+                UserInfo(user: owner, size: 67)
                 
                 Spacer()
                 

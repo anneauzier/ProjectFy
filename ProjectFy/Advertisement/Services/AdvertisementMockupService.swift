@@ -33,7 +33,7 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
             applicationsIDs: [:],
             weeklyWorkload: nil,
             ongoing: true,
-            tags: ["Level Design", "Game Design", "Design"]
+            tags: "Level Design, Game Design, Design"
         )
     ]
     

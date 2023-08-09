@@ -19,9 +19,11 @@ extension AdView {
         
         var body: some View {
             VStack(alignment: .leading) {
-                HStack {
-                    ForEach(advertisement.tags, id: \.self) { tag in
-                        Tag(text: tag)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(advertisement.tags.split(separator: ", "), id: \.self) { tag in
+                            Tag(text: String(tag))
+                        }
                     }
                 }
                 
@@ -63,9 +65,17 @@ extension AdView {
                             Position(position: position)
                         }
                         
-                        .onChange(of: selectedPosition, perform: { _ in
-                            presentSheet = true
+                        .onChange(of: selectedPosition, perform: { selectedPosition in
+                            if selectedPosition != nil {
+                                presentSheet = true
+                            }
                         })
+                        
+                        .onChange(of: presentSheet) { presentSheet in
+                            if !presentSheet {
+                                selectedPosition = nil
+                            }
+                        }
                         
                         .sheet(isPresented: $presentSheet) {
                             if let position = selectedPosition {
@@ -84,16 +94,11 @@ extension AdView {
         let text: String
         
         var body: some View {
-            Text(text)
-                .foregroundColor(.white)
-                .background {
-                    RoundedRectangle(cornerRadius: 5)
-                        .padding(.horizontal, -5)
-                        .padding(.vertical, -3)
-                        .opacity(0.5)
-                }
-                .padding(.leading, 5)
-                .padding(.top, 3)
+            RoundedRectangleContent(cornerRadius: 5, fillColor: .gray) {
+                Text(text)
+                    .foregroundColor(.white)
+                    .padding(.all, 5)
+            }
         }
     }
     

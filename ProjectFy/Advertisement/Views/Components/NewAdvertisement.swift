@@ -10,7 +10,10 @@ import SwiftUI
 
 extension AdvertisementsView {
     struct NewAdvertisement: View {
-        @EnvironmentObject var viewModel: AdvertisementsViewModel
+        @Environment(\.dismiss) var dismiss
+        
+        @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+        @EnvironmentObject var userViewModel: UserViewModel
         
         @Binding var popToRoot: Bool
         var editingID: String?
@@ -23,55 +26,96 @@ extension AdvertisementsView {
                                                  applicationsIDs: [:],
                                                  weeklyWorkload: nil,
                                                  ongoing: false,
-                                                 tags: [])
+                                                 tags: "")
+        
+        @State var presentBackAlert: Bool = false
         
         var body: some View {
-            VStack(alignment: .leading) {
-                TextField("Título do Projeto", text: $advertisement.title)
-                    .font(.title)
-                
-                TextField("Descrição do anúncio...", text: $advertisement.description)
-                    .padding(.top, 54)
+            ScrollView {
+                VStack(alignment: .leading) {
+                    UserInfo(user: userViewModel.user, size: 50)
                     
-                Text("Status do projeto")
-                    .padding(.top, 56)
-                
-                Picker("Status do projeto", selection: $advertisement.ongoing) {
-                    Text("Em andamento")
-                        .tag(true)
+                    TextField("Adicione tags ao seu projeto...", text: $advertisement.tags, axis: .vertical)
+                        .padding(.top, 25)
                     
-                    Text("Não iniciado")
-                        .tag(false)
+                    TextField("Título do Projeto", text: $advertisement.title)
+                        .font(.title)
+                        .padding(.top, 44)
+                    
+                    TextField("Descrição do anúncio...", text: $advertisement.description, axis: .vertical)
+                        .padding(.top, 54)
+                    
+                    DropDownButton(
+                        title: "Status do projeto",
+                        selection: $advertisement.ongoing,
+                        menuItems: [
+                            MenuItem(name: "Não iniciado", tag: false),
+                            MenuItem(name: "Em andamento", tag: true)
+                        ]
+                    )
+                    .padding(.top, 20)
+                    
+                    Spacer()
                 }
-                .padding(.top, 6)
-                
-                Spacer()
+                .padding([.horizontal, .top], 16)
             }
-            .padding([.horizontal, .top], 16)
             
             .onAppear {
                 guard let editingID = editingID else { return }
-                guard let advertisement = viewModel.getAdvertisement(by: editingID) else { return }
+                
+                guard let advertisement = advertisementsViewModel.getAdvertisement(by: editingID) else {
+                    return
+                }
                 
                 self.advertisement = advertisement
             }
-            
+            .navigationBarBackButtonHidden()
             .toolbar {
-                NavigationLink {
-                    Positions(
-                        advertisement: $advertisement,
-                        popToRoot: $popToRoot,
-                        isEditing: editingID != nil
-                    )
-                        .environmentObject(viewModel)
-                } label: {
-                    Text("Avançar")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentBackAlert = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                            Text("Back")
+                        }
+                    }
                 }
                 
-                .simultaneousGesture(TapGesture().onEnded({ _ in
-                    Haptics.shared.selection()
-                }))
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        Positions(
+                            advertisement: $advertisement,
+                            popToRoot: $popToRoot,
+                            isEditing: editingID != nil
+                        )
+                            .environmentObject(advertisementsViewModel)
+                    } label: {
+                        Text("Avançar")
+                    }
+
+                    .simultaneousGesture(TapGesture().onEnded({ _ in
+                        Haptics.shared.selection()
+                    }))
+                }
             }
+            
+            .alert("Você deseja mesmo descartar a publicação?", isPresented: $presentBackAlert) {
+                Button(role: .cancel) {
+                    presentBackAlert = false
+                } label: {
+                    Text("Cancel")
+                }
+
+                Button(role: .destructive) {
+                    dismiss()
+                } label: {
+                    Text("Ok")
+                }
+            } message: {
+                Text("Você perderá todas as informações preenchidas")
+            }
+
         }
     }
     

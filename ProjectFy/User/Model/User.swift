@@ -24,7 +24,7 @@ struct User: Hashable {
     var available: Bool
     var areaExpertise: String
     
-    enum Expertise: String, CaseIterable {
+    enum Expertise: String, CaseIterable, Hashable {
         case beginner = "Beginner"
         case intermediary = "Intermediary"
         case advanced = "Advanced"

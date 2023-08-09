@@ -17,5 +17,5 @@ struct Advertisement: Hashable {
     var applicationsIDs: [String: ProjectGroup.Position]
     var weeklyWorkload: Double?
     var ongoing: Bool
-    var tags: [String]
+    var tags: String
 }
