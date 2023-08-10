@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct ProjectGroup {
-    let id = UUID().uuidString
-    
+struct ProjectGroup: Hashable, Equatable {
+
+    let id: String
     let name: String
     let description: String
     let avatar: String
@@ -18,20 +18,31 @@ struct ProjectGroup {
     let link: String
     let tasks: [Task]
     
-    struct Position: Hashable {
+    struct Position: Hashable, Equatable {
         let id: String
-        
         var title: String
         var description: String
         var vacancies: Int
         var joined: [String] // Array of IDs of people that joined that position
     }
     
-    struct Task {
-        let id = UUID().uuidString
-        
+    struct Task: Hashable, Equatable {
+        let id: String
         let ownerID: String
         var taskDescription: String
         let time: Date
+    }
+    
+    static func == (lhs: ProjectGroup, rhs: ProjectGroup) -> Bool {
+        return (
+            lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.description == rhs.description &&
+            lhs.avatar == rhs.avatar &&
+            lhs.adminID == rhs.adminID &&
+            lhs.members == rhs.members &&
+            lhs.link == rhs.link &&
+            lhs.tasks == rhs.tasks
+        )
     }
 }

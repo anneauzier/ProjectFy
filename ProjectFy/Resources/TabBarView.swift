@@ -11,14 +11,11 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             AdvertisementsView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-            
+                .tabItem { Label("Home", systemImage: "house") }
+            GroupView()
+                .tabItem { Label("Group", systemImage: "person.3") }
             UserView()
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                }
+                .tabItem { Label("Profile", systemImage: "person.fill") }
         }
     }
 }
@@ -26,5 +23,8 @@ struct TabBarView: View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
+            .environmentObject(UserViewModel(service: UserMockupService()))
+            .environmentObject(AdvertisementsViewModel(service: AdvertisementMockupService()))
+            .environmentObject(GroupViewModel(service: GroupMockupService()))
     }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserView: View {
+
     @EnvironmentObject var viewModel: UserViewModel
-    
     @State private var goEditUserView = false
     
     var body: some View {
