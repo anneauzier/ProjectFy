@@ -11,7 +11,7 @@ import FirebaseAuth
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
-    var authorisationState: AuthorisationState = .unauthorized
+    @Published private(set) var authorisationState: AuthorisationState = .unauthorized
     var authenticationService: AuthenticationProtocol?
     
     init() {
@@ -28,6 +28,7 @@ final class AuthenticationViewModel: ObservableObject {
         Task {
             do {
                 try await authenticationService.signIn()
+                self.authenticationService = nil
             } catch {
                 print("Unable to authenticate user: \(error.localizedDescription)")
             }
