@@ -26,7 +26,7 @@ struct EditUserView: View {
                                   username: "",
                                   email: "",
                                   description: nil,
-                                  avatar: "",
+                                  avatar: "Group1",
                                   region: "",
                                   entryDate: Date(),
                                   interestTags: "",

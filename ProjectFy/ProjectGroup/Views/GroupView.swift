@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GroupView: View {
+    
     @EnvironmentObject var viewModel: GroupViewModel
     
     var body: some View {
@@ -15,7 +16,7 @@ struct GroupView: View {
             VStack {
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(id: group.id)) {
+                        NavigationLink(destination: TasksGroupView(groupID: group.id)) {
                             HStack {
                                 Image("\(group.avatar)")
                                     .resizable()

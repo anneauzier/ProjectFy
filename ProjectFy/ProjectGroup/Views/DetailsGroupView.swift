@@ -8,37 +8,91 @@
 import SwiftUI
 
 struct DetailsGroupView: View {
-    @State var teste: String = ""
-
+    
+    @EnvironmentObject var viewModel: GroupViewModel
+    let detailsInfo: ProjectGroup
+    
     var body: some View {
-        VStack {
-            Image("Group4")
-                .resizable()
-                .frame(width: 100, height: 100)
-            
-            Text("Group's name")
-            TextField("Enter your name", text: $teste)
-                .padding(.bottom, 20)
-            
-            Text("Description")
-            
-            ZStack {
-                if teste.isEmpty {
-                    Text("Placeholder Text")
-                        .foregroundColor(Color(UIColor.placeholderText))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 12)
-                }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                Image("\(detailsInfo.avatar)")
+                    .resizable()
+                    .frame(width: 100, height: 100)
                 
-                TextEditor(text: $teste)
+                Group {
+                    Text("Group's name")
+                    Text("\(detailsInfo.name)")
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray.opacity(0.2))
                     
+                    Text("Description")
+                    Text("\(detailsInfo.description)")
+                    
+                    Divider()
+                    
+                    Text("Link")
+            
+                    Link("\(detailsInfo.link)", destination: URL(string: "\(detailsInfo.link)")!)
+                }
+
+                Divider()
+                
+                Text("Participants")
+                
+            }.padding(.horizontal)
+            
+            Spacer()
+
+            FinalButtons()
+            
+        }.toolbar {
+            NavigationLink(destination: EditDetailsGroup(groupID: detailsInfo.id)) {
+                Text("Editar")
+                    .foregroundColor(Color.black)
             }
-        }.padding(.horizontal)
+        }
     }
 }
 
 struct DetailsGroupView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsGroupView(teste: "nj,nkj")
+        let previewGroup = ProjectGroup(
+            id: "1213",
+            name: "Adventure Game",
+            description: "Lorem Ipsum is simply dummy text.",
+            avatar: "Group2",
+            adminID: "123456",
+            members: [:],
+            link: "https://trello.com/b/DwEhWYYJ/projectfy",
+            tasks: [])
+        
+        DetailsGroupView(detailsInfo: previewGroup)
+            .environmentObject(GroupViewModel(service: GroupMockupService()))
+    }
+}
+
+extension DetailsGroupView {
+    
+    struct FinalButtons: View {
+        var body: some View {
+            VStack(alignment: .center) {
+                Button {
+                    print("SAI")
+                } label: {
+                    Text("Sair do grupo")
+                        .padding()
+                        .background(Color.black)
+                }
+                
+                Button {
+                    print("FINALIZEI")
+                } label: {
+                    Text("Finalizar projeto")
+                        .padding()
+                        .background(Color.black)
+                }
+            }
+        }
     }
 }

@@ -13,35 +13,33 @@ struct TasksGroupView: View {
     @State var detailsInfo = ProjectGroup(id: "",
                                           name: "",
                                           description: "",
-                                          avatar: "",
+                                          avatar: "Group1",
                                           adminID: "",
                                           members: [:],
                                           link: "",
                                           tasks: [])
-    let id: String
+    let groupID: String
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading) {
-                Button {
-                    print("TOQUEIIII")
-                } label: {
-                    HStack(alignment: .center) {
-                        Image("\(detailsInfo.avatar)")
-                            .resizable()
-                            .frame(width: 71, height: 71)
-                        VStack {
-                            Text("\(detailsInfo.name)")
-                                .font(.caption)
-                            Text("\(detailsInfo.members.count)")
-                        }.foregroundColor(.black)
-                    }
+        
+        VStack(alignment: .leading) {
+            NavigationLink {
+                DetailsGroupView(detailsInfo: detailsInfo)
+            } label: {
+                HStack(alignment: .center) {
+                    Image("\(detailsInfo.avatar)")
+                        .resizable()
+                        .frame(width: 71, height: 71)
+                    VStack {
+                        Text("\(detailsInfo.name)")
+                            .font(.caption)
+                        Text("\(detailsInfo.members.count)")
+                    }.foregroundColor(.black)
                 }
-                Spacer()
             }
         }
         .onAppear {
-            if let groupInfo = viewModel.getGroup(id: id) {
+            if let groupInfo = viewModel.getGroup(id: groupID) {
                 detailsInfo = groupInfo
             }
         }
@@ -50,7 +48,7 @@ struct TasksGroupView: View {
 
 struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
-        TasksGroupView(id: "1213")
+        TasksGroupView(groupID: "1213")
             .environmentObject(GroupViewModel(service: GroupMockupService()))
     }
 }

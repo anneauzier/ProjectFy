@@ -10,12 +10,12 @@ import Foundation
 struct ProjectGroup: Hashable, Equatable {
 
     let id: String
-    let name: String
-    let description: String
+    var name: String
+    var description: String
     let avatar: String
     let adminID: String
     let members: [String: Position]
-    let link: String
+    var link: String
     let tasks: [Task]
     
     struct Position: Hashable, Equatable {
