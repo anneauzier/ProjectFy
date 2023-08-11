@@ -20,11 +20,11 @@ struct User: Hashable {
     var interestTags: String
     var expertise: Expertise
     var groupsID: [String]?
-    let applicationsID: [String]?
+    var applicationsID: [String]
     var available: Bool
     var areaExpertise: String
     
-    enum Expertise: String, CaseIterable {
+    enum Expertise: String, CaseIterable, Hashable {
         case beginner = "Beginner"
         case intermediary = "Intermediary"
         case advanced = "Advanced"

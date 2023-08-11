@@ -31,7 +31,7 @@ struct EditUserView: View {
                                   entryDate: Date(),
                                   interestTags: "",
                                   expertise: .beginner,
-                                  applicationsID: nil,
+                                  applicationsID: [],
                                   available: true,
                                   areaExpertise: "")
     
@@ -57,6 +57,8 @@ struct EditUserView: View {
                     
                     Button {
                         viewModel.editUser(editingUser)
+                        
+                        Haptics.shared.notification(.success)
                         dismiss()
                     } label: {
                         Text("Salvar")
@@ -85,7 +87,13 @@ struct EditUserView: View {
                     .textFieldStyle(.roundedBorder)
                     .accessibilityLabel("Digite aqui sua área de interesse")
                     
-                    DropDownButton(viewModel: viewModel, editingUser: $editingUser)
+                    DropDownButton(
+                        title: "Nível de conhecimento",
+                        selection: $editingUser.expertise,
+                        menuItems: User.Expertise.allCases.map({ expertise in
+                            MenuItem(name: expertise.rawValue, tag: expertise)
+                        })
+                    )
                     
                     Text("Localização")
                         .font(.headline)
@@ -122,66 +130,9 @@ struct EditUserView: View {
     }
 }
 
- struct EditUserView_Previews: PreviewProvider {
+struct EditUserView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = UserViewModel(service: UserMockupService())
         EditUserView(viewModel: viewModel, editingID: "")
-    }
- }
-
-struct DropDownButton: View {
-    @ObservedObject var viewModel: UserViewModel
-    @Binding var editingUser: User
-
-    let expertise = User.Expertise.allCases
-
-    var body: some View {
-        Text("Nivel de conhecimento")
-            .font(.headline)
-            .foregroundColor(.gray)
-
-        Menu {
-            ForEach(expertise, id: \.self) { type in
-                MenuItem(type: type.rawValue, isSelected: type == editingUser.expertise) {
-                    self.editingUser.expertise = type
-                }
-            }
-        } label: {
-            Text(editingUser.expertise.rawValue)
-                .foregroundColor(Color.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Image(systemName: "arrowtriangle.down.fill")
-                .foregroundColor(Color.black)
-        }
-        .padding(.horizontal, 10)
-        .frame(minWidth: 0, maxWidth: .infinity)
-        .overlay {
-            RoundedRectangle(cornerRadius: 8)
-                .padding()
-                .foregroundColor(.clear)
-                .border(Color.secondary.opacity(0.18))
-        }
-        .accessibilityLabel("Escolha seu nível de conhecimento")
-    }
-}
-
-struct MenuItem: View {
-    let type: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: {
-            action()
-        }, label: {
-            HStack {
-                Text(type)
-                if isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.black)
-                }
-            }
-        })
     }
 }

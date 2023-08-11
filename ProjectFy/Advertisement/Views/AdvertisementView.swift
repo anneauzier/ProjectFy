@@ -14,6 +14,9 @@ struct AdvertisementsView: View {
     @State var isLinkActive = false
     @State var editingID: String?
     
+    @State var selectedPositionToPresent: ProjectGroup.Position?
+    @State var presentPositionSheet: Bool = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -28,7 +31,9 @@ struct AdvertisementsView: View {
                                 owner: owner,
                                 advertisement: advertisement,
                                 editingID: $editingID,
-                                editAdvertisement: $isLinkActive
+                                editAdvertisement: $isLinkActive,
+                                selectedPositionToPresent: $selectedPositionToPresent,
+                                presentPositionSheet: $presentPositionSheet
                             )
                         }
                     }
@@ -47,6 +52,10 @@ struct AdvertisementsView: View {
                 } label: {
                     Label("Criar anúncio", systemImage: "plus")
                 }
+                
+                .simultaneousGesture(TapGesture().onEnded({ _ in
+                    Haptics.shared.selection()
+                }))
             }
         }
     }
@@ -61,24 +70,30 @@ struct AdView: View {
     @Binding var editingID: String?
     @Binding var editAdvertisement: Bool
     
+    @Binding var selectedPositionToPresent: ProjectGroup.Position?
+    @Binding var presentPositionSheet: Bool
+    
     @State var showDeleteAlert: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                UserInfo(user: owner)
+                UserInfo(user: owner, size: 67)
                 
                 Spacer()
                 
                 Menu {
                     Button {
                         editingID = advertisement.id
+                        
+                        Haptics.shared.selection()
                         editAdvertisement.toggle()
                     } label: {
                         Label("Editar anúncio", systemImage: "square.and.pencil")
                     }
                     
                     Button(role: .destructive) {
+                        Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
                         Label("Excluir anúncio", systemImage: "trash")
@@ -92,7 +107,11 @@ struct AdView: View {
                 .padding(.leading, 27)
             }
             
-            AdInfo(advertisement: advertisement)
+            AdInfo(
+                advertisement: advertisement,
+                presentSheet: $presentPositionSheet,
+                selectedPosition: $selectedPositionToPresent
+            )
             
             Divider()
         }
@@ -106,6 +125,8 @@ struct AdView: View {
 
             Button(role: .destructive) {
                 viewModel.deleteAdvertisement(by: advertisement.id)
+                
+                Haptics.shared.notification(.success)
                 showDeleteAlert.toggle()
             } label: {
                 Text("Excluir")
