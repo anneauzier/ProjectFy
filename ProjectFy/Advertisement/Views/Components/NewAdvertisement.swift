@@ -97,10 +97,11 @@ extension AdvertisementsView {
                                 Circle()
                                     .fill(.blue)
                                 
+                                // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
                                 Image(systemName: "plus")
                                     .foregroundColor(.white)
                                     .font(.system(size: 24))
-                                    .fontWeight(.bold)
+//                                    .fontWeight(.bold)
                             }
                             .frame(width: 54, height: 54)
                         }

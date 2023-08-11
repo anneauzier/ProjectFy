@@ -8,7 +8,7 @@
 import Foundation
 
 final class UserMockupService: UserProtocol, ObservableObject {
-
+    
     private var users: [User] = [
         User(
             id: "1234",

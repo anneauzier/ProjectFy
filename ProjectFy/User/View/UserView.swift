@@ -87,11 +87,12 @@ struct UserView: View {
                     let splitInterests = viewModel.users[0].interestTags.split(separator: ",")
                     
                     ForEach(splitInterests, id: \.self) { interest in
+                        // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
                         Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
                             .font(.caption)
                             .padding(7)
                             .foregroundColor(.white)
-                            .bold(true)
+//                            .bold(true)
                             .lineLimit(0)
                             .background(Capsule().fill(.gray))
                     }

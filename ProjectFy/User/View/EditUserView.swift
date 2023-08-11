@@ -97,7 +97,9 @@ struct EditUserView: View {
                     Text("Interesses")
                         .font(.headline)
                         .foregroundColor(.gray)
-                    TextField("Seus interesses", text: $editingUser.interestTags, axis: .vertical)
+                    
+//                     TODO: Mudar para o textfield vertical
+                    TextField("Seus interesses", text: $editingUser.interestTags)
                         .textFieldStyle(.roundedBorder)
                         .accessibilityLabel("Digite seus interesses")
                     

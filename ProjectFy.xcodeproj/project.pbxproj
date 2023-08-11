@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		674982762A83DCD900A1C98E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 674982752A83DCD900A1C98E /* GoogleService-Info.plist */; };
+		674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 674982782A83E2C500A1C98E /* FirebaseAuth */; };
+		6749827C2A855B8200A1C98E /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749827B2A855B8200A1C98E /* AuthenticationManager.swift */; };
+		6749827F2A855EAA00A1C98E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6749827E2A855EAA00A1C98E /* FirebaseAnalytics */; };
+		674982812A857C9800A1C98E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982802A857C9800A1C98E /* Utils.swift */; };
+		674982862A8592A800A1C98E /* AuthenticationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982852A8592A800A1C98E /* AuthenticationProtocol.swift */; };
+		674982882A85931A00A1C98E /* SignInWithAppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982872A85931A00A1C98E /* SignInWithAppleService.swift */; };
+		6749828D2A85DD8E00A1C98E /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749828C2A85DD8E00A1C98E /* SignInView.swift */; };
+		674982922A85DF5B00A1C98E /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982912A85DF5B00A1C98E /* AuthenticationViewModel.swift */; };
 		678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383762A7C4A3800E459F1 /* UserInfo.swift */; };
 		678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383782A7C4A5600E459F1 /* AdInfo.swift */; };
 		6783837C2A7C4A7F00E459F1 /* View+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */; };
@@ -31,6 +40,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		674982752A83DCD900A1C98E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6749827A2A83E47200A1C98E /* ProjectFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFy.entitlements; sourceTree = "<group>"; };
+		6749827B2A855B8200A1C98E /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		674982802A857C9800A1C98E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		674982852A8592A800A1C98E /* AuthenticationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProtocol.swift; sourceTree = "<group>"; };
+		674982872A85931A00A1C98E /* SignInWithAppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleService.swift; sourceTree = "<group>"; };
+		6749828C2A85DD8E00A1C98E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		674982912A85DF5B00A1C98E /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		678383762A7C4A3800E459F1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		678383782A7C4A5600E459F1 /* AdInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdInfo.swift; sourceTree = "<group>"; };
 		6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+removePadding.swift"; sourceTree = "<group>"; };
@@ -60,12 +77,57 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6749827F2A855EAA00A1C98E /* FirebaseAnalytics in Frameworks */,
+				674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6749827D2A855EAA00A1C98E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		674982822A85925F00A1C98E /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				674982902A85DF4800A1C98E /* ViewModel */,
+				6749828B2A85DD6900A1C98E /* Services */,
+				6749828A2A85DD6000A1C98E /* Protocols */,
+				6749828C2A85DD8E00A1C98E /* SignInView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		6749828A2A85DD6000A1C98E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				674982852A8592A800A1C98E /* AuthenticationProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		6749828B2A85DD6900A1C98E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6749827B2A855B8200A1C98E /* AuthenticationManager.swift */,
+				674982872A85931A00A1C98E /* SignInWithAppleService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		674982902A85DF4800A1C98E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				674982912A85DF5B00A1C98E /* AuthenticationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		678383722A7C275300E459F1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,9 +228,11 @@
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				674982752A83DCD900A1C98E /* GoogleService-Info.plist */,
 				9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */,
 				9F4390C82A81376500A3A393 /* TabBarView.swift */,
 				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
+				674982802A857C9800A1C98E /* Utils.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -213,6 +277,7 @@
 			children = (
 				9FFECDE92A71EBEF0053F29D /* ProjectFy */,
 				9FFECDE82A71EBEF0053F29D /* Products */,
+				6749827D2A855EAA00A1C98E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,6 +292,8 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
+				674982822A85925F00A1C98E /* Authentication */,
+				6749827A2A83E47200A1C98E /* ProjectFy.entitlements */,
 				9F553F3D2A816D7900D64192 /* Protocols */,
 				9F4390C52A81316C00A3A393 /* Resources */,
 				67A531F02A78326500EBD022 /* ProjectGroup */,
@@ -263,6 +330,10 @@
 			dependencies = (
 			);
 			name = ProjectFy;
+			packageProductDependencies = (
+				674982782A83E2C500A1C98E /* FirebaseAuth */,
+				6749827E2A855EAA00A1C98E /* FirebaseAnalytics */,
+			);
 			productName = ProjectFy;
 			productReference = 9FFECDE72A71EBEF0053F29D /* ProjectFy.app */;
 			productType = "com.apple.product-type.application";
@@ -291,6 +362,9 @@
 				Base,
 			);
 			mainGroup = 9FFECDDE2A71EBEF0053F29D;
+			packageReferences = (
+				674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 9FFECDE82A71EBEF0053F29D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -307,6 +381,7 @@
 			files = (
 				9FFECDF22A71EBF00053F29D /* Preview Assets.xcassets in Resources */,
 				9FFECDEF2A71EBF00053F29D /* Assets.xcassets in Resources */,
+				674982762A83DCD900A1C98E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +390,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		9FDD73692A76063E00BA8F26 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -337,6 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				674982922A85DF5B00A1C98E /* AuthenticationViewModel.swift in Sources */,
 				67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */,
 				67A531ED2A7831FA00EBD022 /* User.swift in Sources */,
 				9F4390C92A81376500A3A393 /* TabBarView.swift in Sources */,
@@ -344,15 +421,19 @@
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				9F553F442A8178A400D64192 /* SettingsUserViewModel.swift in Sources */,
+				674982812A857C9800A1C98E /* Utils.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,
+				6749827C2A855B8200A1C98E /* AuthenticationManager.swift in Sources */,
 				9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */,
 				9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */,
+				674982862A8592A800A1C98E /* AuthenticationProtocol.swift in Sources */,
+				674982882A85931A00A1C98E /* SignInWithAppleService.swift in Sources */,
 				678383812A7F623D00E459F1 /* NewAdvertisement.swift in Sources */,
 				6783837C2A7C4A7F00E459F1 /* View+removePadding.swift in Sources */,
 				678383832A7F63EA00E459F1 /* AdvertisementsViewModel.swift in Sources */,
 				678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */,
-				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
+				6749828D2A85DD8E00A1C98E /* SignInView.swift in Sources */,
 				678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */,
 				678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */,
 				678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */,
@@ -482,6 +563,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
@@ -493,6 +575,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -514,6 +597,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
@@ -525,6 +609,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -563,6 +648,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		674982782A83E2C500A1C98E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6749827E2A855EAA00A1C98E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9FFECDDF2A71EBEF0053F29D /* Project object */;
 }
