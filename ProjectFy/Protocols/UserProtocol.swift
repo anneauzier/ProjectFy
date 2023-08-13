@@ -8,12 +8,9 @@
 import Foundation
 
 protocol UserProtocol {
-
-    func getUsers() -> [User]
-    func getUser(id: String) -> User?
-
-    func createUser(_ user: User)
-    func updateUser(_ user: User)
-    func deleteUser(id: String)
-
+    
+    func create(_ user: User) throws
+    func getUsers(completion: @escaping ([User]?) -> Void)
+    func update(_ user: User) throws
+    func delete(with id: String)
 }

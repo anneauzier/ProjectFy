@@ -7,12 +7,19 @@
 
 import SwiftUI
 
+// TODO: tirar o dropdownbutton daqui
+
 struct EditUserView: View {
 
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: UserViewModel
-
-    let editingID: String
+    
+    @State var editingUser: User
+    var viewModel: UserViewModel
+    
+    init(editingUser: User, viewModel: UserViewModel) {
+        self._editingUser = State(initialValue: editingUser)
+        self.viewModel = viewModel
+    }
 
     var textFieldsFilled: Bool {
         !editingUser.name.isEmpty
@@ -20,20 +27,6 @@ struct EditUserView: View {
         && !editingUser.region.isEmpty
         && !editingUser.interestTags.isEmpty
     }
-    
-    @State var editingUser = User(id: "",
-                                  name: "",
-                                  username: "",
-                                  email: "",
-                                  description: nil,
-                                  avatar: "",
-                                  region: "",
-                                  entryDate: Date(),
-                                  interestTags: "",
-                                  expertise: .beginner,
-                                  applicationsID: nil,
-                                  available: true,
-                                  areaExpertise: "")
     
     var body: some View {
         ScrollView {
@@ -115,21 +108,8 @@ struct EditUserView: View {
                 
             }.padding(.horizontal, 20)
         }
-        
-        .onAppear {
-            if let user = viewModel.getUser(id: editingID) {
-                editingUser = user
-            }
-        }
     }
 }
-
- struct EditUserView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = UserViewModel(service: UserMockupService())
-        EditUserView(viewModel: viewModel, editingID: "")
-    }
- }
 
 struct DropDownButton: View {
     @ObservedObject var viewModel: UserViewModel

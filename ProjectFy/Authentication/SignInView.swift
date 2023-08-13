@@ -10,7 +10,9 @@ import AuthenticationServices
 
 struct SignInView: View {
     @Environment(\.colorScheme) var colorScheme
+    
     @EnvironmentObject var viewModel: AuthenticationViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     
     var body: some View {
         VStack {
@@ -22,7 +24,17 @@ struct SignInView: View {
             
             Button {
                 viewModel.authenticationService = SignInWithAppleService()
-                viewModel.signIn()
+                
+                viewModel.signIn { signInResult in
+                    if userViewModel.getUser(with: signInResult.identityToken) != nil {
+                        return
+                    }
+                    
+                    let user = User(signInResult: signInResult)
+                    
+                    userViewModel.createUser(user)
+                    userViewModel.setUser(with: user.id)
+                }
             } label: {
                 SignInWithAppleButtonViewRepresentable(
                     type: .default,

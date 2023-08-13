@@ -21,17 +21,26 @@ struct ProjectFyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject var authenticationViewModel = AuthenticationViewModel()
-    @StateObject var userViewModel = UserViewModel(service: UserMockupService())
-    @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementMockupService())
+    @StateObject var userViewModel = UserViewModel(service: UserService())
+    @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
 
     var body: some Scene {
         WindowGroup {
-            if authenticationViewModel.authorisationState == .unauthorized {
+            if authenticationViewModel.isAuthenticated() {
+                HomeView()
+                    .environmentObject(advertisementsViewModel)
+                    .environmentObject(userViewModel)
+                
+                    .onAppear {
+                        guard let userID = authenticationViewModel.getAuthenticatedUser()?.uid else {
+                            return
+                        }
+                        
+                        userViewModel.setUser(with: userID)
+                    }
+            } else {
                 SignInView()
                     .environmentObject(authenticationViewModel)
-            } else {
-                TabBarView()
-                    .environmentObject(advertisementsViewModel)
                     .environmentObject(userViewModel)
             }
         }

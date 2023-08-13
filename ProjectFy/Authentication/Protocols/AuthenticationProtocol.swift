@@ -10,6 +10,19 @@ import FirebaseAuth
 
 protocol AuthenticationProtocol {
     
-    func signIn() async throws
-    func getAuthenticatedUser(from users: [User]) throws -> User
+    func signIn() async throws -> SignInResult
+}
+
+extension AuthenticationProtocol {
+    @discardableResult
+    func signIn(with credential: AuthCredential) async throws -> AuthDataResult {
+        return try await Auth.auth().signIn(with: credential)
+    }
+}
+
+struct SignInResult {
+    let identityToken: String
+    let nonce: String
+    let name: String?
+    let email: String?
 }

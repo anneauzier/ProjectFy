@@ -10,6 +10,7 @@ import SwiftUI
 struct UserView: View {
     @EnvironmentObject var viewModel: UserViewModel
     
+    let user: User
     @State private var goEditUserView = false
     
     var body: some View {
@@ -25,9 +26,10 @@ struct UserView: View {
                         .accessibilityLabel("Edital Perfil")
 
                 }.sheet(isPresented: $goEditUserView, content: {
-                    EditUserView(viewModel: viewModel, editingID: viewModel.users[0].id)
+                    EditUserView(editingUser: user, viewModel: viewModel)
                 })
-                Image("\(viewModel.users[0].avatar)")
+                
+                Image(user.avatar)
                     .aspectRatio(contentMode: .fit)
                     .accessibilityLabel("Foto de perfil")
             }
@@ -36,44 +38,46 @@ struct UserView: View {
                 .padding(.top, -20)
             
             Group {
-                Text("\(viewModel.availability)")
+                let availability = user.available ? "Availavle" : "Unavailable"
+                
+                Text(availability)
                     .foregroundColor(.gray)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 HStack {
-                    Text("\(viewModel.users[0].name)")
+                    Text(user.name)
                         .font(.title)
                         .bold()
-                        .accessibilityLabel("Username \(viewModel.users[0].name)")
+                        .accessibilityLabel("Username \(user.name)")
 
-                    Text("\(viewModel.users[0].username)")
+                    Text(user.username)
                         .foregroundColor(.gray)
                         .bold()
-                        .accessibilityLabel("@\(viewModel.users[0].username)")
+                        .accessibilityLabel("@\(user.username)")
                 }
                 
                 HStack {
-                    Text("\(viewModel.users[0].areaExpertise)")
+                    Text(user.areaExpertise)
                         .bold()
                     
                     Circle()
                         .frame(width: 5)
                         .foregroundColor(.gray)
                     
-                    Text("\(viewModel.users[0].expertise.rawValue)")
+                    Text(user.expertise.rawValue)
                         .foregroundColor(.gray)
                         .bold()
-                        .accessibilityLabel("Nível de Conhecimento \(viewModel.users[0].expertise.rawValue)")
+                        .accessibilityLabel("Nível de Conhecimento \(user.expertise.rawValue)")
                 }
                 
                 HStack {
                     Image(systemName: "mappin")
-                    Text("\(viewModel.users[0].region)")
+                    Text(user.region)
                         .foregroundColor(.gray)
                         .bold()
                 }.accessibilityElement(children: .combine)
-                .accessibilityLabel("Região \(viewModel.users[0].region)")
+                .accessibilityLabel("Região \(user.region)")
             }
             
             Divider()
@@ -84,7 +88,7 @@ struct UserView: View {
                     .bold()
                 
                 HStack(spacing: 8) {
-                    let splitInterests = viewModel.users[0].interestTags.split(separator: ",")
+                    let splitInterests = user.interestTags.split(separator: ",")
                     
                     ForEach(splitInterests, id: \.self) { interest in
                         // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
@@ -92,7 +96,7 @@ struct UserView: View {
                             .font(.caption)
                             .padding(7)
                             .foregroundColor(.white)
-//                            .bold(true)
+    //                            .bold(true)
                             .lineLimit(0)
                             .background(Capsule().fill(.gray))
                     }
@@ -108,12 +112,5 @@ struct UserView: View {
                 
             }
         }.padding(.horizontal, 20)
-    }
-}
-
-struct UserView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserView()
-            .environmentObject(UserViewModel(service: UserMockupService()))
     }
 }

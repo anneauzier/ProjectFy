@@ -11,15 +11,9 @@ import FirebaseAuth
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
-    @Published private(set) var authorisationState: AuthorisationState = .unauthorized
     var authenticationService: AuthenticationProtocol?
     
-    init() {
-        authorisationState = isAuthenticated() ? .authorized : .unauthorized
-        handleAuthenticationChanges()
-    }
-    
-    func signIn() {
+    func signIn(completion: @escaping (SignInResult) -> Void) {
         guard let authenticationService = authenticationService else {
             print("No AuthenticationService found!")
             return
@@ -27,8 +21,10 @@ final class AuthenticationViewModel: ObservableObject {
         
         Task {
             do {
-                try await authenticationService.signIn()
+                let signInResult = try await authenticationService.signIn()
                 self.authenticationService = nil
+                
+                completion(signInResult)
             } catch {
                 print("Unable to authenticate user: \(error.localizedDescription)")
             }
@@ -43,18 +39,17 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
-    private func isAuthenticated() -> Bool {
+    func isAuthenticated() -> Bool {
         return Auth.auth().currentUser != nil
     }
     
-    private func handleAuthenticationChanges() {
+    func handleAuthenticationChanges(completion: @escaping (FirebaseAuth.User?) -> Void) {
         Auth.auth().addStateDidChangeListener { _, user in
-            self.authorisationState = user == nil ? .unauthorized : .authorized
+            completion(user)
         }
     }
     
-    enum AuthorisationState {
-        case authorized
-        case unauthorized
+    func getAuthenticatedUser() -> FirebaseAuth.User? {
+        return Auth.auth().currentUser
     }
 }

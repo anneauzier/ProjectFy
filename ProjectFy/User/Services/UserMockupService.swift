@@ -21,31 +21,34 @@ final class UserMockupService: UserProtocol, ObservableObject {
             entryDate: Date(),
             interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .beginner,
-            groupsID: nil,
-            applicationsID: nil,
+            groups: nil,
+            applications: nil,
             available: true,
             areaExpertise: "iOS Developer"
         )
     ]
     
-    func getUsers() -> [User] {
-        return users
-    }
-    
-    func getUser(id: String) -> User? {
+    func getUser(with id: String) -> User? {
         return users.first(where: {$0.id == id})
     }
     
-    func createUser(_ user: User) {
+    func create(_ user: User) {
         users.append(user)
     }
     
-    func updateUser(_ user: User) {
-        guard let index = users.firstIndex(where: {$0.id == user.id}) else { return }
+    func update(_ user: User) throws {
+        guard let index = users.firstIndex(where: {$0.id == user.id}) else {
+            throw URLError(.fileDoesNotExist)
+        }
+        
         users[index] = user
     }
     
-    func deleteUser(id: String) {
+    func getUsers(completion: @escaping ([User]?) -> Void) {
+        completion(users)
+    }
+    
+    func delete(with id: String) {
         guard let index = users.firstIndex(where: {$0.id == id}) else { return }
         users.remove(at: index)
     }

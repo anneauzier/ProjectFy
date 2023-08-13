@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct ProjectGroup {
-    let id = UUID().uuidString
+struct ProjectGroup: Hashable, Codable {
+    let id: String
     
     let name: String
     let description: String
@@ -18,17 +18,18 @@ struct ProjectGroup {
     let link: String
     let tasks: [Task]
     
-    struct Position: Hashable {
+    struct Position: Hashable, Codable {
         let id: String
         
         var title: String
         var description: String
         var vacancies: Int
-        var joined: [String] // Array of IDs of people that joined that position
+        var applied: [User]
+        var joined: [User]
     }
     
-    struct Task {
-        let id = UUID().uuidString
+    struct Task: Hashable, Codable {
+        let id: String
         
         let ownerID: String
         var taskDescription: String

@@ -11,23 +11,30 @@ import AuthenticationServices
 import CryptoKit
 
 @MainActor
-final class SignInWithAppleService: AuthenticationManager, AuthenticationProtocol {
+final class SignInWithAppleService: NSObject, AuthenticationProtocol {
     
     private var currentNonce: String?
-    private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)?
+    private var completionHandler: ((Result<SignInResult, Error>) -> Void)?
     
-    func signIn() async throws {
-        let result = try await startSignInWithAppleFlow()
+    func signIn() async throws -> SignInResult {
+        var result = try await startSignInWithAppleFlow()
         
         let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                   idToken: result.identityToken,
                                                   rawNonce: result.nonce)
         
-        try await signIn(with: credential)
+        let signedUser = try await signIn(with: credential).user
+
+        let signInResult = SignInResult(identityToken: signedUser.uid,
+                                        nonce: result.nonce,
+                                        name: result.name,
+                                        email: result.email)
         
         if let name = result.name {
             changeDisplayName(to: name)
         }
+        
+        return signInResult
     }
     
     private func changeDisplayName(to name: String) {
@@ -47,7 +54,7 @@ final class SignInWithAppleService: AuthenticationManager, AuthenticationProtoco
 // MARK: - Sign In Request
 extension SignInWithAppleService {
     
-    func startSignInWithAppleFlow() async throws -> SignInWithAppleResult {
+    func startSignInWithAppleFlow() async throws -> SignInResult {
         try await withCheckedThrowingContinuation { continuation in
             self.startSignInWithAppleFlow { result in
                 switch result {
@@ -62,7 +69,7 @@ extension SignInWithAppleService {
         }
     }
 
-    func startSignInWithAppleFlow(completion: @escaping (Result<SignInWithAppleResult, Error>) -> Void) {
+    func startSignInWithAppleFlow(completion: @escaping (Result<SignInResult, Error>) -> Void) {
         guard let topVC = Utils.shared.topViewController() else {
             completion(.failure(URLError(.badURL)))
             return
@@ -104,7 +111,7 @@ extension SignInWithAppleService: ASAuthorizationControllerDelegate {
             name = PersonNameComponentsFormatter().string(from: fullName)
         }
         
-        let tokens = SignInWithAppleResult(identityToken: identityTokenString,
+        let tokens = SignInResult(identityToken: identityTokenString,
                                            nonce: nonce,
                                            name: name,
                                            email: email)

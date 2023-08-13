@@ -11,6 +11,8 @@ struct AdvertisementsView: View {
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     
+    let user: User
+    
     @State var isLinkActive = false
     @State var editingID: String?
     
@@ -21,7 +23,7 @@ struct AdvertisementsView: View {
                     Divider()
                     
                     ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
-                        let owner = userViewModel.getUser(id: advertisement.ownerID)
+                        let owner = userViewModel.getUser(with: advertisement.ownerID)
                         
                         if let owner = owner {
                             AdView(
@@ -42,8 +44,10 @@ struct AdvertisementsView: View {
             
             .toolbar {
                 NavigationLink(isActive: $isLinkActive) {
-                    NewAdvertisement(popToRoot: $isLinkActive, editingID: editingID)
-                        .environmentObject(advertisementsViewModel)
+                    NewAdvertisement(ownerID: user.id,
+                                     viewModel: advertisementsViewModel,
+                                     popToRoot: $isLinkActive,
+                                     editingID: editingID)
                 } label: {
                     Label("Criar anúncio", systemImage: "plus")
                 }
@@ -105,7 +109,7 @@ struct AdView: View {
             }
 
             Button(role: .destructive) {
-                viewModel.deleteAdvertisement(by: advertisement.id)
+                viewModel.deleteAdvertisement(with: advertisement.id)
                 showDeleteAlert.toggle()
             } label: {
                 Text("Excluir")

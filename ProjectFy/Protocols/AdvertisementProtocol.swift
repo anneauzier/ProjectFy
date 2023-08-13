@@ -8,10 +8,9 @@
 import Foundation
 
 protocol AdvertisementProtocol {
-    func getAdvertisements() -> [Advertisement]
-    func createAdvertisement(_ advertisement: Advertisement)
-    func updateAdvertisement(_ advertisement: Advertisement)
-    func deleteAdvertisement(by id: String)
     
-    func getAdvertisement(by id: String) -> Advertisement?
+    func create(_ advertisement: Advertisement) throws
+    func getAdvertisements(completion: @escaping ([Advertisement]?) -> Void)
+    func update(_ advertisement: Advertisement) throws
+    func delete(with id: String)
 }

@@ -9,38 +9,53 @@ import SwiftUI
 
 final class UserViewModel: ObservableObject {
     
-    @Published var users: [User]
-    @Published var availability: String
+    @Published private(set) var user: User?
+    private var userID: String?
     
+    private var users: [User] = []
     private let service: UserProtocol
     
     init(service: UserProtocol) {
         self.service = service
-        self.availability = "Disponível"
-        self.users = service.getUsers()
+        
+        service.getUsers { [weak self] users in
+            guard let self = self, let users = users else { return }
+            
+            self.users = users
+            
+            guard let userID = self.userID else {
+                return
+            }
+            
+            self.user = users.first(where: { $0.id == userID })
+        }
     }
     
-    func createUser (_ user: User) {
-        service.createUser(user)
-        updateUsers()
+    func createUser(_ user: User) {
+        do {
+            try service.create(user)
+        } catch {
+            print("Cannot create user: \(user)")
+        }
     }
     
-    func getUser(id: String) -> User? {
-        return service.getUser(id: id)
+    func setUser(with id: String) {
+        userID = id
+    }
+    
+    func getUser(with id: String) -> User? {
+        return users.first(where: { $0.id == id })
     }
     
     func editUser(_ user: User) {
-        service.updateUser(user)
-        availability = user.available ? "Disponível" : "Indisponível"
-        updateUsers()
+        do {
+            try service.update(user)
+        } catch {
+            print("Cannot update advertisement: \(error)")
+        }
     }
     
-    func deleteUser(id: String) {
-        service.deleteUser(id: id)
-        updateUsers()
-    }
-    
-    private func updateUsers() {
-        users = service.getUsers()
+    func deleteUser(with id: String) {
+        service.delete(with: id)
     }
 }

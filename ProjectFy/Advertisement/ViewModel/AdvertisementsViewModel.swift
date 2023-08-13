@@ -8,35 +8,40 @@
 import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
-    @Published var advertisements: [Advertisement]
+    @Published var advertisements: [Advertisement] = []
     
     private let service: AdvertisementProtocol
     
     init(service: AdvertisementProtocol) {
         self.service = service
-        self.advertisements = service.getAdvertisements()
+        
+        service.getAdvertisements { [weak self] advertisements in
+            guard let advertisements = advertisements else { return }
+            self?.advertisements = advertisements
+        }
     }
     
     func createAdvertisement(_ advertisement: Advertisement) {
-        service.createAdvertisement(advertisement)
-        updateAdvertisements()
+        do {
+            try service.create(advertisement)
+        } catch {
+            print("Cannot create advertisement: \(error.localizedDescription)")
+        }
     }
     
-    func getAdvertisement(by id: String) -> Advertisement? {
-        return service.getAdvertisement(by: id)
+    func getAdvertisement(with id: String) -> Advertisement? {
+        return advertisements.first(where: { $0.id == id })
     }
     
     func editAdvertisement(_ advertisement: Advertisement) {
-        service.updateAdvertisement(advertisement)
-        updateAdvertisements()
+        do {
+            try service.update(advertisement)
+        } catch {
+            print("Cannot update advertisement: \(error)")
+        }
     }
     
-    func deleteAdvertisement(by id: String) {
-        service.deleteAdvertisement(by: id)
-        updateAdvertisements()
-    }
-    
-    private func updateAdvertisements() {
-        advertisements = service.getAdvertisements()
+    func deleteAdvertisement(with id: String) {
+        service.delete(with: id)
     }
 }
