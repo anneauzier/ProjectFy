@@ -17,6 +17,7 @@ struct UserView: View {
         VStack(alignment: .leading) {
             Group {
                 Button {
+                    Haptics.shared.selection()
                     goEditUserView.toggle()
                 } label: {
                     Text("Editar")

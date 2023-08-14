@@ -17,8 +17,16 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
             description: "mock1",
             positions: [
                 ProjectGroup.Position(
-                    id: "1234",
+                    id: UUID().uuidString,
                     title: "Level designer",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
+                    vacancies: 3,
+                    applied: [],
+                    joined: []
+                ),
+                ProjectGroup.Position(
+                    id: UUID().uuidString,
+                    title: "Designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
                     vacancies: 3,
                     applied: [],
@@ -27,7 +35,7 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
             ],
             weeklyWorkload: nil,
             ongoing: true,
-            tags: ["Level Design", "Game Design", "Design"]
+            tags: "Level Design, Game Design, Design"
         )
     ]
     
@@ -60,4 +68,18 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
         
         advertisements[index] = advertisement
     }
+    
+//    func apply(userID: String, for position: ProjectGroup.Position) {
+//        guard var advertisement = getAdvertisementByPosition(positionID: position.id) else { return }
+//
+//        advertisement.applicationsIDs.updateValue(position, forKey: userID)
+//        updateAdvertisement(advertisement)
+//    }
+    
+//    func unapply(userID: String, from position: ProjectGroup.Position) {
+//        guard var advertisement = getAdvertisementByPosition(positionID: position.id) else { return }
+//
+//        advertisement.applicationsIDs.removeValue(forKey: userID)
+//        updateAdvertisement(advertisement)
+//    }
 }

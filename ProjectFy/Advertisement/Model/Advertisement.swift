@@ -17,7 +17,7 @@ struct Advertisement: Hashable, Codable {
     var positions: [ProjectGroup.Position]
     var weeklyWorkload: Double?
     var ongoing: Bool
-    var tags: [String]
+    var tags: String
     
     init(id: String,
          ownerID: String,
@@ -26,8 +26,7 @@ struct Advertisement: Hashable, Codable {
          positions: [ProjectGroup.Position],
          weeklyWorkload: Double?,
          ongoing: Bool,
-         tags: [String])
-    {
+         tags: String){
         self.id = id
         self.title = title
         self.ownerID = ownerID
@@ -46,6 +45,6 @@ struct Advertisement: Hashable, Codable {
         self.positions = []
         self.weeklyWorkload = nil
         self.ongoing = false
-        self.tags = []
+        self.tags = ""
     }
 }

@@ -13,4 +13,7 @@ protocol AdvertisementProtocol {
     func getAdvertisements(completion: @escaping ([Advertisement]?) -> Void)
     func update(_ advertisement: Advertisement) throws
     func delete(with id: String)
+
+//    func apply(userID: String, for position: ProjectGroup.Position)
+//    func unapply(userID: String, from position: ProjectGroup.Position)
 }
