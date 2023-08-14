@@ -60,14 +60,20 @@ struct AdView: View {
     
     @Binding var editingID: String?
     @Binding var editAdvertisement: Bool
-    
+
     @State var showDeleteAlert: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                UserInfo(user: owner)
-                
+
+                NavigationLink {
+                    UserView(presentUsersProfile: true)
+                } label: {
+                    UserInfo(user: owner)
+                        .foregroundColor(.black)
+                }
+
                 Spacer()
                 
                 Menu {

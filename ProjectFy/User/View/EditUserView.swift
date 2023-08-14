@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EditUserView: View {
-
+    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: UserViewModel
-
+    
     let editingID: String
-
+    
     var textFieldsFilled: Bool {
         !editingUser.name.isEmpty
         && !editingUser.areaExpertise.isEmpty
@@ -36,9 +36,56 @@ struct EditUserView: View {
                                   areaExpertise: "")
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                HStack {
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Group {
+                        Text("Nome")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                            .accessibilityLabel("Seu nome")
+                        
+                        TextField("Digite aqui seu nome", text: $editingUser.name)
+                            .textFieldStyle(.roundedBorder)
+                            .accessibilityLabel("Digite aqui seu nome")
+                        
+                        Text("Área de Conhecimento")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        TextField("Digite aqui sua área de interesse(Ex: UI/UX, etc)",
+                                  text: $editingUser.areaExpertise)
+                        .textFieldStyle(.roundedBorder)
+                        .accessibilityLabel("Digite aqui sua área de interesse")
+                        
+                        DropDownButton(viewModel: viewModel, editingUser: $editingUser)
+                        
+                        Text("Localização")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        TextField("State, Country", text: $editingUser.region)
+                            .textFieldStyle(.roundedBorder)
+                            .accessibilityLabel("Digite seu estado, depois país")
+                        
+                        Text("Interesses")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        TextField("Seus interesses", text: $editingUser.interestTags, axis: .vertical)
+                            .textFieldStyle(.roundedBorder)
+                            .accessibilityLabel("Digite seus interesses")
+                        
+                        Toggle(isOn: $editingUser.available) {
+                            Text("Disponibilidade")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                        }
+                        
+                    }.padding(.top, 10)
+                    
+                    Spacer()
+                    
+                }.padding(.horizontal, 20)
+            }.toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         dismiss()
                     } label: {
@@ -47,14 +94,8 @@ struct EditUserView: View {
                             .foregroundColor(.black)
                             .bold()
                     }
-                    Spacer()
-                    
-                    Text("Editar perfil")
-                        .foregroundColor(.black)
-                        .font(.headline)
-                    
-                    Spacer()
-                    
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         viewModel.editUser(editingUser)
                         dismiss()
@@ -65,81 +106,36 @@ struct EditUserView: View {
                             .bold()
                             .opacity(!textFieldsFilled ? 0.2: 1)
                     }.disabled(!textFieldsFilled)
-                }.padding(.top, 20)
-                
-                Group {
-                    Text("Nome")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                        .accessibilityLabel("Seu nome")
-
-                    TextField("Digite aqui seu nome", text: $editingUser.name)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite aqui seu nome")
-                    
-                    Text("Área de Conhecimento")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    TextField("Digite aqui sua área de interesse(Ex: UI/UX, etc)",
-                              text: $editingUser.areaExpertise)
-                    .textFieldStyle(.roundedBorder)
-                    .accessibilityLabel("Digite aqui sua área de interesse")
-                    
-                    DropDownButton(viewModel: viewModel, editingUser: $editingUser)
-                    
-                    Text("Localização")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    TextField("State, Country", text: $editingUser.region)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite seu estado, depois país")
-                    
-                    Text("Interesses")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    TextField("Seus interesses", text: $editingUser.interestTags, axis: .vertical)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite seus interesses")
-                    
-                    Toggle(isOn: $editingUser.available) {
-                        Text("Disponibilidade")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                    }
-                    
-                }.padding(.top, 10)
-                
-                Spacer()
-                
-            }.padding(.horizontal, 20)
-        }
-        
-        .onAppear {
-            if let user = viewModel.getUser(id: editingID) {
-                editingUser = user
+                }
             }
+            .onAppear {
+                if let user = viewModel.getUser(id: editingID) {
+                    editingUser = user
+                }
+            }.navigationTitle("Editar perfil")
+             .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
- struct EditUserView_Previews: PreviewProvider {
+struct EditUserView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = UserViewModel(service: UserMockupService())
         EditUserView(viewModel: viewModel, editingID: "")
     }
- }
+}
 
 struct DropDownButton: View {
     @ObservedObject var viewModel: UserViewModel
     @Binding var editingUser: User
-
+    
     let expertise = User.Expertise.allCases
-
+    
     var body: some View {
         Text("Nivel de conhecimento")
             .font(.headline)
             .foregroundColor(.gray)
-
+        
         Menu {
             ForEach(expertise, id: \.self) { type in
                 MenuItem(type: type.rawValue, isSelected: type == editingUser.expertise) {
