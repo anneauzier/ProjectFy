@@ -14,6 +14,8 @@ struct SignInView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     
+    @Binding var isNewUser: Bool?
+    
     var body: some View {
         VStack {
             Text("Encontre pessoas para realizar projetos paralelos com você!")
@@ -34,6 +36,8 @@ struct SignInView: View {
                     
                     userViewModel.createUser(user)
                     userViewModel.setUser(with: user.id)
+                    
+                    isNewUser = true
                 }
             } label: {
                 SignInWithAppleButtonViewRepresentable(
@@ -62,6 +66,6 @@ struct SignInView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignInView(isNewUser: .constant(true))
     }
 }

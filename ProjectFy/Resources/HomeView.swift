@@ -10,9 +10,11 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     
+    @Binding var isNewUser: Bool?
+    
     var body: some View {
         if let user = userViewModel.user {
-            TabBarView(user: user)
+            TabBarView(user: user, isNewUser: $isNewUser)
         } else {
             LoadingUserInfo()
         }
@@ -27,18 +29,48 @@ struct HomeView: View {
 
 fileprivate struct TabBarView: View {
     let user: User
+    @Binding var isNewUser: Bool?
     
     var body: some View {
-        TabView {
-            AdvertisementsView(user: user)
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
+//        if let isNewUser = isNewUser, isNewUser {
+//            Teste(user: user, isNewUser: $isNewUser)
+//        } else {
+            TabView {
+                AdvertisementsView(user: user)
+                    .tabItem {
+                        Label("Home", systemImage: "house")
+                    }
+                
+                UserView(user: user)
+                    .tabItem {
+                        Label("Profile", systemImage: "person.fill")
+                    }
+            }
+//        }
+    }
+}
+
+fileprivate struct Teste: View {
+    @EnvironmentObject var userViewModel: UserViewModel
+    
+    let user: User
+    @Binding var isNewUser: Bool?
+    
+    var body: some View {
+        VStack {
+            VStack(alignment: .leading) {
+                Text("Hi, stranger! We need some information from you :D")
+                    .font(.title)
+                    .padding(.top, 4)
+                
+                Text("Don't worry, you can change these informations later...")
+                    .foregroundColor(.gray)
+                    .padding(.top, 14)
+            }
+            .padding(.horizontal, 16)
             
-            UserView(user: user)
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                }
+            EditUserView(editingUser: user, viewModel: userViewModel)
         }
+        
     }
 }

@@ -31,36 +31,34 @@ struct EditUserView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Cancelar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
-                    }
-                    Spacer()
-                    
-                    Text("Editar perfil")
-                        .foregroundColor(.black)
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Button {
-                        viewModel.editUser(editingUser)
-                        
-                        Haptics.shared.notification(.success)
-                        dismiss()
-                    } label: {
-                        Text("Salvar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
-                            .opacity(!textFieldsFilled ? 0.2: 1)
-                    }.disabled(!textFieldsFilled)
-                }.padding(.top, 20)
+//                HStack {
+//                    Button {
+//                        dismiss()
+//                    } label: {
+//                        Text("Cancelar")
+//                            .font(.subheadline)
+//                            .foregroundColor(.black)
+//                            .bold()
+//                    }
+//                    Spacer()
+//                    
+//                    Text("Editar perfil")
+//                        .foregroundColor(.black)
+//                        .font(.headline)
+//                    
+//                    Spacer()
+//                    
+//                    Button {
+//                        viewModel.editUser(editingUser)
+//                        dismiss()
+//                    } label: {
+//                        Text("Salvar")
+//                            .font(.subheadline)
+//                            .foregroundColor(.black)
+//                            .bold()
+//                            .opacity(!textFieldsFilled ? 0.2: 1)
+//                    }.disabled(!textFieldsFilled)
+//                }.padding(.top, 20)
                 
                 Group {
                     Text("Nome")
@@ -71,7 +69,20 @@ struct EditUserView: View {
                     TextField("Digite aqui seu nome", text: $editingUser.name)
                         .textFieldStyle(.roundedBorder)
                         .accessibilityLabel("Digite aqui seu nome")
-                    
+                }
+                
+                Group {
+                    Text("Username")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                        .accessibilityLabel("Your username")
+
+                    TextField("@", text: $editingUser.username)
+                        .textFieldStyle(.roundedBorder)
+                        .accessibilityLabel("Type here your username")
+                }
+                
+                Group {
                     Text("Área de Conhecimento")
                         .font(.headline)
                         .foregroundColor(.gray)
@@ -79,6 +90,14 @@ struct EditUserView: View {
                               text: $editingUser.areaExpertise)
                     .textFieldStyle(.roundedBorder)
                     .accessibilityLabel("Digite aqui sua área de interesse")
+                }
+                
+                Group {
+                    
+                    
+                    
+                    
+                    
                     
                     DropDownButton(
                         title: "Nível de conhecimento",

@@ -24,10 +24,12 @@ struct ProjectFyApp: App {
     @StateObject var userViewModel = UserViewModel(service: UserService())
     @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
 
+    @State var isNewUser: Bool? = true
+    
     var body: some Scene {
         WindowGroup {
             if authenticationViewModel.isAuthenticated() {
-                HomeView()
+                HomeView(isNewUser: $isNewUser)
                     .environmentObject(advertisementsViewModel)
                     .environmentObject(userViewModel)
                 
@@ -39,7 +41,7 @@ struct ProjectFyApp: App {
                         userViewModel.setUser(with: userID)
                     }
             } else {
-                SignInView()
+                SignInView(isNewUser: $isNewUser)
                     .environmentObject(authenticationViewModel)
                     .environmentObject(userViewModel)
             }

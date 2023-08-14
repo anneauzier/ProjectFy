@@ -26,7 +26,7 @@ struct Advertisement: Hashable, Codable {
          positions: [ProjectGroup.Position],
          weeklyWorkload: Double?,
          ongoing: Bool,
-         tags: String){
+         tags: String) {
         self.id = id
         self.title = title
         self.ownerID = ownerID
