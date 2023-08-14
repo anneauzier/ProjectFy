@@ -93,12 +93,6 @@ struct EditUserView: View {
                 }
                 
                 Group {
-                    
-                    
-                    
-                    
-                    
-                    
                     DropDownButton(
                         title: "Nível de conhecimento",
                         selection: $editingUser.expertise,

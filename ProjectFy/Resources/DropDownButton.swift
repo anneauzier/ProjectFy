@@ -72,4 +72,3 @@ struct MenuItem<T: Hashable>: Identifiable {
     let name: String
     let tag: T
 }
-

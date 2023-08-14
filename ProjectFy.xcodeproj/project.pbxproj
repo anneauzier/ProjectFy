@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
+		674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982732A82F3E000A1C98E /* DropDownButton.swift */; };
 		674982762A83DCD900A1C98E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 674982752A83DCD900A1C98E /* GoogleService-Info.plist */; };
 		674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 674982782A83E2C500A1C98E /* FirebaseAuth */; };
 		6749827F2A855EAA00A1C98E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6749827E2A855EAA00A1C98E /* FirebaseAnalytics */; };
@@ -21,8 +23,6 @@
 		6749829F2A86C15D00A1C98E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749829E2A86C15D00A1C98E /* UserService.swift */; };
 		674982A42A86D08300A1C98E /* AdvertisementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982A32A86D08300A1C98E /* AdvertisementService.swift */; };
 		674982A62A88012100A1C98E /* String+avatars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982A52A88012100A1C98E /* String+avatars.swift */; };
-		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
-		674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982732A82F3E000A1C98E /* DropDownButton.swift */; };
 		678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383762A7C4A3800E459F1 /* UserInfo.swift */; };
 		678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383782A7C4A5600E459F1 /* AdInfo.swift */; };
 		6783837C2A7C4A7F00E459F1 /* View+removePadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */; };
@@ -37,6 +37,7 @@
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
 		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
 		9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F412A816F4600D64192 /* UserMockupService.swift */; };
+		9F5C15932A8AABE100162E2E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5C15922A8AABE100162E2E /* FirebaseMessaging */; };
 		9F8F29C52A7977610030958B /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C42A7977610030958B /* EditUserView.swift */; };
 		9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* UserViewModel.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
@@ -46,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		674982732A82F3E000A1C98E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		674982752A83DCD900A1C98E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6749827A2A83E47200A1C98E /* ProjectFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFy.entitlements; sourceTree = "<group>"; };
 		674982802A857C9800A1C98E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -57,8 +60,6 @@
 		6749829E2A86C15D00A1C98E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		674982A32A86D08300A1C98E /* AdvertisementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementService.swift; sourceTree = "<group>"; };
 		674982A52A88012100A1C98E /* String+avatars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+avatars.swift"; sourceTree = "<group>"; };
-		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-		674982732A82F3E000A1C98E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		678383762A7C4A3800E459F1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		678383782A7C4A5600E459F1 /* AdInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdInfo.swift; sourceTree = "<group>"; };
 		6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+removePadding.swift"; sourceTree = "<group>"; };
@@ -70,9 +71,11 @@
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
 		67A531F72A7841DD00EBD022 /* AdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementView.swift; sourceTree = "<group>"; };
+		9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFyDebug.entitlements; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
 		9F553F412A816F4600D64192 /* UserMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMockupService.swift; sourceTree = "<group>"; };
+		9F5C15942A8AAF4E00162E2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9F8F29C42A7977610030958B /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		9F8F29C92A7984730030958B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 			files = (
 				6749827F2A855EAA00A1C98E /* FirebaseAnalytics in Frameworks */,
 				674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */,
+				9F5C15932A8AABE100162E2E /* FirebaseMessaging in Frameworks */,
 				6749829B2A86A92D00A1C98E /* FirebaseFirestore in Frameworks */,
 				6749829D2A86A92D00A1C98E /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -315,6 +319,8 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
+				9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */,
+				9F5C15942A8AAF4E00162E2E /* Info.plist */,
 				674982932A86A8D200A1C98E /* Database */,
 				674982822A85925F00A1C98E /* Authentication */,
 				6749827A2A83E47200A1C98E /* ProjectFy.entitlements */,
@@ -359,6 +365,7 @@
 				6749827E2A855EAA00A1C98E /* FirebaseAnalytics */,
 				6749829A2A86A92D00A1C98E /* FirebaseFirestore */,
 				6749829C2A86A92D00A1C98E /* FirebaseFirestoreSwift */,
+				9F5C15922A8AABE100162E2E /* FirebaseMessaging */,
 			);
 			productName = ProjectFy;
 			productReference = 9FFECDE72A71EBEF0053F29D /* ProjectFy.app */;
@@ -593,13 +600,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFy.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFyDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = J5QJGKM573;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ProjectFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -613,6 +622,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = anneauzier.ProjectFy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -628,12 +638,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFy.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development: Iago Ramos (QRVDF9857B)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = J5QJGKM573;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ProjectFy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -710,6 +722,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		9F5C15922A8AABE100162E2E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 674982772A83E2C500A1C98E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
