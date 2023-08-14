@@ -69,6 +69,7 @@ struct AdView: View {
 
                 NavigationLink {
                     UserView(presentUsersProfile: true)
+
                 } label: {
                     UserInfo(user: owner)
                         .foregroundColor(.black)

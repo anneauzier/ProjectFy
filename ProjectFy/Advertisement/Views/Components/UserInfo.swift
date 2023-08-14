@@ -14,9 +14,9 @@ extension AdView {
         
         var body: some View {
             HStack {
-                Circle()
-                    .frame(width: 67, height: 67)
-                    .opacity(0.5)
+                Image(user.avatar)
+                    .resizable()
+                    .frame(width: 96, height: 96)
                 
                 VStack(alignment: .leading) {
                     HStack(spacing: 5) {
