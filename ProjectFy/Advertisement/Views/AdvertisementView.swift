@@ -82,8 +82,15 @@ struct AdView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                UserInfo(user: owner, size: 67)
-                
+
+                NavigationLink {
+//                    UserView(presentUsersProfile: true)
+
+                } label: {
+                    UserInfo(user: owner, size: 67)
+                        .foregroundColor(.black)
+                }
+
                 Spacer()
                 
                 Menu {

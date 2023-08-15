@@ -25,7 +25,7 @@ extension AdvertisementsView {
         Ah8PMHvirVO8Lp4tDzgnYEMbnr4lC0ZKFusOHUJemEhDZoKFTEAr9
         """
         
-        let sender = PushNotificationSender()
+//        let sender = PushNotificationSender()
         
         var viewModel: AdvertisementsViewModel
         @Binding var popToRoot: Bool
@@ -64,7 +64,7 @@ extension AdvertisementsView {
                     .padding(.top, 20)
                     
                     Button("aperte aqui") {
-                        sender.sendPushNotification(to: "\(mytoken)", title: "Notification title", body: "Notification body")
+//                        sender.sendPushNotification(to: "\(mytoken)", title: "Notification title", body: "Notification body")
                     }
                     
                     Spacer()

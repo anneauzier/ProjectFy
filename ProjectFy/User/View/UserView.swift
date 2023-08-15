@@ -63,9 +63,9 @@ struct UserView: View {
                     Text(user.areaExpertise)
                         .bold()
                     
-                    Circle()
-                        .frame(width: 5)
-                        .foregroundColor(.gray)
+//                    Image("\(viewModel.users[0].avatar)")
+                        .aspectRatio(contentMode: .fit)
+                        .accessibilityLabel("Foto de perfil")
                     
                     Text(user.expertise.rawValue)
                         .foregroundColor(.gray)
@@ -102,17 +102,24 @@ struct UserView: View {
                             .lineLimit(0)
                             .background(Capsule().fill(.gray))
                     }
-                }
-                
-                Divider()
-                
-                Text("Meus anúncios")
-                    .foregroundColor(.black)
-                    .bold()
-                
-                Spacer()
-                
+                }.padding(.horizontal, 20)
             }
-        }.padding(.horizontal, 20)
+//            .toolbar {
+//                if !presentUsersProfile {
+//                    Button {
+//                        goEditUserView.toggle()
+//                    } label: {
+//                        Text("Editar")
+//                            .font(.headline)
+//                            .foregroundColor(.gray)
+//                            .frame(maxWidth: .infinity, alignment: .trailing)
+//                            .accessibilityLabel("Edital Perfil")
+//
+//                    }.sheet(isPresented: $goEditUserView, content: {
+//                        EditUserView(viewModel: viewModel, editingID: viewModel.users[0].id)
+//                    })
+////                }
+//            }
+        }
     }
 }

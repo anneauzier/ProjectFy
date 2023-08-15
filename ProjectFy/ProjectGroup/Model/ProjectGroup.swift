@@ -15,12 +15,11 @@ struct ProjectGroup: Hashable, Codable {
     let avatar: String
     let adminID: String
     let members: [String: Position]
-    let link: String
+    var link: String
     let tasks: [Task]
     
     struct Position: Hashable, Codable {
         let id: String
-        
         var title: String
         var description: String
         var vacancies: Int
@@ -34,5 +33,18 @@ struct ProjectGroup: Hashable, Codable {
         let ownerID: String
         var taskDescription: String
         let time: Date
+    }
+    
+    static func == (lhs: ProjectGroup, rhs: ProjectGroup) -> Bool {
+        return (
+            lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.description == rhs.description &&
+            lhs.avatar == rhs.avatar &&
+            lhs.adminID == rhs.adminID &&
+            lhs.members == rhs.members &&
+            lhs.link == rhs.link &&
+            lhs.tasks == rhs.tasks
+        )
     }
 }
