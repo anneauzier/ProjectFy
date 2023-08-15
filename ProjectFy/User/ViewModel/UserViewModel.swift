@@ -59,10 +59,13 @@ final class UserViewModel: ObservableObject {
         service.delete(with: id)
     }
     
-    func isUserInfoFilled() -> Bool {
+    func isUserInfoFilled(_ user: User?) -> Bool {
+        var user = user
+        
+        if user == nil { user = self.user }
         guard let user = user else { return false }
         
-        if user.name.isEmpty, user.areaExpertise.isEmpty, user.region.isEmpty, user.interestTags.isEmpty {
+        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty || user.interestTags.isEmpty {
             return false
         }
         

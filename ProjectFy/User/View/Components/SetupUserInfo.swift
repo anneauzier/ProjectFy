@@ -92,7 +92,7 @@ struct SetupUserInfo: View {
     }
     
     private func checkIfCanContinue() {
-        let isUserInfoFilled = userViewModel.isUserInfoFilled()
+        let isUserInfoFilled = userViewModel.isUserInfoFilled(user)
         
         if canContinue != isUserInfoFilled {
             canContinue = isUserInfoFilled
