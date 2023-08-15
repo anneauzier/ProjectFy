@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: adicionar codingkeys
 struct Advertisement: Hashable, Codable {
     let id: String
     let ownerID: String
@@ -18,6 +17,17 @@ struct Advertisement: Hashable, Codable {
     var weeklyWorkload: Double?
     var ongoing: Bool
     var tags: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case ownerID = "owner_id"
+        case title
+        case description
+        case positions
+        case weeklyWorkload = "weekly_workload"
+        case ongoing
+        case tags
+    }
     
     init(id: String,
          ownerID: String,
