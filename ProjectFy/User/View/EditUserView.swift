@@ -10,17 +10,19 @@ import SwiftUI
 // TODO: tirar o dropdownbutton daqui
 
 struct EditUserView: View {
-
+    
     @Environment(\.dismiss) var dismiss
     
     @State var editingUser: User
+    var isNewUser: Bool
     var viewModel: UserViewModel
     
-    init(editingUser: User, viewModel: UserViewModel) {
+    init(editingUser: User, isNewUser: Bool = false, viewModel: UserViewModel) {
         self._editingUser = State(initialValue: editingUser)
+        self.isNewUser = isNewUser
         self.viewModel = viewModel
     }
-
+    
     var textFieldsFilled: Bool {
         !editingUser.name.isEmpty
         && !editingUser.areaExpertise.isEmpty
@@ -29,111 +31,117 @@ struct EditUserView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-//                HStack {
-//                    Button {
-//                        dismiss()
-//                    } label: {
-//                        Text("Cancelar")
-//                            .font(.subheadline)
-//                            .foregroundColor(.black)
-//                            .bold()
-//                    }
-//                    Spacer()
-//                    
-//                    Text("Editar perfil")
-//                        .foregroundColor(.black)
-//                        .font(.headline)
-//                    
-//                    Spacer()
-//                    
-//                    Button {
-//                        viewModel.editUser(editingUser)
-//                        dismiss()
-//                    } label: {
-//                        Text("Salvar")
-//                            .font(.subheadline)
-//                            .foregroundColor(.black)
-//                            .bold()
-//                            .opacity(!textFieldsFilled ? 0.2: 1)
-//                    }.disabled(!textFieldsFilled)
-//                }.padding(.top, 20)
-                
-                Group {
-                    Text("Nome")
+        VStack(alignment: .leading, spacing: 20) {
+            FormField(
+                title: "Nome",
+                titleAccessibilityLabel: "Seu nome",
+                placeholder: "Digite aqui seu nome",
+                text: $editingUser.name,
+                textFieldAccessibilityLabel: "Digite aqui seu nome"
+            )
+            
+            if isNewUser {
+                FormField(
+                    title: "Username",
+                    titleAccessibilityLabel: "Your username",
+                    placeholder: "@",
+                    text: $editingUser.username,
+                    textFieldAccessibilityLabel: "Type here your username"
+                )
+            }
+            
+            FormField(
+                title: "Área de conhecimento",
+                titleAccessibilityLabel: "Digite aqui sua área de interesse (Ex: UI/UX)",
+                placeholder: "Digite aqui sua área de interesse (Ex: UI/UX)",
+                text: $editingUser.areaExpertise,
+                textFieldAccessibilityLabel: "Digite aqui sua área de interesse"
+            )
+            
+            DropDownButton(
+                title: "Nível de conhecimento",
+                selection: $editingUser.expertise,
+                menuItems: User.Expertise.allCases.map({ expertise in
+                    MenuItem(name: expertise.rawValue, tag: expertise)
+                })
+            )
+            
+            FormField(
+                title: "Localização",
+                titleAccessibilityLabel: "Sua localização",
+                placeholder: "State, Country",
+                text: $editingUser.region,
+                textFieldAccessibilityLabel: "Digite seu estado e país"
+            )
+            
+            FormField(
+                title: "Interesses",
+                titleAccessibilityLabel: "Seus interesses",
+                placeholder: "Seus interesses",
+                text: $editingUser.interestTags,
+                textFieldAccessibilityLabel: "Digite seus interesses"
+            )
+            
+            if !isNewUser {
+                Toggle(isOn: $editingUser.available) {
+                    Text("Disponibilidade")
                         .font(.headline)
                         .foregroundColor(.gray)
-                        .accessibilityLabel("Seu nome")
+                }
+            }
+            
+            Spacer()
+            
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancelar")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .bold()
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.editUser(editingUser)
+                    
+                    Haptics.shared.notification(.success)
+                    dismiss()
+                } label: {
+                    Text("Salvar")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .bold()
+                        .opacity(!textFieldsFilled ? 0.2: 1)
+                }.disabled(!textFieldsFilled)
+            }
+        }
+        .navigationTitle("Editar perfil")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
 
-                    TextField("Digite aqui seu nome", text: $editingUser.name)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite aqui seu nome")
-                }
-                
-                Group {
-                    Text("Username")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                        .accessibilityLabel("Your username")
-
-                    TextField("@", text: $editingUser.username)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Type here your username")
-                }
-                
-                Group {
-                    Text("Área de Conhecimento")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    TextField("Digite aqui sua área de interesse(Ex: UI/UX, etc)",
-                              text: $editingUser.areaExpertise)
-                    .textFieldStyle(.roundedBorder)
-                    .accessibilityLabel("Digite aqui sua área de interesse")
-                }
-                
-                Group {
-                    
-                    
-                    
-                    
-                    
-                    
-                    DropDownButton(
-                        title: "Nível de conhecimento",
-                        selection: $editingUser.expertise,
-                        menuItems: User.Expertise.allCases.map({ expertise in
-                            MenuItem(name: expertise.rawValue, tag: expertise)
-                        })
-                    )
-                    
-                    Text("Localização")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    TextField("State, Country", text: $editingUser.region)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite seu estado, depois país")
-                    
-                    Text("Interesses")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    
-//                     TODO: Mudar para o textfield vertical
-                    TextField("Seus interesses", text: $editingUser.interestTags)
-                        .textFieldStyle(.roundedBorder)
-                        .accessibilityLabel("Digite seus interesses")
-                    
-                    Toggle(isOn: $editingUser.available) {
-                        Text("Disponibilidade")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                    }
-                    
-                }.padding(.top, 10)
-                
-                Spacer()
-                
-            }.padding(.horizontal, 20)
+struct FormField: View {
+    let title: String
+    let titleAccessibilityLabel: String
+    
+    let placeholder: String
+    @Binding var text: String
+    let textFieldAccessibilityLabel: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.gray)
+                .accessibilityLabel(titleAccessibilityLabel)
+            
+            TextField(placeholder, text: $text)
+                .textFieldStyle(.roundedBorder)
+                .accessibilityLabel(textFieldAccessibilityLabel)
         }
     }
 }

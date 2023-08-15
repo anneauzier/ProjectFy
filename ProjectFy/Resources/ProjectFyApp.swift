@@ -23,6 +23,7 @@ struct ProjectFyApp: App {
     @StateObject var authenticationViewModel = AuthenticationViewModel()
     @StateObject var userViewModel = UserViewModel(service: UserService())
     @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
+    @StateObject var groupViewModel = GroupViewModel(service: GroupMockupService())
 
     @State var isNewUser: Bool? = true
     
@@ -32,6 +33,7 @@ struct ProjectFyApp: App {
                 HomeView(isNewUser: $isNewUser)
                     .environmentObject(advertisementsViewModel)
                     .environmentObject(userViewModel)
+                    .environmentObject(groupViewModel)
                 
                     .onAppear {
                         guard let userID = authenticationViewModel.getAuthenticatedUser()?.uid else {

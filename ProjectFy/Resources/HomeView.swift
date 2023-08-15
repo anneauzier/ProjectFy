@@ -37,14 +37,13 @@ fileprivate struct TabBarView: View {
 //        } else {
             TabView {
                 AdvertisementsView(user: user)
-                    .tabItem {
-                        Label("Home", systemImage: "house")
-                    }
+                    .tabItem { Label("Home", systemImage: "house") }
+                
+                GroupView()
+                    .tabItem { Label("Group", systemImage: "person.3") }
                 
                 UserView(user: user)
-                    .tabItem {
-                        Label("Profile", systemImage: "person.fill")
-                    }
+                    .tabItem { Label("Profile", systemImage: "person.fill") }
             }
 //        }
     }
@@ -69,7 +68,7 @@ fileprivate struct Teste: View {
             }
             .padding(.horizontal, 16)
             
-            EditUserView(editingUser: user, viewModel: userViewModel)
+            EditUserView(editingUser: user, isNewUser: true, viewModel: userViewModel)
         }
         
     }
