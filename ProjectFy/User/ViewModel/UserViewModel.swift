@@ -58,4 +58,14 @@ final class UserViewModel: ObservableObject {
     func deleteUser(with id: String) {
         service.delete(with: id)
     }
+    
+    func isUserInfoFilled() -> Bool {
+        guard let user = user else { return false }
+        
+        if user.name.isEmpty, user.areaExpertise.isEmpty, user.region.isEmpty, user.interestTags.isEmpty {
+            return false
+        }
+        
+        return true
+    }
 }
