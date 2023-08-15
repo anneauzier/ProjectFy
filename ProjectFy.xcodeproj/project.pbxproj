@@ -40,6 +40,7 @@
 		9F5C15932A8AABE100162E2E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5C15922A8AABE100162E2E /* FirebaseMessaging */; };
 		9F8F29C52A7977610030958B /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C42A7977610030958B /* EditUserView.swift */; };
 		9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* UserViewModel.swift */; };
+		9F9FF1942A8AE9DF00289B97 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9FF1932A8AE9DF00289B97 /* PushNotificationSender.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
 		9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */; };
 		9FFECDEF2A71EBF00053F29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFECDEE2A71EBF00053F29D /* Assets.xcassets */; };
@@ -78,6 +79,7 @@
 		9F5C15942A8AAF4E00162E2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9F8F29C42A7977610030958B /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		9F8F29C92A7984730030958B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		9F9FF1932A8AE9DF00289B97 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		9FFECDE72A71EBEF0053F29D /* ProjectFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFyApp.swift; sourceTree = "<group>"; };
@@ -290,6 +292,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		9F9FF1922A8AE9C600289B97 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				9F9FF1932A8AE9DF00289B97 /* PushNotificationSender.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		9FD721602A7842C7007A1BA6 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +329,7 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
+				9F9FF1922A8AE9C600289B97 /* Notifications */,
 				9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */,
 				9F5C15942A8AAF4E00162E2E /* Info.plist */,
 				674982932A86A8D200A1C98E /* Database */,
@@ -459,6 +470,7 @@
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,
+				9F9FF1942A8AE9DF00289B97 /* PushNotificationSender.swift in Sources */,
 				9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */,
 				9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */,
 				674982862A8592A800A1C98E /* AuthenticationProtocol.swift in Sources */,
@@ -638,7 +650,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ProjectFy/ProjectFy.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development: Iago Ramos (QRVDF9857B)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";

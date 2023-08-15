@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct UserView: View {
+
     @EnvironmentObject var viewModel: UserViewModel
-    
-    let user: User
     @State private var goEditUserView = false
-    
+
+    let user: User
+
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -39,7 +40,7 @@ struct UserView: View {
                 .padding(.top, -20)
             
             Group {
-                let availability = user.available ? "Availavle" : "Unavailable"
+                let availability = user.available ? "Available" : "Unvailable"
                 
                 Text(availability)
                     .foregroundColor(.gray)
@@ -78,7 +79,7 @@ struct UserView: View {
                         .foregroundColor(.gray)
                         .bold()
                 }.accessibilityElement(children: .combine)
-                .accessibilityLabel("Região \(user.region)")
+                .accessibilityLabel("Region \(user.region)")
             }
             
             Divider()
