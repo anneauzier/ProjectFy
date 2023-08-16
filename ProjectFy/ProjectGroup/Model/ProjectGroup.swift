@@ -8,13 +8,12 @@
 import Foundation
 
 struct ProjectGroup: Hashable, Codable {
+
     let id: String
-    
-    let name: String
-    let description: String
+    var name: String
+    var description: String
     let avatar: String
     let adminID: String
-    let members: [String: Position]
     var link: String
     let tasks: [Task]
     
@@ -23,8 +22,6 @@ struct ProjectGroup: Hashable, Codable {
         var title: String
         var description: String
         var vacancies: Int
-        var applied: [User]
-        var joined: [User]
     }
     
     struct Task: Hashable, Codable {
@@ -35,16 +32,29 @@ struct ProjectGroup: Hashable, Codable {
         let time: Date
     }
     
-    static func == (lhs: ProjectGroup, rhs: ProjectGroup) -> Bool {
-        return (
-            lhs.id == rhs.id &&
-            lhs.name == rhs.name &&
-            lhs.description == rhs.description &&
-            lhs.avatar == rhs.avatar &&
-            lhs.adminID == rhs.adminID &&
-            lhs.members == rhs.members &&
-            lhs.link == rhs.link &&
-            lhs.tasks == rhs.tasks
-        )
+    init(id: String,
+         name: String,
+         description: String,
+         avatar: String,
+         adminID: String,
+         link: String,
+         tasks: [Task]) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.avatar = avatar
+        self.adminID = adminID
+        self.link = link
+        self.tasks = tasks
+    }
+    
+    init() {
+        self.id = UUID().uuidString
+        self.name = ""
+        self.description = ""
+        self.avatar = ""
+        self.adminID = ""
+        self.link = ""
+        self.tasks = []
     }
 }

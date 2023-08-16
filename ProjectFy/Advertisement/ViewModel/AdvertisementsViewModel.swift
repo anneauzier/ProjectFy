@@ -9,6 +9,7 @@ import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
     @Published var advertisements: [Advertisement] = []
+    @Published var applicationStatus: ApplicationStatus?
     
     private let service: AdvertisementProtocol
     
@@ -43,5 +44,27 @@ final class AdvertisementsViewModel: ObservableObject {
     
     func deleteAdvertisement(with id: String) {
         service.delete(with: id)
+    }
+    
+    func apply(user: User, to advertisement: Advertisement, for position: ProjectGroup.Position) {
+        service.apply(user: user, to: advertisement, for: position) { [weak self] in
+            self?.completeApplication()
+        }
+    }
+    
+    func unapply(user: User, of advertisement: Advertisement, from position: ProjectGroup.Position) {
+        service.unapply(user: user, of: advertisement, from: position) { [weak self] in
+            self?.completeApplication()
+        }
+    }
+    
+    private func completeApplication() {
+        DispatchQueue.main.async {
+            self.applicationStatus = .completed
+        }
+    }
+    enum ApplicationStatus {
+        case applying
+        case completed
     }
 }

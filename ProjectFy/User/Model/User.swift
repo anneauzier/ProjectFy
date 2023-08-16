@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: adicionar codingkeys
-
 struct User: Hashable, Codable {
 
     let id: String
@@ -21,10 +19,27 @@ struct User: Hashable, Codable {
     let entryDate: Date
     var interestTags: String
     var expertise: Expertise
-    var groups: [ProjectGroup]?
+    var groups: [ProjectGroup: ProjectGroup.Position]?
     let applications: [ProjectGroup.Position]?
     var available: Bool
     var areaExpertise: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case username
+        case email
+        case description
+        case avatar
+        case region
+        case entryDate
+        case interestTags = "interest_tags"
+        case expertise
+        case groups
+        case applications
+        case available
+        case areaExpertise = "area_expertise"
+    }
     
     init(id: String,
          name: String,
@@ -36,7 +51,7 @@ struct User: Hashable, Codable {
          entryDate: Date,
          interestTags: String,
          expertise: Expertise,
-         groups: [ProjectGroup]? = nil,
+         groups: [ProjectGroup: ProjectGroup.Position]? = nil,
          applications: [ProjectGroup.Position]?,
          available: Bool,
          areaExpertise: String
@@ -68,7 +83,7 @@ struct User: Hashable, Codable {
         self.entryDate = Date()
         self.interestTags = ""
         self.expertise = .beginner
-        self.groups = []
+        self.groups = [:]
         self.applications = []
         self.available = true
         self.areaExpertise = ""

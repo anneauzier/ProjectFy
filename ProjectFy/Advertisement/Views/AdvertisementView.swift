@@ -84,8 +84,7 @@ struct AdView: View {
             HStack {
 
                 NavigationLink {
-//                    UserView(presentUsersProfile: true)
-
+                    UserView(user: owner, presentUsersProfile: true)
                 } label: {
                     UserInfo(user: owner, size: 67)
                         .foregroundColor(.black)
@@ -119,6 +118,7 @@ struct AdView: View {
             }
             
             AdInfo(
+                user: owner,
                 advertisement: advertisement,
                 presentSheet: $presentPositionSheet,
                 selectedPosition: $selectedPositionToPresent
