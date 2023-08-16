@@ -15,7 +15,7 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      description: "Lorem Ipsum is simply dummy text.",
                      avatar: "Group2",
                      adminID: "123456",
-                     members: [:],
+                     positions: [],
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: []),
         ProjectGroup(id: "12134",
@@ -23,7 +23,7 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      description: "Lorem Ipsum is simply dummy text.",
                      avatar: "Group4",
                      adminID: "123455",
-                     members: [:],
+                     positions: [],
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: []),
         ProjectGroup(id: "12135",
@@ -31,7 +31,7 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      description: "Lorem Ipsum is simply dummy text.",
                      avatar: "Group5",
                      adminID: "123454",
-                     members: [:],
+                     positions: [],
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: [])
     ]

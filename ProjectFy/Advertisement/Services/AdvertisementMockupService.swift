@@ -20,19 +20,16 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
                     id: UUID().uuidString,
                     title: "Level designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
-                    vacancies: 3,
-                    applied: [],
-                    joined: []
+                    vacancies: 3
                 ),
                 ProjectGroup.Position(
                     id: UUID().uuidString,
                     title: "Designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
-                    vacancies: 3,
-                    applied: [],
-                    joined: []
+                    vacancies: 3
                 )
             ],
+            applications: [],
             weeklyWorkload: nil,
             ongoing: true,
             tags: "Level Design, Game Design, Design"
@@ -69,17 +66,9 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
         advertisements[index] = advertisement
     }
     
-//    func apply(userID: String, for position: ProjectGroup.Position) {
-//        guard var advertisement = getAdvertisementByPosition(positionID: position.id) else { return }
-//
-//        advertisement.applicationsIDs.updateValue(position, forKey: userID)
-//        updateAdvertisement(advertisement)
-//    }
+    func apply(user: User, to advertisement: Advertisement, for position: ProjectGroup.Position, completion: @escaping () -> Void) {
+    }
     
-//    func unapply(userID: String, from position: ProjectGroup.Position) {
-//        guard var advertisement = getAdvertisementByPosition(positionID: position.id) else { return }
-//
-//        advertisement.applicationsIDs.removeValue(forKey: userID)
-//        updateAdvertisement(advertisement)
-//    }
+    func unapply(user: User, of advertisement: Advertisement, from position: ProjectGroup.Position, completion: @escaping () -> Void) {
+    }
 }

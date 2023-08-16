@@ -87,4 +87,35 @@ class DBCollection {
     func delete(_ field: String, from id: String) {
         document(with: id).updateData([field: FieldValue.delete()])
     }
+    
+    func runTransaction<T: Codable>(on id: String,
+                                    getUpdatedData: @escaping () -> T,
+                                    completion: @escaping () -> Void) {
+        
+        database.runTransaction({ (transaction, errorPointer) -> Any? in
+            do {
+                let updatedData = getUpdatedData()
+                try transaction.setData(from: updatedData, forDocument: self.document(with: id))
+            } catch let error as NSError {
+                print("Error on transaction: \(error)")
+                errorPointer?.pointee = error
+                
+                return nil
+            }
+            
+            return nil
+        }, completion: { (object, error) in
+            completion()
+            
+            if let error = error {
+                print("Transaction failed: \(error)")
+                Haptics.shared.notification(.error)
+
+                return
+            }
+            
+            print("Transaction successfully committed!: \(String(describing: object))")
+            Haptics.shared.notification(.success)
+        })
+    }
 }

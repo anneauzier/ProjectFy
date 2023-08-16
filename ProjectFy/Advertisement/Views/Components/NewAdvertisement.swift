@@ -187,9 +187,7 @@ extension AdvertisementsView {
                     id: UUID().uuidString,
                     title: "",
                     description: "",
-                    vacancies: 1,
-                    applied: [],
-                    joined: []
+                    vacancies: 1
                 )
             )
         }

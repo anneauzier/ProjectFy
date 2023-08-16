@@ -118,6 +118,7 @@ struct AdView: View {
             }
             
             AdInfo(
+                user: owner,
                 advertisement: advertisement,
                 presentSheet: $presentPositionSheet,
                 selectedPosition: $selectedPositionToPresent

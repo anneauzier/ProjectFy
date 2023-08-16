@@ -14,6 +14,7 @@ struct Advertisement: Hashable, Codable {
     var title: String
     var description: String
     var positions: [ProjectGroup.Position]
+    var applications: [Applications]
     var weeklyWorkload: Double?
     var ongoing: Bool
     var tags: String
@@ -24,9 +25,16 @@ struct Advertisement: Hashable, Codable {
         case title
         case description
         case positions
+        case applications
         case weeklyWorkload = "weekly_workload"
         case ongoing
         case tags
+    }
+    
+    struct Applications: Hashable, Codable {
+        let position: ProjectGroup.Position
+        let user: User
+        let joined: Bool
     }
     
     init(id: String,
@@ -34,6 +42,7 @@ struct Advertisement: Hashable, Codable {
          title: String,
          description: String,
          positions: [ProjectGroup.Position],
+         applications: [Applications],
          weeklyWorkload: Double?,
          ongoing: Bool,
          tags: String) {
@@ -42,6 +51,7 @@ struct Advertisement: Hashable, Codable {
         self.ownerID = ownerID
         self.description = description
         self.positions = positions
+        self.applications = applications
         self.weeklyWorkload = weeklyWorkload
         self.ongoing = ongoing
         self.tags = tags
@@ -53,6 +63,7 @@ struct Advertisement: Hashable, Codable {
         self.ownerID = ownerID
         self.description = ""
         self.positions = []
+        self.applications = []
         self.weeklyWorkload = nil
         self.ongoing = false
         self.tags = ""

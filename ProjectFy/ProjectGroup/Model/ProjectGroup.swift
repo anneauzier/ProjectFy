@@ -14,7 +14,7 @@ struct ProjectGroup: Hashable, Codable {
     var description: String
     let avatar: String
     let adminID: String
-    let members: [String: Position]
+    let positions: [Position]
     var link: String
     let tasks: [Task]
     
@@ -23,8 +23,6 @@ struct ProjectGroup: Hashable, Codable {
         var title: String
         var description: String
         var vacancies: Int
-        var applied: [User]
-        var joined: [User]
     }
     
     struct Task: Hashable, Codable {

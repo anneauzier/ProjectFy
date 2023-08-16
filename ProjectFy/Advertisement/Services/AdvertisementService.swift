@@ -26,4 +26,36 @@ final class AdvertisementService: DBCollection, AdvertisementProtocol {
             completion(advertisement)
         }
     }
+    
+    func apply(user: User,
+               to advertisement: Advertisement,
+               for position: ProjectGroup.Position,
+               completion: @escaping () -> Void) {
+        
+        runTransaction(on: advertisement.id) {
+            var advertisement = advertisement
+            
+            let newApplication = Advertisement.Applications(position: position, user: user, joined: false)
+            advertisement.applications.append(newApplication)
+            
+            return advertisement
+        } completion: {
+            completion()
+        }
+    }
+    
+    func unapply(user: User,
+                 of advertisement: Advertisement,
+                 from position: ProjectGroup.Position,
+                 completion: @escaping () -> Void) {
+        
+        runTransaction(on: advertisement.id) {
+            var advertisement = advertisement
+            advertisement.applications.removeAll(where: { $0.user.id == user.id })
+            
+            return advertisement
+        } completion: {
+            completion()
+        }
+    }
 }

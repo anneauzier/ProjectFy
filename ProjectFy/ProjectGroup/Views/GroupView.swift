@@ -24,7 +24,7 @@ struct GroupView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(group.name)")
                                         .font(.subheadline)
-                                    Text("\(group.members.count) participants")
+//                                    Text("\(group.members.count) participants")
                                 }
                             }
                         }

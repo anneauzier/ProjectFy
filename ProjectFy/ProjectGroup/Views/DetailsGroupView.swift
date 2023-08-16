@@ -63,7 +63,7 @@ struct DetailsGroupView_Previews: PreviewProvider {
             description: "Lorem Ipsum is simply dummy text.",
             avatar: "Group2",
             adminID: "123456",
-            members: [:],
+            positions: [],
             link: "https://trello.com/b/DwEhWYYJ/projectfy",
             tasks: [])
         

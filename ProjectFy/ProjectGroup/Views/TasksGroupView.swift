@@ -15,7 +15,7 @@ struct TasksGroupView: View {
                                           description: "",
                                           avatar: "Group1",
                                           adminID: "",
-                                          members: [:],
+                                          positions: [],
                                           link: "",
                                           tasks: [])
     let groupID: String
@@ -33,7 +33,7 @@ struct TasksGroupView: View {
                     VStack {
                         Text("\(detailsInfo.name)")
                             .font(.caption)
-                        Text("\(detailsInfo.members.count)")
+//                        Text("\(detailsInfo.members.count)")
                     }.foregroundColor(.black)
                 }
             }

@@ -15,7 +15,7 @@ struct EditDetailsGroup: View {
                                         description: "",
                                         avatar: "Group1",
                                         adminID: "",
-                                        members: [:],
+                                        positions: [],
                                         link: "", tasks: [])
     let groupID: String
     
