@@ -17,6 +17,16 @@ struct ProjectGroup: Hashable, Codable {
     var link: String
     let tasks: [Task]
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case description
+        case avatar
+        case adminID = "admin_id"
+        case link
+        case tasks
+    }
+    
     struct Position: Hashable, Codable {
         let id: String
         var title: String
@@ -30,6 +40,13 @@ struct ProjectGroup: Hashable, Codable {
         let ownerID: String
         var taskDescription: String
         let time: Date
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case ownerID = "owner_id"
+            case taskDescription = "task_description"
+            case time
+        }
     }
     
     init(id: String,
