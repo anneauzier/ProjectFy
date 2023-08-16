@@ -8,17 +8,13 @@
 import SwiftUI
 
 struct TasksGroupView: View {
+    @State var detailsInfo: ProjectGroup
+    var viewModel: GroupViewModel
     
-    @EnvironmentObject var viewModel: GroupViewModel
-    @State var detailsInfo = ProjectGroup(id: "",
-                                          name: "",
-                                          description: "",
-                                          avatar: "Group1",
-                                          adminID: "",
-                                          positions: [],
-                                          link: "",
-                                          tasks: [])
-    let groupID: String
+    init(detailsInfo: ProjectGroup, viewModel: GroupViewModel) {
+        self._detailsInfo = State(initialValue: detailsInfo)
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         
@@ -38,17 +34,11 @@ struct TasksGroupView: View {
                 }
             }
         }
-        .onAppear {
-            if let groupInfo = viewModel.getGroup(id: groupID) {
-                detailsInfo = groupInfo
-            }
-        }
     }
 }
 
 struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
-        TasksGroupView(groupID: "1213")
-            .environmentObject(GroupViewModel(service: GroupMockupService()))
+        TasksGroupView(detailsInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
     }
 }

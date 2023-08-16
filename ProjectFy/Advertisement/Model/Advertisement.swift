@@ -14,7 +14,7 @@ struct Advertisement: Hashable, Codable {
     var title: String
     var description: String
     var positions: [ProjectGroup.Position]
-    var applications: [Applications]
+    var applications: [Application]
     var weeklyWorkload: Double?
     var ongoing: Bool
     var tags: String
@@ -31,7 +31,7 @@ struct Advertisement: Hashable, Codable {
         case tags
     }
     
-    struct Applications: Hashable, Codable {
+    struct Application: Hashable, Codable {
         let position: ProjectGroup.Position
         let user: User
         let joined: Bool
@@ -42,7 +42,7 @@ struct Advertisement: Hashable, Codable {
          title: String,
          description: String,
          positions: [ProjectGroup.Position],
-         applications: [Applications],
+         applications: [Application],
          weeklyWorkload: Double?,
          ongoing: Bool,
          tags: String) {

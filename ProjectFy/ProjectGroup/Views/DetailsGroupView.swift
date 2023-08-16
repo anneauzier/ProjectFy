@@ -47,7 +47,7 @@ struct DetailsGroupView: View {
             FinalButtons()
             
         }.toolbar {
-            NavigationLink(destination: EditDetailsGroup(groupID: detailsInfo.id)) {
+            NavigationLink(destination: EditDetailsGroup(groupInfo: detailsInfo, viewModel: viewModel)) {
                 Text("Editar")
                     .foregroundColor(Color.black)
             }
@@ -63,7 +63,6 @@ struct DetailsGroupView_Previews: PreviewProvider {
             description: "Lorem Ipsum is simply dummy text.",
             avatar: "Group2",
             adminID: "123456",
-            positions: [],
             link: "https://trello.com/b/DwEhWYYJ/projectfy",
             tasks: [])
         
