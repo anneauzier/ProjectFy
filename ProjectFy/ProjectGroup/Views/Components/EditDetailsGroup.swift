@@ -9,15 +9,13 @@ import SwiftUI
 
 struct EditDetailsGroup: View {
     
-    @EnvironmentObject var viewModel: GroupViewModel
-    @State var groupInfo = ProjectGroup(id: "",
-                                        name: "",
-                                        description: "",
-                                        avatar: "Group1",
-                                        adminID: "",
-                                        members: [:],
-                                        link: "", tasks: [])
-    let groupID: String
+    @State var groupInfo: ProjectGroup
+    var viewModel: GroupViewModel
+    
+    init(groupInfo: ProjectGroup, viewModel: GroupViewModel) {
+        self._groupInfo = State(initialValue: groupInfo)
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ScrollView {
@@ -51,11 +49,6 @@ struct EditDetailsGroup: View {
                     }
 
                 }
-                .onAppear {
-                    guard let editGroup = viewModel.getGroup(id: groupID) else { return }
-                    groupInfo = editGroup
-                }
-    
         }
     }
     
@@ -63,7 +56,6 @@ struct EditDetailsGroup: View {
 
 struct EditDetailsGroup_Previews: PreviewProvider {
     static var previews: some View {
-        EditDetailsGroup(groupID: "12134")
-            .environmentObject(GroupViewModel(service: GroupMockupService()))
+        EditDetailsGroup(groupInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
     }
 }

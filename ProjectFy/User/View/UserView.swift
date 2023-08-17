@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct UserView: View {
-    
     @EnvironmentObject var viewModel: UserViewModel
-    @State private var goEditUserView = false
-
+    
+    let user: User
     var presentUsersProfile: Bool = false
+    
+    @State private var goEditUserView = false
     
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     
-                    Image("\(viewModel.users[0].avatar)")
+                    Image(user.avatar)
                         .aspectRatio(contentMode: .fit)
                         .accessibilityLabel("Foto de perfil")
                     
@@ -27,44 +28,46 @@ struct UserView: View {
                         .padding(.top, -20)
                     
                     Group {
-                        Text("\(viewModel.availability)")
+                        let availability = user.available ? "Availavle" : "Unavailable"
+                        
+                        Text(availability)
                             .foregroundColor(.gray)
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                         
                         HStack {
-                            Text("\(viewModel.users[0].name)")
+                            Text(user.name)
                                 .font(.title)
                                 .bold()
-                                .accessibilityLabel("Username \(viewModel.users[0].name)")
+                                .accessibilityLabel("Username: \(user.name)")
                             
-                            Text("\(viewModel.users[0].username)")
+                            Text(user.username)
                                 .foregroundColor(.gray)
                                 .bold()
-                                .accessibilityLabel("@\(viewModel.users[0].username)")
+                                .accessibilityLabel("@\(user.username)")
                         }
                         
                         HStack {
-                            Text("\(viewModel.users[0].areaExpertise)")
+                            Text(user.areaExpertise)
                                 .bold()
                             
                             Circle()
                                 .frame(width: 5)
                                 .foregroundColor(.gray)
                             
-                            Text("\(viewModel.users[0].expertise.rawValue)")
+                            Text(user.expertise.rawValue)
                                 .foregroundColor(.gray)
                                 .bold()
-                                .accessibilityLabel("Nível de Conhecimento \(viewModel.users[0].expertise.rawValue)")
+                                .accessibilityLabel("Nível de Conhecimento \(user.expertise.rawValue)")
                         }
                         
                         HStack {
                             Image(systemName: "mappin")
-                            Text("\(viewModel.users[0].region)")
+                            Text(user.region)
                                 .foregroundColor(.gray)
                                 .bold()
                         }.accessibilityElement(children: .combine)
-                            .accessibilityLabel("Região \(viewModel.users[0].region)")
+                            .accessibilityLabel("Região \(user.region)")
                     }
                     
                     Divider()
@@ -74,15 +77,16 @@ struct UserView: View {
                             .foregroundColor(.gray)
                             .bold()
                         
+                        // TODO: Trocar o bold pelo equivalente
                         HStack(spacing: 8) {
-                            let splitInterests = viewModel.users[0].interestTags.split(separator: ",")
+                            let splitInterests = user.interestTags.split(separator: ",")
                             
                             ForEach(splitInterests, id: \.self) { interest in
                                 Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
                                     .font(.caption)
                                     .padding(7)
                                     .foregroundColor(.white)
-                                    .bold(true)
+//                                    .bold(true)
                                     .lineLimit(0)
                                     .background(Capsule().fill(.gray))
                             }
@@ -95,9 +99,9 @@ struct UserView: View {
                             .bold()
                         
                         Spacer()
-                        
                     }
-                }.padding(.horizontal, 20)
+                }
+                .padding(.horizontal, 20)
             }
             .toolbar {
                 if !presentUsersProfile {
@@ -109,19 +113,13 @@ struct UserView: View {
                             .foregroundColor(.gray)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .accessibilityLabel("Edital Perfil")
-                        
-                    }.sheet(isPresented: $goEditUserView, content: {
-                        EditUserView(viewModel: viewModel, editingID: viewModel.users[0].id)
-                    })
+                    }
                 }
             }
+            
+            .sheet(isPresented: $goEditUserView, content: {
+                EditUserView(editingUser: user, viewModel: viewModel)
+            })
         }
-    }
-}
-
-struct UserView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserView()
-            .environmentObject(UserViewModel(service: UserMockupService()))
     }
 }

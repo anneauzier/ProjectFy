@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GroupView: View {
-    
     @EnvironmentObject var viewModel: GroupViewModel
     
     var body: some View {
@@ -16,7 +15,7 @@ struct GroupView: View {
             VStack {
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(groupID: group.id)) {
+                        NavigationLink(destination: TasksGroupView(detailsInfo: group, viewModel: viewModel)) {
                             HStack {
                                 Image("\(group.avatar)")
                                     .resizable()
@@ -24,7 +23,7 @@ struct GroupView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(group.name)")
                                         .font(.subheadline)
-                                    Text("\(group.members.count) participants")
+//                                    Text("\(group.members.count) participants")
                                 }
                             }
                         }
@@ -38,6 +37,6 @@ struct GroupView: View {
 struct GroupView_Previews: PreviewProvider {
     static var previews: some View {
         GroupView()
-            .environmentObject(GroupViewModel(service: GroupMockupService()))
+            .environmentObject(GroupViewModel(service: GroupService()))
     }
 }
