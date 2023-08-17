@@ -19,6 +19,8 @@ struct ProjectFyApp: App {
                 .environmentObject(groupViewModel)
                 .environmentObject(advertisementsViewModel)
                 .environmentObject(userViewModel)
+
+                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
     }
 }

@@ -20,6 +20,11 @@
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* ProjectGroup.swift */; };
 		67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F72A7841DD00EBD022 /* AdvertisementView.swift */; };
+		9F2AC85E2A8C163D00CBE3A5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85D2A8C163D00CBE3A5 /* Task.swift */; };
+		9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */; };
+		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
+		9F2AC8642A8D422200CBE3A5 /* TasksMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */; };
+		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
 		9F4390C92A81376500A3A393 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* TabBarView.swift */; };
 		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
 		9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F412A816F4600D64192 /* UserMockupService.swift */; };
@@ -55,6 +60,11 @@
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
 		67A531F72A7841DD00EBD022 /* AdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementView.swift; sourceTree = "<group>"; };
+		9F2AC85D2A8C163D00CBE3A5 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBubble.swift; sourceTree = "<group>"; };
+		9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskField.swift; sourceTree = "<group>"; };
+		9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksMockupService.swift; sourceTree = "<group>"; };
+		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
 		9F553F412A816F4600D64192 /* UserMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMockupService.swift; sourceTree = "<group>"; };
@@ -110,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */,
+				9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -176,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				67A531F22A78327600EBD022 /* ProjectGroup.swift */,
+				9F2AC85D2A8C163D00CBE3A5 /* Task.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,6 +236,8 @@
 			children = (
 				9F7F33F82A857E2A00792EE6 /* EditDetailsGroup.swift */,
 				9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */,
+				9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */,
+				9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -252,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				9FAE4F662A82B49B0086725F /* GroupMockupService.swift */,
+				9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -403,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FAE4F692A82B9BA0086725F /* GroupProtocol.swift in Sources */,
+				9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */,
 				674982702A82C1CB00A1C98E /* Haptics.swift in Sources */,
 				67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */,
 				67A531ED2A7831FA00EBD022 /* User.swift in Sources */,
@@ -412,6 +428,7 @@
 				9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
+				9F2AC8642A8D422200CBE3A5 /* TasksMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				9F553F442A8178A400D64192 /* SettingsUserViewModel.swift in Sources */,
@@ -426,11 +443,14 @@
 				674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */,
 				678383832A7F63EA00E459F1 /* AdvertisementsViewModel.swift in Sources */,
 				678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */,
+				9F2AC85E2A8C163D00CBE3A5 /* Task.swift in Sources */,
+				9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				9FB2765F2A85ED3C00C593EA /* DescriptionGroup.swift in Sources */,
 				678383792A7C4A5600E459F1 /* AdInfo.swift in Sources */,
 				9FAE4F6E2A82E4430086725F /* TasksGroupView.swift in Sources */,
 				678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */,
+				9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */,
 				678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */,
 				67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */,
 			);

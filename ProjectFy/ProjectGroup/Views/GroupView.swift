@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct GroupView: View {
-    
+
     @EnvironmentObject var viewModel: GroupViewModel
+    @State var showTabBar: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(groupID: group.id)) {
+                        NavigationLink(destination: TasksGroupView(showTabBar: $showTabBar, groupID: group.id)) {
                             HStack {
                                 Image("\(group.avatar)")
                                     .resizable()
@@ -31,6 +32,9 @@ struct GroupView: View {
                     }
                 }
             }.navigationTitle("My Groups")
+            .onAppear {
+                 showTabBar = true
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditUserView: View {
-    
+
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: UserViewModel
     

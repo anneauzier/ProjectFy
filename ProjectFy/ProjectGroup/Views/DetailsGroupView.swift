@@ -10,30 +10,37 @@ import SwiftUI
 struct DetailsGroupView: View {
     
     @EnvironmentObject var viewModel: GroupViewModel
-    let detailsInfo: ProjectGroup
+    @State private var goEditGroupView = false
+
+    let detailsGroup: ProjectGroup
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                Image("\(detailsInfo.avatar)")
+                Image("\(detailsGroup.avatar)")
                     .resizable()
                     .frame(width: 100, height: 100)
                 
                 Group {
                     Text("Group's name")
-                    Text("\(detailsInfo.name)")
+                    Text("\(detailsGroup.name)")
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.gray.opacity(0.2))
                     
                     Text("Description")
-                    Text("\(detailsInfo.description)")
+                    Text("\(detailsGroup.description)")
                     
                     Divider()
                     
                     Text("Link")
-            
-                    Link("\(detailsInfo.link)", destination: URL(string: "\(detailsInfo.link)")!)
+                    
+                    if let url = URL(string: detailsGroup.link) {
+                        Link("\(detailsGroup.link)", destination: url)
+                    } else {
+                        Text("Sem link disponível")
+                    }
+                    
                 }
 
                 Divider()
@@ -47,9 +54,13 @@ struct DetailsGroupView: View {
             FinalButtons()
             
         }.toolbar {
-            NavigationLink(destination: EditDetailsGroup(groupID: detailsInfo.id)) {
-                Text("Editar")
-                    .foregroundColor(Color.black)
+            Button(action: {
+                goEditGroupView.toggle()
+            }, label: {
+                Text("Edit")
+                    .foregroundColor(.black)
+            }).sheet(isPresented: $goEditGroupView) {
+                EditDetailsGroup(groupID: detailsGroup.id)
             }
         }
     }
@@ -67,7 +78,7 @@ struct DetailsGroupView_Previews: PreviewProvider {
             link: "https://trello.com/b/DwEhWYYJ/projectfy",
             tasks: [])
         
-        DetailsGroupView(detailsInfo: previewGroup)
+        DetailsGroupView(detailsGroup: previewGroup)
             .environmentObject(GroupViewModel(service: GroupMockupService()))
     }
 }
