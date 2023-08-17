@@ -8,13 +8,19 @@
 import Foundation
 
 protocol AdvertisementProtocol {
-    func getAdvertisements() -> [Advertisement]
-    func createAdvertisement(_ advertisement: Advertisement)
-    func updateAdvertisement(_ advertisement: Advertisement)
-    func deleteAdvertisement(by id: String)
     
-    func getAdvertisement(by id: String) -> Advertisement?
+    func create(_ advertisement: Advertisement) throws
+    func getAdvertisements(completion: @escaping ([Advertisement]?) -> Void)
+    func update(_ advertisement: Advertisement) throws
+    func delete(with id: String)
+
+    func apply(user: User,
+               to advertisement: Advertisement,
+               for position: ProjectGroup.Position,
+               completion: @escaping () -> Void)
     
-    func apply(userID: String, for position: ProjectGroup.Position)
-    func unapply(userID: String, from position: ProjectGroup.Position)
+    func unapply(user: User,
+                 of advertisement: Advertisement,
+                 from position: ProjectGroup.Position,
+                 completion: @escaping () -> Void)
 }

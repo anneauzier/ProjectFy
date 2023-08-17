@@ -9,14 +9,14 @@ import SwiftUI
 
 class TasksMockupService: ObservableObject {
 
-    @Published private(set) var messages: [Task] = []
+    @Published private(set) var messages: [Tasks] = []
     @Published private(set) var lastMessageId: String = ""
     
-    private let mockMessages: [Task] = [
-        Task(id: "1234", senderName: "Iago Ramos",
+    private let mockMessages: [Tasks] = [
+        Tasks(id: "1234", senderName: "Iago Ramos",
              text: ["oi, tudo bem?", "hoje eu dei push em tal branch"],
              received: false, time: Date()),
-        Task(id: "12345", senderName: "Anne Auzier",
+        Tasks(id: "12345", senderName: "Anne Auzier",
              text: ["beleza mano00000000000000000000000000000000000000000000000000", "vou já dar pull00000000000000000000000000000000000000000000000000"],
              received: true, time: Date().addingTimeInterval(1000))
     ]

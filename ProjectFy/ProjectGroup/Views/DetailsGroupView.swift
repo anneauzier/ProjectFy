@@ -60,7 +60,7 @@ struct DetailsGroupView: View {
                 Text("Edit")
                     .foregroundColor(.black)
             }).sheet(isPresented: $goEditGroupView) {
-                EditDetailsGroup(groupID: detailsGroup.id)
+                EditDetailsGroup(groupInfo: detailsGroup, viewModel: viewModel)
             }
         }
     }
@@ -74,7 +74,6 @@ struct DetailsGroupView_Previews: PreviewProvider {
             description: "Lorem Ipsum is simply dummy text.",
             avatar: "Group2",
             adminID: "123456",
-            members: [:],
             link: "https://trello.com/b/DwEhWYYJ/projectfy",
             tasks: [])
         

@@ -9,54 +9,66 @@ import SwiftUI
 
 final class UserViewModel: ObservableObject {
     
-    @Published var users: [User]
-    @Published var availability: String
+    @Published private(set) var user: User?
+    private var userID: String?
     
-    let user: User
-    
+    private var users: [User] = []
     private let service: UserProtocol
     
     init(service: UserProtocol) {
         self.service = service
-        self.availability = "Disponível"
         
-        let users = service.getUsers()
-        
-        self.users = users
-        self.user = users[0]  // TODO: Remover quando implementar o banco de dados
+        service.getUsers { [weak self] users in
+            guard let self = self, let users = users else { return }
+            
+            self.users = users
+            
+            guard let userID = self.userID else {
+                return
+            }
+            
+            self.user = users.first(where: { $0.id == userID })
+        }
     }
     
-    func createUser (_ user: User) {
-        service.createUser(user)
-        updateUsers()
+    func createUser(_ user: User) {
+        do {
+            try service.create(user)
+        } catch {
+            print("Cannot create user: \(user)")
+        }
     }
     
-    func getUser(id: String) -> User? {
-        return service.getUser(id: id)
+    func setUser(with id: String) {
+        userID = id
+    }
+    
+    func getUser(with id: String) -> User? {
+        return users.first(where: { $0.id == id })
     }
     
     func editUser(_ user: User) {
-        service.updateUser(user)
-        availability = user.available ? "Disponível" : "Indisponível"
-        updateUsers()
+        do {
+            try service.update(user)
+        } catch {
+            print("Cannot update advertisement: \(error)")
+        }
     }
     
-    func deleteUser(id: String) {
-        service.deleteUser(id: id)
-        updateUsers()
+    func deleteUser(with id: String) {
+        service.delete(with: id)
     }
     
-    func apply(to positionID: String) {
-        service.apply(to: positionID)
-        updateUsers()
-    }
-    
-    func unapply(from positionID: String) {
-        service.unapply(from: positionID)
-        updateUsers()
-    }
-    
-    private func updateUsers() {
-        users = service.getUsers()
+    func isUserInfoFilled(_ user: User?) -> Bool {
+        var user = user
+        
+        if user == nil { user = self.user }
+        guard let user = user else { return false }
+        
+        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty || user.interestTags.isEmpty {
+            return false
+        }
+        
+        return true
     }
 }

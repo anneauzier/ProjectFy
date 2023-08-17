@@ -15,34 +15,33 @@ extension AdvertisementsView {
         @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
         @EnvironmentObject var userViewModel: UserViewModel
         
+        @State var advertisement: Advertisement
+        @State var presentBackAlert: Bool = false
+        
+        var viewModel: AdvertisementsViewModel
         @Binding var popToRoot: Bool
         var editingID: String?
         
-        @State var advertisement = Advertisement(id: UUID().uuidString,
-                                                 ownerID: "1234",
-                                                 title: "",
-                                                 description: "",
-                                                 positions: [],
-                                                 applicationsIDs: [:],
-                                                 weeklyWorkload: nil,
-                                                 ongoing: false,
-                                                 tags: "")
-        
-        @State var presentBackAlert: Bool = false
+        init(ownerID: String, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
+            self._advertisement = State(initialValue: Advertisement(ownerID: ownerID))
+            self.viewModel = viewModel
+            self._popToRoot = popToRoot
+            self.editingID = editingID
+        }
         
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    UserInfo(user: userViewModel.user, size: 50)
+//                    UserInfo(user: userViewModel.user, size: 50)
                     
-                    TextField("Adicione tags ao seu projeto...", text: $advertisement.tags, axis: .vertical)
+                    TextField("Adicione tags ao seu projeto...", text: $advertisement.tags)
                         .padding(.top, 25)
                     
                     TextField("Título do Projeto", text: $advertisement.title)
                         .font(.title)
                         .padding(.top, 44)
                     
-                    TextField("Descrição do anúncio...", text: $advertisement.description, axis: .vertical)
+                    TextField("Descrição do anúncio...", text: $advertisement.description)
                         .padding(.top, 54)
                     
                     DropDownButton(
@@ -62,10 +61,7 @@ extension AdvertisementsView {
             
             .onAppear {
                 guard let editingID = editingID else { return }
-                
-                guard let advertisement = advertisementsViewModel.getAdvertisement(by: editingID) else {
-                    return
-                }
+                guard let advertisement = viewModel.getAdvertisement(with: editingID) else { return }
                 
                 self.advertisement = advertisement
             }
@@ -146,10 +142,11 @@ extension AdvertisementsView {
                                 Circle()
                                     .fill(.blue)
                                 
+                                // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
                                 Image(systemName: "plus")
                                     .foregroundColor(.white)
                                     .font(.system(size: 24))
-                                    .fontWeight(.bold)
+//                                    .fontWeight(.bold)
                             }
                             .frame(width: 54, height: 54)
                         }
@@ -190,8 +187,7 @@ extension AdvertisementsView {
                     id: UUID().uuidString,
                     title: "",
                     description: "",
-                    vacancies: 1,
-                    joined: []
+                    vacancies: 1
                 )
             )
         }

@@ -8,7 +8,7 @@
 import Foundation
 
 final class UserMockupService: UserProtocol, ObservableObject {
-
+    
     private var users: [User] = [
         User(
             id: "1234",
@@ -21,46 +21,35 @@ final class UserMockupService: UserProtocol, ObservableObject {
             entryDate: Date(),
             interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .beginner,
-            groupsID: nil,
-            applicationsID: [],
+            groups: nil,
+            applications: nil,
             available: true,
             areaExpertise: "iOS Developer"
         )
     ]
     
-    func getUsers() -> [User] {
-        return users
-    }
-    
-    func getUser(id: String) -> User? {
+    func getUser(with id: String) -> User? {
         return users.first(where: {$0.id == id})
     }
     
-    func createUser(_ user: User) {
+    func create(_ user: User) {
         users.append(user)
     }
     
-    func updateUser(_ user: User) {
-        guard let index = users.firstIndex(where: {$0.id == user.id}) else { return }
+    func update(_ user: User) throws {
+        guard let index = users.firstIndex(where: {$0.id == user.id}) else {
+            throw URLError(.fileDoesNotExist)
+        }
+        
         users[index] = user
     }
     
-    func deleteUser(id: String) {
+    func getUsers(completion: @escaping ([User]?) -> Void) {
+        completion(users)
+    }
+    
+    func delete(with id: String) {
         guard let index = users.firstIndex(where: {$0.id == id}) else { return }
         users.remove(at: index)
-    }
-    
-    func apply(to positionID: String) {
-        guard var user = users.first else { return }
-        
-        user.applicationsID.append(positionID)
-        updateUser(user)
-    }
-    
-    func unapply(from positionID: String) {
-        guard var user = users.first else { return }
-        
-        user.applicationsID.removeAll(where: { $0 == positionID })
-        updateUser(user)
     }
 }

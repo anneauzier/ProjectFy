@@ -8,35 +8,39 @@
 import SwiftUI
 
 final class GroupViewModel: ObservableObject {
-
-    @Published var groups: [ProjectGroup]
-    let service: GroupProtocol
-
+    @Published var groups: [ProjectGroup] = []
+    private let service: GroupProtocol
+    
     init(service: GroupProtocol) {
         self.service = service
-        self.groups = service.getGroups()
+        
+        service.getGroups { [weak self] groups in
+            guard let groups = groups else { return }
+            self?.groups = groups
+        }
     }
-
-    func getGroup(id: String) -> ProjectGroup? {
-        return service.getGroup(id: id)
-    }
-
+    
     func createGroup(_ group: ProjectGroup) {
-        service.createGroup(group)
-        updateGroups()
+        do {
+            try service.create(group)
+        } catch {
+            print("Cannot create group: \(error.localizedDescription)")
+        }
     }
-
+    
+    func getGroup(with id: String) -> ProjectGroup? {
+        return groups.first(where: { $0.id == id })
+    }
+    
     func editGroup(_ group: ProjectGroup) {
-        service.updateGroup(group)
-        updateGroups()
+        do {
+            try service.update(group)
+        } catch {
+            print("Cannot update advertisement: \(error)")
+        }
     }
-
-    func deleteGroup(id: String) {
-        service.deleteGroup(id: id)
-        updateGroups()
-    }
-
-    func updateGroups() {
-        groups = service.getGroups()
+    
+    func deleteGroup(with id: String) {
+        service.delete(with: id)
     }
 }

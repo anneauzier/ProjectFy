@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct TasksGroupView: View {
+    @State var detailsInfo: ProjectGroup
+    var viewModel: GroupViewModel
     
-    @EnvironmentObject var viewModel: GroupViewModel
     @ObservedObject var taskMockup = TasksMockupService()
     @Binding var showTabBar: Bool
-
-    let groupID: String
 
     var body: some View {
         VStack {
             VStack {
-                GroupInfo(groupID: groupID)
+                GroupInfo(detailsInfo: detailsInfo, viewModel: viewModel)
                 
                 ScrollView {
                     ForEach(taskMockup.messages, id: \.id) { task in
@@ -32,7 +31,7 @@ struct TasksGroupView: View {
 
             TaskField()
         }
-        .toolbar(showTabBar ? .visible : .hidden, for: .tabBar)
+//        .toolbar(showTabBar ? .visible : .hidden, for: .tabBar)
         .onAppear {
             showTabBar = false
         }
@@ -42,24 +41,19 @@ struct TasksGroupView: View {
 struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
         @State var showTabBar: Bool = false
-
-        TasksGroupView(showTabBar: $showTabBar, groupID: "1213")
-            .environmentObject(GroupViewModel(service: GroupMockupService()))
+        TasksGroupView(detailsInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()), showTabBar: $showTabBar)
     }
 }
 
 struct GroupInfo: View {
     
-    @EnvironmentObject var viewModel: GroupViewModel
-    @State var detailsInfo = ProjectGroup(id: "",
-                                          name: "",
-                                          description: "",
-                                          avatar: "Group1",
-                                          adminID: "",
-                                          members: [:],
-                                          link: "",
-                                          tasks: [])
-    let groupID: String
+    var viewModel: GroupViewModel
+    @State var detailsInfo: ProjectGroup
+
+    init(detailsInfo: ProjectGroup, viewModel: GroupViewModel) {
+        self._detailsInfo = State(initialValue: detailsInfo)
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack {
@@ -73,7 +67,7 @@ struct GroupInfo: View {
                     VStack {
                         Text("\(detailsInfo.name)")
                             .font(.caption)
-                        Text("\(detailsInfo.members.count)")
+//                        Text("\(detailsInfo.members.count)")
                     }.foregroundColor(.black)
                     
                     Spacer()
@@ -84,11 +78,5 @@ struct GroupInfo: View {
             }
         }
         Divider()
-
-            .onAppear {
-                if let groupInfo = viewModel.getGroup(id: groupID) {
-                    detailsInfo = groupInfo
-                }
-            }
     }
 }

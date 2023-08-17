@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task: Identifiable, Codable {
+struct Tasks: Identifiable, Codable {
 
     var id: String
     var senderName: String

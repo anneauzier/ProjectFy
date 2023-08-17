@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskBubble: View {
 
-    var task: Task
+    var task: Tasks
 
     var body: some View {
         VStack(alignment: task.received ? .leading : .trailing, spacing: 0) {
@@ -40,7 +40,7 @@ struct TaskBubble: View {
 
 struct TaskBubble_Previews: PreviewProvider {
     static var previews: some View {
-        TaskBubble(task: Task(id: "1234",
+        TaskBubble(task: Tasks(id: "1234",
                               senderName: "Iago Ramos",
                               text: ["Hello, word!", "É mesmo é", "nossaaaaa!!!!00000000000000000000000000000"],
                               received: false, time: Date()))
