@@ -28,7 +28,7 @@ struct UserView: View {
                         .padding(.top, -20)
                     
                     Group {
-                        let availability = user.available ? "Availavle" : "Unavailable"
+                        let availability = user.available ? "Available" : "Unavailable"
                         
                         Text(availability)
                             .foregroundColor(.gray)

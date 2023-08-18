@@ -11,7 +11,7 @@ struct EditDetailsGroup: View {
     
    @Environment(\.dismiss) var dismiss
    @State var groupInfo: ProjectGroup
-    var viewModel: GroupViewModel
+   var viewModel: GroupViewModel
     
     init(groupInfo: ProjectGroup, viewModel: GroupViewModel) {
         self._groupInfo = State(initialValue: groupInfo)

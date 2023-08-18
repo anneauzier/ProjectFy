@@ -9,14 +9,14 @@ import SwiftUI
 
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
-    @State var showTabBar: Bool = false
-    
+//    @State var showTabBar: Bool = false
+
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(detailsInfo: group, viewModel: viewModel, showTabBar: $showTabBar)) {
+                        NavigationLink(destination: TasksGroupView(detailsInfo: group, viewModel: viewModel)) {
                             HStack {
                                 Image("\(group.avatar)")
                                     .resizable()
@@ -24,23 +24,23 @@ struct GroupView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(group.name)")
                                         .font(.subheadline)
-                                    //                                    Text("\(group.members.count) participants")
+                                    // Text("\(group.members.count) participants")
                                 }
                             }
                         }
                     }
                 }
             }.navigationTitle("My Groups")
-                .onAppear {
-                    showTabBar = true
-                }
+//                .onAppear {
+//                    showTabBar = true
+//                }
         }
     }
 }
 
-struct GroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupView()
-            .environmentObject(GroupViewModel(service: GroupService()))
-    }
-}
+// struct GroupView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GroupView()
+//            .environmentObject(GroupViewModel(service: GroupService()))
+//    }
+// }

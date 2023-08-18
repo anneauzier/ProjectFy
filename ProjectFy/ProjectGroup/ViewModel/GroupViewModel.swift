@@ -8,12 +8,12 @@
 import SwiftUI
 
 final class GroupViewModel: ObservableObject {
+    
     @Published var groups: [ProjectGroup] = []
     private let service: GroupProtocol
     
     init(service: GroupProtocol) {
         self.service = service
-        
         service.getGroups { [weak self] groups in
             guard let groups = groups else { return }
             self?.groups = groups

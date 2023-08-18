@@ -25,7 +25,7 @@ struct ProjectFyApp: App {
     @StateObject var authenticationViewModel = AuthenticationViewModel()
     @StateObject var userViewModel = UserViewModel(service: UserService())
     @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
-    @StateObject var groupViewModel = GroupViewModel(service: GroupService())
+    @StateObject var groupViewModel = GroupViewModel(service: GroupMockupService())
 
     @State var isNewUser: Bool? = true
     

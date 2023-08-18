@@ -10,12 +10,12 @@ import SwiftUI
 struct EditUserView: View {
 
     @Environment(\.dismiss) var dismiss
-    
+
+    @State var canContinue = false
     @State var editingUser: User
+    
     var isNewUser: Bool
     var viewModel: UserViewModel
-    
-    @State var canContinue = false
     
     init(editingUser: User, isNewUser: Bool = false, viewModel: UserViewModel) {
         self._editingUser = State(initialValue: editingUser)

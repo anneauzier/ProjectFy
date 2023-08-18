@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TaskField: View {
     @State var message: String = ""
-    
+    @Binding var task: ProjectGroup.Tasks
+
     var body: some View {
         VStack {
             Rectangle()
@@ -22,8 +23,9 @@ struct TaskField: View {
                     .cornerRadius(8)
                 
                 Button {
-                    // messagesManager.sendMessage(text: message)
+                    task.taskDescription.append(message)
                     message = ""
+                    print("\(task.taskDescription)")
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
@@ -39,11 +41,11 @@ struct TaskField: View {
     }
 }
 
-struct TaskField_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskField()
-    }
-}
+// struct TaskField_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskField(taskDescrip: $taskDescrip)
+//    }
+// }
 
 struct CustomTextField: View {
     

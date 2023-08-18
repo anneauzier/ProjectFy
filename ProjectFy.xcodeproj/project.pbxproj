@@ -37,10 +37,8 @@
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* ProjectGroup.swift */; };
 		67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F72A7841DD00EBD022 /* AdvertisementView.swift */; };
-		9F2AC85E2A8C163D00CBE3A5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85D2A8C163D00CBE3A5 /* Task.swift */; };
 		9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */; };
 		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
-		9F2AC8642A8D422200CBE3A5 /* TasksMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */; };
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
 		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
@@ -90,10 +88,8 @@
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
 		67A531F72A7841DD00EBD022 /* AdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementView.swift; sourceTree = "<group>"; };
-		9F2AC85D2A8C163D00CBE3A5 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBubble.swift; sourceTree = "<group>"; };
 		9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskField.swift; sourceTree = "<group>"; };
-		9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksMockupService.swift; sourceTree = "<group>"; };
 		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
@@ -288,7 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				67A531F22A78327600EBD022 /* ProjectGroup.swift */,
-				9F2AC85D2A8C163D00CBE3A5 /* Task.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -305,15 +300,13 @@
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9FBAE03E2A8EC0BA003F6424 /* Tools */,
 				673BD3062A8AFE6700DD161F /* FormField */,
 				674982752A83DCD900A1C98E /* GoogleService-Info.plist */,
+				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
 				9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */,
 				9F4390C82A81376500A3A393 /* HomeView.swift */,
-				9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */,
-				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
 				674982802A857C9800A1C98E /* Utils.swift */,
-				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
-				674982732A82F3E000A1C98E /* DropDownButton.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -370,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				9FAE4F662A82B49B0086725F /* GroupMockupService.swift */,
-				9F2AC8632A8D422200CBE3A5 /* TasksMockupService.swift */,
 				6783CC862A8D51EA0050AD39 /* GroupService.swift */,
 			);
 			path = Services;
@@ -382,6 +374,16 @@
 				9FAE4F6B2A82C5580086725F /* GroupViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9FBAE03E2A8EC0BA003F6424 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */,
+				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
+				674982732A82F3E000A1C98E /* DropDownButton.swift */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		9FD721602A7842C7007A1BA6 /* View */ = {
@@ -553,7 +555,6 @@
 				6749829F2A86C15D00A1C98E /* UserService.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
-				9F2AC8642A8D422200CBE3A5 /* TasksMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
@@ -574,7 +575,6 @@
 				674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */,
 				678383832A7F63EA00E459F1 /* AdvertisementsViewModel.swift in Sources */,
 				678383772A7C4A3800E459F1 /* UserInfo.swift in Sources */,
-				9F2AC85E2A8C163D00CBE3A5 /* Task.swift in Sources */,
 				9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				6749828D2A85DD8E00A1C98E /* SignInView.swift in Sources */,

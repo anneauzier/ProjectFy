@@ -11,7 +11,6 @@ struct DetailsGroupView: View {
     
     @EnvironmentObject var viewModel: GroupViewModel
     @State private var goEditGroupView = false
-
     let detailsGroup: ProjectGroup
     
     var body: some View {

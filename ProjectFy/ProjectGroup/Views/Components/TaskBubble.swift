@@ -8,41 +8,39 @@
 import SwiftUI
 
 struct TaskBubble: View {
-
-    var task: Tasks
+    @Binding var tasks: ProjectGroup.Tasks
 
     var body: some View {
-        VStack(alignment: task.received ? .leading : .trailing, spacing: 0) {
+        VStack(alignment: tasks.received ? .leading : .trailing, spacing: 0) {
 
-            Text("\(task.senderName)")
+            Text("\(tasks.ownerID)")
                 .padding()
                 .font(.headline)
                 .frame(maxWidth: 288)
                 .foregroundColor(.white)
                 .background(Color.black)
 
-            ForEach(task.text, id: \.self) { message in
+            ForEach(tasks.taskDescription, id: \.self) { message in
                 Text(message)
                     .padding()
                     .frame(maxWidth: 288)
-                    .background(task.received ? Color.orange : Color.green)
+                    .background(tasks.received ? Color.orange : Color.green)
                 Rectangle()
                     .frame(maxWidth: 288, maxHeight: 1)
                     .foregroundColor(.gray.opacity(0.5))
             }
         }
         .cornerRadius(12)
-        .frame(maxWidth: .infinity, alignment: task.received ? .leading : .trailing)
-        .padding(task.received ? .leading : .trailing)
+        .frame(maxWidth: .infinity, alignment: tasks.received ? .leading : .trailing)
+        .padding(tasks.received ? .leading : .trailing)
 
     }
 }
 
-struct TaskBubble_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskBubble(task: Tasks(id: "1234",
-                              senderName: "Iago Ramos",
-                              text: ["Hello, word!", "É mesmo é", "nossaaaaa!!!!00000000000000000000000000000"],
-                              received: false, time: Date()))
-    }
-}
+// struct TaskBubble_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskBubble(tasks: ProjectGroup.Tasks(id: "6789", ownerID: "Iago Ramos",
+//            taskDescription: ["n sei q sei q mais lá", "é sobre isso"],
+//            received: false, time: Date()))
+//    }
+// }

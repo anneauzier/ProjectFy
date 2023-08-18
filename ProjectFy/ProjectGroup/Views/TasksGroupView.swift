@@ -8,48 +8,52 @@
 import SwiftUI
 
 struct TasksGroupView: View {
-    @State var detailsInfo: ProjectGroup
+//    @Binding var showTabBar: Bool
+    @State var task: ProjectGroup.Tasks = ProjectGroup.Tasks(id: "123",
+                                                             ownerID: "Iago Ramos",
+                                                             taskDescription: ["Oi, galera", "tudo certo?"],
+                                                             received: false,
+                                                             time: Date())
+    
+    let detailsInfo: ProjectGroup
     var viewModel: GroupViewModel
     
-    @ObservedObject var taskMockup = TasksMockupService()
-    @Binding var showTabBar: Bool
-
     var body: some View {
         VStack {
             VStack {
                 GroupInfo(detailsInfo: detailsInfo, viewModel: viewModel)
                 
                 ScrollView {
-                    ForEach(taskMockup.messages, id: \.id) { task in
-                        TaskBubble(task: task)
+                    ForEach(detailsInfo.tasks, id: \.id) { task in
+                        TaskBubble(tasks: $task)
                     }
                 }
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
-
+                
             }.padding(.horizontal, 20)
-
-            TaskField()
+            
+            TaskField(task: $task)
         }
-//        .toolbar(showTabBar ? .visible : .hidden, for: .tabBar)
-        .onAppear {
-            showTabBar = false
-        }
+        //        .toolbar(showTabBar ? .visible : .hidden, for: .tabBar)
+//        .onAppear {
+//            showTabBar = false
+//        }
     }
 }
 
-struct MyPreviewProvider_Previews: PreviewProvider {
-    static var previews: some View {
-        @State var showTabBar: Bool = false
-        TasksGroupView(detailsInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()), showTabBar: $showTabBar)
-    }
-}
+// struct MyPreviewProvider_Previews: PreviewProvider {
+//    static var previews: some View {
+//        @State var showTabBar: Bool = false
+//        TasksGroupView(detailsInfo: ProjectGroup(),
+//                       showTabBar: $showTabBar, viewModel: GroupViewModel(service: GroupMockupService()))
+//    }
+// }
 
 struct GroupInfo: View {
-    
-    var viewModel: GroupViewModel
     @State var detailsInfo: ProjectGroup
-
+    var viewModel: GroupViewModel
+    
     init(detailsInfo: ProjectGroup, viewModel: GroupViewModel) {
         self._detailsInfo = State(initialValue: detailsInfo)
         self.viewModel = viewModel
@@ -67,7 +71,7 @@ struct GroupInfo: View {
                     VStack {
                         Text("\(detailsInfo.name)")
                             .font(.caption)
-//                        Text("\(detailsInfo.members.count)")
+                        //                        Text("\(detailsInfo.members.count)")
                     }.foregroundColor(.black)
                     
                     Spacer()

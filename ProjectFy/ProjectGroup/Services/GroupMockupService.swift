@@ -16,21 +16,54 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      avatar: "Group2",
                      adminID: "123456",
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: []),
+                     tasks: [
+                        ProjectGroup.Tasks(id: "123",
+                                           ownerID: "Iago Ramos",
+                                           taskDescription: ["Oi, galera", "tudo certo?"],
+                                           received: false,
+                                           time: Date()),
+                        ProjectGroup.Tasks(id: "456",
+                                           ownerID: "Anne Auzier",
+                                           taskDescription: ["Eai", "tudo tranquilo"],
+                                           received: true,
+                                           time: Date())
+                     ]),
         ProjectGroup(id: "12134",
                      name: "God Of War - Clone",
                      description: "Lorem Ipsum is simply dummy text.",
                      avatar: "Group4",
                      adminID: "123455",
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: []),
+                     tasks: [
+                        ProjectGroup.Tasks(id: "123",
+                                           ownerID: "Iago Ramos",
+                                           taskDescription: ["Oi, galera", "tudo certo?"],
+                                           received: false,
+                                           time: Date()),
+                        ProjectGroup.Tasks(id: "456",
+                                           ownerID: "Anne Auzier",
+                                           taskDescription: ["Eai", "tudo tranquilo"],
+                                           received: true,
+                                           time: Date())
+                     ]),
         ProjectGroup(id: "12135",
                      name: "GTA RJ",
                      description: "Lorem Ipsum is simply dummy text.",
                      avatar: "Group5",
                      adminID: "123454",
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: [])
+                     tasks: [
+                        ProjectGroup.Tasks(id: "123",
+                                           ownerID: "Iago Ramos",
+                                           taskDescription: ["Oi, galera", "tudo certo?"],
+                                           received: false,
+                                           time: Date()),
+                        ProjectGroup.Tasks(id: "456",
+                                           ownerID: "Anne Auzier",
+                                           taskDescription: ["Eai", "tudo tranquilo"],
+                                           received: true,
+                                           time: Date())
+                     ])
     ]
     
     func create(_ group: ProjectGroup) throws {
