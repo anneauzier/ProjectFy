@@ -64,17 +64,18 @@ fileprivate struct SetupInitialConfigs: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     Text("Hi, stranger! We need some information from you :D")
-                        .font(.title)
-                        .padding(.top, 4)
+                        .font(Font.largeTitle.bold())
+                        .padding(.top, 16)
                     
                     Text("Don't worry, you can change these informations later...")
                         .foregroundColor(.gray)
-                        .padding(.top, 14)
-                }
-                .padding(.horizontal, 16)
+                        .font(Font.headline)
+                        .padding(.top, 20)
+
+                }.frame(width: UIScreen.main.bounds.width - 40)
                 
                 SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
             }
@@ -88,7 +89,6 @@ fileprivate struct SetupInitialConfigs: View {
                 .disabled(!canContinue)
             }
         }
-        
     }
     
     private struct StartView: View {
@@ -98,27 +98,29 @@ fileprivate struct SetupInitialConfigs: View {
         @Binding var isNewUser: Bool?
         
         var body: some View {
-            VStack {
-                Spacer()
+            VStack(alignment: .center) {
+                Text("    All ready? \nLet's group!:D")
+                    .font(Font.largeTitle.bold())
+                    .frame(width: UIScreen.main.bounds.width - 97)
+                    .padding(.bottom, 40)
                 
-                Text("All ready, let's group! :D")
-                    .font(.system(.title))
-                
-                Spacer()
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: UIScreen.main.bounds.width - 144, height: 1)
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.bottom, 44)
                 
                 Button {
                     viewModel.editUser(user)
                     isNewUser = nil
                 } label: {
-                    RoundedRectangleContent(cornerRadius: 16, fillColor: .black) {
+                    RoundedRectangleContent(cornerRadius: 16, fillColor: .blue) {
                         Text("Let's go!")
+                            .font(Font.headline)
                             .foregroundColor(.white)
-                            .padding(.vertical, 15)
                     }
-                }
-                .frame(height: 56)
+                }.frame(width: UIScreen.main.bounds.width - 208, height: 56)
             }
-            .padding(.horizontal, 20)
         }
     }
 }

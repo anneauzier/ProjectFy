@@ -18,11 +18,11 @@ struct SetupUserInfo: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             FormField(
-                title: "Nome",
-                titleAccessibilityLabel: "Seu nome",
-                placeholder: "Digite aqui seu nome",
+                title: "Name",
+                titleAccessibilityLabel: "Name",
+                placeholder: "Your name...",
                 text: $user.name,
-                textFieldAccessibilityLabel: "Digite aqui seu nome"
+                textFieldAccessibilityLabel: "Enter your name here"
             )
             
             if isNewUser {
@@ -36,15 +36,15 @@ struct SetupUserInfo: View {
             }
             
             FormField(
-                title: "Área de conhecimento",
-                titleAccessibilityLabel: "Digite aqui sua área de interesse (Ex: UI/UX)",
-                placeholder: "Digite aqui sua área de interesse (Ex: UI/UX)",
+                title: "Area of interest",
+                titleAccessibilityLabel: "Area of interest",
+                placeholder: "DUI/UX Design, iOS Developer, 3D Modelator...",
                 text: $user.areaExpertise,
-                textFieldAccessibilityLabel: "Digite aqui sua área de interesse"
+                textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
             )
             
             DropDownButton(
-                title: "Nível de conhecimento",
+                title: "Level of knowledge in the area",
                 selection: $user.expertise,
                 menuItems: User.Expertise.allCases.map({ expertise in
                     MenuItem(name: expertise.rawValue, tag: expertise)
@@ -52,24 +52,24 @@ struct SetupUserInfo: View {
             )
             
             FormField(
-                title: "Localização",
-                titleAccessibilityLabel: "Sua localização",
-                placeholder: "State, Country",
+                title: "Your location",
+                titleAccessibilityLabel: "Your location",
+                placeholder: "Your location...",
                 text: $user.region,
-                textFieldAccessibilityLabel: "Digite seu estado e país"
+                textFieldAccessibilityLabel: "Enter your state and country"
             )
             
             FormField(
-                title: "Interesses",
-                titleAccessibilityLabel: "Seus interesses",
-                placeholder: "Seus interesses",
+                title: "Interests (optional)",
+                titleAccessibilityLabel: "your interests",
+                placeholder: "Tag your interests, Ex: Design, Unity, iOS...",
                 text: $user.interestTags,
-                textFieldAccessibilityLabel: "Digite seus interesses"
+                textFieldAccessibilityLabel: "Enter your interests"
             )
             
             if !isNewUser {
                 Toggle(isOn: $user.available) {
-                    Text("Disponibilidade")
+                    Text("Availability")
                         .font(.headline)
                         .foregroundColor(.gray)
                 }
@@ -77,7 +77,7 @@ struct SetupUserInfo: View {
             
             Spacer()
             
-        }
+        }.frame(width: UIScreen.main.bounds.width - 40)
         
         .onAppear {
             checkIfCanContinue()
@@ -86,9 +86,7 @@ struct SetupUserInfo: View {
         .onChange(of: user) { _ in
             checkIfCanContinue()
         }
-        
-        .padding(.horizontal, 20)
-        .padding(.top, 20)
+        .padding(.top, 16)
     }
     
     private func checkIfCanContinue() {
