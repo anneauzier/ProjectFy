@@ -41,6 +41,7 @@
 		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
+		9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */; };
 		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
 		9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F412A816F4600D64192 /* UserMockupService.swift */; };
 		9F5C027B2A855B4200A49EF3 /* WrappedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */; };
@@ -92,6 +93,7 @@
 		9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskField.swift; sourceTree = "<group>"; };
 		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+tabBarHidden.swift"; sourceTree = "<group>"; };
 		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
 		9F553F412A816F4600D64192 /* UserMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMockupService.swift; sourceTree = "<group>"; };
 		9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTextView.swift; sourceTree = "<group>"; };
@@ -153,10 +155,10 @@
 		674982822A85925F00A1C98E /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				9F495A392A9045CA00DB8EB9 /* View */,
 				674982902A85DF4800A1C98E /* ViewModel */,
 				6749828B2A85DD6900A1C98E /* Services */,
 				6749828A2A85DD6000A1C98E /* Protocols */,
-				6749828C2A85DD8E00A1C98E /* SignInView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -214,6 +216,7 @@
 		6783837A2A7C4A7100E459F1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */,
 				6783837B2A7C4A7F00E459F1 /* View+removePadding.swift */,
 				9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */,
 				674982A52A88012100A1C98E /* String+avatars.swift */,
@@ -311,6 +314,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		9F495A392A9045CA00DB8EB9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6749828C2A85DD8E00A1C98E /* SignInView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9F553F3D2A816D7900D64192 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,10 +343,10 @@
 		9F5C02792A855B2400A49EF3 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */,
+				9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */,
 				9F7F33F82A857E2A00792EE6 /* EditDetailsGroup.swift */,
 				9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */,
-				9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */,
-				9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -558,6 +569,7 @@
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
+				9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */,
 				9F802AC72A84386200003925 /* DetailsGroupView.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				673BD3082A8AFE7800DD161F /* FormField.swift in Sources */,

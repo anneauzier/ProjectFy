@@ -36,16 +36,14 @@ struct ProjectGroup: Hashable, Codable {
     
     struct Tasks: Identifiable, Hashable, Codable {
         let id: String
-        let ownerID: String
+        let user: User
         var taskDescription: [String]
-        let received: Bool
         let time: Date
  
         enum CodingKeys: String, CodingKey {
             case id
-            case ownerID = "owner_id"
+            case user = "owner_id"
             case taskDescription = "task_description"
-            case received
             case time
         }
     }

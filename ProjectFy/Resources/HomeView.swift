@@ -29,6 +29,8 @@ struct HomeView: View {
 
 fileprivate struct TabBarView: View {
     let user: User
+//    let advertisement: Advertisement
+    
     @Binding var isNewUser: Bool?
     
     var body: some View {
@@ -39,7 +41,7 @@ fileprivate struct TabBarView: View {
                 AdvertisementsView(user: user)
                     .tabItem { Label("Home", systemImage: "house") }
                 
-                GroupView()
+                GroupView(user: user)
                     .tabItem { Label("Group", systemImage: "person.3") }
                 
                 UserView(user: user)
@@ -51,8 +53,8 @@ fileprivate struct TabBarView: View {
 
 fileprivate struct SetupInitialConfigs: View {
     @State var user: User
+
     @Binding var isNewUser: Bool?
-    
     @State var canContinue = false
     
     init(user: User, isNewUser: Binding<Bool?>) {

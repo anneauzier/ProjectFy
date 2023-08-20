@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct UserView: View {
-
+    
     @EnvironmentObject var viewModel: UserViewModel
     @State private var goEditUserView = false
-
+    
     var presentUsersProfile: Bool = false
     let user: User
-
+    
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
@@ -77,7 +77,6 @@ struct UserView: View {
                             .foregroundColor(.gray)
                             .bold()
                         
-                        // TODO: Trocar o bold pelo equivalente
                         HStack(spacing: 8) {
                             let splitInterests = user.interestTags.split(separator: ",")
                             
@@ -86,20 +85,14 @@ struct UserView: View {
                                     .font(.caption)
                                     .padding(7)
                                     .foregroundColor(.white)
-//                                    .bold(true)
                                     .lineLimit(0)
                                     .background(Capsule().fill(.gray))
                             }
                         }
-                        
-                        Divider()
-                        
-                        Text("Meus anúncios")
-                            .foregroundColor(.black)
-                            .bold()
-                        
-                        Spacer()
                     }
+                        
+                    UserAdvertisement(user: user)
+
                 }
                 .padding(.horizontal, 20)
             }
@@ -115,11 +108,34 @@ struct UserView: View {
                             .accessibilityLabel("Edital Perfil")
                     }
                 }
-            }
-            
-            .sheet(isPresented: $goEditUserView, content: {
+            }.sheet(isPresented: $goEditUserView, content: {
                 EditUserView(editingUser: user, viewModel: viewModel)
             })
+        }
+    }
+}
+
+struct UserAdvertisement: View {
+    
+    let user: User
+//    let advertisement: Advertisement
+    
+    var body: some View {
+        VStack(alignment: .center) {
+
+            Divider()
+            Text("Meus anúncios")
+                .foregroundColor(.black)
+                .bold()
+            Divider()
+            
+//        AdView(owner: <#T##User#>,
+//        advertisement: <#T##Advertisement#>,
+//        editingID: <#T##Binding<String?>#>,
+//        editAdvertisement: <#T##Binding<Bool>#>,
+//        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
+//        presentPositionSheet: <#T##Binding<Bool>#>)
+
         }
     }
 }

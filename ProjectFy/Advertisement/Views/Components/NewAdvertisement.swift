@@ -32,8 +32,7 @@ extension AdvertisementsView {
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-//                    UserInfo(user: userViewModel.user, size: 50)
-                    
+
                     TextField("Adicione tags ao seu projeto...", text: $advertisement.tags)
                         .padding(.top, 25)
                     

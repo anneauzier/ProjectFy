@@ -9,6 +9,8 @@ import Foundation
 
 final class GroupMockupService: ObservableObject, GroupProtocol {
     
+    private var listenerCompletion: (([ProjectGroup]?) -> Void)?
+    
     private var groups: [ProjectGroup] = [
         ProjectGroup(id: "1213",
                      name: "Adventure Game",
@@ -18,14 +20,14 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: [
                         ProjectGroup.Tasks(id: "123",
-                                           ownerID: "Iago Ramos",
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Iago", email: "")),
                                            taskDescription: ["Oi, galera", "tudo certo?"],
-                                           received: false,
                                            time: Date()),
                         ProjectGroup.Tasks(id: "456",
-                                           ownerID: "Anne Auzier",
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Anne Auzier", email: "")),
                                            taskDescription: ["Eai", "tudo tranquilo"],
-                                           received: true,
                                            time: Date())
                      ]),
         ProjectGroup(id: "12134",
@@ -36,14 +38,14 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: [
                         ProjectGroup.Tasks(id: "123",
-                                           ownerID: "Iago Ramos",
-                                           taskDescription: ["Oi, galera", "tudo certo?"],
-                                           received: false,
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Iago", email: "")),
+                                           taskDescription: ["Oi, galera", "tudo bem?"],
                                            time: Date()),
                         ProjectGroup.Tasks(id: "456",
-                                           ownerID: "Anne Auzier",
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Anne Auzier", email: "")),
                                            taskDescription: ["Eai", "tudo tranquilo"],
-                                           received: true,
                                            time: Date())
                      ]),
         ProjectGroup(id: "12135",
@@ -54,23 +56,31 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
                      link: "https://trello.com/b/DwEhWYYJ/projectfy",
                      tasks: [
                         ProjectGroup.Tasks(id: "123",
-                                           ownerID: "Iago Ramos",
-                                           taskDescription: ["Oi, galera", "tudo certo?"],
-                                           received: false,
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Iago", email: "")),
+                                           taskDescription: ["Oi, galera", "tudo na paz?"],
                                            time: Date()),
                         ProjectGroup.Tasks(id: "456",
-                                           ownerID: "Anne Auzier",
+                                           user: User(signInResult: .init(identityToken: "",
+                                           nonce: "", name: "Anne Auzier", email: "")),
                                            taskDescription: ["Eai", "tudo tranquilo"],
-                                           received: true,
                                            time: Date())
                      ])
     ]
+
+    {
+        didSet {
+            guard let completion = listenerCompletion else { return }
+            getGroups(completion: completion)
+        }
+    }
     
     func create(_ group: ProjectGroup) throws {
         groups.append(group)
     }
     
     func getGroups(completion: @escaping ([ProjectGroup]?) -> Void) {
+        self.listenerCompletion = completion
         completion(groups)
     }
     

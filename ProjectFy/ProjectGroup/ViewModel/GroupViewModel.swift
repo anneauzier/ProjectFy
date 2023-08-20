@@ -10,6 +10,7 @@ import SwiftUI
 final class GroupViewModel: ObservableObject {
     
     @Published var groups: [ProjectGroup] = []
+    
     private let service: GroupProtocol
     
     init(service: GroupProtocol) {

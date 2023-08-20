@@ -9,12 +9,12 @@ import SwiftUI
 
 struct EditDetailsGroup: View {
     
-   @Environment(\.dismiss) var dismiss
-   @State var groupInfo: ProjectGroup
-   var viewModel: GroupViewModel
+    @Environment(\.dismiss) var dismiss
+    @Binding var groupInfo: ProjectGroup
+    var viewModel: GroupViewModel
     
-    init(groupInfo: ProjectGroup, viewModel: GroupViewModel) {
-        self._groupInfo = State(initialValue: groupInfo)
+    init(groupInfo: Binding<ProjectGroup>, viewModel: GroupViewModel) {
+        self._groupInfo = groupInfo
         self.viewModel = viewModel
     }
     
@@ -62,15 +62,15 @@ struct EditDetailsGroup: View {
                             }
                         }
                     }
-                .navigationTitle("Edit Group Info")
-                .navigationBarTitleDisplayMode(.inline)
-                }
+                    .navigationTitle("Edit Group Info")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }
 
-struct EditDetailsGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        EditDetailsGroup(groupInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
-    }
-}
+// struct EditDetailsGroup_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditDetailsGroup(groupInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
+//    }
+// }
