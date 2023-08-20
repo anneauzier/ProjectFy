@@ -54,7 +54,7 @@ struct AdvertisementsView: View {
                                      popToRoot: $isLinkActive,
                                      editingID: editingID)
                 } label: {
-                    Label("Criar anúncio", systemImage: "plus")
+                    Label("Create ad", systemImage: "plus")
                 }
                 
                 .simultaneousGesture(TapGesture().onEnded({ _ in
@@ -86,8 +86,7 @@ struct AdView: View {
                 NavigationLink {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
-                    UserInfo(user: owner, size: 67)
-                        .foregroundColor(.black)
+                    UserInfo(user: owner, size: 49, nameColor: .black)
                 }
 
                 Spacer()
@@ -99,18 +98,19 @@ struct AdView: View {
                         Haptics.shared.selection()
                         editAdvertisement.toggle()
                     } label: {
-                        Label("Editar anúncio", systemImage: "square.and.pencil")
+                        Label("Edit", systemImage: "square.and.pencil")
                     }
                     
                     Button(role: .destructive) {
                         Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
-                        Label("Excluir anúncio", systemImage: "trash")
+                        Label("Delete Ad", systemImage: "trash")
                     }
                 } label: {
-                    Label("opções", systemImage: "ellipsis")
+                    Label("Options", systemImage: "ellipsis")
                         .labelStyle(.iconOnly)
+                        .imageScale(.large)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
                 .padding(.top, 10)
@@ -123,15 +123,13 @@ struct AdView: View {
                 presentSheet: $presentPositionSheet,
                 selectedPosition: $selectedPositionToPresent
             )
-            
-            Divider()
         }
         
-        .alert("Você deseja mesmo excluir a publicação?", isPresented: $showDeleteAlert) {
+        .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
                 showDeleteAlert.toggle()
             } label: {
-                Text("Cancelar")
+                Text("Cancel")
             }
 
             Button(role: .destructive) {
@@ -140,7 +138,7 @@ struct AdView: View {
                 
                 showDeleteAlert.toggle()
             } label: {
-                Text("Excluir")
+                Text("Delete")
             }
         }
     }
