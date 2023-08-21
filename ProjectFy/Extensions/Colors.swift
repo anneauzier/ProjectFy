@@ -19,4 +19,9 @@ extension Color {
     static let roleBackground = Color("roleBackground")
     static let userNameColor = Color("userNameColor")
     static let placeholderColor = Color("placeholderColor")
+    static let unavailableBackground = Color("unavailableBackground")
+    static let availableBackground = Color("availableBackground")
+    static let availableText = Color("availableText")
+    static let unavailableText = Color("unavailableText")
+    static let rectangleLine = Color("rectangleLine")
 }

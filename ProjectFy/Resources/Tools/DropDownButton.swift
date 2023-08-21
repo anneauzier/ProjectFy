@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DropDownButton<T: Hashable>: View {
     let title: String
+    let textColor: Color
     @Binding var selection: T
     let menuItems: [MenuItem<T>]
     
@@ -29,10 +30,8 @@ struct DropDownButton<T: Hashable>: View {
                     } label: {
                         HStack {
                             Text(item.name)
-                            
                             if item.name == String(describing: selection) {
                                 Spacer()
-                                
                                 Image(systemName: "checkmark")
                                     .foregroundColor(.black)
                             }
@@ -41,7 +40,7 @@ struct DropDownButton<T: Hashable>: View {
                 }
             } label: {
                 Text(text)
-                    .foregroundColor(.textColorBlue)
+                    .foregroundColor(textColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Image(systemName: "chevron.down")
@@ -58,7 +57,7 @@ struct DropDownButton<T: Hashable>: View {
                     text = item.name
                 }
             }
-            
+
 //            .padding(.horizontal, 10)
 //            .frame(minWidth: 0, maxWidth: .infinity)
 //            .overlay {

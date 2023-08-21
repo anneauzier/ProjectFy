@@ -39,6 +39,7 @@
 		67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F72A7841DD00EBD022 /* AdvertisementView.swift */; };
 		9F0ED0D12A91D10900DCBBE4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0ED0D02A91D10900DCBBE4 /* Colors.swift */; };
 		9F0ED0D32A9290B600DCBBE4 /* View+placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0ED0D22A9290B600DCBBE4 /* View+placeholder.swift */; };
+		9F0ED0D52A92ECB600DCBBE4 /* TextFieldLimitModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0ED0D42A92ECB600DCBBE4 /* TextFieldLimitModifer.swift */; };
 		9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */; };
 		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
@@ -93,6 +94,7 @@
 		67A531F72A7841DD00EBD022 /* AdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementView.swift; sourceTree = "<group>"; };
 		9F0ED0D02A91D10900DCBBE4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9F0ED0D22A9290B600DCBBE4 /* View+placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+placeholder.swift"; sourceTree = "<group>"; };
+		9F0ED0D42A92ECB600DCBBE4 /* TextFieldLimitModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLimitModifer.swift; sourceTree = "<group>"; };
 		9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBubble.swift; sourceTree = "<group>"; };
 		9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskField.swift; sourceTree = "<group>"; };
 		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */,
 				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
 				674982732A82F3E000A1C98E /* DropDownButton.swift */,
+				9F0ED0D42A92ECB600DCBBE4 /* TextFieldLimitModifer.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F0ED0D52A92ECB600DCBBE4 /* TextFieldLimitModifer.swift in Sources */,
 				9FAE4F692A82B9BA0086725F /* GroupProtocol.swift in Sources */,
 				9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */,
 				674982922A85DF5B00A1C98E /* AuthenticationViewModel.swift in Sources */,

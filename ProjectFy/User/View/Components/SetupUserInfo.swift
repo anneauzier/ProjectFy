@@ -10,9 +10,13 @@ import SwiftUI
 
 struct SetupUserInfo: View {
     @EnvironmentObject var userViewModel: UserViewModel
+    @FocusState var isTextFieldFocused: Bool
     
     @Binding var user: User
     @Binding var canContinue: Bool
+    @State private var height: CGFloat?
+
+    let minHeight: CGFloat = 30
     let isNewUser: Bool
     
     var body: some View {
@@ -44,7 +48,7 @@ struct SetupUserInfo: View {
             )
             
             DropDownButton(
-                title: "Level of knowledge in the area",
+                title: "Level of knowledge in the area", textColor: .black,
                 selection: $user.expertise,
                 menuItems: User.Expertise.allCases.map({ expertise in
                     MenuItem(name: expertise.rawValue, tag: expertise)
@@ -58,15 +62,12 @@ struct SetupUserInfo: View {
                 text: $user.region,
                 textFieldAccessibilityLabel: "Enter your state and country"
             )
-            
-            FormField(
-                title: "Interests (optional)",
-                titleAccessibilityLabel: "your interests",
-                placeholder: "Tag your interests, Ex: Design, Unity, iOS...",
-                text: $user.interestTags,
-                textFieldAccessibilityLabel: "Enter your interests"
-            )
-            
+
+            CustomText(title: "Interests(opcional)",
+                       text: $user.interestTags,
+                       condition: user.interestTags.isEmpty,
+                       placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
+
             if !isNewUser {
                 Toggle(isOn: $user.available) {
                     Text("Availability")
@@ -95,5 +96,9 @@ struct SetupUserInfo: View {
         if canContinue != isUserInfoFilled {
             canContinue = isUserInfoFilled
         }
+    }
+
+    private func textDidChange(_ textView: UITextView) {
+        self.height = max(textView.contentSize.height, minHeight)
     }
 }

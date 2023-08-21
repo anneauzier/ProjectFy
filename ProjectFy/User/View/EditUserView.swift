@@ -34,10 +34,9 @@ struct EditUserView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Cancelar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Text("X")
+                            .font(Font.headline)
+                            .foregroundColor(.textColorBlue)
                     }
                 }
                 
@@ -48,10 +47,9 @@ struct EditUserView: View {
                         Haptics.shared.notification(.success)
                         dismiss()
                     } label: {
-                        Text("Salvar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Text("Save")
+                            .font(.body)
+                            .foregroundColor(.textColorBlue)
                             .opacity(canContinue ? 1 : 0.2)
                     }
                     .disabled(!canContinue)

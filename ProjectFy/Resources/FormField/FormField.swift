@@ -24,8 +24,12 @@ struct FormField: View {
                 .accessibilityLabel(titleAccessibilityLabel)
             
             TextField(placeholder, text: $text)
-                .textFieldStyle(.roundedBorder)
+                .limitInputLength(value: $text, length: 19, commaLimit: 30)
                 .accessibilityLabel(textFieldAccessibilityLabel)
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.rectangleLine)
         }
     }
 }

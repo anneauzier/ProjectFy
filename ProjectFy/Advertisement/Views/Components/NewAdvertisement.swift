@@ -49,7 +49,7 @@ extension AdvertisementsView {
                         .padding(.top, 54)
                     
                     DropDownButton(
-                        title: "Project status",
+                        title: "Project status", textColor: .textColorBlue,
                         selection: $advertisement.ongoing,
                         menuItems: [
                             MenuItem(name: "Not started", tag: false),
