@@ -16,19 +16,21 @@ struct GroupView: View {
             VStack {
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(task: group.tasks[0],
-                            detailsInfo: group, viewModel: viewModel, user: user)) {
-                            HStack {
-                                Image("\(group.avatar)")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                VStack(alignment: .leading) {
-                                    Text("\(group.name)")
-                                        .font(.subheadline)
-                                    // Text("\(group.members.count) participants")
+                        NavigationLink(
+                            destination: TasksGroupView(group: group, user: user),
+                            label: {
+                                HStack {
+                                    Image("\(group.avatar)")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                    VStack(alignment: .leading) {
+                                        Text("\(group.name)")
+                                            .font(.subheadline)
+                                        // Text("\(group.members.count) participants")
+                                    }
                                 }
                             }
-                        }
+                        )
                     }.swipeActions(edge: .trailing) {
                         Button {
                             print("INFOOO")
@@ -44,14 +46,16 @@ struct GroupView: View {
                     }.tint(.red)
                     
                 }
-            }.navigationTitle("My Groups")
-             .onAppear {
-                 TabBarModifier.showTabBar()
+            }
+            .navigationViewStyle(.stack)
+            .navigationTitle("My Groups")
+            
+            .onAppear {
+                TabBarModifier.showTabBar()
             }
         }
     }
 }
-
 
 // @State var isEditing: Bool = false
 // @State var selectedRows: Set<String> = []

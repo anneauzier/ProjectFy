@@ -18,12 +18,21 @@ extension AdvertisementsView {
         @State var advertisement: Advertisement
         @State var presentBackAlert: Bool = false
         
+        let mytoken =
+        """
+        dYoLEoNX8UJ4i5hqg01zfe:APA91bExgdfwk2osT8ZBD3LMzjU5qT2
+        COFs8aApolcX8th50uht8jg39hHZLZPK5aDYe52LA2-OUYgC5cc9YeBj
+        Ah8PMHvirVO8Lp4tDzgnYEMbnr4lC0ZKFusOHUJemEhDZoKFTEAr9
+        """
+        
+//        let sender = PushNotificationSender()
+        
         var viewModel: AdvertisementsViewModel
         @Binding var popToRoot: Bool
         var editingID: String?
         
-        init(ownerID: String, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
-            self._advertisement = State(initialValue: Advertisement(ownerID: ownerID))
+        init(owner: User, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
+            self._advertisement = State(initialValue: Advertisement(owner: owner))
             self.viewModel = viewModel
             self._popToRoot = popToRoot
             self.editingID = editingID
@@ -57,6 +66,10 @@ extension AdvertisementsView {
                         ]
                     )
                     .padding(.top, 20)
+                    
+                    Button("aperte aqui") {
+//                        sender.sendPushNotification(to: "\(mytoken)", title: "Notification title", body: "Notification body")
+                    }
                     
                     Spacer()
                 }

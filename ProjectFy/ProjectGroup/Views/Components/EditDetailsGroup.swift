@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct EditDetailsGroup: View {
-    
     @Environment(\.dismiss) var dismiss
-    @Binding var groupInfo: ProjectGroup
+    
+    @State var groupInfo: ProjectGroup
     var viewModel: GroupViewModel
     
-    init(groupInfo: Binding<ProjectGroup>, viewModel: GroupViewModel) {
-        self._groupInfo = groupInfo
+    init(group: ProjectGroup, viewModel: GroupViewModel) {
+        self._groupInfo = State(initialValue: group)
         self.viewModel = viewModel
     }
     

@@ -8,8 +8,23 @@
 import SwiftUI
 
 struct TaskField: View {
+    @State var group: ProjectGroup
+    @State var task: ProjectGroup.Task
+    var viewModel: GroupViewModel
+    
     @State var message: String = ""
-    @Binding var task: ProjectGroup.Tasks
+    
+    init(user: User, group: ProjectGroup, viewModel: GroupViewModel) {
+        self._group = State(initialValue: group)
+        self.viewModel = viewModel
+        
+        if let task = group.tasks.first(where: { $0.user.id == user.id }) {
+            self._task = State(initialValue: task)
+            return
+        }
+        
+        self._task = State(initialValue: ProjectGroup.Task(user: user))
+    }
 
     var body: some View {
         VStack {
@@ -25,7 +40,9 @@ struct TaskField: View {
                 Button {
                     task.taskDescription.append(message)
                     message = ""
-                    print("\(task.taskDescription)")
+                    
+                    updateTasks()
+                    viewModel.editGroup(group)
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
@@ -37,6 +54,16 @@ struct TaskField: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 4)
         }
+    }
+    
+    private func updateTasks() {
+        if !group.tasks.contains(where: { $0.id == task.id }) {
+            group.tasks.append(task)
+            return
+        }
+        
+        guard let index = group.tasks.firstIndex(where: { $0.id == task.id }) else { return }
+        group.tasks[index] = task
     }
 }
 
@@ -56,14 +83,3 @@ struct CustomTextField: View {
         }
     }
 }
-
-// struct TaskField_Previews: PreviewProvider {
-//    static var previews: some View {
-//        @State var tasks = ProjectGroup.Tasks(id: "6789",
-//                                              ownerID: "Iago Ramos",
-//                                              taskDescription: ["n sei q sei q mais lá", "é sobre isso"],
-//                                              received: false,
-//                                              time: Date())
-//        TaskField(task: $tasks)
-//    }
-// }

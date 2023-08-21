@@ -151,6 +151,7 @@ extension AdView {
     private struct PositionDetails: View {
         @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
         @EnvironmentObject var userViewModel: UserViewModel
+        @EnvironmentObject var notificationsViewModel: NotificationsViewModel
         
         let user: User
         let advertisement: Advertisement
@@ -218,10 +219,18 @@ extension AdView {
                     
                     if hasApplied {
                         advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
+                        notificationsViewModel.deleteRequestNotification(userID: user.id,
+                                                                         advertisementID: advertisement.id)
+                        
                         return
                     }
                     
                     advertisementsViewModel.apply(user: user, to: advertisement, for: position)
+                    
+                    notificationsViewModel.pushRequestNotification(target: advertisement.owner,
+                                                                   sender: user,
+                                                                   advertisement: advertisement,
+                                                                   position: position.title)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
                         VStack {

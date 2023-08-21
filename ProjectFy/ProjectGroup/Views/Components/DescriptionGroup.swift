@@ -20,10 +20,10 @@ extension EditDetailsGroup {
             VStack(alignment: .leading) {
                 Text("Description")
                 ZStack(alignment: .bottom) {
-                    WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
-                        .focused($isTextFieldFocused)
-                        .frame(height: height ?? minHeight)
-                    
+//                    WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
+//                        .focused($isTextFieldFocused)
+//                        .frame(height: height ?? minHeight)
+//                    
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.gray.opacity(0.2))

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskBubble: View {
-    var tasks: ProjectGroup.Tasks
+    var tasks: ProjectGroup.Task
     var currentUserID: String
     
     var body: some View {
@@ -27,7 +27,7 @@ struct TaskBubble: View {
                         .frame(maxWidth: 288)
                         .background(tasks.user.id == currentUserID ? Color.orange : Color.green)
                         .overlay(alignment: .topTrailing) {
-                            Text("\(tasks.time.formatted(.dateTime.hour().minute()))")
+                            Text("\(tasks.date.formatted(.dateTime.hour().minute()))")
                                 .font(.caption2)
                                 .foregroundColor(.white)
                                 .padding(.trailing, 10)
@@ -46,13 +46,5 @@ struct TaskBubble: View {
         .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .leading : .trailing)
         .padding(tasks.user.id == currentUserID ? .leading : .trailing)
         
-    }
-}
-
-struct TaskBubble_Previews: PreviewProvider {
-    static var previews: some View {
-        @State var tasks = ProjectGroup.Tasks(id: "6789", user: User(signInResult: .init(identityToken: "", nonce: "",
-            name: "Iago", email: "")), taskDescription: ["n sei q sei q mais lá", "é sobre isso"], time: Date())
-        TaskBubble(tasks: tasks, currentUserID: "12324")
     }
 }
