@@ -19,6 +19,7 @@ struct DetailsGroupView: View {
                 Image("\(group.avatar)")
                     .resizable()
                     .frame(width: 100, height: 100)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 Group {
                     Text("Group name")
@@ -83,6 +84,8 @@ struct DetailsGroupView: View {
             }).sheet(isPresented: $goEditGroupView) {
                 EditDetailsGroup(group: group, viewModel: viewModel)
             }
+        }.onAppear {
+            TabBarModifier.hideTabBar()
         }
     }
 }

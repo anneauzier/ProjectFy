@@ -9,13 +9,24 @@ import SwiftUI
 
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
-    @State private var showBottomSheet = false
-    @State private var selection = ""
+    @State private var showActionSheet = false
+    @State private var selection: ProjectGroup?
     let user: User
+    
+    @State var isActive = false
+    @State var selectedGroup: ProjectGroup?
     
     var body: some View {
         NavigationView {
             VStack {
+                NavigationLink(isActive: $isActive) {
+                    if let group = selectedGroup {
+                        DetailsGroupView(group: group)
+                    }
+                } label: {
+                    EmptyView()
+                }
+
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
                         NavigationLink(
@@ -34,30 +45,30 @@ struct GroupView: View {
                             }
                         ).swipeActions {
                             Button(action: {
-                                showBottomSheet.toggle()
+                                showActionSheet.toggle()
                             }, label: {
                                 Text("...")
                                     .foregroundColor(.black)
                             })
                         }
-                    }
-                }.confirmationDialog("Select Color", isPresented: $showBottomSheet, titleVisibility: .visible) {
-                    Button {
-                        selection = "Group info"
-                    } label: {
-                        Label("Group info", systemImage: "info.circle")
-                    }
-                    Button {
-                        selection = "Exit group"
-                    } label: {
-                        Label("Exit group", systemImage: "iphone.and.arrow.forward")
-                            .foregroundColor(.red)
+                        .confirmationDialog("", isPresented: $showActionSheet, titleVisibility: .visible) {
+                            Button {
+                                selectedGroup = group
+                                isActive = true
+                            } label: {
+                                Label("Group info", systemImage: "info.circle")
+                            }
+
+                            Button(role: .destructive) {
+                                selection = group
+                            } label: {
+                                Text("Exit group")
+                            }
+                        }
                     }
                 }
-            }
-            .navigationViewStyle(.stack)
+            }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")
-            
             .onAppear {
                 TabBarModifier.showTabBar()
             }

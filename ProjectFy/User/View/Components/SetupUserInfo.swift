@@ -67,14 +67,16 @@ struct SetupUserInfo: View {
                        text: $user.interestTags,
                        condition: user.interestTags.isEmpty,
                        placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
-
-            if !isNewUser {
-                Toggle(isOn: $user.available) {
-                    Text("Availability")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-            }
+            
+            DropDownButton(
+                title: "Availability",
+                textColor: .black,
+                selection: $user.available,
+                menuItems: [
+                    MenuItem(name: "Unavailable for projects", tag: false),
+                    MenuItem(name: "Available for projects", tag: true)
+                ]
+            )
             
             Spacer()
             

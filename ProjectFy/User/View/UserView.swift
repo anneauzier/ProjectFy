@@ -23,7 +23,6 @@ struct UserView: View {
                         Rectangle()
                             .frame(maxWidth: .infinity)
                             .frame(height: 100)
-//                            .edgesIgnoringSafeArea(.top)
                             .foregroundColor(.roleBackground)
                         
                         Image(user.avatar)
@@ -53,9 +52,8 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     Group {
-                        let availability = user.available ? "Available" : "Unavailable"
                         let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
-
+                        
                         HStack(spacing: 4) {
                             Text(user.areaExpertise)
                                 .font(.body)
@@ -74,16 +72,13 @@ struct UserView: View {
                                 .frame(width: 3)
                                 .foregroundColor(.editAdvertisementText)
                             
-                            Label(availability, systemImage: imageVerify)
-                                .padding(5)
-                                .font(.callout)
+                            Image(systemName: imageVerify)
                                 .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
-                                .background(user.available ? Color.availableBackground : Color.unavailableBackground)
-                                .cornerRadius(8)
                         }
                         
                         HStack(spacing: 6) {
-                            Image(systemName: "mappin")
+                            Image("location")
+
                             Text(user.region)
                                 .font(.body)
                                 .foregroundColor(.editAdvertisementText)
