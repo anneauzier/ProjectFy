@@ -11,7 +11,16 @@ import FirebaseAuth
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
+    @Published var isAuthenticated = false
     var authenticationService: AuthenticationProtocol?
+    
+    init() {
+        isAuthenticated = self.getAuthenticatedUser() != nil
+        
+        handleAuthenticationChanges { [weak self] user in
+            self?.isAuthenticated = user != nil
+        }
+    }
     
     func signIn(completion: @escaping (SignInResult) -> Void) {
         guard let authenticationService = authenticationService else {
@@ -37,10 +46,6 @@ final class AuthenticationViewModel: ObservableObject {
         } catch {
             print("Unable to sign out: \(error.localizedDescription)")
         }
-    }
-    
-    func isAuthenticated() -> Bool {
-        return Auth.auth().currentUser != nil
     }
     
     func handleAuthenticationChanges(completion: @escaping (FirebaseAuth.User?) -> Void) {

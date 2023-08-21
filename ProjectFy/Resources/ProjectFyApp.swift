@@ -23,25 +23,26 @@ struct ProjectFyApp: App {
 
     @State var isNewUser: Bool? = true
     
+    init() {
+        UIApplication.shared.addTapGestureRecognizer()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            if authenticationViewModel.isAuthenticated() {
+            if authenticationViewModel.isAuthenticated {
                 HomeView(isNewUser: $isNewUser)
-                    .environmentObject(advertisementsViewModel)
-                    .environmentObject(userViewModel)
-                    .environmentObject(groupViewModel)
-                    .environmentObject(notificationsViewModel)
+                
+                .onAppear {
+                    guard let user = authenticationViewModel.getAuthenticatedUser() else { return }
                     
-                    .onAppear {
-                        UIApplication.shared.addTapGestureRecognizer()
-
-                        guard let userID = authenticationViewModel.getAuthenticatedUser()?.uid else {
-                            return
-                        }
-                        
-                        userViewModel.setUser(with: userID)
-                        groupViewModel.setUser(with: userID)
-                    }
+                    userViewModel.setUser(with: user.uid)
+                    groupViewModel.setUser(with: user.uid)
+                }
+                
+                .environmentObject(advertisementsViewModel)
+                .environmentObject(userViewModel)
+                .environmentObject(groupViewModel)
+                .environmentObject(notificationsViewModel)
             } else {
                 SignInView(isNewUser: $isNewUser)
                     .environmentObject(authenticationViewModel)
