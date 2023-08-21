@@ -227,10 +227,13 @@ extension AdView {
                     
                     advertisementsViewModel.apply(user: user, to: advertisement, for: position)
                     
+                    let application = Advertisement.Application(id: UUID().uuidString,
+                                                                position: position,
+                                                                user: user)
+                    
                     notificationsViewModel.pushRequestNotification(target: advertisement.owner,
-                                                                   sender: user,
                                                                    advertisement: advertisement,
-                                                                   position: position.title)
+                                                                   application: application)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
                         VStack {

@@ -42,11 +42,13 @@ final class NotificationsViewModel: ObservableObject {
         }
     }
     
-    func pushRequestNotification(target: User, sender: User, advertisement: Advertisement, position: String) {
+    func pushRequestNotification(target: User,
+                                 advertisement: Advertisement,
+                                 application: Advertisement.Application) {
+        
         let notification = RequestNotification(target: target,
-                                               sender: sender,
                                                advertisement: advertisement,
-                                               position: position)
+                                               application: application)
         
         createNotification(notification)
     }
@@ -66,7 +68,10 @@ final class NotificationsViewModel: ObservableObject {
     func deleteRequestNotification(userID: String, advertisementID: String) {
         var notification: RequestNotification? {
             let requests = self.notifications.compactMap { $0 as? RequestNotification }
-            return requests.first(where: { $0.userID == userID && $0.advertisementID == advertisementID })
+            
+            return requests.first {
+                $0.application.user.id == userID && $0.advertisement.id == advertisementID
+            }
         }
         
         guard let notification = notification else { return }

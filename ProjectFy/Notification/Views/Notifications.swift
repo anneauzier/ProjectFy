@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Notifications: View {
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
-    @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+    @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var groupViewModel: GroupViewModel
     
     let user: User
@@ -28,6 +28,7 @@ struct Notifications: View {
                                 viewModel: notificationsViewModel,
                                 acceptedHandler: { notification in
                                     acceptAdvertisementRequest(notification: notification)
+                                    deleteAdvertisementApplication(notification: notification)
                                 }
                             )
                         } else {
@@ -61,33 +62,28 @@ struct Notifications: View {
         }
     }
     
-    func acceptAdvertisementRequest(notification: RequestNotification) {
+    private func acceptAdvertisementRequest(notification: RequestNotification) {
         guard let accepted = notification.accepted, accepted else { return }
+        let advertisement = notification.advertisement
         
-        let advertisementID = notification.advertisementID
-        
-        guard var advertisement = advertisementsViewModel.getAdvertisement(with: advertisementID) else {
+        if var group = groupViewModel.groups.first(where: { $0.advertisement.id == advertisement.id }) {
+            group.members.append(notification.application)
+            groupViewModel.editGroup(group)
+            
             return
         }
         
-        if let group = groupViewModel.groups.first(where: { $0.advertisement.id == advertisement.id }) {
-            return
-        }
+        var group = ProjectGroup(advertisement: advertisement)
         
-        let applications = advertisement.applications.map {
-            var application = $0
-            
-            if application.user.id == user.id {
-                application.joined = true
-            }
-            
-            return application
-        }
+        group.members.append(notification.application)
+        groupViewModel.createGroup(group)
+    }
+    
+    private func deleteAdvertisementApplication(notification: RequestNotification) {
+        var advertisement = notification.advertisement
         
-        advertisement.applications = applications
-        advertisementsViewModel.editAdvertisement(advertisement)
-        
-        groupViewModel.createGroup(ProjectGroup(advertisement: advertisement))
+        advertisement.applications.removeAll(where: { $0.id == notification.application.id })
+        advertisementViewModel.editAdvertisement(advertisement)
     }
 }
 
