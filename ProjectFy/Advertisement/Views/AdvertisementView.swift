@@ -12,6 +12,7 @@ struct AdvertisementsView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     
     let user: User
+    @State var advertisements: [Advertisement] = []
     
     @State var isLinkActive = false
     @State var editingID: String?
@@ -25,7 +26,7 @@ struct AdvertisementsView: View {
                 VStack {
                     Divider()
                     
-                    ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
+                    ForEach(advertisements, id: \.self) { advertisement in
                         AdView(
                             user: user,
                             owner: advertisement.owner,
@@ -42,6 +43,11 @@ struct AdvertisementsView: View {
             
             .onAppear {
                 editingID = nil
+                updateAdvertisements()
+            }
+            
+            .refreshable {
+                updateAdvertisements()
             }
             
             .toolbar {
@@ -59,6 +65,10 @@ struct AdvertisementsView: View {
                 }))
             }
         }
+    }
+    
+    private func updateAdvertisements() {
+        advertisements = advertisementsViewModel.advertisements
     }
 }
 

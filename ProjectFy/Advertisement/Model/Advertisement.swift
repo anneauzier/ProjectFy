@@ -18,6 +18,7 @@ struct Advertisement: Hashable, Codable {
     var weeklyWorkload: Double?
     var ongoing: Bool
     var tags: String
+    let date = Date()
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -29,6 +30,7 @@ struct Advertisement: Hashable, Codable {
         case weeklyWorkload = "weekly_workload"
         case ongoing
         case tags
+        case date
     }
     
     struct Application: Hashable, Codable {
