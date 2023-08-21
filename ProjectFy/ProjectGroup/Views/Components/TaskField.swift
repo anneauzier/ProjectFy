@@ -47,7 +47,7 @@ struct TaskField: View {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(10)
-                        .background(message.isEmpty ? Color.gray.opacity(0.2) : Color.black)
+                        .background(message.isEmpty ? Color.gray.opacity(0.2) : Color.textColorBlue)
                         .cornerRadius(50)
                 }.disabled(message.isEmpty)
             }
@@ -78,7 +78,7 @@ struct CustomTextField: View {
                 .padding(8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray6))
+                        .fill(Color.fieldColor)
                 )
         }
     }

@@ -15,37 +15,60 @@ struct DetailsGroupView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 20) {
                 Image("\(group.avatar)")
                     .resizable()
                     .frame(width: 100, height: 100)
                 
                 Group {
-                    Text("Group's name")
+                    Text("Group name")
+                        .font(.headline)
+                        .foregroundColor(.black)
                     Text("\(group.name)")
+                        .font(.body)
+                        .foregroundColor(.black)
+                    
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.gray.opacity(0.2))
                     
-                    Text("Description")
+                    Text("Group description")
+                        .font(.headline)
+                        .foregroundColor(.black)
                     Text("\(group.description)")
+                        .font(.body)
+                        .foregroundColor(.black)
                     
                     Divider()
                     
-                    Text("Link")
+                    Text("Link for chat or/and meetings")
+                        .font(.headline)
+                        .foregroundColor(.black)
                     
                     if let url = URL(string: group.link) {
                         Link("\(group.link)", destination: url)
                     } else {
-                        Text("Sem link disponível")
+                        Text("No link available")
+                            .font(.body)
                     }
                 }
 
                 Divider()
                 
                 Text("Participants")
+                    .font(.headline)
+                    .foregroundColor(.black)
                 
-            }.padding(.horizontal)
+                // AJEITAR ISSO AQUI
+                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                    UserInfo(user: group.admin, size: 49, nameColor: .white)
+                    // TRATAR ESSA RESPONSIVIDADE DEPOIS
+                        .padding(.trailing, 40)
+                        .removePadding()
+                }.frame(height: 88)
+                    .padding(.bottom, 40)
+                
+            }.padding(.horizontal, 20)
             
             Spacer()
 
@@ -68,22 +91,26 @@ extension DetailsGroupView {
     
     struct FinalButtons: View {
         var body: some View {
-            VStack(alignment: .center) {
+            VStack {
                 Button {
-                    print("SAI")
+                    print("FINALIZAR GRUPO")
                 } label: {
-                    Text("Sair do grupo")
-                        .padding()
-                        .background(Color.black)
-                }
+                    RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
+                        Text("Finalize project")
+                            .font(Font.headline)
+                            .foregroundColor(.white)
+                    }
+                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 
                 Button {
-                    print("FINALIZEI")
+                    print("SAIR DO GRUPOOO")
                 } label: {
-                    Text("Finalizar projeto")
-                        .padding()
-                        .background(Color.black)
-                }
+                    RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
+                        Text("Exit group")
+                            .font(Font.headline)
+                            .foregroundColor(.white)
+                    }
+                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
             }
         }
     }

@@ -26,8 +26,10 @@ struct EditDetailsGroup: View {
                         .resizable()
                         .frame(width: 100, height: 100)
                     
-                    Text("Group's name")
-                    TextField("Digite o nome do grupo", text: $groupInfo.name)
+                    Text("Group name")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                    TextField("Enter the group name", text: $groupInfo.name)
                     
                     Rectangle()
                         .frame(height: 1)
@@ -35,12 +37,14 @@ struct EditDetailsGroup: View {
                     
                     DescriptionGroup(groupInfo: $groupInfo)
                     
-                    Text("Link")
+                    Text("Link for chat or/and meetings")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        
                     TextField("\(groupInfo.link)", text: $groupInfo.link)
                         .textFieldStyle(.roundedBorder)
-                    
-                    Text("Participants")
-                    
+                        .autocorrectionDisabled(true)
+
                 }.padding(.horizontal)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
@@ -60,6 +64,13 @@ struct EditDetailsGroup: View {
                                 Text("Salvar")
                                     .foregroundColor(.black)
                             }
+                            .opacity((groupInfo.name.isEmpty ||
+                                      groupInfo.link.isEmpty ||
+                                      groupInfo.description.isEmpty) ? 0.2 : 1.0)
+
+                            .disabled(groupInfo.name.isEmpty ||
+                                       groupInfo.link.isEmpty ||
+                                       groupInfo.description.isEmpty)
                         }
                     }
                     .navigationTitle("Edit Group Info")

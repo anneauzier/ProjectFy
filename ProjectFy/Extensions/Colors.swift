@@ -24,4 +24,6 @@ extension Color {
     static let availableText = Color("availableText")
     static let unavailableText = Color("unavailableText")
     static let rectangleLine = Color("rectangleLine")
+    static let bubbleColor = Color("bubbleColor")
+    static let fieldColor = Color("fieldColor")
 }

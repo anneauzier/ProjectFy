@@ -14,7 +14,7 @@ struct HomeView: View {
     @Binding var isNewUser: Bool?
     
     var body: some View {
-        if let user = userViewModel.user {
+        if let user = userViewModel.user{
             TabBarView(user: user, isNewUser: $isNewUser)
                 .onAppear {
                     notificationsViewModel.startListening(with: user.id)

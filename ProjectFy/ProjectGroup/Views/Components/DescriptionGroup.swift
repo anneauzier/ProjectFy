@@ -18,18 +18,18 @@ extension EditDetailsGroup {
     
         var body: some View {
             VStack(alignment: .leading) {
-                Text("Description")
+                Text("Group description")
                 ZStack(alignment: .bottom) {
-//                    WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
-//                        .focused($isTextFieldFocused)
-//                        .frame(height: height ?? minHeight)
-//                    
+                    WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
+                        .focused($isTextFieldFocused)
+                        .frame(height: height ?? minHeight)
+                    
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.gray.opacity(0.2))
                     
                     if groupInfo.description.isEmpty {
-                        Text("Digite algo...")
+                        Text("Give a description to the group...")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(.gray.opacity(0.7))
                             .padding(.bottom, 7)

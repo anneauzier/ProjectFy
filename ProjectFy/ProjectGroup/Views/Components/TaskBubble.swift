@@ -18,28 +18,25 @@ struct TaskBubble: View {
                 .font(.headline)
                 .frame(maxWidth: 288)
                 .foregroundColor(.white)
-                .background(Color.black)
+                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.black)
             
             ForEach(tasks.taskDescription, id: \.self) { message in
                 HStack {
                     Text(message)
                         .padding()
                         .frame(maxWidth: 288)
-                        .background(tasks.user.id == currentUserID ? Color.orange : Color.green)
+                        .background(tasks.user.id == currentUserID ?
+                                    Color.backgroundTextBlue : Color.bubbleColor)
                         .overlay(alignment: .topTrailing) {
                             Text("\(tasks.date.formatted(.dateTime.hour().minute()))")
                                 .font(.caption2)
-                                .foregroundColor(.white)
+                                .foregroundColor(.gray)
                                 .padding(.trailing, 10)
                         }
                 }
                 Rectangle()
                     .frame(maxWidth: 288, maxHeight: 1)
                     .foregroundColor(.gray.opacity(0.5))
-            }
-            
-            Button("bkhbkhb") {
-                print("\(tasks)")
             }
         }
         .cornerRadius(12)

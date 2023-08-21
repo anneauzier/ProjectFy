@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    @State private var showBottomSheet = false
+    @State private var selection = ""
     let user: User
     
     var body: some View {
@@ -30,21 +32,27 @@ struct GroupView: View {
                                     }
                                 }
                             }
-                        )
-                    }.swipeActions(edge: .trailing) {
-                        Button {
-                            print("INFOOO")
-                        } label: {
-                            Image(systemName: "info.circle")
-                        }.tint(.blue)
-                        
-                        Button {
-                            print("EXITTTTTTT")
-                        } label: {
-                            Image(systemName: "trash")
+                        ).swipeActions {
+                            Button(action: {
+                                showBottomSheet.toggle()
+                            }, label: {
+                                Text("...")
+                                    .foregroundColor(.black)
+                            })
                         }
-                    }.tint(.red)
-                    
+                    }
+                }.confirmationDialog("Select Color", isPresented: $showBottomSheet, titleVisibility: .visible) {
+                    Button {
+                        selection = "Group info"
+                    } label: {
+                        Label("Group info", systemImage: "info.circle")
+                    }
+                    Button {
+                        selection = "Exit group"
+                    } label: {
+                        Label("Exit group", systemImage: "iphone.and.arrow.forward")
+                            .foregroundColor(.red)
+                    }
                 }
             }
             .navigationViewStyle(.stack)
@@ -56,40 +64,3 @@ struct GroupView: View {
         }
     }
 }
-
-// @State var isEditing: Bool = false
-// @State var selectedRows: Set<String> = []
-
-// struct GroupView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GroupView()
-//            .environmentObject(GroupViewModel(service: GroupService()))
-//    }
-// }
-
-//    .navigationBarItems(leading: cancelButton, trailing: editButton)
- //            .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive))
- //            //            .animation(Animation.spring())
- //            .listStyle(InsetListStyle())
-
-// var cancelButton: some View {
-//    if isEditing {
-//        return AnyView(Button("Cancelar") {
-//            isEditing.toggle()
-//            //                selectedRows.removeAll()
-//        })
-//    } else {
-//        return AnyView(EmptyView())
-//    }
-// var editButton: some View {
-//    return AnyView(Button(action: {
-//        isEditing.toggle()
-//        selectedRows.removeAll()
-//    }) {
-//        if isEditing {
-//            Text("Deletar")
-//        } else {
-//            Image(systemName: "square.and.pencil")
-//        }
-//    })
-// }
