@@ -35,8 +35,15 @@ fileprivate struct TabBarView: View {
     let user: User
     @Binding var isNewUser: Bool?
     
+    var getUserInfo: Bool {
+        user.name.isEmpty ||
+        user.username.isEmpty ||
+        user.areaExpertise.isEmpty ||
+        user.region.isEmpty
+    }
+
     var body: some View {
-        if let isNewUser = isNewUser, isNewUser {
+        if let isNewUser = isNewUser, isNewUser, getUserInfo {
             SetupInitialConfigs(user: user, isNewUser: $isNewUser)
         } else {
             TabView {
