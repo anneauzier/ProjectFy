@@ -8,37 +8,61 @@
 import SwiftUI
 
 struct TasksGroupView: View {
-    @State var detailsInfo: ProjectGroup
-    var viewModel: GroupViewModel
+    @EnvironmentObject var viewModel: GroupViewModel
     
-    init(detailsInfo: ProjectGroup, viewModel: GroupViewModel) {
-        self._detailsInfo = State(initialValue: detailsInfo)
-        self.viewModel = viewModel
-    }
+    let group: ProjectGroup
+    let user: User
     
     var body: some View {
-        
-        VStack(alignment: .leading) {
-            NavigationLink {
-                DetailsGroupView(detailsInfo: detailsInfo)
-            } label: {
-                HStack(alignment: .center) {
-                    Image("\(detailsInfo.avatar)")
-                        .resizable()
-                        .frame(width: 71, height: 71)
-                    VStack {
-                        Text("\(detailsInfo.name)")
-                            .font(.caption)
-//                        Text("\(detailsInfo.members.count)")
-                    }.foregroundColor(.black)
+        VStack {
+            VStack {
+                GroupInfo(group: group)
+                
+                ScrollView {
+                    ForEach(group.tasks, id: \.id) { task in
+                        TaskBubble(tasks: task, currentUserID: user.id)
+                    }
                 }
-            }
+                .padding(.top, 10)
+                .frame(maxWidth: .infinity)
+                
+            }.padding(.horizontal, 20)
+            
+            TaskField(user: user, group: group, viewModel: viewModel)
+        }
+        .onAppear {
+            TabBarModifier.hideTabBar()
         }
     }
 }
 
-struct MyPreviewProvider_Previews: PreviewProvider {
-    static var previews: some View {
-        TasksGroupView(detailsInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
+struct GroupInfo: View {
+    @EnvironmentObject var viewModel: GroupViewModel
+    let group: ProjectGroup
+    
+    var body: some View {
+        VStack {
+            NavigationLink {
+                DetailsGroupView(group: group)
+            } label: {
+                HStack(alignment: .center) {
+                    Image("\(group.avatar)")
+                        .resizable()
+                        .frame(width: 71, height: 71)
+                    VStack {
+                        Text("\(group.name)")
+                            .font(.caption)
+//                      Text("\(detailsInfo.members.count)")
+                    }.foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.forward")
+                        .foregroundColor(.black)
+                }.navigationBarTitleDisplayMode(.inline)
+            }
+        }
+
+        Divider()
     }
 }

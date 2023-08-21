@@ -31,8 +31,10 @@ struct ProjectFyApp: App {
                     .environmentObject(userViewModel)
                     .environmentObject(groupViewModel)
                     .environmentObject(notificationsViewModel)
-                
+                    
                     .onAppear {
+                        UIApplication.shared.addTapGestureRecognizer()
+
                         guard let userID = authenticationViewModel.getAuthenticatedUser()?.uid else {
                             return
                         }

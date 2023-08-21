@@ -8,118 +8,185 @@
 import SwiftUI
 
 struct UserView: View {
+    
     @EnvironmentObject var viewModel: UserViewModel
-    
-    let user: User
-    var presentUsersProfile: Bool = false
-    
     @State private var goEditUserView = false
+    
+    var presentUsersProfile: Bool = false
+    let user: User
     
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    
-                    Image(user.avatar)
-                        .aspectRatio(contentMode: .fit)
-                        .accessibilityLabel("Foto de perfil")
-                    
-                    Divider()
-                        .padding(.top, -20)
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 100)
+//                            .edgesIgnoringSafeArea(.top)
+                            .foregroundColor(.roleBackground)
+                        
+                        Image(user.avatar)
+                            .resizable()
+                            .frame(width: 90, height: 90)
+                            .aspectRatio(contentMode: .fill)
+                            .accessibilityLabel("Profile photo")
+                            .background(
+                                Circle()
+                                    .fill(.white)
+                                    .frame(width: 110, height: 110)
+                            )
+                            .padding(.leading, 30)
+                            .padding(.top, 40)
+                    }
+
+                    HStack(spacing: 4) {
+                        Text(user.name)
+                            .font(Font.title2)
+                            .foregroundColor(.black)
+                            .accessibilityLabel("Username: \(user.name)")
+                        
+                        Text(user.username)
+                            .font(.body)
+                            .foregroundColor(.editAdvertisementText)
+                            .accessibilityLabel("@\(user.username)")
+                    }.padding(.horizontal, 20)
                     
                     Group {
-                        let availability = user.available ? "Availavle" : "Unavailable"
-                        
-                        Text(availability)
-                            .foregroundColor(.gray)
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                        
-                        HStack {
-                            Text(user.name)
-                                .font(.title)
-                                .bold()
-                                .accessibilityLabel("Username: \(user.name)")
-                            
-                            Text(user.username)
-                                .foregroundColor(.gray)
-                                .bold()
-                                .accessibilityLabel("@\(user.username)")
-                        }
-                        
-                        HStack {
+                        let availability = user.available ? "Available" : "Unavailable"
+                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
+
+                        HStack(spacing: 4) {
                             Text(user.areaExpertise)
-                                .bold()
+                                .font(.body)
+                                .foregroundColor(.black)
                             
                             Circle()
-                                .frame(width: 5)
-                                .foregroundColor(.gray)
+                                .frame(width: 3)
+                                .foregroundColor(.editAdvertisementText)
                             
                             Text(user.expertise.rawValue)
-                                .foregroundColor(.gray)
-                                .bold()
-                                .accessibilityLabel("Nível de Conhecimento \(user.expertise.rawValue)")
+                                .font(.body)
+                                .foregroundColor(.editAdvertisementText)
+                                .accessibilityLabel("Knowledge Level \(user.expertise.rawValue)")
+                            
+                            Circle()
+                                .frame(width: 3)
+                                .foregroundColor(.editAdvertisementText)
+                            
+                            Label(availability, systemImage: imageVerify)
+                                .padding(5)
+                                .font(.callout)
+                                .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
+                                .background(user.available ? Color.availableBackground : Color.unavailableBackground)
+                                .cornerRadius(8)
                         }
                         
-                        HStack {
+                        HStack(spacing: 6) {
                             Image(systemName: "mappin")
                             Text(user.region)
-                                .foregroundColor(.gray)
-                                .bold()
+                                .font(.body)
+                                .foregroundColor(.editAdvertisementText)
                         }.accessibilityElement(children: .combine)
-                            .accessibilityLabel("Região \(user.region)")
-                    }
+                            .accessibilityLabel("Region \(user.region)")
+                        
+                    }.padding(.horizontal, 20)
                     
                     Divider()
                     
                     Group {
-                        Text("Interesses:")
-                            .foregroundColor(.gray)
-                            .bold()
+                        Text("Interests")
+                            .font(Font.headline)
+                            .foregroundColor(.black)
                         
-                        // TODO: Trocar o bold pelo equivalente
-                        HStack(spacing: 8) {
-                            let splitInterests = user.interestTags.split(separator: ",")
-                            
-                            ForEach(splitInterests, id: \.self) { interest in
-                                Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
-                                    .font(.caption)
-                                    .padding(7)
-                                    .foregroundColor(.white)
-//                                    .bold(true)
-                                    .lineLimit(0)
-                                    .background(Capsule().fill(.gray))
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                let splitInterests = user.interestTags.split(separator: ",")
+                                ForEach(splitInterests, id: \.self) { interest in
+                                    Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
+                                        .padding(5)
+                                        .font(.callout.bold())
+                                        .foregroundColor(.textColorBlue)
+                                        .lineLimit(0)
+                                        .background(Color.backgroundTextBlue)
+                                        .cornerRadius(8)
+                                }
                             }
                         }
-                        
-                        Divider()
-                        
-                        Text("Meus anúncios")
-                            .foregroundColor(.black)
-                            .bold()
-                        
-                        Spacer()
-                    }
+                    }.padding(.horizontal, 20)
+                    
+                    UserAdvertisement(user: user)
+                    
                 }
-                .padding(.horizontal, 20)
-            }
+            } .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("My Profile")
+
             .toolbar {
                 if !presentUsersProfile {
-                    Button {
-                        goEditUserView.toggle()
+                    Menu {
+                        Button {
+                            goEditUserView.toggle()
+                        } label: {
+                            Label("Edit profile", systemImage: "square.and.pencil")
+                        }
+                        
+                        Button {
+                            // LÓGICA PARA LOGOUT
+                        } label: {
+                            Label("Log out", systemImage: "iphone.and.arrow.forward")
+                        }
+                        Button(role: .destructive) {
+                            Haptics.shared.impact(.rigid)
+                            // LÓGICA PARA DELETAR CONTA
+                        } label: {
+                            Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
+                        }
                     } label: {
-                        Text("Editar")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        Image(systemName: "ellipsis.circle")
+                            .imageScale(.large)
                             .accessibilityLabel("Edital Perfil")
-                    }
+                    }.sheet(isPresented: $goEditUserView, content: {
+                        EditUserView(editingUser: user, viewModel: viewModel)
+                    })
                 }
             }
-            
-            .sheet(isPresented: $goEditUserView, content: {
-                EditUserView(editingUser: user, viewModel: viewModel)
-            })
         }
     }
 }
+
+struct UserAdvertisement: View {
+    
+    let user: User
+    //    let advertisement: Advertisement
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            
+            Divider()
+            Text("Meus anúncios")
+                .foregroundColor(.black)
+                .bold()
+            Divider()
+            
+            //        AdView(owner: <#T##User#>,
+            //        advertisement: <#T##Advertisement#>,
+            //        editingID: <#T##Binding<String?>#>,
+            //        editAdvertisement: <#T##Binding<Bool>#>,
+            //        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
+            //        presentPositionSheet: <#T##Binding<Bool>#>)
+            
+        }
+    }
+}
+
+//                if !presentUsersProfile {
+//                    Button {
+//                        goEditUserView.toggle()
+//                    } label: {
+//                        Image(systemName: "ellipsis.circle")
+//                            .imageScale(.large)
+//                            .accessibilityLabel("Edital Perfil")
+//                    }
+//                }
+//            }.sheet(isPresented: $goEditUserView, content: {
+//                EditUserView(editingUser: user, viewModel: viewModel)

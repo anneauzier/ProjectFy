@@ -9,6 +9,8 @@ import Foundation
 
 final class GroupMockupService: ObservableObject, GroupProtocol {
     
+    private var listenerCompletion: (([ProjectGroup]?) -> Void)?
+    
     private var groups: [ProjectGroup] = [
 //        ProjectGroup(id: "1213",
 //                     advertisement: Advertisement(owner: .ini)
@@ -33,12 +35,20 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
 //                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
 //                     tasks: [])
     ]
+
+    {
+        didSet {
+            guard let completion = listenerCompletion else { return }
+            getGroups(completion: completion)
+        }
+    }
     
     func create(_ group: ProjectGroup) throws {
         groups.append(group)
     }
     
     func getGroups(completion: @escaping ([ProjectGroup]?) -> Void) {
+        self.listenerCompletion = completion
         completion(groups)
     }
     

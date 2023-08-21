@@ -18,11 +18,17 @@ struct SignInView: View {
     
     var body: some View {
         VStack {
-            Text("Encontre pessoas para realizar projetos paralelos com você!")
+            Text("Find people to help you bring your ideas into the real world! :D")
+                .frame(width: UIScreen.main.bounds.width - 48)
+                .font(Font.largeTitle.bold())
                 .multilineTextAlignment(.center)
-                .font(.title)
-            
-            Divider()
+                .padding(.bottom, 34)
+                
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: UIScreen.main.bounds.width - 144, height: 1)
+                .background(Color.gray.opacity(0.3))
+                .padding(.bottom, 44)
             
             Button {
                 viewModel.authenticationService = SignInWithAppleService()
@@ -44,8 +50,7 @@ struct SignInView: View {
                     type: .default,
                     style: colorScheme == .light ? .black : .white
                 )
-            }
-            .frame(width: 375, height: 55)
+            }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
 
         }
         .padding()

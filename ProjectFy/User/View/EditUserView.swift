@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct EditUserView: View {
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
+    @State var canContinue = false
     @State var editingUser: User
+    
     var isNewUser: Bool
     var viewModel: UserViewModel
-    
-    @State var canContinue = false
     
     init(editingUser: User, isNewUser: Bool = false, viewModel: UserViewModel) {
         self._editingUser = State(initialValue: editingUser)
@@ -34,10 +34,9 @@ struct EditUserView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Cancelar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Text("X")
+                            .font(Font.headline)
+                            .foregroundColor(.textColorBlue)
                     }
                 }
                 
@@ -48,10 +47,9 @@ struct EditUserView: View {
                         Haptics.shared.notification(.success)
                         dismiss()
                     } label: {
-                        Text("Salvar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Text("Save")
+                            .font(.body)
+                            .foregroundColor(.textColorBlue)
                             .opacity(canContinue ? 1 : 0.2)
                     }
                     .disabled(!canContinue)

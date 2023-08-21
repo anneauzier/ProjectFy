@@ -21,7 +21,7 @@ extension AdView {
         var body: some View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
+                    HStack(spacing: 8) {
                         ForEach(advertisement.tags.split(separator: ","), id: \.self) { tag in
                             Tag(text: String(tag))
                         }
@@ -29,33 +29,40 @@ extension AdView {
                 }
                 
                 Text(advertisement.title)
-                    .font(.title)
-                    .padding(.top, 21)
+                    .font(Font.largeTitle.bold())
+                    .foregroundColor(.black)
+                    .padding(.top, 10)
                 
-                HStack(spacing: 27) {
-                    if let weeklyWorkload = advertisement.weeklyWorkload {
-                        Text("\(weeklyWorkload)h semanais")
-                    }
+                HStack {
+                    // if let weeklyWorkload = advertisement.weeklyWorkload {
+                    //  Text("\(weeklyWorkload)h weekly")
+                    // }
                     
-                    Text(advertisement.ongoing ? "Em andamento" : "Não iniciado")
+                    Text(advertisement.ongoing ? "In progress" : "Not started")
+                        .padding(5)
+                        .font(.body)
+                        .foregroundColor(.textColorYellow)
+                        .background(Color.backgroundTextYellow)
+                        .cornerRadius(8)
                 }
                 .removePadding()
-                .padding(.top, 7)
                 
                 Text(advertisement.description)
                     .removePadding()
-                    .padding(.top, 10)
+                    .padding(.top, 15)
                 
                 // Images
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
-                    ForEach(0..<4) { _ in
-                        RoundedRectangle(cornerRadius: 7)
-                            .frame(width: 177, height: 114)
-                    }
-                }
+                //   LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
+                //   ForEach(0..<4) { _ in
+                //    RoundedRectangle(cornerRadius: 7)
+                //     .frame(width: 177, height: 114)
+                //    }
+                //   }
                 
-                Text("Vagas do Projeto")
-                    .font(.title)
+                Text("Project roles")
+                    .font(Font.title.bold())
+                    .foregroundColor(.black)
+                    .padding(.top, 15)
                 
                 VStack {
                     ForEach(advertisement.positions, id: \.self) { position in
@@ -63,7 +70,7 @@ extension AdView {
                             selectedPosition = position
                             Haptics.shared.selection()
                         } label: {
-                            Position(advertisement: advertisement, position: position)
+                            Position(user: user, advertisement: advertisement, position: position)
                         }
                         
                         .onChange(of: selectedPosition, perform: { selectedPosition in
@@ -82,53 +89,62 @@ extension AdView {
                             if let position = selectedPosition {
                                 PositionDetails(user: user, advertisement: advertisement, position: position)
                             } else {
-                                Text("Posição não encontrada!")
+                                Text("Position not found!")
                             }
                         }
                     }
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
                 }
-            }
+            }.frame(width: UIScreen.main.bounds.width - 40)
         }
     }
-
+    
     private struct Tag: View {
         let text: String
         
         var body: some View {
-            RoundedRectangleContent(cornerRadius: 5, fillColor: .gray) {
+            RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundTextBlue) {
                 Text(text)
-                    .foregroundColor(.white)
-                    .padding(.all, 5)
-            }
+                    .padding(5)
+                    .font(.callout)
+                    .foregroundColor(.textColorBlue)
+                    .lineLimit(0)
+            }.padding(.top, 15)
         }
     }
     
     private struct Position: View {
+        let user: User
         let advertisement: Advertisement
         let position: ProjectGroup.Position
         
         var body: some View {
             HStack(spacing: -20) {
-                RoundedRectangleContent(cornerRadius: 5, fillColor: .red) {
+                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
                     HStack(spacing: 12) {
-                        Circle()
-                            .fill(.gray)
-                            .frame(width: 39, height: 39)
+                        Image(user.avatar)
+                            .resizable()
+                            .frame(width: 42, height: 42)
                         
                         let usersJoined = advertisement.applications.compactMap { $0 }
                         Text("\(usersJoined.count)/\(position.vacancies)")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .scaledToFit()
                     }
                 }
-                .frame(width: 95)
+                .frame(width: 107)
                 .zIndex(1)
                 
-                RoundedRectangleContent(cornerRadius: 5, fillColor: .blue) {
+                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.roleBackground) {
                     Text(position.title)
-                        .foregroundColor(.orange)
+                        .font(.headline)
+                        .foregroundColor(.black)
                 }
-                .frame(width: 269)
-            }
-            .frame(height: 60)
+//                .frame(width: 287)
+            }.frame(height: 60)
         }
     }
     
@@ -144,20 +160,43 @@ extension AdView {
         var body: some View {
             VStack(alignment: .leading) {
                 Text(position.title)
-                    .font(.title)
+                    .font(Font.largeTitle.bold())
+                    .foregroundColor(.black)
                 
                 let usersJoined = advertisement.applications.compactMap { $0 }
-                Text("\(position.vacancies - usersJoined.count) vagas restantes")
-                    .foregroundColor(.gray)
+                Text("\(position.vacancies - usersJoined.count) remaining vacancies")
+                    .padding(5)
+                    .foregroundColor(.textColorBlue)
+                    .background(Color.backgroundTextBlue)
+                    .cornerRadius(8)
                     .removePadding()
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray.opacity(0.2))
+                
+                Text("What will you do")
+                    .font(Font.title.bold())
+                    .foregroundColor(.black)
+                    .padding(.bottom, 5)
                 
                 Text(position.description)
                     .padding(.top, -5)
                 
-                Text("Pessoas ingressadas")
-                    .font(.title)
+                Text("People who are already in this project role")
+                    .font(Font.title.bold())
+                    .foregroundColor(.black)
                     .removePadding()
                     .padding(.top, 37)
+                
+                // BANCO DE DADOS
+                
+                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                    UserInfo(user: user, size: 49, nameColor: .white)
+                    // TRATAR ESSA RESPONSIVIDADE DEPOIS
+                        .padding(.trailing, 40)
+                        .removePadding()
+                }.frame(height: 88)
                 
                 Spacer()
                 
@@ -172,7 +211,7 @@ extension AdView {
                     return false
                 }
                 
-                let buttonText = hasAppliedForThisPosition ? "Retirar solicitação" : "Solicitar ingresso"
+                let buttonText = hasAppliedForThisPosition ? "Remove request" : "Request to join"
                 let isDisabled = hasApplied && !hasAppliedForThisPosition
                 
                 Button {
@@ -193,20 +232,19 @@ extension AdView {
                                                                    advertisement: advertisement,
                                                                    position: position.title)
                 } label: {
-                    RoundedRectangleContent(cornerRadius: 5, fillColor: .gray) {
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
                         VStack {
                             if advertisementsViewModel.applicationStatus == .applying {
                                 ProgressView()
                                     .progressViewStyle(.circular)
                             } else {
                                 Text(buttonText)
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
+                                    .font(.headline)
+                                    .foregroundColor(.white)
                             }
                         }
-                    }
-                    .frame(maxHeight: 60)
-                    .padding(.top, 20)
+                    }.frame(maxHeight: 60)
+                     .padding(.top, 20)
                 }
                 .disabled(isDisabled)
                 
@@ -215,14 +253,13 @@ extension AdView {
                         Haptics.shared.notification(.error)
                     }
                 }))
-            }
+            }.frame(width: UIScreen.main.bounds.width - 40)
             
             .onDisappear {
                 advertisementsViewModel.applicationStatus = nil
             }
             
             .foregroundColor(.black)
-            .padding(.horizontal, 25)
             .padding(.top, 30)
         }
     }
@@ -241,6 +278,6 @@ struct RoundedRectangleContent<Content: View>: View {
             
             content()
         }
-//        .fixedSize(horizontal: false, vertical: true)
+        //        .fixedSize(horizontal: false, vertical: true)
     }
 }

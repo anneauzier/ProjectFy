@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProjectGroup: Hashable, Codable {
-
+    
     let id: String
     let advertisement: Advertisement
     var name: String
@@ -16,7 +16,7 @@ struct ProjectGroup: Hashable, Codable {
     let avatar: String
     let admin: User
     var link: String
-    let tasks: [Task]
+    var tasks: [Task]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -36,18 +36,24 @@ struct ProjectGroup: Hashable, Codable {
         var vacancies: Int
     }
     
-    struct Task: Hashable, Codable {
+    struct Task: Identifiable, Hashable, Codable {
         let id: String
-        
-        let ownerID: String
-        var taskDescription: String
-        let time: Date
-        
+        let user: User
+        var taskDescription: [String]
+        let date: Date
+ 
         enum CodingKeys: String, CodingKey {
             case id
-            case ownerID = "owner_id"
+            case user
             case taskDescription = "task_description"
-            case time
+            case date
+        }
+        
+        init(user: User) {
+            self.id = UUID().uuidString
+            self.user = user
+            self.taskDescription = []
+            self.date = Date()
         }
     }
     

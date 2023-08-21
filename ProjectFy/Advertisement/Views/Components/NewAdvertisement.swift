@@ -41,24 +41,28 @@ extension AdvertisementsView {
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-//                    UserInfo(user: userViewModel.user, size: 50)
-                    
-                    TextField("Adicione tags ao seu projeto...", text: $advertisement.tags)
+
+                    TextField("Add 10 tags to your project...", text: $advertisement.tags)
+                        .font(Font.body)
+                        .foregroundColor(.editAdvertisementText)
                         .padding(.top, 25)
                     
-                    TextField("Título do Projeto", text: $advertisement.title)
-                        .font(.title)
+                    TextField("Name your project...", text: $advertisement.title)
+                        .font(Font.largeTitle.bold())
+                        .foregroundColor(.editAdvertisementText)
                         .padding(.top, 44)
                     
-                    TextField("Descrição do anúncio...", text: $advertisement.description)
+                    TextField("Describe your project in 1000 characters or less...", text: $advertisement.description)
+                        .font(Font.body)
+                        .foregroundColor(.editAdvertisementText)
                         .padding(.top, 54)
                     
                     DropDownButton(
-                        title: "Status do projeto",
+                        title: "Project status", textColor: .textColorBlue,
                         selection: $advertisement.ongoing,
                         menuItems: [
-                            MenuItem(name: "Não iniciado", tag: false),
-                            MenuItem(name: "Em andamento", tag: true)
+                            MenuItem(name: "Not started", tag: false),
+                            MenuItem(name: "In progress", tag: true)
                         ]
                     )
                     .padding(.top, 20)
@@ -85,8 +89,8 @@ extension AdvertisementsView {
                         presentBackAlert = true
                     } label: {
                         HStack {
-                            Image(systemName: "chevron.backward")
-                            Text("Back")
+                            Text("X")
+                                .font(Font.title3.bold())
                         }
                     }
                 }
@@ -100,8 +104,8 @@ extension AdvertisementsView {
                         )
                             .environmentObject(advertisementsViewModel)
                     } label: {
-                        Text("Avançar")
-                    }
+                        Text("Next")
+                    }.disabled(!(cantNext()))
 
                     .simultaneousGesture(TapGesture().onEnded({ _ in
                         Haptics.shared.selection()
@@ -109,7 +113,7 @@ extension AdvertisementsView {
                 }
             }
             
-            .alert("Você deseja mesmo descartar a publicação?", isPresented: $presentBackAlert) {
+            .alert("Do you really want to delete this project announcement?", isPresented: $presentBackAlert) {
                 Button(role: .cancel) {
                     presentBackAlert = false
                 } label: {
@@ -119,13 +123,20 @@ extension AdvertisementsView {
                 Button(role: .destructive) {
                     dismiss()
                 } label: {
-                    Text("Ok")
+                    Text("Delete")
                 }
             } message: {
-                Text("Você perderá todas as informações preenchidas")
+                Text("This project announcement will be deleted permanentely")
             }
 
         }
+        
+        private func cantNext() -> Bool {
+                // Verificar se os campos relevantes estão preenchidos
+                return !advertisement.tags.isEmpty
+                    && !advertisement.title.isEmpty
+                    && !advertisement.description.isEmpty
+            }
     }
     
     private struct Positions: View {
@@ -139,8 +150,8 @@ extension AdvertisementsView {
         var body: some View {
             ScrollView {
                 VStack {
-                    Text("Criar vagas de projeto")
-                        .font(.title)
+                    Text("Create project vacancies")
+                        .font(Font.title.bold())
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in
                         Position(position: $advertisement.positions[index])
@@ -153,13 +164,11 @@ extension AdvertisementsView {
                         } label: {
                             ZStack {
                                 Circle()
-                                    .fill(.blue)
+                                    .fill(Color.textColorBlue)
                                 
-                                // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
                                 Image(systemName: "plus")
+                                    .font(Font.title2.bold())
                                     .foregroundColor(.white)
-                                    .font(.system(size: 24))
-//                                    .fontWeight(.bold)
                             }
                             .frame(width: 54, height: 54)
                         }
@@ -189,8 +198,8 @@ extension AdvertisementsView {
                     Haptics.shared.notification(.success)
                     popToRoot.toggle()
                 } label: {
-                    Text(isEditing ? "Editar" : "Publicar")
-                }
+                    Text(isEditing ? "Edit" : "Share")
+                }.disabled(!cantShare())
             }
         }
         
@@ -204,31 +213,60 @@ extension AdvertisementsView {
                 )
             )
         }
+
+        private func cantShare() -> Bool {
+            return !advertisement.positions.isEmpty &&
+            advertisement.positions.allSatisfy { !$0.title.isEmpty }
+        }
     }
     
     private struct Position: View {
         @Binding var position: ProjectGroup.Position
         
         var body: some View {
-            RoundedRectangleContent(cornerRadius: 20, fillColor: .mint) {
+            RoundedRectangleContent(cornerRadius: 20, fillColor: Color.backgroundRole) {
                 VStack(alignment: .leading) {
-                    Text("Nome da vaga")
-                    TextField("Nome da vaga", text: $position.title)
+                    HStack {
+                        Text("Project role name")
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Button {
+                            print("EXCLUIR VAGA")
+                        } label: {
+                            Image(systemName: "x.circle.fill")
+                                .imageScale(.large)
+                                .foregroundColor(.white)
+                        }
+                    }
+                    TextField("", text: $position.title)
+                        .placeholder(when: position.title.isEmpty, placeholder: {
+                            Text("Ex: UI/UX Design, Software Engeneer...")
+                                .foregroundColor(.placeholderColor)
+                        }).foregroundColor(.white)
                     
                     Divider()
                     
-                    Text("Descrição da vaga (opcional)")
-                    TextField("Responsabilidades de quem irá assumir...", text: $position.description)
-                    
+                    Text("Project role descripition (optional)")
+                        .foregroundColor(.white)
+                    TextField("", text: $position.description)
+                        .placeholder(when: position.description.isEmpty, placeholder: {
+                            Text("Describe what the person entering this role will do on the project...")
+                                .foregroundColor(.placeholderColor)
+                        }).foregroundColor(.white)
+
                     Divider()
                     
                     HStack(spacing: 15) {
-                        Text("Quantidade de vagas")
+                        Text("Quantity")
+                            .foregroundColor(.white)
                         
                         Spacer()
                         
                         VacancyButton(position: $position, isPlusButton: false)
                         Text("\(position.vacancies)")
+                            .foregroundColor(.white)
                         VacancyButton(position: $position, isPlusButton: true)
                     }
                 }
@@ -247,11 +285,11 @@ extension AdvertisementsView {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.blue)
+                        .fill(Color.textColorBlue)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
                         .font(.system(size: 12))
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                 }
             }
             .disabled(!isPlusButton && position.vacancies < 2)
