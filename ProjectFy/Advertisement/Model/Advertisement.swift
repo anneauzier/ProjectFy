@@ -32,9 +32,9 @@ struct Advertisement: Hashable, Codable {
     }
     
     struct Application: Hashable, Codable {
+        let id: String
         let position: ProjectGroup.Position
         let user: User
-        var joined: Bool
     }
     
     init(id: String,

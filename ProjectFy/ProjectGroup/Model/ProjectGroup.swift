@@ -8,11 +8,13 @@
 import Foundation
 
 struct ProjectGroup: Hashable, Codable {
+    typealias Member = Advertisement.Application
     
     let id: String
     let advertisement: Advertisement
     var name: String
     var description: String
+    var members: [Member]
     let avatar: String
     let admin: User
     var link: String
@@ -23,6 +25,7 @@ struct ProjectGroup: Hashable, Codable {
         case advertisement
         case name
         case description
+        case members
         case avatar
         case admin
         case link
@@ -61,6 +64,7 @@ struct ProjectGroup: Hashable, Codable {
          advertisement: Advertisement,
          name: String,
          description: String,
+         members: [Member],
          avatar: String,
          admin: User,
          link: String,
@@ -69,6 +73,7 @@ struct ProjectGroup: Hashable, Codable {
         self.advertisement = advertisement
         self.name = name
         self.description = description
+        self.members = members
         self.avatar = avatar
         self.admin = admin
         self.link = link
@@ -80,6 +85,7 @@ struct ProjectGroup: Hashable, Codable {
         self.advertisement = advertisement
         self.name = advertisement.title
         self.description = advertisement.description
+        self.members = []
         self.avatar = String.avatars.randomElement() ?? ""
         self.admin = advertisement.owner
         self.link = ""
@@ -91,6 +97,7 @@ struct ProjectGroup: Hashable, Codable {
         self.advertisement = Advertisement(owner: .init(signInResult: .init(identityToken: "", nonce: "", name: "", email: "")))
         self.name = ""
         self.description = ""
+        self.members = []
         self.avatar = ""
         self.admin = User(signInResult: .init(identityToken: "", nonce: "", name: "", email: ""))
         self.link = ""

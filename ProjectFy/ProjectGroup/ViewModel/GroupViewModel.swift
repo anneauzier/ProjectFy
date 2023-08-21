@@ -12,12 +12,19 @@ final class GroupViewModel: ObservableObject {
     @Published var groups: [ProjectGroup] = []
     
     private let service: GroupProtocol
+    private var userID: String?
     
     init(service: GroupProtocol) {
         self.service = service
+        
         service.getGroups { [weak self] groups in
             guard let groups = groups else { return }
-            self?.groups = groups
+            
+            self?.groups = groups.filter { group in
+                group.members.contains { member in
+                    member.user.id == self?.userID
+                }
+            }
         }
     }
     
@@ -43,5 +50,9 @@ final class GroupViewModel: ObservableObject {
     
     func deleteGroup(with id: String) {
         service.delete(with: id)
+    }
+    
+    func setUser(with id: String) {
+        self.userID = id
     }
 }
