@@ -26,18 +26,15 @@ struct AdvertisementsView: View {
                     Divider()
                     
                     ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
-                        let owner = userViewModel.getUser(with: advertisement.ownerID)
-                        
-                        if let owner = owner {
-                            AdView(
-                                owner: owner,
-                                advertisement: advertisement,
-                                editingID: $editingID,
-                                editAdvertisement: $isLinkActive,
-                                selectedPositionToPresent: $selectedPositionToPresent,
-                                presentPositionSheet: $presentPositionSheet
-                            )
-                        }
+                        AdView(
+                            user: user,
+                            owner: advertisement.owner,
+                            advertisement: advertisement,
+                            editingID: $editingID,
+                            editAdvertisement: $isLinkActive,
+                            selectedPositionToPresent: $selectedPositionToPresent,
+                            presentPositionSheet: $presentPositionSheet
+                        )
                     }
                 }
                 .padding(.horizontal, 16)
@@ -49,7 +46,7 @@ struct AdvertisementsView: View {
             
             .toolbar {
                 NavigationLink(isActive: $isLinkActive) {
-                    NewAdvertisement(ownerID: user.id,
+                    NewAdvertisement(owner: user,
                                      viewModel: advertisementsViewModel,
                                      popToRoot: $isLinkActive,
                                      editingID: editingID)
@@ -68,6 +65,7 @@ struct AdvertisementsView: View {
 struct AdView: View {
     @EnvironmentObject var viewModel: AdvertisementsViewModel
     
+    let user: User
     let owner: User
     let advertisement: Advertisement
     
@@ -118,7 +116,7 @@ struct AdView: View {
             }
             
             AdInfo(
-                user: owner,
+                user: user,
                 advertisement: advertisement,
                 presentSheet: $presentPositionSheet,
                 selectedPosition: $selectedPositionToPresent

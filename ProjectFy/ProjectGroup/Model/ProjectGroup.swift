@@ -10,19 +10,21 @@ import Foundation
 struct ProjectGroup: Hashable, Codable {
 
     let id: String
+    let advertisement: Advertisement
     var name: String
     var description: String
     let avatar: String
-    let adminID: String
+    let admin: User
     var link: String
     let tasks: [Task]
     
     enum CodingKeys: String, CodingKey {
         case id
+        case advertisement
         case name
         case description
         case avatar
-        case adminID = "admin_id"
+        case admin
         case link
         case tasks
     }
@@ -50,27 +52,41 @@ struct ProjectGroup: Hashable, Codable {
     }
     
     init(id: String,
+         advertisement: Advertisement,
          name: String,
          description: String,
          avatar: String,
-         adminID: String,
+         admin: User,
          link: String,
          tasks: [Task]) {
         self.id = id
+        self.advertisement = advertisement
         self.name = name
         self.description = description
         self.avatar = avatar
-        self.adminID = adminID
+        self.admin = admin
         self.link = link
         self.tasks = tasks
     }
     
+    init(advertisement: Advertisement) {
+        self.id = UUID().uuidString
+        self.advertisement = advertisement
+        self.name = advertisement.title
+        self.description = advertisement.description
+        self.avatar = String.avatars.randomElement() ?? ""
+        self.admin = advertisement.owner
+        self.link = ""
+        self.tasks = []
+    }
+    
     init() {
         self.id = UUID().uuidString
+        self.advertisement = Advertisement(owner: .init(signInResult: .init(identityToken: "", nonce: "", name: "", email: "")))
         self.name = ""
         self.description = ""
         self.avatar = ""
-        self.adminID = ""
+        self.admin = User(signInResult: .init(identityToken: "", nonce: "", name: "", email: ""))
         self.link = ""
         self.tasks = []
     }

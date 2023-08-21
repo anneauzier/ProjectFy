@@ -27,6 +27,10 @@ final class NotificationsViewModel: ObservableObject {
             
             self.notifications.removeAll(where: { type(of: $0) == T.self })
             self.notifications.append(contentsOf: notifications)
+            
+            self.notifications.sort {
+                $0.date < $1.date
+            }
         }
     }
     
@@ -36,6 +40,15 @@ final class NotificationsViewModel: ObservableObject {
         } catch {
             print("Cannot create advertisement: \(error.localizedDescription)")
         }
+    }
+    
+    func pushRequestNotification(target: User, sender: User, advertisement: Advertisement, position: String) {
+        let notification = RequestNotification(target: target,
+                                               sender: sender,
+                                               advertisement: advertisement,
+                                               position: position)
+        
+        createNotification(notification)
     }
     
     func getNotification(with id: String) -> (any Notification)? {
@@ -58,5 +71,9 @@ final class NotificationsViewModel: ObservableObject {
         
         guard let notification = notification else { return }
         service.delete(with: notification.id)
+    }
+    
+    func delete(with id: String) {
+        service.delete(with: id)
     }
 }

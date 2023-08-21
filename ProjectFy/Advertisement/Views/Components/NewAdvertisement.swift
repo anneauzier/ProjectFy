@@ -31,8 +31,8 @@ extension AdvertisementsView {
         @Binding var popToRoot: Bool
         var editingID: String?
         
-        init(ownerID: String, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
-            self._advertisement = State(initialValue: Advertisement(ownerID: ownerID))
+        init(owner: User, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
+            self._advertisement = State(initialValue: Advertisement(owner: owner))
             self.viewModel = viewModel
             self._popToRoot = popToRoot
             self.editingID = editingID

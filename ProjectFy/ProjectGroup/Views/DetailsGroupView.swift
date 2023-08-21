@@ -57,12 +57,15 @@ struct DetailsGroupView: View {
 
 struct DetailsGroupView_Previews: PreviewProvider {
     static var previews: some View {
+        let user = User(signInResult: .init(identityToken: "", nonce: "", name: "Iago", email: ""))
+        
         let previewGroup = ProjectGroup(
             id: "1213",
+            advertisement: Advertisement(owner: user),
             name: "Adventure Game",
             description: "Lorem Ipsum is simply dummy text.",
             avatar: "Group2",
-            adminID: "123456",
+            admin: user,
             link: "https://trello.com/b/DwEhWYYJ/projectfy",
             tasks: [])
         

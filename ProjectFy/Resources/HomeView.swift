@@ -9,12 +9,16 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
     @Binding var isNewUser: Bool?
     
     var body: some View {
         if let user = userViewModel.user {
             TabBarView(user: user, isNewUser: $isNewUser)
+                .onAppear {
+                    notificationsViewModel.startListening(with: user.id)
+                }
         } else {
             LoadingUserInfo()
         }
@@ -38,6 +42,9 @@ fileprivate struct TabBarView: View {
             TabView {
                 AdvertisementsView(user: user)
                     .tabItem { Label("Home", systemImage: "house") }
+                
+                Notifications(user: user)
+                    .tabItem { Label("Notifications", systemImage: "bell") }
                 
                 GroupView()
                     .tabItem { Label("Group", systemImage: "person.3") }
