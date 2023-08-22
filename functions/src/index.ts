@@ -16,9 +16,3 @@ export const notificate = functions.firestore
       body: notification.body,
     });
   });
-
-export const teste = functions.firestore
-  .document("/notifications/{notificationID}")
-  .onDelete((snapshot, context) => {
-    console.log("apagou", context.params.notificationID);
-  });

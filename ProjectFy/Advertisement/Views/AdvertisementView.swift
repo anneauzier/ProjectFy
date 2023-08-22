@@ -141,16 +141,16 @@ struct AdView: View {
                             Haptics.shared.impact(.rigid)
                             showDeleteAlert.toggle()
                         } label: {
-                            Label("Delete Ad", systemImage: "trash")
+                            Label("Delete announce", systemImage: "trash")
                         }
                     } label: {
                         Label("Options", systemImage: "ellipsis")
                             .labelStyle(.iconOnly)
                             .imageScale(.large)
+                            .tint(.editAdvertisementText)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 10)
-                    .padding(.leading, 27)
+                    .padding(.top, 23)
                 }
             }
             

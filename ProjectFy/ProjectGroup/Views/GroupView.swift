@@ -65,7 +65,7 @@ struct GroupView: View {
                             }
 
                             Button(role: .destructive) {
-                                viewModel.exitGroup(user: user, group: group)
+                                viewModel.exitOfGroup(user: user, group: group)
                             } label: {
                                 Text("Exit group")
                             }

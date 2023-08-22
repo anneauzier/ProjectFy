@@ -24,10 +24,11 @@ struct DetailsGroupView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding([.top, .bottom], 32)
                 
-                Group {
+                VStack(alignment: .leading) {
                     Text("Group name")
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
+                    
                     Text("\(group.name)")
                         .font(.body)
                         .foregroundColor(.backgroundRole)
@@ -41,6 +42,7 @@ struct DetailsGroupView: View {
                     Text("Group description")
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
+                    
                     Text("\(group.description)")
                         .font(.body)
                         .foregroundColor(.backgroundRole)
@@ -140,7 +142,7 @@ extension DetailsGroupView {
                 }
                 
                 Button {
-                    viewModel.exitGroup(user: user, group: group)
+                    viewModel.exitOfGroup(user: user, group: group)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
                         Text("Exit group")

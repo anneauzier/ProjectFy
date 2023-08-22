@@ -17,7 +17,7 @@ struct DropDownButton<T: Hashable>: View {
     @State var text: String = ""
     
     var body: some View {
-        Group {
+        VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.backgroundRole)
@@ -47,6 +47,8 @@ struct DropDownButton<T: Hashable>: View {
                 Image(systemName: "chevron.down")
                     .foregroundColor(Color.backgroundRole)
             }
+            .padding(.top, 5)
+            
             .background(
                 Rectangle()
                     .frame(height: 1)

@@ -75,6 +75,7 @@ struct CustomText: View {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.backgroundRole)
+            
             ZStack(alignment: .bottom) {
                 WrappedTextView(text: $text, textDidChange: self.textDidChange)
                     .focused($isTextFieldFocused)
@@ -96,6 +97,7 @@ struct CustomText: View {
                     }
                 }
             }
+            .padding(.top, -3)
         }.onTapGesture {
             isTextFieldFocused = false
         }

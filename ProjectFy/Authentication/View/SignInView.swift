@@ -11,32 +11,52 @@ import AuthenticationServices
 struct SignInView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    @EnvironmentObject var viewModel: AuthenticationViewModel
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+    @EnvironmentObject var groupViewModel: GroupViewModel
+    @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
+    var isDeletingAccount = false
     @Binding var isNewUser: Bool?
     
     var body: some View {
         VStack {
-            
             Image("logo")
                 .padding(.bottom, 34)
             
             Spacer()
 
-            Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world!")
-                .frame(width: UIScreen.main.bounds.width - 90)
-                .font(Font.title.bold())
-                .foregroundColor(.backgroundRole)
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 40)
+            if isDeletingAccount {
+                Text("To delete \(Text("your account")) you need to log into the app again...")
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 68)
+                
+                Text("We're very sad to know that you want to delete your account on our app :(")
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 98)
+                
+                
+            } else {
+                Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
+                    .frame(width: UIScreen.main.bounds.width - 105)
+                    .font(Font.title2.bold())
+                    .foregroundColor(.signInColor)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 40)
+            }
             
             Spacer()
             
             Button {
-                viewModel.authenticationService = SignInWithAppleService()
+                authenticationViewModel.authenticationService = SignInWithAppleService()
                 
-                viewModel.signIn { signInResult in
+                authenticationViewModel.signIn { signInResult in
+                    if isDeletingAccount {
+                        deleteAllUserData(with: signInResult.identityToken)
+                        return
+                    }
+                    
                     if userViewModel.getUser(with: signInResult.identityToken) != nil {
                         return
                     }
@@ -77,6 +97,16 @@ struct SignInView: View {
         
         func updateUIView(_ uiView: UIViewType, context: Context) {
         }
+    }
+    
+    private func deleteAllUserData(with userID: String) {
+        MessagingService.shared.deleteTokens()
+        advertisementsViewModel.deleteAllAdvertisements(from: userID)
+        groupViewModel.exitOfAllGroups()
+        notificationsViewModel.deleteAllNotifications()
+        
+        userViewModel.deleteUser()
+        authenticationViewModel.delete()
     }
 }
 

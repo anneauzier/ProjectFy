@@ -29,26 +29,27 @@ struct ProjectFyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if authenticationViewModel.isAuthenticated {
-                HomeView(isNewUser: $isNewUser)
-                
-                .onAppear {
-                    guard let user = authenticationViewModel.getAuthenticatedUser() else { return }
+            Group {
+                if authenticationViewModel.isAuthenticated {
+                    HomeView(isNewUser: $isNewUser)
                     
-                    userViewModel.setUser(with: user.uid)
-                    groupViewModel.setUser(with: user.uid)
+                    .onAppear {
+                        guard let user = authenticationViewModel.getAuthenticatedUser() else { return }
+                        
+                        userViewModel.setUser(with: user.uid)
+                        groupViewModel.setUser(with: user.uid)
+                    }
+                } else  {
+                    SignInView(isNewUser: $isNewUser)
                 }
-                
+            }
+                .environmentObject(authenticationViewModel)
                 .environmentObject(advertisementsViewModel)
                 .environmentObject(userViewModel)
                 .environmentObject(groupViewModel)
                 .environmentObject(notificationsViewModel)
-            } else {
-                SignInView(isNewUser: $isNewUser)
-                    .environmentObject(authenticationViewModel)
-                    .environmentObject(userViewModel)
-            }
         }
+        
     }
 }
 
@@ -81,42 +82,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        guard let currentUser = Auth.auth().currentUser, let token = fcmToken else { return }
-        self.saveFCMToken(currentUser: currentUser, token: token)
-    }
-    
-    private func saveFCMToken(currentUser: FirebaseAuth.User, token: String) {
-        let tokensCollection = DBCollection(collectionName: "tokens")
-        
-        tokensCollection.addSnapshotListener { (tokens: [FCMToken]?) in
-            let userID = currentUser.uid
-            
-            do {
-                guard var userTokens = tokens?.first(where: { $0.userID == userID }) else {
-                    let tokens = FCMToken(userID: currentUser.uid, tokens: [token])
-                    try tokensCollection.create(tokens, with: userID)
-                    
-                    return
-                }
-                
-                if !userTokens.tokens.contains(token) {
-                    userTokens.tokens.append(token)
-                    try tokensCollection.update(userTokens, with: userID)
-                }
-            } catch {
-                print("Cannot save FCMToken: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    private struct FCMToken: Hashable, Codable {
-        let userID: String
-        var tokens: [String]
-        
-        enum CodingKeys: String, CodingKey {
-            case userID = "user_id"
-            case tokens
-        }
+        MessagingService.shared.token = fcmToken
     }
 }
 

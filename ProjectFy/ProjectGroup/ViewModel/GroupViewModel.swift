@@ -66,7 +66,7 @@ final class GroupViewModel: ObservableObject {
         }
     }
     
-    func exitGroup(user: User, group: ProjectGroup) {
+    func exitOfGroup(user: User, group: ProjectGroup) {
         var group = group
         
         if group.admin.id == user.id {
@@ -83,6 +83,14 @@ final class GroupViewModel: ObservableObject {
         
         group.members.removeAll(where: { $0.user.id == user.id })
         editGroup(group)
+    }
+    
+    func exitOfAllGroups() {
+        var groupsIDs = groups.map(\.id)
+        
+        groupsIDs.forEach { [weak self] id in
+            self?.deleteGroup(with: id)
+        }
     }
     
     func deleteGroup(with id: String) {

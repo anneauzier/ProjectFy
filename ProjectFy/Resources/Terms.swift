@@ -38,7 +38,9 @@ struct Terms: View {
                         )
                         Text(
                 """
-                However, you understand and agree that the Application is not responsible for the consequences of sharing ideas, opinions or information through the Application. You are solely responsible for the content you share and the consequences of your actions.
+                However, you understand and agree that the Application is not responsible for the
+                consequences of sharing ideas, opinions or information through the Application. You are solely
+                responsible for the content you share and the consequences of your actions.
                 """
                         )
                     }

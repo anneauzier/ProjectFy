@@ -30,13 +30,13 @@ struct UserInfo: View {
                         .foregroundColor(.userNameColor)
                 }.scaledToFit()
                 
-                HStack(spacing: 9) {
+                HStack(spacing: 5) {
                     Text(user.areaExpertise)
                         .font(.body)
                         .foregroundColor(nameColor)
                     
                     Circle()
-                        .frame(width: 4, height: 4)
+                        .frame(width: 3, height: 3)
                         .foregroundColor(.editAdvertisementText)
                     
                     Text(user.expertise.rawValue)

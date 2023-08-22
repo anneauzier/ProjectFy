@@ -48,6 +48,16 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
+    func delete() {
+        guard let user = Auth.auth().currentUser else {
+            print("There's no user authenticated!")
+            return
+        }
+        
+        signOut()
+        user.delete()
+    }
+    
     func handleAuthenticationChanges(completion: @escaping (FirebaseAuth.User?) -> Void) {
         Auth.auth().addStateDidChangeListener { _, user in
             completion(user)

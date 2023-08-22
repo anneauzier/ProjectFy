@@ -39,8 +39,9 @@ extension AdView {
                     // }
                     
                     Text(advertisement.ongoing ? "In progress" : "Not started")
-                        .padding(5)
-                        .font(.body)
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 10)
+                        .font(.subheadline)
                         .foregroundColor(.textColorYellow)
                         .background(Color.backgroundTextYellow)
                         .cornerRadius(8)
@@ -48,8 +49,8 @@ extension AdView {
                 .removePadding()
                 
                 Text(advertisement.description)
-                    .removePadding()
-                    .padding(.top, 15)
+                    .padding(.top, 8)
+//                    .removePadding()
                 
                 Text("Project roles")
                     .font(Font.title.bold())
@@ -63,7 +64,7 @@ extension AdView {
                             Haptics.shared.selection()
                         } label: {
                             Position(user: user, advertisement: advertisement, position: position)
-                        }
+                        }.padding(.bottom, 20)
                         
                         .onChange(of: selectedPosition, perform: { selectedPosition in
                             if selectedPosition != nil {
@@ -85,8 +86,8 @@ extension AdView {
                             }
                         }
                     }
+                    Divider()
                 }
-                Divider()
                 
             }.frame(width: UIScreen.main.bounds.width - 40)
         }
@@ -98,7 +99,8 @@ extension AdView {
         var body: some View {
             RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundTextBlue) {
                 Text(text)
-                    .padding(5)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 10)
                     .font(.callout)
                     .foregroundColor(.textColorBlue)
                     .lineLimit(0)
