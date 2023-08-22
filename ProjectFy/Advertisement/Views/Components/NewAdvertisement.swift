@@ -147,7 +147,7 @@ extension AdvertisementsView {
                         .padding(.bottom, 30)
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in
-                        Position(position: $advertisement.positions[index])
+                        Position(advertisement: $advertisement, position: $advertisement.positions[index])
                     }
                     
                     Button {
@@ -216,6 +216,7 @@ extension AdvertisementsView {
     }
     
     private struct Position: View {
+        @Binding var advertisement: Advertisement
         @Binding var position: ProjectGroup.Position
         
         var body: some View {
@@ -228,7 +229,7 @@ extension AdvertisementsView {
                         Spacer()
                         
                         Button {
-                            print("EXCLUIR VAGA")
+                            advertisement.positions.removeAll(where: { $0.id == position.id })
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .imageScale(.large)
