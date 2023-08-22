@@ -12,6 +12,8 @@ final class GroupViewModel: ObservableObject {
     @Published var groups: [ProjectGroup] = []
     
     private let service: GroupProtocol
+    private var allGroups: [ProjectGroup] = []
+    
     private var userID: String?
     
     init(service: GroupProtocol) {
@@ -20,10 +22,14 @@ final class GroupViewModel: ObservableObject {
         service.getGroups { [weak self] groups in
             guard let groups = groups else { return }
             
+            self?.allGroups = groups
+            
             self?.groups = groups.filter { group in
                 group.members.contains { member in
                     member.user.id == self?.userID
-                }
+                } ||
+                
+                group.admin.id == self?.userID
             }
         }
     }
@@ -38,6 +44,10 @@ final class GroupViewModel: ObservableObject {
     
     func getGroup(with id: String) -> ProjectGroup? {
         return groups.first(where: { $0.id == id })
+    }
+    
+    func getGroup(by advertisementID: String) -> ProjectGroup? {
+        return allGroups.first(where: { $0.advertisement.id == advertisementID })
     }
     
     func editGroup(_ group: ProjectGroup) {

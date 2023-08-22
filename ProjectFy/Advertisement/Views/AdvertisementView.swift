@@ -17,9 +17,6 @@ struct AdvertisementsView: View {
     @State var isLinkActive = false
     @State var editingID: String?
     
-    @State var selectedPositionToPresent: ProjectGroup.Position?
-    @State var presentPositionSheet: Bool = false
-    
     @State var presentSheet = false
     
     var body: some View {
@@ -34,9 +31,7 @@ struct AdvertisementsView: View {
                             owner: advertisement.owner,
                             advertisement: advertisement,
                             editingID: $editingID,
-                            editAdvertisement: $isLinkActive,
-                            selectedPositionToPresent: $selectedPositionToPresent,
-                            presentPositionSheet: $presentPositionSheet
+                            editAdvertisement: $isLinkActive
                         )
                     }
                 }
@@ -84,15 +79,11 @@ struct AdView: View {
     @Binding var editingID: String?
     @Binding var editAdvertisement: Bool
     
-    @Binding var selectedPositionToPresent: ProjectGroup.Position?
-    @Binding var presentPositionSheet: Bool
-    
     @State var showDeleteAlert: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-
                 NavigationLink {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
@@ -127,12 +118,7 @@ struct AdView: View {
                 .padding(.leading, 27)
             }
             
-            AdInfo(
-                user: user,
-                advertisement: advertisement,
-                presentSheet: $presentPositionSheet,
-                selectedPosition: $selectedPositionToPresent
-            )
+            AdInfo(user: user, advertisement: advertisement)
         }
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {

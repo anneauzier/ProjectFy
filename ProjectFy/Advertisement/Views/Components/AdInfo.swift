@@ -15,8 +15,8 @@ extension AdView {
         let user: User
         let advertisement: Advertisement
         
-        @Binding var presentSheet: Bool
-        @Binding var selectedPosition: ProjectGroup.Position?
+        @State var presentSheet = false
+        @State var selectedPosition: ProjectGroup.Position?
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -50,14 +50,6 @@ extension AdView {
                 Text(advertisement.description)
                     .removePadding()
                     .padding(.top, 15)
-                
-                // Images
-                //   LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
-                //   ForEach(0..<4) { _ in
-                //    RoundedRectangle(cornerRadius: 7)
-                //     .frame(width: 177, height: 114)
-                //    }
-                //   }
                 
                 Text("Project roles")
                     .font(Font.title.bold())
@@ -97,7 +89,8 @@ extension AdView {
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
                 }
-            }.frame(width: UIScreen.main.bounds.width - 40)
+            }
+            .frame(width: UIScreen.main.bounds.width - 40)
         }
     }
     
@@ -116,6 +109,8 @@ extension AdView {
     }
     
     private struct Position: View {
+        @EnvironmentObject var groupViewModel: GroupViewModel
+        
         let user: User
         let advertisement: Advertisement
         let position: ProjectGroup.Position
@@ -128,8 +123,15 @@ extension AdView {
                             .resizable()
                             .frame(width: 42, height: 42)
                         
-                        let usersJoined = advertisement.applications.compactMap { $0 }
-                        Text("\(usersJoined.count)/\(position.vacancies)")
+                        var usersJoined: Int {
+                            guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                                return 0
+                            }
+                            
+                            return group.members.count
+                        }
+                        
+                        Text("\(usersJoined)/\(position.vacancies)")
                             .font(.headline)
                             .foregroundColor(.white)
                             .scaledToFit()
@@ -143,14 +145,13 @@ extension AdView {
                         .font(.headline)
                         .foregroundColor(.black)
                 }
-//                .frame(width: 287)
             }.frame(height: 60)
         }
     }
     
     private struct PositionDetails: View {
         @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
-        @EnvironmentObject var userViewModel: UserViewModel
+        @EnvironmentObject var groupViewModel: GroupViewModel
         @EnvironmentObject var notificationsViewModel: NotificationsViewModel
         
         let user: User
@@ -163,8 +164,17 @@ extension AdView {
                     .font(Font.largeTitle.bold())
                     .foregroundColor(.black)
                 
-                let usersJoined = advertisement.applications.compactMap { $0 }
-                Text("\(position.vacancies - usersJoined.count) remaining vacancies")
+                var remainingVacancies: Int {
+                    let vacancies = position.vacancies
+                    
+                    guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                        return vacancies
+                    }
+                    
+                    return vacancies - group.members.count
+                }
+                
+                Text("\(remainingVacancies) remaining vacancies")
                     .padding(5)
                     .foregroundColor(.textColorBlue)
                     .background(Color.backgroundTextBlue)
