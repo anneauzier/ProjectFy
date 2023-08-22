@@ -9,6 +9,7 @@ import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
 
+//    @Published private(set) var advertisement: Advertisement?
     @Published var advertisements: [Advertisement] = []
     @Published var applicationStatus: ApplicationStatus?
     
@@ -40,6 +41,10 @@ final class AdvertisementsViewModel: ObservableObject {
         return advertisements.first(where: { $0.id == id })
     }
     
+    func getAdvertisements(from userID: String) -> [Advertisement] {
+        return advertisements.filter({ $0.owner.id == userID })
+    }
+    
     func editAdvertisement(_ advertisement: Advertisement) {
         do {
             try service.update(advertisement)
@@ -69,6 +74,7 @@ final class AdvertisementsViewModel: ObservableObject {
             self.applicationStatus = .completed
         }
     }
+    
     enum ApplicationStatus {
         case applying
         case completed

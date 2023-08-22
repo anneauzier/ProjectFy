@@ -26,7 +26,8 @@ struct TasksGroupView: View {
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
                 
-            }.padding(.horizontal, 20)
+            }
+//            .padding(.horizontal, 20)
             
             TaskField(user: user, group: group, viewModel: viewModel)
         }
@@ -51,7 +52,7 @@ struct GroupInfo: View {
                         .frame(width: 71, height: 71)
                     VStack {
                         Text("\(group.name)")
-                            .font(.caption)
+                            .font(.headline)
 //                      Text("\(detailsInfo.members.count)")
                     }.foregroundColor(.black)
                     

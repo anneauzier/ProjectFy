@@ -42,7 +42,7 @@ extension AdvertisementsView {
                     VStack(alignment: .leading) {
                         UserInfo(user: owner, size: 49, nameColor: .black)
                             .padding(.top, -10)
-
+                        
                         TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
                             .font(Font.body)
                             .foregroundColor(.editAdvertisementText)
@@ -76,36 +76,34 @@ extension AdvertisementsView {
                 .navigationTitle("\(isEditing ? "Edit" : "Create") project")
                 .navigationBarTitleDisplayMode(.inline)
                 
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            presentBackAlert = true
-                        } label: {
-                            Text("X")
-                                .font(Font.title3.bold())
+            }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentBackAlert = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .font(Font.system(size: 15, weight: .bold))
                         }
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            Positions(
-                                owner: owner,
-                                advertisement: $advertisement,
-                                isEditing: isEditing
-                            )
-                                .environmentObject(viewModel)
-                        } label: {
-                            Text("Next")
-                        }
-                        .disabled(!canContinue())
-
-                        .simultaneousGesture(TapGesture().onEnded({ _ in
-                            Haptics.shared.selection()
-                        }))
                     }
                 }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        Positions(owner: owner, advertisement: $advertisement, isEditing: isEditing)
+                    } label: {
+                        Text("Next")
+                    }
+                    .disabled(!canContinue())
+                    
+                    .simultaneousGesture(TapGesture().onEnded({ _ in
+                        Haptics.shared.selection()
+                    }))
+                }
             }
-            
+        
             .confirmationDialog("back", isPresented: $presentBackAlert) {
                 Button(role: .destructive) {
                     presentBackAlert = false
@@ -113,7 +111,7 @@ extension AdvertisementsView {
                 } label: {
                     Text("Delete draft")
                 }
-
+                
                 Button(role: .cancel) {
                     presentBackAlert = false
                 } label: {
@@ -123,11 +121,10 @@ extension AdvertisementsView {
         }
         
         private func canContinue() -> Bool {
-                // Verificar se os campos relevantes estão preenchidos
-                return !advertisement.tags.isEmpty
-                    && !advertisement.title.isEmpty
-                    && !advertisement.description.isEmpty
-            }
+            return !advertisement.tags.isEmpty
+            && !advertisement.title.isEmpty
+            && !advertisement.description.isEmpty
+        }
     }
     
     private struct Positions: View {
@@ -206,7 +203,7 @@ extension AdvertisementsView {
                 )
             )
         }
-
+        
         private func cantShare() -> Bool {
             return !advertisement.positions.isEmpty &&
             advertisement.positions.allSatisfy { !$0.title.isEmpty }
@@ -248,7 +245,7 @@ extension AdvertisementsView {
                             Text("Describe what the person entering this role will do on the project...")
                                 .foregroundColor(.placeholderColor)
                         }).foregroundColor(.white)
-
+                    
                     Divider()
                     
                     HStack(spacing: 15) {

@@ -85,12 +85,10 @@ extension AdView {
                             }
                         }
                     }
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.rectangleLine)
                 }
-            }
-            .frame(width: UIScreen.main.bounds.width - 40)
+                Divider()
+                
+            }.frame(width: UIScreen.main.bounds.width - 40)
         }
     }
     

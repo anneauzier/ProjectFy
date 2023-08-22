@@ -11,6 +11,7 @@ struct EditDetailsGroup: View {
     @Environment(\.dismiss) var dismiss
     
     @State var groupInfo: ProjectGroup
+    @State var actionDiscardGroup = false
     var viewModel: GroupViewModel
     
     init(group: ProjectGroup, viewModel: GroupViewModel) {
@@ -25,31 +26,37 @@ struct EditDetailsGroup: View {
                     Image("\(groupInfo.avatar)")
                         .resizable()
                         .frame(width: 100, height: 100)
+                        .frame(maxWidth: .infinity, alignment: .center)
                     
-                    Text("Group's name")
-                    TextField("Digite o nome do grupo", text: $groupInfo.name)
+                    Text("Group name")
+                        .font(.headline)
+                        .foregroundColor(.black)
                     
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
+                    TextField("Enter the group name", text: $groupInfo.name)
+                        .limitInputLength(value: $groupInfo.name, length: 19, commaLimit: 7)
+                        .background(
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.rectangleLine)
+                                .padding(.top, 30)
+                        )
                     
                     DescriptionGroup(groupInfo: $groupInfo)
                     
-                    Text("Link")
-                    TextField("\(groupInfo.link)", text: $groupInfo.link)
-                        .textFieldStyle(.roundedBorder)
+                    Text("Link for chat or/and meetings")
+                        .font(.headline)
+                        .foregroundColor(.black)
                     
-                    Text("Participants")
-                    
+                    CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
+                        
                 }.padding(.horizontal)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button {
-                                dismiss()
+                                actionDiscardGroup.toggle()
                             } label: {
-                                Text("X")
-                                    .font(.headline)
-                                    .foregroundColor(.black)
+                                Image(systemName: "xmark")
+                                    .font(Font.system(size: 15, weight: .bold))
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
@@ -57,20 +64,31 @@ struct EditDetailsGroup: View {
                                 viewModel.editGroup(groupInfo)
                                 dismiss()
                             } label: {
-                                Text("Salvar")
-                                    .foregroundColor(.black)
+                                Text("Save")
+                                    .font(.body)
+                                    .foregroundColor(.textColorBlue)
                             }
+                            .opacity((groupInfo.name.isEmpty ||
+                                      groupInfo.link.isEmpty ||
+                                      groupInfo.description.isEmpty) ? 0.2 : 1.0)
+                            
+                            .disabled(canSave())
                         }
-                    }
+                    }.confirmationDialog("", isPresented: $actionDiscardGroup, actions: {
+                        Button(role: .destructive) {
+                            dismiss()
+                        } label: {
+                            Text("Discard Changes")
+                        }
+                    })
                     .navigationTitle("Edit Group Info")
                     .navigationBarTitleDisplayMode(.inline)
             }
         }
     }
+    private func canSave() -> Bool {
+        return groupInfo.name.isEmpty
+        || groupInfo.link.isEmpty
+        || groupInfo.description.isEmpty
+    }
 }
-
-// struct EditDetailsGroup_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditDetailsGroup(groupInfo: ProjectGroup(), viewModel: GroupViewModel(service: GroupMockupService()))
-//    }
-// }

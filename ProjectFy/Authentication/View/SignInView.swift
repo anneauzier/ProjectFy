@@ -18,17 +18,16 @@ struct SignInView: View {
     
     var body: some View {
         VStack {
-            Text("Find people to help you bring your ideas into the real world! :D")
-                .frame(width: UIScreen.main.bounds.width - 48)
-                .font(Font.largeTitle.bold())
-                .multilineTextAlignment(.center)
+            
+            Image("logo")
                 .padding(.bottom, 34)
-                
-            Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: UIScreen.main.bounds.width - 144, height: 1)
-                .background(Color.gray.opacity(0.3))
-                .padding(.bottom, 44)
+
+            Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
+                .frame(width: UIScreen.main.bounds.width - 105)
+                .font(Font.title2.bold())
+                .foregroundColor(.signInColor)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 40)
             
             Button {
                 viewModel.authenticationService = SignInWithAppleService()

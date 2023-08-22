@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
     @Binding var isNewUser: Bool?
@@ -83,11 +84,11 @@ fileprivate struct SetupInitialConfigs: View {
                         .padding(.top, 16)
                     
                     Text("Don't worry, you can change these informations later...")
-                        .foregroundColor(.gray)
                         .font(Font.headline)
-                        .padding(.top, 20)
+                        .foregroundColor(.editAdvertisementText)
+                        .padding(.top, 15)
 
-                }.frame(width: UIScreen.main.bounds.width - 40)
+                }.frame(width: UIScreen.main.bounds.width - 35.9)
                 
                 SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
             }

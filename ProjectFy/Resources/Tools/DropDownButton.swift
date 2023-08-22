@@ -30,7 +30,8 @@ struct DropDownButton<T: Hashable>: View {
                     } label: {
                         HStack {
                             Text(item.name)
-                            if item.name == String(describing: selection) {
+                                .font(.body)
+                            if item.tag == selection {
                                 Spacer()
                                 Image(systemName: "checkmark")
                                     .foregroundColor(.black)
@@ -48,24 +49,15 @@ struct DropDownButton<T: Hashable>: View {
             }.background(
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundColor(.gray.opacity(0.2))
-                    .padding(.top, 28)
+                    .foregroundColor(.rectangleLine)
+                    .padding(.top, 30)
             )
             
             .onAppear {
-                if let item = menuItems.first {
+                if let item = menuItems.first(where: { $0.tag == selection }) {
                     text = item.name
                 }
             }
-
-//            .padding(.horizontal, 10)
-//            .frame(minWidth: 0, maxWidth: .infinity)
-//            .overlay {
-//                RoundedRectangle(cornerRadius: 8)
-//                    .padding()
-//                    .foregroundColor(.clear)
-//                    .border(Color.secondary.opacity(0.18))
-//            }
         }
     }
 }

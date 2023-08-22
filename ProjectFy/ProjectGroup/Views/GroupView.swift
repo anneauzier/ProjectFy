@@ -9,11 +9,24 @@ import SwiftUI
 
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    @State private var showActionSheet = false
+    @State private var selection: ProjectGroup?
     let user: User
+    
+    @State var isActive = false
+    @State var selectedGroup: ProjectGroup?
     
     var body: some View {
         NavigationView {
             VStack {
+                NavigationLink(isActive: $isActive) {
+                    if let group = selectedGroup {
+                        DetailsGroupView(group: group)
+                    }
+                } label: {
+                    EmptyView()
+                }
+
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
                         NavigationLink(
@@ -25,71 +38,40 @@ struct GroupView: View {
                                         .frame(width: 50, height: 50)
                                     VStack(alignment: .leading) {
                                         Text("\(group.name)")
-                                            .font(.subheadline)
+                                            .font(.headline)
+                                            .foregroundColor(.black)
                                         // Text("\(group.members.count) participants")
                                     }
                                 }
                             }
-                        )
-                    }.swipeActions(edge: .trailing) {
-                        Button {
-                            print("INFOOO")
-                        } label: {
-                            Image(systemName: "info.circle")
-                        }.tint(.blue)
-                        
-                        Button {
-                            print("EXITTTTTTT")
-                        } label: {
-                            Image(systemName: "trash")
+                        ).swipeActions {
+                            Button(action: {
+                                showActionSheet.toggle()
+                            }, label: {
+                                Image("points")
+                            }).tint(.backgroundTextBlue)
                         }
-                    }.tint(.red)
-                    
+                        .confirmationDialog("", isPresented: $showActionSheet, actions: {
+                            Button {
+                                selectedGroup = group
+                                isActive = true
+                            } label: {
+                                Label("Group info", systemImage: "info.circle")
+                            }
+
+                            Button(role: .destructive) {
+                                selection = group
+                            } label: {
+                                Text("Exit group")
+                            }
+                        })
+                    }
                 }
-            }
-            .navigationViewStyle(.stack)
+            }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")
-            
             .onAppear {
                 TabBarModifier.showTabBar()
             }
         }
     }
 }
-
-// @State var isEditing: Bool = false
-// @State var selectedRows: Set<String> = []
-
-// struct GroupView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GroupView()
-//            .environmentObject(GroupViewModel(service: GroupService()))
-//    }
-// }
-
-//    .navigationBarItems(leading: cancelButton, trailing: editButton)
- //            .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive))
- //            //            .animation(Animation.spring())
- //            .listStyle(InsetListStyle())
-
-// var cancelButton: some View {
-//    if isEditing {
-//        return AnyView(Button("Cancelar") {
-//            isEditing.toggle()
-//            //                selectedRows.removeAll()
-//        })
-//    } else {
-//        return AnyView(EmptyView())
-//    }
-// var editButton: some View {
-//    return AnyView(Button(action: {
-//        isEditing.toggle()
-//        selectedRows.removeAll()
-//    }) {
-//        if isEditing {
-//            Text("Deletar")
-//        } else {
-//            Image(systemName: "square.and.pencil")
-//        }
-//    })
-// }

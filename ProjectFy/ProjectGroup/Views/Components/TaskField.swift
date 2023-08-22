@@ -33,7 +33,7 @@ struct TaskField: View {
                 .foregroundColor(.gray.opacity(0.2))
             
             HStack {
-                CustomTextField(message: $message)
+                CustomTextField(message: $message, placeholder: "What did you do today?")
                     .frame(height: 37)
                     .cornerRadius(8)
                 
@@ -47,7 +47,7 @@ struct TaskField: View {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(10)
-                        .background(message.isEmpty ? Color.gray.opacity(0.2) : Color.black)
+                        .background(message.isEmpty ? Color.gray.opacity(0.2) : Color.textColorBlue)
                         .cornerRadius(50)
                 }.disabled(message.isEmpty)
             }
@@ -64,22 +64,5 @@ struct TaskField: View {
         
         guard let index = group.tasks.firstIndex(where: { $0.id == task.id }) else { return }
         group.tasks[index] = task
-    }
-}
-
-struct CustomTextField: View {
-    @Binding var message: String
-    var editingChanged: (Bool) -> Void = { _ in }
-    var commit: () -> Void = {}
-    
-    var body: some View {
-        ZStack(alignment: .leading) {
-            TextField("What did you do today?", text: $message, onEditingChanged: editingChanged, onCommit: commit)
-                .padding(8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray6))
-                )
-        }
     }
 }

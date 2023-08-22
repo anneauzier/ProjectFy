@@ -11,6 +11,7 @@ struct UserView: View {
     
     @EnvironmentObject var viewModel: UserViewModel
     @State private var goEditUserView = false
+    @State private var showDeleteAlert = false
     
     var presentUsersProfile: Bool = false
     let user: User
@@ -23,7 +24,6 @@ struct UserView: View {
                         Rectangle()
                             .frame(maxWidth: .infinity)
                             .frame(height: 100)
-//                            .edgesIgnoringSafeArea(.top)
                             .foregroundColor(.roleBackground)
                         
                         Image(user.avatar)
@@ -53,9 +53,8 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     Group {
-                        let availability = user.available ? "Available" : "Unavailable"
                         let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
-
+                        
                         HStack(spacing: 4) {
                             Text(user.areaExpertise)
                                 .font(.body)
@@ -74,16 +73,13 @@ struct UserView: View {
                                 .frame(width: 3)
                                 .foregroundColor(.editAdvertisementText)
                             
-                            Label(availability, systemImage: imageVerify)
-                                .padding(5)
-                                .font(.callout)
+                            Image(systemName: imageVerify)
                                 .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
-                                .background(user.available ? Color.availableBackground : Color.unavailableBackground)
-                                .cornerRadius(8)
                         }
                         
                         HStack(spacing: 6) {
-                            Image(systemName: "mappin")
+                            Image("location")
+
                             Text(user.region)
                                 .font(.body)
                                 .foregroundColor(.editAdvertisementText)
@@ -116,11 +112,9 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     UserAdvertisement(user: user)
-                    
+        
                 }
-            } .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("My Profile")
-
+            }
             .toolbar {
                 if !presentUsersProfile {
                     Menu {
@@ -137,7 +131,7 @@ struct UserView: View {
                         }
                         Button(role: .destructive) {
                             Haptics.shared.impact(.rigid)
-                            // LÓGICA PARA DELETAR CONTA
+                            showDeleteAlert.toggle()
                         } label: {
                             Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
                         }
@@ -150,43 +144,45 @@ struct UserView: View {
                     })
                 }
             }
+        }.alert("Do you really want to delete your account?", isPresented: $showDeleteAlert) {
+            Button(role: .cancel) {
+                showDeleteAlert.toggle()
+            } label: {
+                Text("No, I don't")
+            }
+
+            Button(role: .destructive) {
+//                viewModel.deleteUser(with: user.id)
+                Haptics.shared.notification(.success)
+                showDeleteAlert.toggle()
+            } label: {
+                Text("Yes, I do")
+            }
+        } message: {
+            Text("Your account and all information, groups and your project advertisements will be permanently deleted.")
         }
     }
 }
 
 struct UserAdvertisement: View {
-    
+    @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
     let user: User
-    //    let advertisement: Advertisement
-    
+
     var body: some View {
         VStack(alignment: .center) {
-            
+
             Divider()
-            Text("Meus anúncios")
+            Text("My advertisements")
                 .foregroundColor(.black)
                 .bold()
             Divider()
             
-            //        AdView(owner: <#T##User#>,
-            //        advertisement: <#T##Advertisement#>,
-            //        editingID: <#T##Binding<String?>#>,
-            //        editAdvertisement: <#T##Binding<Bool>#>,
-            //        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
-            //        presentPositionSheet: <#T##Binding<Bool>#>)
-            
+            UserInfo(user: user, size: 49, nameColor: .black)
+                .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
+
+            ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
+                AdView.AdInfo(user: user, advertisement: advertisement)
+            }
         }
     }
 }
-
-//                if !presentUsersProfile {
-//                    Button {
-//                        goEditUserView.toggle()
-//                    } label: {
-//                        Image(systemName: "ellipsis.circle")
-//                            .imageScale(.large)
-//                            .accessibilityLabel("Edital Perfil")
-//                    }
-//                }
-//            }.sheet(isPresented: $goEditUserView, content: {
-//                EditUserView(editingUser: user, viewModel: viewModel)
