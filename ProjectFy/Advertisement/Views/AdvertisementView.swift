@@ -120,30 +120,32 @@ struct AdView: View {
 
                 Spacer()
                 
-                Menu {
-                    Button {
-                        editingID = advertisement.id
+                if owner.id == user.id {
+                    Menu {
+                        Button {
+                            editingID = advertisement.id
+                            
+                            Haptics.shared.selection()
+                            editAdvertisement.toggle()
+                        } label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
                         
-                        Haptics.shared.selection()
-                        editAdvertisement.toggle()
+                        Button(role: .destructive) {
+                            Haptics.shared.impact(.rigid)
+                            showDeleteAlert.toggle()
+                        } label: {
+                            Label("Delete Ad", systemImage: "trash")
+                        }
                     } label: {
-                        Label("Edit", systemImage: "square.and.pencil")
+                        Label("Options", systemImage: "ellipsis")
+                            .labelStyle(.iconOnly)
+                            .imageScale(.large)
                     }
-                    
-                    Button(role: .destructive) {
-                        Haptics.shared.impact(.rigid)
-                        showDeleteAlert.toggle()
-                    } label: {
-                        Label("Delete Ad", systemImage: "trash")
-                    }
-                } label: {
-                    Label("Options", systemImage: "ellipsis")
-                        .labelStyle(.iconOnly)
-                        .imageScale(.large)
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 10)
+                    .padding(.leading, 27)
                 }
-                .frame(maxHeight: .infinity, alignment: .top)
-                .padding(.top, 10)
-                .padding(.leading, 27)
             }
             
             AdInfo(user: user, advertisement: advertisement)

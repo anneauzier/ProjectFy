@@ -91,16 +91,22 @@ struct DetailsGroupView: View {
             FinalButtons(user: user, group: group)
                 .padding(.top, 60)
             
-        }.toolbar {
-            Button(action: {
-                goEditGroupView.toggle()
-            }, label: {
-                Text("Edit")
-                    .foregroundColor(.black)
-            }).sheet(isPresented: $goEditGroupView) {
-                EditDetailsGroup(group: group, viewModel: viewModel)
+        }
+        .toolbar {
+            if group.admin.id == user.id {
+                Button {
+                    goEditGroupView.toggle()
+                } label: {
+                    Text("Edit")
+                        .foregroundColor(.black)
+                }
+                
+                .sheet(isPresented: $goEditGroupView) {
+                    EditDetailsGroup(group: group, viewModel: viewModel)
+                }
             }
-        }.onAppear {
+        }
+        .onAppear {
             TabBarModifier.hideTabBar()
         }
     }
@@ -116,15 +122,18 @@ extension DetailsGroupView {
         
         var body: some View {
             VStack {
-                Button {
-                    print("FINALIZAR GRUPO")
-                } label: {
-                    RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
-                        Text("Finalize project")
-                            .font(Font.headline)
-                            .foregroundColor(.white)
+                if group.admin.id == user.id {
+                    Button {
+                        print("FINALIZAR GRUPO")
+                    } label: {
+                        RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
+                            Text("Finalize project")
+                                .font(Font.headline)
+                                .foregroundColor(.white)
+                        }
                     }
-                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                    .frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                }
                 
                 Button {
                     var group = group
@@ -137,7 +146,8 @@ extension DetailsGroupView {
                             .font(Font.headline)
                             .foregroundColor(.white)
                     }
-                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                }
+                .frame(width: UIScreen.main.bounds.width - 40, height: 56)
             }
         }
     }
