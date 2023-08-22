@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		671CA5182A94EC8A00CF5109 /* InfoNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA5172A94EC8A00CF5109 /* InfoNotification.swift */; };
 		671FA2AA2A8FB428003684AC /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2A92A8FB428003684AC /* Notification.swift */; };
 		671FA2AE2A8FB762003684AC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2AD2A8FB762003684AC /* NotificationService.swift */; };
 		671FA2B12A8FB792003684AC /* NotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2B02A8FB792003684AC /* NotificationProtocol.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		671CA5172A94EC8A00CF5109 /* InfoNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNotification.swift; sourceTree = "<group>"; };
 		671FA2A92A8FB428003684AC /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		671FA2AD2A8FB762003684AC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		671FA2B02A8FB792003684AC /* NotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationProtocol.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				671FA2A92A8FB428003684AC /* Notification.swift */,
 				671FA2B52A93392E003684AC /* RequestNotification.swift */,
+				671CA5172A94EC8A00CF5109 /* InfoNotification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				671FA2B62A93392E003684AC /* RequestNotification.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				673BD3082A8AFE7800DD161F /* FormField.swift in Sources */,
+				671CA5182A94EC8A00CF5109 /* InfoNotification.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,
 				9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */,
 				9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */,

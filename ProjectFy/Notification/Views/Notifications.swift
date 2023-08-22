@@ -30,6 +30,15 @@ struct Notifications: View {
                                     acceptAdvertisementRequest(notification: notification)
                                     deleteAdvertisementApplication(notification: notification)
                                     
+                                    var acceptedNotification: InfoNotification {
+                                        let targetID = notification.application.user.id
+                                        let advertisement = notification.advertisement
+                                        
+                                        return InfoNotification(targetID: targetID, advertisement: advertisement)
+                                    }
+                                    
+                                    notificationsViewModel.createNotification(acceptedNotification)
+                                    
                                     let userID = notification.application.user.id
                                     
                                     if groupViewModel.getGroups(from: userID).count >= 3 {
@@ -37,7 +46,7 @@ struct Notifications: View {
                                     }
                                 }
                             )
-                        } else {
+                        } else if let infoNotification = notification as? InfoNotification {
                             NotificationComponent(notification: notification)
                         }
                     }

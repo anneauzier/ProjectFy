@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DetailsGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    
+    let user: User
     let group: ProjectGroup
     
     @State private var goEditGroupView = false
@@ -86,7 +88,7 @@ struct DetailsGroupView: View {
 
             }.padding(.horizontal, 20)
             
-            FinalButtons()
+            FinalButtons(user: user, group: group)
                 .padding(.top, 60)
             
         }.toolbar {
@@ -107,6 +109,11 @@ struct DetailsGroupView: View {
 extension DetailsGroupView {
     
     struct FinalButtons: View {
+        @EnvironmentObject var viewModel: GroupViewModel
+        
+        let user: User
+        let group: ProjectGroup
+        
         var body: some View {
             VStack {
                 Button {
@@ -120,7 +127,10 @@ extension DetailsGroupView {
                 }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 
                 Button {
-                    print("SAIR DO GRUPOOO")
+                    var group = group
+                    
+                    group.members.removeAll(where: { $0.user.id == user.id })
+                    viewModel.editGroup(group)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
                         Text("Exit group")
