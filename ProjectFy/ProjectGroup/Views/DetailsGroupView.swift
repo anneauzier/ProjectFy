@@ -22,35 +22,38 @@ struct DetailsGroupView: View {
                     .resizable()
                     .frame(width: 100, height: 100)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .padding([.top, .bottom], 32)
                 
                 Group {
                     Text("Group name")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     Text("\(group.name)")
                         .font(.body)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
 
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
                         .padding(.top, -15)
+                        .padding(.bottom, 20)
 
                     Text("Group description")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     Text("\(group.description)")
                         .font(.body)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
                         .padding(.top, -15)
+                        .padding(.bottom, 20)
  
                     Text("Link for chat or/and meetings")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     
                     if let url = URL(string: group.link) {
                         Link("\(group.link)", destination: url)
@@ -63,11 +66,12 @@ struct DetailsGroupView: View {
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
                         .padding(.top, -15)
+                        .padding(.bottom, 20)
                 }
                 
                 Text("\(group.members.count + 1) Participants")
                     .font(.headline)
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                 
                 RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
                     UserInfo(user: group.admin, size: 49, nameColor: .white)
@@ -98,7 +102,7 @@ struct DetailsGroupView: View {
                     goEditGroupView.toggle()
                 } label: {
                     Text("Edit")
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                 }
                 
                 .sheet(isPresented: $goEditGroupView) {

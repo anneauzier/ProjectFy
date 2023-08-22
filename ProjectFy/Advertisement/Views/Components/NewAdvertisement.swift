@@ -40,7 +40,7 @@ extension AdvertisementsView {
                     Divider()
                     
                     VStack(alignment: .leading) {
-                        UserInfo(user: owner, size: 49, nameColor: .black)
+                        UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
                         
                         TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
@@ -137,7 +137,7 @@ extension AdvertisementsView {
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    UserInfo(user: owner, size: 49, nameColor: .black)
+                    UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                         .padding(.bottom, 30)
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in

@@ -20,7 +20,7 @@ struct FormField: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(.backgroundRole)
                 .accessibilityLabel(titleAccessibilityLabel)
             
             TextField(placeholder, text: $text)

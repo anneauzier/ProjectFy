@@ -30,7 +30,7 @@ extension AdView {
                 
                 Text(advertisement.title)
                     .font(Font.largeTitle.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                     .padding(.top, 10)
                 
                 HStack {
@@ -53,7 +53,7 @@ extension AdView {
                 
                 Text("Project roles")
                     .font(Font.title.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                     .padding(.top, 15)
                 
                 VStack {
@@ -141,7 +141,7 @@ extension AdView {
                 RoundedRectangleContent(cornerRadius: 8, fillColor: Color.roleBackground) {
                     Text(position.title)
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                 }
             }.frame(height: 60)
         }
@@ -162,7 +162,7 @@ extension AdView {
             VStack(alignment: .leading) {
                 Text(position.title)
                     .font(Font.largeTitle.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                 
                 var remainingVacancies: Int {
                     let vacancies = position.vacancies
@@ -187,7 +187,7 @@ extension AdView {
                 
                 Text("What will you do")
                     .font(Font.title.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                     .padding(.bottom, 5)
                 
                 Text(position.description)
@@ -196,7 +196,7 @@ extension AdView {
                 if let group = groupViewModel.getGroup(by: advertisement.id) {
                     Text("People who are already in this project role")
                         .font(Font.title.bold())
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                         .removePadding()
                         .padding(.top, 37)
                     
@@ -311,7 +311,7 @@ extension AdView {
                    }
             )
             
-            .foregroundColor(.black)
+            .foregroundColor(.backgroundRole)
             .padding(.top, 30)
         }
     }

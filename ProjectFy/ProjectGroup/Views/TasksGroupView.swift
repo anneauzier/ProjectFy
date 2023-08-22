@@ -41,6 +41,7 @@ struct GroupInfo: View {
     let user: User
     let group: ProjectGroup
     
+    
     var body: some View {
         VStack {
             NavigationLink {
@@ -53,8 +54,11 @@ struct GroupInfo: View {
                     VStack(alignment: .leading) {
                         Text("\(group.name)")
                             .font(.headline)
-                            .foregroundColor(.black)
-                        Text("members of a group")
+                            .foregroundColor(.backgroundRole)
+                        
+                        let names = group.members.map(\.user.name)
+                        
+                        Text("\(names.joined(separator: ", "))")
                             .font(.subheadline)
                             .foregroundColor(.editAdvertisementText)
                     }
@@ -62,7 +66,7 @@ struct GroupInfo: View {
                     Spacer()
                     
                     Image(systemName: "chevron.forward")
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                 }.padding(.horizontal, 15)
                 .navigationBarTitleDisplayMode(.inline)
             }

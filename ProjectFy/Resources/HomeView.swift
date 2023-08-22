@@ -112,7 +112,7 @@ fileprivate struct SetupInitialConfigs: View {
         
         var body: some View {
             VStack(alignment: .center) {
-                Text("    All ready? \nLet's group!:D")
+                Text("    All ready? \nLet's \(Text("group!").foregroundColor(.textColorBlue))")
                     .font(Font.largeTitle.bold())
                     .frame(width: UIScreen.main.bounds.width - 97)
                     .padding(.bottom, 40)
@@ -133,7 +133,13 @@ fileprivate struct SetupInitialConfigs: View {
                             .foregroundColor(.white)
                     }
                 }.frame(width: UIScreen.main.bounds.width - 208, height: 56)
-            }
+            }.background(
+                Image("LasPageLog")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width)
+                    .edgesIgnoringSafeArea(.all)
+            )
         }
     }
 }

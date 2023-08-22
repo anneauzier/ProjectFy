@@ -74,7 +74,7 @@ struct CustomText: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(.backgroundRole)
             ZStack(alignment: .bottom) {
                 WrappedTextView(text: $text, textDidChange: self.textDidChange)
                     .focused($isTextFieldFocused)

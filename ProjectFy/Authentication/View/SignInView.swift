@@ -21,13 +21,17 @@ struct SignInView: View {
             
             Image("logo")
                 .padding(.bottom, 34)
+            
+            Spacer()
 
-            Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
-                .frame(width: UIScreen.main.bounds.width - 105)
-                .font(Font.title2.bold())
-                .foregroundColor(.signInColor)
+            Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world!")
+                .frame(width: UIScreen.main.bounds.width - 90)
+                .font(Font.title.bold())
+                .foregroundColor(.backgroundRole)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 40)
+            
+            Spacer()
             
             Button {
                 viewModel.authenticationService = SignInWithAppleService()
@@ -52,6 +56,14 @@ struct SignInView: View {
             }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
 
         }
+        .background(
+            Image("InitialLogPage")
+                .resizable()
+                .scaledToFill()
+//                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width)
+                .edgesIgnoringSafeArea(.all)
+        )
         .padding()
     }
     

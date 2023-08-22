@@ -18,7 +18,7 @@ struct TaskBubble: View {
                 .font(.headline)
                 .frame(maxWidth: 288)
                 .foregroundColor(.white)
-                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.black)
+                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.backgroundRole)
             
             ForEach(tasks.taskDescription, id: \.self) { message in
                 HStack {

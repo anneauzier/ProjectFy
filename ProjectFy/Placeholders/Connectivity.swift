@@ -22,7 +22,7 @@ struct Connectivity: View {
     
             Text(title)
                 .font(Font.title2.bold())
-                .foregroundColor(.black)
+                .foregroundColor(.backgroundRole)
                 .frame(width: UIScreen.main.bounds.width - 104)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 5)

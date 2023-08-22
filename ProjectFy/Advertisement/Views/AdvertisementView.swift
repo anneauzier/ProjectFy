@@ -121,7 +121,7 @@ struct AdView: View {
                 NavigationLink {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
-                    UserInfo(user: owner, size: 49, nameColor: .black)
+                    UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                 }.padding(.top, 3)
                 
                 Spacer()
