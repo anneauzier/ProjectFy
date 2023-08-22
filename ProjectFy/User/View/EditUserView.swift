@@ -11,6 +11,7 @@ struct EditUserView: View {
 
     @Environment(\.dismiss) var dismiss
 
+    @State var actionDiscard = false
     @State var canContinue = false
     @State var editingUser: User
     
@@ -32,11 +33,10 @@ struct EditUserView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        dismiss()
+                        actionDiscard.toggle()
                     } label: {
-                        Text("X")
-                            .font(Font.headline)
-                            .foregroundColor(.textColorBlue)
+                        Image(systemName: "xmark")
+                            .font(Font.system(size: 15, weight: .bold))
                     }
                 }
                 
@@ -54,7 +54,14 @@ struct EditUserView: View {
                     }
                     .disabled(!canContinue)
                 }
-            }
+            }.confirmationDialog("", isPresented: $actionDiscard, actions: {
+                Button(role: .destructive) {
+                    dismiss()
+                } label: {
+                    Text("Discard Changes")
+                }
+
+            })
             .navigationTitle("Editar perfil")
             .navigationBarTitleDisplayMode(.inline)
         }

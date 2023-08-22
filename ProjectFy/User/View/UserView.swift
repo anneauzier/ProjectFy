@@ -11,6 +11,7 @@ struct UserView: View {
     
     @EnvironmentObject var viewModel: UserViewModel
     @State private var goEditUserView = false
+    @State private var showDeleteAlert = false
     
     var presentUsersProfile: Bool = false
     let user: User
@@ -111,11 +112,9 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     UserAdvertisement(user: user)
-                    
+        
                 }
-            } .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("My Profile")
-
+            }
             .toolbar {
                 if !presentUsersProfile {
                     Menu {
@@ -132,7 +131,7 @@ struct UserView: View {
                         }
                         Button(role: .destructive) {
                             Haptics.shared.impact(.rigid)
-                            // LÓGICA PARA DELETAR CONTA
+                            showDeleteAlert.toggle()
                         } label: {
                             Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
                         }
@@ -145,43 +144,47 @@ struct UserView: View {
                     })
                 }
             }
+        }.alert("Do you really want to delete your account?", isPresented: $showDeleteAlert) {
+            Button(role: .cancel) {
+                showDeleteAlert.toggle()
+            } label: {
+                Text("No, I don't")
+            }
+
+            Button(role: .destructive) {
+//                viewModel.deleteUser(with: user.id)
+                Haptics.shared.notification(.success)
+                showDeleteAlert.toggle()
+            } label: {
+                Text("Yes, I do")
+            }
+        } message: {
+            Text("Your account and all information, groups and your project advertisements will be permanently deleted.")
         }
     }
 }
 
 struct UserAdvertisement: View {
-    
+
     let user: User
-    //    let advertisement: Advertisement
-    
+//        let advertisement: Advertisement
+
     var body: some View {
         VStack(alignment: .center) {
-            
+
             Divider()
             Text("Meus anúncios")
                 .foregroundColor(.black)
                 .bold()
             Divider()
-            
-            //        AdView(owner: <#T##User#>,
-            //        advertisement: <#T##Advertisement#>,
-            //        editingID: <#T##Binding<String?>#>,
-            //        editAdvertisement: <#T##Binding<Bool>#>,
-            //        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
-            //        presentPositionSheet: <#T##Binding<Bool>#>)
-            
+//
+//            //        AdView(owner: <#T##User#>,
+//            //        advertisement: <#T##Advertisement#>,
+//            //        editingID: <#T##Binding<String?>#>,
+//            //        editAdvertisement: <#T##Binding<Bool>#>,
+//            //        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
+//            //        presentPositionSheet: <#T##Binding<Bool>#>)
+//
         }
     }
 }
-
-//                if !presentUsersProfile {
-//                    Button {
-//                        goEditUserView.toggle()
-//                    } label: {
-//                        Image(systemName: "ellipsis.circle")
-//                            .imageScale(.large)
-//                            .accessibilityLabel("Edital Perfil")
-//                    }
-//                }
-//            }.sheet(isPresented: $goEditUserView, content: {
-//                EditUserView(editingUser: user, viewModel: viewModel)

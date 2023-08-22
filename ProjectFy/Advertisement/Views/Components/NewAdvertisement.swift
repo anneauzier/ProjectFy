@@ -89,8 +89,8 @@ extension AdvertisementsView {
                         presentBackAlert = true
                     } label: {
                         HStack {
-                            Text("X")
-                                .font(Font.title3.bold())
+                            Image(systemName: "xmark")
+                                .font(Font.system(size: 15, weight: .bold))
                         }
                     }
                 }
@@ -132,7 +132,6 @@ extension AdvertisementsView {
         }
         
         private func cantNext() -> Bool {
-                // Verificar se os campos relevantes estão preenchidos
                 return !advertisement.tags.isEmpty
                     && !advertisement.title.isEmpty
                     && !advertisement.description.isEmpty

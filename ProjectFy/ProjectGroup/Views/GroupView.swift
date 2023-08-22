@@ -38,7 +38,8 @@ struct GroupView: View {
                                         .frame(width: 50, height: 50)
                                     VStack(alignment: .leading) {
                                         Text("\(group.name)")
-                                            .font(.subheadline)
+                                            .font(.headline)
+                                            .foregroundColor(.black)
                                         // Text("\(group.members.count) participants")
                                     }
                                 }
@@ -65,7 +66,7 @@ struct GroupView: View {
                                 Text("Exit group")
                             }
                         }
-                    }
+                    }.background(Color.white)
                 }
             }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")

@@ -8,17 +8,19 @@
 import SwiftUI
 
 extension EditDetailsGroup {
-    
     struct DescriptionGroup: View {
         @FocusState var isTextFieldFocused: Bool
         @State private var height: CGFloat?
         @Binding var groupInfo: ProjectGroup
-
+        
         let minHeight: CGFloat = 30
-    
+        
         var body: some View {
             VStack(alignment: .leading) {
                 Text("Group description")
+                    .font(.headline)
+                    .foregroundColor(.black)
+                
                 ZStack(alignment: .bottom) {
                     WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
                         .focused($isTextFieldFocused)
@@ -39,11 +41,12 @@ extension EditDetailsGroup {
                             }
                     }
                 }
-            }.onTapGesture {
+            }
+            .onTapGesture {
                 isTextFieldFocused = false
             }
         }
-
+        
         private func textDidChange(_ textView: UITextView) {
             self.height = max(textView.contentSize.height, minHeight)
         }

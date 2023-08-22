@@ -27,10 +27,13 @@ struct DropDownButton<T: Hashable>: View {
                     Button {
                         text = item.name
                         selection = item.tag
+                        print(item.name)
+                        print(item.tag)
                     } label: {
                         HStack {
                             Text(item.name)
-                            if item.name == String(describing: selection) {
+                                .font(.body)
+                            if item.name == String(describing: selection).capitalized {
                                 Spacer()
                                 Image(systemName: "checkmark")
                                     .foregroundColor(.black)

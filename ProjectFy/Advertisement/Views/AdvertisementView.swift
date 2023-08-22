@@ -22,9 +22,8 @@ struct AdvertisementsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Divider()
                 VStack {
-                    Divider()
-                    
                     ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
                         AdView(
                             user: user,
@@ -80,7 +79,6 @@ struct AdView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-
                 NavigationLink {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
