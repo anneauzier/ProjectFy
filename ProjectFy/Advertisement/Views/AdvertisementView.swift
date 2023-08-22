@@ -27,17 +27,15 @@ struct AdvertisementsView: View {
             ScrollView {
                 Divider()
                 if !networking.isConnected {
-                    Connectivity(image: Image(""),
+                    Connectivity(image: Image("networking"),
                                  title: "Sorry, we couldn't load this page :(",
                                  description: "Check your connection to see if there's something wrong",
                                  heightPH: 0.7)
-                }
-                else if advertisementsViewModel.advertisements.isEmpty {
-                    Connectivity(image: Image(""),
-                                 title: "Looks like people haven't shared project ideas yet :(",
-                                 description: "You can start to share your project ideas by taping on +",
+                } else if advertisementsViewModel.advertisements.isEmpty {
+                    Connectivity(image: Image("emptyAd"),
+                                 title: "Looks like people \nhaven't shared project \nideas yet :(",
+                                 description: "You can start to share your project ideas by taping on “+”",
                                  heightPH: 0.7)
-
                 } else {
                     VStack {
                         ForEach(advertisements, id: \.self) { advertisement in
@@ -87,15 +85,15 @@ struct AdvertisementsView: View {
             .alert("You can't create a new advertisement beacause you are already in  three projects",
                    isPresented: $presentMaxGroupsAlert,
                    actions: {
-                        Button(role: .cancel) {
-                            presentMaxGroupsAlert = false
-                        } label: {
-                            Text("OK")
-                        }
-                   },
+                Button(role: .cancel) {
+                    presentMaxGroupsAlert = false
+                } label: {
+                    Text("OK")
+                }
+            },
                    message: {
-                        Text("you cannot participate in more than three projects at the same time")
-                   }
+                Text("you cannot participate in more than three projects at the same time")
+            }
             )
         }
     }
@@ -125,52 +123,54 @@ struct AdView: View {
                 } label: {
                     UserInfo(user: owner, size: 49, nameColor: .black)
                 }.padding(.top, 3)
-
+                
                 Spacer()
                 
-                Menu {
-                    Button {
-                        editingID = advertisement.id
+                if owner.id == user.id {
+                    Menu {
+                        Button {
+                            editingID = advertisement.id
+                            
+                            Haptics.shared.selection()
+                            editAdvertisement.toggle()
+                        } label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
                         
-                        Haptics.shared.selection()
-                        editAdvertisement.toggle()
+                        Button(role: .destructive) {
+                            Haptics.shared.impact(.rigid)
+                            showDeleteAlert.toggle()
+                        } label: {
+                            Label("Delete Ad", systemImage: "trash")
+                        }
                     } label: {
-                        Label("Edit", systemImage: "square.and.pencil")
+                        Label("Options", systemImage: "ellipsis")
+                            .labelStyle(.iconOnly)
+                            .imageScale(.large)
                     }
-                    
-                    Button(role: .destructive) {
-                        Haptics.shared.impact(.rigid)
-                        showDeleteAlert.toggle()
-                    } label: {
-                        Label("Delete Ad", systemImage: "trash")
-                    }
-                } label: {
-                    Label("Options", systemImage: "ellipsis")
-                        .labelStyle(.iconOnly)
-                        .imageScale(.large)
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 10)
+                    .padding(.leading, 27)
                 }
-                .frame(maxHeight: .infinity, alignment: .top)
-                .padding(.top, 10)
-                .padding(.leading, 27)
             }
             
             AdInfo(user: user, advertisement: advertisement)
-        }
+        }.navigationBarTitleDisplayMode(.inline)
         
-        .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
-            Button(role: .cancel) {
-                showDeleteAlert.toggle()
-            } label: {
-                Text("Cancel")
+            .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
+                Button(role: .cancel) {
+                    showDeleteAlert.toggle()
+                } label: {
+                    Text("Cancel")
+                }
+                
+                Button(role: .destructive) {
+                    viewModel.deleteAdvertisement(with: advertisement.id)
+                    Haptics.shared.notification(.success)
+                    showDeleteAlert.toggle()
+                } label: {
+                    Text("Delete")
+                }
             }
-
-            Button(role: .destructive) {
-                viewModel.deleteAdvertisement(with: advertisement.id)
-                Haptics.shared.notification(.success)
-                showDeleteAlert.toggle()
-            } label: {
-                Text("Delete")
-            }
-        }
     }
 }

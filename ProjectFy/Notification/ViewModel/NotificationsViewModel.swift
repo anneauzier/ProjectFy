@@ -17,6 +17,7 @@ final class NotificationsViewModel: ObservableObject {
     
     func startListening(with id: String) {
         self.listen(to: RequestNotification.self, with: id)
+        self.listen(to: InfoNotification.self, with: id)
     }
     
     private func listen<T: Notification>(to: T.Type, with id: String) {

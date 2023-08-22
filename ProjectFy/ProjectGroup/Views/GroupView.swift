@@ -10,7 +10,7 @@ import SwiftUI
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
     @State private var showActionSheet = false
-    @State private var selection: ProjectGroup?
+    
     let user: User
     
     @State var isActive = false
@@ -21,7 +21,7 @@ struct GroupView: View {
             VStack {
                 NavigationLink(isActive: $isActive) {
                     if let group = selectedGroup {
-                        DetailsGroupView(group: group)
+                        DetailsGroupView(user: user, group: group)
                     }
                 } label: {
                     EmptyView()
@@ -62,13 +62,17 @@ struct GroupView: View {
                             }
 
                             Button(role: .destructive) {
-                                selection = group
+                                var group = group
+                                
+                                group.members.removeAll(where: { $0.user.id == user.id })
+                                viewModel.editGroup(group)
                             } label: {
                                 Text("Exit group")
                             }
                         })
                     }
                 }.listStyle(.plain)
+
             }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")
             .onAppear {

@@ -74,36 +74,35 @@ extension AdvertisementsView {
                 }
                 .navigationBarBackButtonHidden()
                 .navigationTitle("\(isEditing ? "Edit" : "Create") project")
-                .navigationBarTitleDisplayMode(.inline)
                 
-            }
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        presentBackAlert = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "xmark")
-                                .font(Font.system(size: 15, weight: .bold))
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentBackAlert = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "xmark")
+                                    .font(Font.system(size: 15, weight: .bold))
+                            }
                         }
                     }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            Positions(owner: owner, advertisement: $advertisement, isEditing: isEditing)
+                        } label: {
+                            Text("Next")
+                        }
+                        .disabled(!canContinue())
+                        
+                        .simultaneousGesture(TapGesture().onEnded({ _ in
+                            Haptics.shared.selection()
+                        }))
+                    }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        Positions(owner: owner, advertisement: $advertisement, isEditing: isEditing)
-                    } label: {
-                        Text("Next")
-                    }
-                    .disabled(!canContinue())
-                    
-                    .simultaneousGesture(TapGesture().onEnded({ _ in
-                        Haptics.shared.selection()
-                    }))
-                }
             }
-        
+            
             .confirmationDialog("back", isPresented: $presentBackAlert) {
                 Button(role: .destructive) {
                     presentBackAlert = false

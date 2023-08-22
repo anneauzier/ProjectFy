@@ -30,6 +30,15 @@ struct Notifications: View {
                                     acceptAdvertisementRequest(notification: notification)
                                     deleteAdvertisementApplication(notification: notification)
                                     
+                                    var acceptedNotification: InfoNotification {
+                                        let targetID = notification.application.user.id
+                                        let advertisement = notification.advertisement
+                                        
+                                        return InfoNotification(targetID: targetID, advertisement: advertisement)
+                                    }
+                                    
+                                    notificationsViewModel.createNotification(acceptedNotification)
+                                    
                                     let userID = notification.application.user.id
                                     
                                     if groupViewModel.getGroups(from: userID).count >= 3 {
@@ -146,6 +155,7 @@ fileprivate struct AcceptableNotification: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.title)
                 }
+                .foregroundColor(.textColorBlue)
                 .buttonStyle(.plain)
 
                 Button {
@@ -155,6 +165,7 @@ fileprivate struct AcceptableNotification: View {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title)
                 }
+                .foregroundColor(.textColorBlue)
                 .buttonStyle(.plain)
             }
             .padding(.leading, 20)

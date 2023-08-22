@@ -70,7 +70,7 @@ struct User: Hashable, Codable {
         self.username = ""
         self.email = signInResult.email ?? ""
         self.description = ""
-        self.avatar = String.avatars.randomElement() ?? ""
+        self.avatar = String.userAvatar
         self.region = ""
         self.entryDate = Date()
         self.interestTags = ""

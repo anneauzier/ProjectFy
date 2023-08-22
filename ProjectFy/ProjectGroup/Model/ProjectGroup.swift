@@ -86,7 +86,7 @@ struct ProjectGroup: Hashable, Codable {
         self.name = advertisement.title
         self.description = advertisement.description
         self.members = []
-        self.avatar = String.avatars.randomElement() ?? ""
+        self.avatar = String.groupAvatar
         self.admin = advertisement.owner
         self.link = ""
         self.tasks = []

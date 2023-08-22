@@ -143,7 +143,7 @@ struct UserView: View {
                         EditUserView(editingUser: user, viewModel: viewModel)
                     })
                 }
-            }.navigationBarTitle("Título da Tela", displayMode: .inline)
+            }
         }.alert("Do you really want to delete your account?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
                 showDeleteAlert.toggle()
@@ -178,10 +178,10 @@ struct UserAdvertisement: View {
             Divider()
             
             if advertisementsViewModel.advertisements.isEmpty {
-                Connectivity(image: Image(""),
+                Connectivity(image: Image("emptyAd"),
                              title: "You haven't shared project ideas yet :(",
-                             description: "You can start sharing your project ideas on the home screen :)",
-                             heightPH: 0.45)
+                             description: "You can start sharing your project ideas on the home screen:)",
+                             heightPH: 0.4)
             } else {
                 UserInfo(user: user, size: 49, nameColor: .black)
                     .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)

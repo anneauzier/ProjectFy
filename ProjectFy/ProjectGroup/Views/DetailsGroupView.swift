@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DetailsGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    
+    let user: User
     let group: ProjectGroup
     
     @State private var goEditGroupView = false
@@ -86,19 +88,25 @@ struct DetailsGroupView: View {
 
             }.padding(.horizontal, 20)
             
-            FinalButtons()
+            FinalButtons(user: user, group: group)
                 .padding(.top, 60)
             
-        }.toolbar {
-            Button(action: {
-                goEditGroupView.toggle()
-            }, label: {
-                Text("Edit")
-                    .foregroundColor(.black)
-            }).sheet(isPresented: $goEditGroupView) {
-                EditDetailsGroup(group: group, viewModel: viewModel)
+        }
+        .toolbar {
+            if group.admin.id == user.id {
+                Button {
+                    goEditGroupView.toggle()
+                } label: {
+                    Text("Edit")
+                        .foregroundColor(.black)
+                }
+                
+                .sheet(isPresented: $goEditGroupView) {
+                    EditDetailsGroup(group: group, viewModel: viewModel)
+                }
             }
-        }.onAppear {
+        }
+        .onAppear {
             TabBarModifier.hideTabBar()
         }
     }
@@ -107,27 +115,39 @@ struct DetailsGroupView: View {
 extension DetailsGroupView {
     
     struct FinalButtons: View {
+        @EnvironmentObject var viewModel: GroupViewModel
+        
+        let user: User
+        let group: ProjectGroup
+        
         var body: some View {
             VStack {
-                Button {
-                    print("FINALIZAR GRUPO")
-                } label: {
-                    RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
-                        Text("Finalize project")
-                            .font(Font.headline)
-                            .foregroundColor(.white)
+                if group.admin.id == user.id {
+                    Button {
+                        print("FINALIZAR GRUPO")
+                    } label: {
+                        RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
+                            Text("Finalize project")
+                                .font(Font.headline)
+                                .foregroundColor(.white)
+                        }
                     }
-                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                    .frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                }
                 
                 Button {
-                    print("SAIR DO GRUPOOO")
+                    var group = group
+                    
+                    group.members.removeAll(where: { $0.user.id == user.id })
+                    viewModel.editGroup(group)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
                         Text("Exit group")
                             .font(Font.headline)
                             .foregroundColor(.white)
                     }
-                }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                }
+                .frame(width: UIScreen.main.bounds.width - 40, height: 56)
             }
         }
     }

@@ -16,8 +16,8 @@ struct TasksGroupView: View {
     var body: some View {
         VStack {
             VStack {
-                GroupInfo(group: group)
-    
+                GroupInfo(user: user, group: group)
+                
                 ScrollView {
                     ForEach(group.tasks, id: \.id) { task in
                         TaskBubble(tasks: task, currentUserID: user.id)
@@ -37,12 +37,14 @@ struct TasksGroupView: View {
 
 struct GroupInfo: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    
+    let user: User
     let group: ProjectGroup
     
     var body: some View {
         VStack {
             NavigationLink {
-                DetailsGroupView(group: group)
+                DetailsGroupView(user: user, group: group)
             } label: {
                 HStack(alignment: .center, spacing: 10) {
                     Image("\(group.avatar)")

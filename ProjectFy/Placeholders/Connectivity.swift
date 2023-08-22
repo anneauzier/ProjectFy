@@ -15,17 +15,17 @@ struct Connectivity: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Circle()
+            image
+                .resizable()
                 .frame(width: 155, height: 155)
-                .foregroundColor(.backgroundTextBlue)
-                .padding(.bottom, 20)
+                .padding(.bottom, 5)
     
             Text(title)
                 .font(Font.title2.bold())
                 .foregroundColor(.black)
                 .frame(width: UIScreen.main.bounds.width - 104)
                 .multilineTextAlignment(.center)
-                .padding(.bottom, 16)
+                .padding(.bottom, 5)
             
             Text(description)
                 .font(.body)
