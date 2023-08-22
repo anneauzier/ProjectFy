@@ -39,7 +39,7 @@ struct ProjectFyApp: App {
                         userViewModel.setUser(with: user.uid)
                         groupViewModel.setUser(with: user.uid)
                     }
-                } else  {
+                } else {
                     SignInView(isNewUser: $isNewUser)
                 }
             }

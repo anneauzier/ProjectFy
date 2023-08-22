@@ -28,14 +28,20 @@ struct SignInView: View {
             Spacer()
 
             if isDeletingAccount {
-                Text("To delete \(Text("your account")) you need to log into the app again...")
-                    .multilineTextAlignment(.center)
-                    .frame(width: UIScreen.main.bounds.width - 68)
-                
-                Text("We're very sad to know that you want to delete your account on our app :(")
-                    .multilineTextAlignment(.center)
-                    .frame(width: UIScreen.main.bounds.width - 98)
-                
+                VStack {
+                    Text("To delete \(Text("your account").foregroundColor(.unavailableText)) you need to log into the app again...")
+                        .font(Font.title2.bold())
+                        .foregroundColor(.backgroundRole)
+                        .multilineTextAlignment(.center)
+                        .frame(width: UIScreen.main.bounds.width - 68)
+                    
+                    Text("We're very sad to know that you want to delete your account on our app :(")
+                        .foregroundColor(.editAdvertisementText)
+                        .multilineTextAlignment(.center)
+                        .frame(width: UIScreen.main.bounds.width - 98)
+                        .padding(.top, 5)
+                }
+                .padding(.top, -60)
                 
             } else {
                 Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
