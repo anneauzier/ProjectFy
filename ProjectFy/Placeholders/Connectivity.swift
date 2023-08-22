@@ -11,6 +11,7 @@ struct Connectivity: View {
     let image: Image
     let title: String
     let description: String
+    let heightPH: Double
     
     var body: some View {
         VStack(alignment: .center) {
@@ -31,9 +32,6 @@ struct Connectivity: View {
                 .foregroundColor(.editAdvertisementText)
                 .frame(width: UIScreen.main.bounds.width - 114)
                 .multilineTextAlignment(.center)
-        }.frame(height: UIScreen.main.bounds.height * 0.7)
+        }.frame(height: UIScreen.main.bounds.height * heightPH)
     }
 }
-
-// "Sorry, we couldn't load this page :("
-// "Check your connection to see if there's something wrong"

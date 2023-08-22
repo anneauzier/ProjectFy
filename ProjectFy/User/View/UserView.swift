@@ -112,7 +112,7 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     UserAdvertisement(user: user)
-        
+
                 }
             }
             .toolbar {
@@ -143,7 +143,7 @@ struct UserView: View {
                         EditUserView(editingUser: user, viewModel: viewModel)
                     })
                 }
-            }
+            }.navigationBarTitle("Título da Tela", displayMode: .inline)
         }.alert("Do you really want to delete your account?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
                 showDeleteAlert.toggle()
@@ -177,11 +177,18 @@ struct UserAdvertisement: View {
                 .bold()
             Divider()
             
-            UserInfo(user: user, size: 49, nameColor: .black)
-                .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
-
-            ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
-                AdView.AdInfo(user: user, advertisement: advertisement)
+            if advertisementsViewModel.advertisements.isEmpty {
+                Connectivity(image: Image(""),
+                             title: "You haven't shared project ideas yet :(",
+                             description: "You can start sharing your project ideas on the home screen :)",
+                             heightPH: 0.45)
+            } else {
+                UserInfo(user: user, size: 49, nameColor: .black)
+                    .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
+                
+                ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
+                    AdView.AdInfo(user: user, advertisement: advertisement)
+                }
             }
         }
     }

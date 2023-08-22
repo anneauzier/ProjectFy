@@ -14,6 +14,7 @@ struct AdvertisementsView: View {
     
     let user: User
     @State var advertisements: [Advertisement] = []
+    @StateObject private var networking = NetworkManager()
     
     @State var isLinkActive = false
     @State var editingID: String?
@@ -25,10 +26,17 @@ struct AdvertisementsView: View {
         NavigationView {
             ScrollView {
                 Divider()
-                if advertisementsViewModel.advertisements.isEmpty {
+                if !networking.isConnected {
+                    Connectivity(image: Image(""),
+                                 title: "Sorry, we couldn't load this page :(",
+                                 description: "Check your connection to see if there's something wrong",
+                                 heightPH: 0.7)
+                }
+                else if advertisementsViewModel.advertisements.isEmpty {
                     Connectivity(image: Image(""),
                                  title: "Looks like people haven't shared project ideas yet :(",
-                                 description: "You can start to share your project ideas by taping on +")
+                                 description: "You can start to share your project ideas by taping on +",
+                                 heightPH: 0.7)
 
                 } else {
                     VStack {

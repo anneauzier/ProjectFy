@@ -396,7 +396,6 @@
 				9F3A8FB32A94717E003A1032 /* Connectivity.swift */,
 				9F3A8FB52A9476C1003A1032 /* GroupPH.swift */,
 				9F3A8FB92A9476F4003A1032 /* ChatPH.swift */,
-				9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */,
 			);
 			path = Placeholders;
 			sourceTree = "<group>";
@@ -404,6 +403,7 @@
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */,
 				6783CC882A8D91C10050AD39 /* GoogleService-Info.plist */,
 				9FBAE03E2A8EC0BA003F6424 /* Tools */,
 				673BD3062A8AFE6700DD161F /* FormField */,
