@@ -25,10 +25,8 @@ struct TasksGroupView: View {
                 }
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
-                
             }
-//            .padding(.horizontal, 20)
-            
+
             TaskField(user: user, group: group, viewModel: viewModel)
         }
         .onAppear {
@@ -43,26 +41,34 @@ struct GroupInfo: View {
     let user: User
     let group: ProjectGroup
     
+    
     var body: some View {
         VStack {
             NavigationLink {
                 DetailsGroupView(user: user, group: group)
             } label: {
-                HStack(alignment: .center) {
+                HStack(alignment: .center, spacing: 10) {
                     Image("\(group.avatar)")
                         .resizable()
                         .frame(width: 71, height: 71)
-                    VStack {
+                    VStack(alignment: .leading) {
                         Text("\(group.name)")
                             .font(.headline)
-//                      Text("\(detailsInfo.members.count)")
-                    }.foregroundColor(.black)
+                            .foregroundColor(.backgroundRole)
+                        
+                        let names = group.members.map(\.user.name)
+                        
+                        Text("\(names.joined(separator: ", "))")
+                            .font(.subheadline)
+                            .foregroundColor(.editAdvertisementText)
+                    }
                     
                     Spacer()
                     
                     Image(systemName: "chevron.forward")
-                        .foregroundColor(.black)
-                }.navigationBarTitleDisplayMode(.inline)
+                        .foregroundColor(.backgroundRole)
+                }.padding(.horizontal, 15)
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
 

@@ -16,7 +16,7 @@ struct SetupUserInfo: View {
     @Binding var canContinue: Bool
     @State private var height: CGFloat?
 
-    let minHeight: CGFloat = 30
+    let minHeight: CGFloat = 40
     let isNewUser: Bool
     
     var body: some View {
@@ -27,7 +27,7 @@ struct SetupUserInfo: View {
                 placeholder: "Your name...",
                 text: $user.name,
                 textFieldAccessibilityLabel: "Enter your name here"
-            )
+            ).padding(.bottom, 40)
             
             if isNewUser {
                 FormField(
@@ -36,7 +36,7 @@ struct SetupUserInfo: View {
                     placeholder: "@",
                     text: $user.username,
                     textFieldAccessibilityLabel: "Type here your username"
-                )
+                ).padding(.bottom, 40)
             }
             
             FormField(
@@ -45,15 +45,17 @@ struct SetupUserInfo: View {
                 placeholder: "DUI/UX Design, iOS Developer, 3D Modelator...",
                 text: $user.areaExpertise,
                 textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
-            )
+            ).padding(.bottom, 40)
             
             DropDownButton(
-                title: "Level of knowledge in the area", textColor: .black,
+                title: "Level of knowledge in the area", textColor: .backgroundRole,
                 selection: $user.expertise,
                 menuItems: User.Expertise.allCases.map({ expertise in
                     MenuItem(name: expertise.rawValue, tag: expertise)
                 })
             )
+            .padding(.top, -15)
+            .padding(.bottom, 40)
             
             FormField(
                 title: "Your location",
@@ -61,12 +63,13 @@ struct SetupUserInfo: View {
                 placeholder: "Your location...",
                 text: $user.region,
                 textFieldAccessibilityLabel: "Enter your state and country"
-            )
+            ).padding(.bottom, 40)
 
             CustomText(title: "Interests(opcional)",
                        text: $user.interestTags,
                        condition: user.interestTags.isEmpty,
                        placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
+            .padding(.bottom, 40)
             
             DropDownButton(
                 title: "Availability",
@@ -77,6 +80,8 @@ struct SetupUserInfo: View {
                     MenuItem(name: "Available for projects", tag: true)
                 ]
             )
+            .padding(.top, -15)
+            .padding(.bottom, 40)
             
             Spacer()
             

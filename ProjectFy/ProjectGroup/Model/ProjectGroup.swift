@@ -86,7 +86,7 @@ struct ProjectGroup: Hashable, Codable {
         self.name = advertisement.title
         self.description = advertisement.description
         self.members = []
-        self.avatar = String.avatars.randomElement() ?? ""
+        self.avatar = String.groupAvatar
         self.admin = advertisement.owner
         self.link = ""
         self.tasks = []
@@ -94,7 +94,9 @@ struct ProjectGroup: Hashable, Codable {
     
     init() {
         self.id = UUID().uuidString
-        self.advertisement = Advertisement(owner: .init(signInResult: .init(identityToken: "", nonce: "", name: "", email: "")))
+        self.advertisement = Advertisement(owner: .init(signInResult: .
+                                                        init(identityToken: "",
+                                                        nonce: "", name: "", email: "")))
         self.name = ""
         self.description = ""
         self.members = []

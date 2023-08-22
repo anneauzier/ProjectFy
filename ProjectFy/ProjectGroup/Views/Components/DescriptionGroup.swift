@@ -13,13 +13,13 @@ extension EditDetailsGroup {
         @State private var height: CGFloat?
         @Binding var groupInfo: ProjectGroup
         
-        let minHeight: CGFloat = 30
+        let minHeight: CGFloat = 40
         
         var body: some View {
             VStack(alignment: .leading) {
                 Text("Group description")
                     .font(.headline)
-                    .foregroundColor(.black)
+                    .foregroundColor(.backgroundRole)
                 
                 ZStack(alignment: .bottom) {
                     WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)

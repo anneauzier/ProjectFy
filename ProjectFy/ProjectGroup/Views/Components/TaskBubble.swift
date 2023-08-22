@@ -12,13 +12,13 @@ struct TaskBubble: View {
     var currentUserID: String
     
     var body: some View {
-        VStack(alignment: tasks.user.id == currentUserID ? .leading : .trailing, spacing: 0) {
+        VStack(alignment: tasks.user.id == currentUserID ? .trailing : .leading, spacing: 0) {
             Text("\(tasks.user.name)")
                 .padding()
                 .font(.headline)
                 .frame(maxWidth: 288)
                 .foregroundColor(.white)
-                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.black)
+                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.backgroundRole)
             
             ForEach(tasks.taskDescription, id: \.self) { message in
                 HStack {
@@ -40,8 +40,8 @@ struct TaskBubble: View {
             }
         }
         .cornerRadius(12)
-        .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .leading : .trailing)
-        .padding(tasks.user.id == currentUserID ? .leading : .trailing)
+        .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .trailing : .leading)
+        .padding(tasks.user.id == currentUserID ? .trailing : .leading)
         
     }
 }

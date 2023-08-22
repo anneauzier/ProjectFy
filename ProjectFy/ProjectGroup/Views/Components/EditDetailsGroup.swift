@@ -27,10 +27,11 @@ struct EditDetailsGroup: View {
                         .resizable()
                         .frame(width: 100, height: 100)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding([.top, .bottom], 32)
                     
                     Text("Group name")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     
                     TextField("Enter the group name", text: $groupInfo.name)
                         .limitInputLength(value: $groupInfo.name, length: 19, commaLimit: 7)
@@ -40,12 +41,14 @@ struct EditDetailsGroup: View {
                                 .foregroundColor(.rectangleLine)
                                 .padding(.top, 30)
                         )
+                        .padding(.bottom, 40)
                     
                     DescriptionGroup(groupInfo: $groupInfo)
+                        .padding(.bottom, 40)
                     
                     Text("Link for chat or/and meetings")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.backgroundRole)
                     
                     CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
                         

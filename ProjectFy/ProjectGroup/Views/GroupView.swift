@@ -39,8 +39,13 @@ struct GroupView: View {
                                     VStack(alignment: .leading) {
                                         Text("\(group.name)")
                                             .font(.headline)
-                                            .foregroundColor(.black)
-                                        // Text("\(group.members.count) participants")
+                                            .foregroundColor(.backgroundRole)
+                                        
+                                        let names = group.members.map(\.user.name)
+                                        
+                                        Text("\(names.joined(separator: ", "))")
+                                            .font(.subheadline)
+                                            .foregroundColor(.editAdvertisementText)
                                     }
                                 }
                             }
@@ -66,7 +71,8 @@ struct GroupView: View {
                             }
                         })
                     }
-                }
+                }.listStyle(.plain)
+
             }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")
             .onAppear {

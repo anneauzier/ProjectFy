@@ -25,7 +25,7 @@ struct Notifications: View {
                             
                             AcceptableNotification(
                                 notification: requestNotification,
-                                viewModel: notificationsViewModel,
+                                viewModel: notificationsViewModel, user: user,
                                 acceptedHandler: { notification in
                                     acceptAdvertisementRequest(notification: notification)
                                     deleteAdvertisementApplication(notification: notification)
@@ -46,8 +46,8 @@ struct Notifications: View {
                                     }
                                 }
                             )
-                        } else if let infoNotification = notification as? InfoNotification {
-                            NotificationComponent(notification: notification)
+                        } else {
+                            NotificationComponent(notification: notification, user: user)
                         }
                     }
                     
@@ -104,11 +104,13 @@ struct Notifications: View {
 
 fileprivate struct NotificationComponent: View {
     let notification: any Notification
+    let user: User
     
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: 38, height: 38)
+            Image(user.avatar)
+                .resizable()
+                .frame(width: 39, height: 39)
             
             Group {
                 Text(.init(notification.appBody)) +
@@ -127,19 +129,21 @@ fileprivate struct AcceptableNotification: View {
     
     var viewModel: NotificationsViewModel
     var acceptedHandler: (RequestNotification) -> Void
+    let user: User
     
     init(notification: RequestNotification,
-         viewModel: NotificationsViewModel,
+         viewModel: NotificationsViewModel, user: User,
          acceptedHandler: @escaping (RequestNotification) -> Void) {
         self._notification = State(initialValue: notification)
         
         self.viewModel = viewModel
+        self.user = user
         self.acceptedHandler = acceptedHandler
     }
     
     var body: some View {
         HStack {
-            NotificationComponent(notification: notification)
+            NotificationComponent(notification: notification, user: user)
             
             HStack {
                 Button {
@@ -151,6 +155,7 @@ fileprivate struct AcceptableNotification: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.title)
                 }
+                .foregroundColor(.textColorBlue)
                 .buttonStyle(.plain)
 
                 Button {
@@ -160,6 +165,7 @@ fileprivate struct AcceptableNotification: View {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title)
                 }
+                .foregroundColor(.textColorBlue)
                 .buttonStyle(.plain)
             }
             .padding(.leading, 20)

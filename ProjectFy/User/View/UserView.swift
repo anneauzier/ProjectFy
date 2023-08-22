@@ -41,10 +41,19 @@ struct UserView: View {
                     }
 
                     HStack(spacing: 4) {
+                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
+
                         Text(user.name)
-                            .font(Font.title2)
-                            .foregroundColor(.black)
+                            .font(Font.title2.bold())
+                            .foregroundColor(.backgroundRole)
                             .accessibilityLabel("Username: \(user.name)")
+                        
+                        Image(systemName: imageVerify)
+                            .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
+                        
+                        Circle()
+                            .frame(width: 3)
+                            .foregroundColor(.editAdvertisementText)
                         
                         Text(user.username)
                             .font(.body)
@@ -53,12 +62,10 @@ struct UserView: View {
                     }.padding(.horizontal, 20)
                     
                     Group {
-                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
-                        
                         HStack(spacing: 4) {
                             Text(user.areaExpertise)
                                 .font(.body)
-                                .foregroundColor(.black)
+                                .foregroundColor(.backgroundRole)
                             
                             Circle()
                                 .frame(width: 3)
@@ -68,13 +75,6 @@ struct UserView: View {
                                 .font(.body)
                                 .foregroundColor(.editAdvertisementText)
                                 .accessibilityLabel("Knowledge Level \(user.expertise.rawValue)")
-                            
-                            Circle()
-                                .frame(width: 3)
-                                .foregroundColor(.editAdvertisementText)
-                            
-                            Image(systemName: imageVerify)
-                                .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
                         }
                         
                         HStack(spacing: 6) {
@@ -87,13 +87,14 @@ struct UserView: View {
                             .accessibilityLabel("Region \(user.region)")
                         
                     }.padding(.horizontal, 20)
+                     .padding(.bottom, 5)
                     
                     Divider()
                     
                     Group {
                         Text("Interests")
                             .font(Font.headline)
-                            .foregroundColor(.black)
+                            .foregroundColor(.backgroundRole)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
@@ -110,9 +111,10 @@ struct UserView: View {
                             }
                         }
                     }.padding(.horizontal, 20)
+                     .padding(.bottom, 10)
                     
                     UserAdvertisement(user: user)
-        
+
                 }
             }
             .toolbar {
@@ -172,16 +174,25 @@ struct UserAdvertisement: View {
         VStack(alignment: .center) {
 
             Divider()
-            Text("My advertisements")
-                .foregroundColor(.black)
-                .bold()
+            
+            Text("My projects")
+                .font(Font.headline)
+                .foregroundColor(.backgroundRole)
+                
             Divider()
             
-            UserInfo(user: user, size: 49, nameColor: .black)
-                .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
-
-            ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
-                AdView.AdInfo(user: user, advertisement: advertisement)
+            if advertisementsViewModel.advertisements.isEmpty {
+                Connectivity(image: Image("emptyAd"),
+                             title: "You haven't shared project ideas yet :(",
+                             description: "You can start sharing your project ideas on the home screen:)",
+                             heightPH: 0.4)
+            } else {
+                UserInfo(user: user, size: 49, nameColor: .backgroundRole)
+                    .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
+                
+                ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
+                    AdView.AdInfo(user: user, advertisement: advertisement)
+                }
             }
         }
     }

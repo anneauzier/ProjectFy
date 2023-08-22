@@ -20,7 +20,7 @@ struct DropDownButton<T: Hashable>: View {
         Group {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(.backgroundRole)
             
             Menu {
                 ForEach(menuItems) { item in
@@ -34,7 +34,7 @@ struct DropDownButton<T: Hashable>: View {
                             if item.tag == selection {
                                 Spacer()
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.backgroundRole)
                             }
                         }
                     }
@@ -45,8 +45,9 @@ struct DropDownButton<T: Hashable>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Image(systemName: "chevron.down")
-                    .foregroundColor(Color.black)
-            }.background(
+                    .foregroundColor(Color.backgroundRole)
+            }
+            .background(
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(.rectangleLine)
