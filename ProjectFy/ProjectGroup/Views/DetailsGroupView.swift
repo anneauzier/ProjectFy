@@ -28,11 +28,12 @@ struct DetailsGroupView: View {
                     Text("\(group.name)")
                         .font(.body)
                         .foregroundColor(.black)
-                    
+
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
-                    
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, -15)
+
                     Text("Group description")
                         .font(.headline)
                         .foregroundColor(.black)
@@ -40,8 +41,11 @@ struct DetailsGroupView: View {
                         .font(.body)
                         .foregroundColor(.black)
                     
-                    Divider()
-                    
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, -15)
+ 
                     Text("Link for chat or/and meetings")
                         .font(.headline)
                         .foregroundColor(.black)
@@ -52,9 +56,12 @@ struct DetailsGroupView: View {
                         Text("No link available")
                             .font(.body)
                     }
-                }
 
-                Divider()
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, -15)
+                }
                 
                 Text("Participants")
                     .font(.headline)
@@ -72,7 +79,7 @@ struct DetailsGroupView: View {
             }.padding(.horizontal, 20)
             
             Spacer()
-
+            
             FinalButtons()
             
         }.toolbar {

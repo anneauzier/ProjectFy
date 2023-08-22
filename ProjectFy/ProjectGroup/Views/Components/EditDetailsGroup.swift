@@ -26,15 +26,19 @@ struct EditDetailsGroup: View {
                     Image("\(groupInfo.avatar)")
                         .resizable()
                         .frame(width: 100, height: 100)
+                        .frame(maxWidth: .infinity, alignment: .center)
                     
                     Text("Group name")
                         .font(.headline)
                         .foregroundColor(.black)
-                    TextField("Enter the group name", text: $groupInfo.name)
                     
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
+                    TextField("Enter the group name", text: $groupInfo.name)
+                        .background(
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.rectangleLine)
+                                .padding(.top, 30)
+                        )
                     
                     DescriptionGroup(groupInfo: $groupInfo)
                     
@@ -42,13 +46,10 @@ struct EditDetailsGroup: View {
                         .font(.headline)
                         .foregroundColor(.black)
                     
-                    TextField("\(groupInfo.link)", text: $groupInfo.link)
-                        .autocorrectionDisabled(true)
+                    CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
                     
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
-
+//                    TextField("\(groupInfo.link)", text: $groupInfo.link)
+                        
                 }.padding(.horizontal)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
@@ -88,7 +89,7 @@ struct EditDetailsGroup: View {
     }
     private func canSave() -> Bool {
         return groupInfo.name.isEmpty
-            || groupInfo.link.isEmpty
-            || groupInfo.description.isEmpty
+        || groupInfo.link.isEmpty
+        || groupInfo.description.isEmpty
     }
 }

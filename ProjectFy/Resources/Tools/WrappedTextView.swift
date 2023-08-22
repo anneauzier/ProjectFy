@@ -11,9 +11,9 @@ struct WrappedTextView: UIViewRepresentable {
     typealias UIViewType = UITextView
     
     @Binding var text: String
-    let textDidChange: (UITextView) -> Void // chamado sempre que o texto na UITextView for alterado.
+    let textDidChange: (UITextView) -> Void
     
-    func makeUIView(context: Context) -> UITextView { // configurações básicas como a capacidade de edição e o delegado.
+    func makeUIView(context: Context) -> UITextView { 
         let view = UITextView()
         view.isEditable = true
         view.delegate = context.coordinator
@@ -22,16 +22,14 @@ struct WrappedTextView: UIViewRepresentable {
         
         return view
     }
-    
-    // é chamado sempre que a representação da view precisar ser atualizada.
+
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.text = self.text
         DispatchQueue.main.async {
             self.textDidChange(uiView)
         }
     }
-    
-    // garante que as alterações no texto sejam refletidas no binding e para acionar o closure textDidChange.
+
     func makeCoordinator() -> Coordinator {
         return Coordinator(self, text: $text, textDidChange: textDidChange)
     }

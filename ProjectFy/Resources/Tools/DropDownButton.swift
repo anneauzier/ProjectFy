@@ -67,12 +67,3 @@ struct MenuItem<T: Hashable>: Identifiable {
     let name: String
     let tag: T
 }
-
-//            .padding(.horizontal, 10)
-//            .frame(minWidth: 0, maxWidth: .infinity)
-//            .overlay {
-//                RoundedRectangle(cornerRadius: 8)
-//                    .padding()
-//                    .foregroundColor(.clear)
-//                    .border(Color.secondary.opacity(0.18))
-//            }

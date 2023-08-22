@@ -52,7 +52,7 @@ struct GroupView: View {
                                     .foregroundColor(.black)
                             })
                         }
-                        .confirmationDialog("", isPresented: $showActionSheet, titleVisibility: .visible) {
+                        .confirmationDialog("", isPresented: $showActionSheet, actions: {
                             Button {
                                 selectedGroup = group
                                 isActive = true
@@ -65,8 +65,8 @@ struct GroupView: View {
                             } label: {
                                 Text("Exit group")
                             }
-                        }
-                    }.background(Color.white)
+                        })
+                    }
                 }
             }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")

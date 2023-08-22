@@ -76,11 +76,11 @@ fileprivate struct SetupInitialConfigs: View {
                         .padding(.top, 16)
                     
                     Text("Don't worry, you can change these informations later...")
-                        .foregroundColor(.gray)
                         .font(Font.headline)
-                        .padding(.top, 20)
+                        .foregroundColor(.editAdvertisementText)
+                        .padding(.top, 15)
 
-                }.frame(width: UIScreen.main.bounds.width - 40)
+                }.frame(width: UIScreen.main.bounds.width - 35)
                 
                 SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
             }

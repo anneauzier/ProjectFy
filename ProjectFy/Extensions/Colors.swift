@@ -26,4 +26,5 @@ extension Color {
     static let rectangleLine = Color("rectangleLine")
     static let bubbleColor = Color("bubbleColor")
     static let fieldColor = Color("fieldColor")
+    static let signInColor = Color("signInColor")
 }

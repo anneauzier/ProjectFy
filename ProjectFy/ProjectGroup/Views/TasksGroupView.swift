@@ -51,7 +51,7 @@ struct GroupInfo: View {
                         .frame(width: 71, height: 71)
                     VStack {
                         Text("\(group.name)")
-                            .font(.caption)
+                            .font(.headline)
 //                      Text("\(detailsInfo.members.count)")
                     }.foregroundColor(.black)
                     
