@@ -136,10 +136,7 @@ extension DetailsGroupView {
                 }
                 
                 Button {
-                    var group = group
-                    
-                    group.members.removeAll(where: { $0.user.id == user.id })
-                    viewModel.editGroup(group)
+                    viewModel.exitGroup(user: user, group: group)
                 } label: {
                     RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
                         Text("Exit group")

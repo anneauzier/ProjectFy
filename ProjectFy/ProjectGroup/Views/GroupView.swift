@@ -60,10 +60,7 @@ struct GroupView: View {
                             }
 
                             Button(role: .destructive) {
-                                var group = group
-                                
-                                group.members.removeAll(where: { $0.user.id == user.id })
-                                viewModel.editGroup(group)
+                                viewModel.exitGroup(user: user, group: group)
                             } label: {
                                 Text("Exit group")
                             }
