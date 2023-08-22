@@ -31,12 +31,9 @@ struct Connectivity: View {
                 .foregroundColor(.editAdvertisementText)
                 .frame(width: UIScreen.main.bounds.width - 114)
                 .multilineTextAlignment(.center)
-        }.frame(height: UIScreen.main.bounds.height * 0.6)
+        }.frame(height: UIScreen.main.bounds.height * 0.7)
     }
 }
 
-//"Looks like people haven't shared project ideas yet :("
-//"You can start to share your project ideas by taping on \(Text("+").font(.title2).foregroundColor(.textColorBlue))"
-
-//"Sorry, we couldn't load this page :("
-//"Check your connection to see if there's something wrong"
+// "Sorry, we couldn't load this page :("
+// "Check your connection to see if there's something wrong"

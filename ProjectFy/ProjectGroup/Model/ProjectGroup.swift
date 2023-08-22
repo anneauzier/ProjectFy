@@ -94,7 +94,9 @@ struct ProjectGroup: Hashable, Codable {
     
     init() {
         self.id = UUID().uuidString
-        self.advertisement = Advertisement(owner: .init(signInResult: .init(identityToken: "", nonce: "", name: "", email: "")))
+        self.advertisement = Advertisement(owner: .init(signInResult: .
+                                                        init(identityToken: "",
+                                                        nonce: "", name: "", email: "")))
         self.name = ""
         self.description = ""
         self.members = []

@@ -42,7 +42,7 @@ struct UserView: View {
 
                     HStack(spacing: 4) {
                         Text(user.name)
-                            .font(Font.title2)
+                            .font(Font.title2.bold())
                             .foregroundColor(.black)
                             .accessibilityLabel("Username: \(user.name)")
                         

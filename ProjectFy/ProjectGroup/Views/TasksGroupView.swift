@@ -17,7 +17,7 @@ struct TasksGroupView: View {
         VStack {
             VStack {
                 GroupInfo(group: group)
-                
+    
                 ScrollView {
                     ForEach(group.tasks, id: \.id) { task in
                         TaskBubble(tasks: task, currentUserID: user.id)
@@ -25,10 +25,8 @@ struct TasksGroupView: View {
                 }
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
-                
             }
-//            .padding(.horizontal, 20)
-            
+
             TaskField(user: user, group: group, viewModel: viewModel)
         }
         .onAppear {
@@ -46,21 +44,25 @@ struct GroupInfo: View {
             NavigationLink {
                 DetailsGroupView(group: group)
             } label: {
-                HStack(alignment: .center) {
+                HStack(alignment: .center, spacing: 10) {
                     Image("\(group.avatar)")
                         .resizable()
                         .frame(width: 71, height: 71)
-                    VStack {
+                    VStack(alignment: .leading) {
                         Text("\(group.name)")
                             .font(.headline)
-//                      Text("\(detailsInfo.members.count)")
-                    }.foregroundColor(.black)
+                            .foregroundColor(.black)
+                        Text("members of a group")
+                            .font(.subheadline)
+                            .foregroundColor(.editAdvertisementText)
+                    }
                     
                     Spacer()
                     
                     Image(systemName: "chevron.forward")
                         .foregroundColor(.black)
-                }.navigationBarTitleDisplayMode(.inline)
+                }.padding(.horizontal, 15)
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
 

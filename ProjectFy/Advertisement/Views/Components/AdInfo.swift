@@ -307,7 +307,7 @@ extension AdView {
                         }
                    },
                    message: {
-                        Text("you cannot participate in more than three projects at the same time")
+                        Text("You cannot participate in more than three projects at the same time")
                    }
             )
             

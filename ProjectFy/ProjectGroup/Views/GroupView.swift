@@ -40,7 +40,9 @@ struct GroupView: View {
                                         Text("\(group.name)")
                                             .font(.headline)
                                             .foregroundColor(.black)
-                                        // Text("\(group.members.count) participants")
+                                        Text("\(group.members.count) participants")
+                                            .font(.subheadline)
+                                            .foregroundColor(.editAdvertisementText)
                                     }
                                 }
                             }
@@ -66,7 +68,7 @@ struct GroupView: View {
                             }
                         })
                     }
-                }
+                }.listStyle(.plain)
             }.navigationViewStyle(.stack)
             .navigationTitle("My Groups")
             .onAppear {

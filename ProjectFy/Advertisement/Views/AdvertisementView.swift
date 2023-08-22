@@ -28,7 +28,7 @@ struct AdvertisementsView: View {
                 if advertisementsViewModel.advertisements.isEmpty {
                     Connectivity(image: Image(""),
                                  title: "Looks like people haven't shared project ideas yet :(",
-                                 description: "You can start to share your project ideas by taping on \(Text("+").font(.title2).foregroundColor(.textColorBlue))")
+                                 description: "You can start to share your project ideas by taping on +")
 
                 } else {
                     VStack {
