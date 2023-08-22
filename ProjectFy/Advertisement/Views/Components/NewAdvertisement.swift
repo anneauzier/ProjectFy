@@ -12,126 +12,117 @@ extension AdvertisementsView {
     struct NewAdvertisement: View {
         @Environment(\.dismiss) var dismiss
         
-        @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
-        @EnvironmentObject var userViewModel: UserViewModel
+        let owner: User
+        var viewModel: AdvertisementsViewModel
         
         @State var advertisement: Advertisement
         @State var presentBackAlert: Bool = false
+        let isEditing: Bool
         
-        let mytoken =
-        """
-        dYoLEoNX8UJ4i5hqg01zfe:APA91bExgdfwk2osT8ZBD3LMzjU5qT2
-        COFs8aApolcX8th50uht8jg39hHZLZPK5aDYe52LA2-OUYgC5cc9YeBj
-        Ah8PMHvirVO8Lp4tDzgnYEMbnr4lC0ZKFusOHUJemEhDZoKFTEAr9
-        """
-        
-//        let sender = PushNotificationSender()
-        
-        var viewModel: AdvertisementsViewModel
-        @Binding var popToRoot: Bool
-        var editingID: String?
-        
-        init(owner: User, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
-            self._advertisement = State(initialValue: Advertisement(owner: owner))
+        init(owner: User, viewModel: AdvertisementsViewModel, editingID: String?) {
+            self.owner = owner
             self.viewModel = viewModel
-            self._popToRoot = popToRoot
-            self.editingID = editingID
+            
+            if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
+                self._advertisement = State(initialValue: advertisement)
+                self.isEditing = true
+                
+                return
+            }
+            
+            self._advertisement = State(initialValue: Advertisement(owner: owner))
+            self.isEditing = false
         }
         
         var body: some View {
-            ScrollView {
-                VStack(alignment: .leading) {
+            NavigationView {
+                ScrollView {
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        UserInfo(user: owner, size: 49, nameColor: .black)
+                            .padding(.top, -10)
 
-                    TextField("Add 10 tags to your project...", text: $advertisement.tags)
-                        .font(Font.body)
-                        .foregroundColor(.editAdvertisementText)
-                        .padding(.top, 25)
-                    
-                    TextField("Name your project...", text: $advertisement.title)
-                        .font(Font.largeTitle.bold())
-                        .foregroundColor(.editAdvertisementText)
-                        .padding(.top, 44)
-                    
-                    TextField("Describe your project in 1000 characters or less...", text: $advertisement.description)
-                        .font(Font.body)
-                        .foregroundColor(.editAdvertisementText)
-                        .padding(.top, 54)
-                    
-                    DropDownButton(
-                        title: "Project status", textColor: .textColorBlue,
-                        selection: $advertisement.ongoing,
-                        menuItems: [
-                            MenuItem(name: "Not started", tag: false),
-                            MenuItem(name: "In progress", tag: true)
-                        ]
-                    )
-                    .padding(.top, 20)
-                    
-                    Button("aperte aqui") {
-//                        sender.sendPushNotification(to: "\(mytoken)", title: "Notification title", body: "Notification body")
+                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
+                            .font(Font.body)
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 25)
+                        
+                        TextField("Name your project...", text: $advertisement.title)
+                            .font(Font.largeTitle.bold())
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 44)
+                        
+                        TextField("Describe your project in 1000 characters or less...", text: $advertisement.description)
+                            .font(Font.body)
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 54)
+                        
+                        DropDownButton(
+                            title: "Project status", textColor: .textColorBlue,
+                            selection: $advertisement.ongoing,
+                            menuItems: [
+                                MenuItem(name: "Not started", tag: false),
+                                MenuItem(name: "In progress", tag: true)
+                            ]
+                        )
+                        .padding(.top, 20)
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .padding([.horizontal, .top], 16)
                 }
-                .padding([.horizontal, .top], 16)
-            }
-            
-            .onAppear {
-                guard let editingID = editingID else { return }
-                guard let advertisement = viewModel.getAdvertisement(with: editingID) else { return }
+                .navigationBarBackButtonHidden()
+                .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+                .navigationBarTitleDisplayMode(.inline)
                 
-                self.advertisement = advertisement
-            }
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        presentBackAlert = true
-                    } label: {
-                        HStack {
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentBackAlert = true
+                        } label: {
                             Text("X")
                                 .font(Font.title3.bold())
                         }
                     }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        Positions(
-                            advertisement: $advertisement,
-                            popToRoot: $popToRoot,
-                            isEditing: editingID != nil
-                        )
-                            .environmentObject(advertisementsViewModel)
-                    } label: {
-                        Text("Next")
-                    }.disabled(!(cantNext()))
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            Positions(
+                                owner: owner,
+                                advertisement: $advertisement,
+                                isEditing: isEditing
+                            )
+                                .environmentObject(viewModel)
+                        } label: {
+                            Text("Next")
+                        }
+                        .disabled(!canContinue())
 
-                    .simultaneousGesture(TapGesture().onEnded({ _ in
-                        Haptics.shared.selection()
-                    }))
+                        .simultaneousGesture(TapGesture().onEnded({ _ in
+                            Haptics.shared.selection()
+                        }))
+                    }
                 }
             }
             
-            .alert("Do you really want to delete this project announcement?", isPresented: $presentBackAlert) {
+            .confirmationDialog("back", isPresented: $presentBackAlert) {
+                Button(role: .destructive) {
+                    presentBackAlert = false
+                    dismiss()
+                } label: {
+                    Text("Delete draft")
+                }
+
                 Button(role: .cancel) {
                     presentBackAlert = false
                 } label: {
                     Text("Cancel")
                 }
-
-                Button(role: .destructive) {
-                    dismiss()
-                } label: {
-                    Text("Delete")
-                }
-            } message: {
-                Text("This project announcement will be deleted permanentely")
             }
-
         }
         
-        private func cantNext() -> Bool {
+        private func canContinue() -> Bool {
                 // Verificar se os campos relevantes estão preenchidos
                 return !advertisement.tags.isEmpty
                     && !advertisement.title.isEmpty
@@ -140,66 +131,68 @@ extension AdvertisementsView {
     }
     
     private struct Positions: View {
+        @Environment(\.dismiss) var dismiss
         @EnvironmentObject var viewModel: AdvertisementsViewModel
         
+        let owner: User
         @Binding var advertisement: Advertisement
-        @Binding var popToRoot: Bool
-        
         let isEditing: Bool
         
         var body: some View {
             ScrollView {
-                VStack {
-                    Text("Create project vacancies")
-                        .font(Font.title.bold())
+                VStack(alignment: .leading) {
+                    UserInfo(user: owner, size: 49, nameColor: .black)
+                        .padding(.bottom, 30)
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in
                         Position(position: $advertisement.positions[index])
                     }
                     
-                    HStack {
-                        Button {
-                            newPosition()
-                            Haptics.shared.selection()
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.textColorBlue)
-                                
-                                Image(systemName: "plus")
-                                    .font(Font.title2.bold())
-                                    .foregroundColor(.white)
-                            }
-                            .frame(width: 54, height: 54)
+                    Button {
+                        newPosition()
+                        Haptics.shared.selection()
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(Color.textColorBlue)
+                            
+                            Image(systemName: "plus")
+                                .font(Font.title2.bold())
+                                .foregroundColor(.white)
                         }
+                        .frame(width: 54, height: 54)
+                        .frame(maxWidth: .infinity)
                     }
-                    
-                    Spacer()
+                    .padding(.top, 10)
                 }
                 .padding(.horizontal, 16)
             }
+            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+            
             .onAppear {
                 if advertisement.positions.isEmpty {
                     newPosition()
                 }
             }
+            
             .toolbar {
                 Button {
                     if isEditing {
                         viewModel.editAdvertisement(advertisement)
-                        popToRoot.toggle()
-        
                         Haptics.shared.notification(.success)
+                        
+                        dismiss()
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
                     
                     Haptics.shared.notification(.success)
-                    popToRoot.toggle()
+                    dismiss()
                 } label: {
                     Text(isEditing ? "Edit" : "Share")
-                }.disabled(!cantShare())
+                }
+                .disabled(!cantShare())
             }
         }
         

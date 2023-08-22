@@ -20,6 +20,8 @@ struct AdvertisementsView: View {
     @State var selectedPositionToPresent: ProjectGroup.Position?
     @State var presentPositionSheet: Bool = false
     
+    @State var presentSheet = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -51,18 +53,18 @@ struct AdvertisementsView: View {
             }
             
             .toolbar {
-                NavigationLink(isActive: $isLinkActive) {
-                    NewAdvertisement(owner: user,
-                                     viewModel: advertisementsViewModel,
-                                     popToRoot: $isLinkActive,
-                                     editingID: editingID)
-                } label: {
-                    Label("Create ad", systemImage: "plus")
-                }
-                
-                .simultaneousGesture(TapGesture().onEnded({ _ in
+                Button {
+                    presentSheet.toggle()
                     Haptics.shared.selection()
-                }))
+                } label: {
+                    Label("new advertisement", systemImage: "plus")
+                }
+            }
+            
+            .sheet(isPresented: $presentSheet) {
+                NewAdvertisement(owner: user,
+                                 viewModel: advertisementsViewModel,
+                                 editingID: editingID)
             }
         }
     }
