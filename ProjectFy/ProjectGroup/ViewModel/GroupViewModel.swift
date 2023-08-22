@@ -50,6 +50,14 @@ final class GroupViewModel: ObservableObject {
         return allGroups.first(where: { $0.advertisement.id == advertisementID })
     }
     
+    func getGroups(from userID: String) -> [ProjectGroup] {
+        return allGroups.filter { group in
+            group.members.contains { member in
+                member.user.id == userID
+            }
+        }
+    }
+    
     func editGroup(_ group: ProjectGroup) {
         do {
             try service.update(group)

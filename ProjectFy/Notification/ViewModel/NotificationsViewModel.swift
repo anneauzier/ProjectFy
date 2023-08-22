@@ -78,6 +78,22 @@ final class NotificationsViewModel: ObservableObject {
         service.delete(with: notification.id)
     }
     
+    func deleteAllRequests(from userID: String) {
+        var requests: [RequestNotification] = []
+        
+        notifications.forEach { notification in
+            guard let request = notification as? RequestNotification else { return }
+            
+            if request.application.user.id == userID {
+                requests.append(request)
+            }
+        }
+        
+        requests.forEach { [weak self] request in
+            self?.delete(with: request.id)
+        }
+    }
+    
     func delete(with id: String) {
         service.delete(with: id)
     }

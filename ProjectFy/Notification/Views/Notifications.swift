@@ -29,6 +29,12 @@ struct Notifications: View {
                                 acceptedHandler: { notification in
                                     acceptAdvertisementRequest(notification: notification)
                                     deleteAdvertisementApplication(notification: notification)
+                                    
+                                    let userID = notification.application.user.id
+                                    
+                                    if groupViewModel.getGroups(from: userID).count >= 3 {
+                                        notificationsViewModel.deleteAllRequests(from: userID)
+                                    }
                                 }
                             )
                         } else {
