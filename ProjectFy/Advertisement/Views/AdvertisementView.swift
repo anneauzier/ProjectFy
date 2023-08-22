@@ -77,9 +77,12 @@ struct AdvertisementsView: View {
             }
             
             .sheet(isPresented: $presentSheet) {
-                NewAdvertisement(owner: user,
-                                 viewModel: advertisementsViewModel,
-                                 editingID: editingID)
+                NewAdvertisement(
+                    owner: user,
+                    viewModel: advertisementsViewModel,
+                    dismiss: $presentSheet,
+                    editingID: editingID
+                )
             }
             
             .alert("You can't create a new advertisement beacause you are already in  three projects",
