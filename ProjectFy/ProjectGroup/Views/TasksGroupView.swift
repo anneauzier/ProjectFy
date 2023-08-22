@@ -26,7 +26,8 @@ struct TasksGroupView: View {
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
                 
-            }.padding(.horizontal, 20)
+            }
+//            .padding(.horizontal, 20)
             
             TaskField(user: user, group: group, viewModel: viewModel)
         }

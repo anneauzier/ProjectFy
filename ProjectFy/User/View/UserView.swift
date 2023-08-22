@@ -15,6 +15,7 @@ struct UserView: View {
     
     var presentUsersProfile: Bool = false
     let user: User
+    let advertisement: Advertisement
     
     var body: some View {
         NavigationView {
@@ -111,7 +112,7 @@ struct UserView: View {
                         }
                     }.padding(.horizontal, 20)
                     
-                    UserAdvertisement(user: user)
+                    UserAdvertisement(user: user, advertisement: advertisement)
         
                 }
             }
@@ -165,26 +166,24 @@ struct UserView: View {
 }
 
 struct UserAdvertisement: View {
-
     let user: User
-//        let advertisement: Advertisement
+    let advertisement: Advertisement
 
     var body: some View {
         VStack(alignment: .center) {
 
             Divider()
-            Text("Meus anúncios")
+            Text("My advertisements")
                 .foregroundColor(.black)
                 .bold()
             Divider()
-//
-//            //        AdView(owner: <#T##User#>,
-//            //        advertisement: <#T##Advertisement#>,
-//            //        editingID: <#T##Binding<String?>#>,
-//            //        editAdvertisement: <#T##Binding<Bool>#>,
-//            //        selectedPositionToPresent: <#T##Binding<ProjectGroup.Position?>#>,
-//            //        presentPositionSheet: <#T##Binding<Bool>#>)
-//
+            
+            UserInfo(user: user, size: 49, nameColor: .black)
+                .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
+
+            AdView.AdInfo(user: user, advertisement: advertisement,
+                          presentSheet: .constant(false), selectedPosition: .constant(nil))
+    
         }
     }
 }

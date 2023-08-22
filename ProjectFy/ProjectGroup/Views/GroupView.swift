@@ -48,9 +48,8 @@ struct GroupView: View {
                             Button(action: {
                                 showActionSheet.toggle()
                             }, label: {
-                                Text("...")
-                                    .foregroundColor(.black)
-                            })
+                                Image("points")
+                            }).tint(.backgroundTextBlue)
                         }
                         .confirmationDialog("", isPresented: $showActionSheet, actions: {
                             Button {

@@ -9,6 +9,7 @@ import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
 
+//    @Published private(set) var advertisement: Advertisement?
     @Published var advertisements: [Advertisement] = []
     @Published var applicationStatus: ApplicationStatus?
     

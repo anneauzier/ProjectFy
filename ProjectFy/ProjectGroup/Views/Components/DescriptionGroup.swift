@@ -25,6 +25,7 @@ extension EditDetailsGroup {
                     WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
                         .focused($isTextFieldFocused)
                         .frame(height: height ?? minHeight)
+                        .limitInputLength(value: $groupInfo.description, length: 100, commaLimit: 7)
  
                     Rectangle()
                         .frame(height: 1)

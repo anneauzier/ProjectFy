@@ -9,16 +9,19 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
     @Binding var isNewUser: Bool?
     
     var body: some View {
         if let user = userViewModel.user {
-            TabBarView(user: user, isNewUser: $isNewUser)
-                .onAppear {
-                    notificationsViewModel.startListening(with: user.id)
-                }
+            if let userAdvertisement = advertisementViewModel.advertisements.first(where: { $0.owner.id == user.id }) {
+                TabBarView(user: user, advertisement: userAdvertisement, isNewUser: $isNewUser)
+                    .onAppear {
+                        notificationsViewModel.startListening(with: user.id)
+                    }
+            }
         } else {
             LoadingUserInfo()
         }
@@ -33,6 +36,7 @@ struct HomeView: View {
 
 fileprivate struct TabBarView: View {
     let user: User
+    let advertisement: Advertisement
     @Binding var isNewUser: Bool?
     
     var body: some View {
@@ -49,7 +53,7 @@ fileprivate struct TabBarView: View {
                 GroupView(user: user)
                     .tabItem { Label("Group", systemImage: "person.3") }
                 
-                UserView(user: user)
+                UserView(user: user, advertisement: advertisement)
                     .tabItem { Label("Profile", systemImage: "person.fill") }
             }
         }
@@ -80,7 +84,7 @@ fileprivate struct SetupInitialConfigs: View {
                         .foregroundColor(.editAdvertisementText)
                         .padding(.top, 15)
 
-                }.frame(width: UIScreen.main.bounds.width - 35)
+                }.frame(width: UIScreen.main.bounds.width - 35.9)
                 
                 SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
             }

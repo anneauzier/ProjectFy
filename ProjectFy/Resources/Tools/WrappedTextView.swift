@@ -79,7 +79,7 @@ struct CustomText: View {
                 WrappedTextView(text: $text, textDidChange: self.textDidChange)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
-                    .limitInputLength(value: $text, length: 60, commaLimit: 7)
+                    .limitInputLength(value: $text, length: 100, commaLimit: 7)
                 
                 Rectangle()
                     .frame(height: 1)

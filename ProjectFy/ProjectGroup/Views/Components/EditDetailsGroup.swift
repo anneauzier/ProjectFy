@@ -33,6 +33,7 @@ struct EditDetailsGroup: View {
                         .foregroundColor(.black)
                     
                     TextField("Enter the group name", text: $groupInfo.name)
+                        .limitInputLength(value: $groupInfo.name, length: 19, commaLimit: 7)
                         .background(
                             Rectangle()
                                 .frame(height: 1)
@@ -47,8 +48,6 @@ struct EditDetailsGroup: View {
                         .foregroundColor(.black)
                     
                     CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
-                    
-//                    TextField("\(groupInfo.link)", text: $groupInfo.link)
                         
                 }.padding(.horizontal)
                     .toolbar {

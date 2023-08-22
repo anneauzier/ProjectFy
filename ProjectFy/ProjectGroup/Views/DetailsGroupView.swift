@@ -14,7 +14,7 @@ struct DetailsGroupView: View {
     @State private var goEditGroupView = false
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
                 Image("\(group.avatar)")
                     .resizable()
@@ -67,15 +67,11 @@ struct DetailsGroupView: View {
                     .font(.headline)
                     .foregroundColor(.black)
                 
-                // AJEITAR ISSO AQUI
                 RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
                     UserInfo(user: group.admin, size: 49, nameColor: .white)
-                    // TRATAR ESSA RESPONSIVIDADE DEPOIS
-                        .padding(.trailing, 40)
-                        .removePadding()
+                        .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                 }.frame(height: 88)
-                    .padding(.bottom, 40)
-                
+
             }.padding(.horizontal, 20)
             
             Spacer()

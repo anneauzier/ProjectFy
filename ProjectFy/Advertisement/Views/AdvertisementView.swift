@@ -23,22 +23,28 @@ struct AdvertisementsView: View {
         NavigationView {
             ScrollView {
                 Divider()
-                VStack {
-                    ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
-                        AdView(
-                            user: user,
-                            owner: advertisement.owner,
-                            advertisement: advertisement,
-                            editingID: $editingID,
-                            editAdvertisement: $isLinkActive,
-                            selectedPositionToPresent: $selectedPositionToPresent,
-                            presentPositionSheet: $presentPositionSheet
-                        )
+                if advertisementsViewModel.advertisements.isEmpty {
+                    Connectivity(image: Image(""),
+                                 title: "Looks like people haven't shared project ideas yet :(",
+                                 description: "You can start to share your project ideas by taping on \(Text("+").font(.title2).foregroundColor(.textColorBlue))")
+
+                } else {
+                    VStack {
+                        ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
+                            AdView(
+                                user: user,
+                                owner: advertisement.owner,
+                                advertisement: advertisement,
+                                editingID: $editingID,
+                                editAdvertisement: $isLinkActive,
+                                selectedPositionToPresent: $selectedPositionToPresent,
+                                presentPositionSheet: $presentPositionSheet
+                            )
+                        }
                     }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.horizontal, 16)
             }
-            
             .onAppear {
                 editingID = nil
             }
@@ -80,7 +86,7 @@ struct AdView: View {
         VStack(alignment: .leading) {
             HStack {
                 NavigationLink {
-                    UserView(presentUsersProfile: true, user: owner)
+                    UserView(presentUsersProfile: true, user: owner, advertisement: advertisement)
                 } label: {
                     UserInfo(user: owner, size: 49, nameColor: .black)
                 }.padding(.top, 3)
@@ -131,7 +137,6 @@ struct AdView: View {
             Button(role: .destructive) {
                 viewModel.deleteAdvertisement(with: advertisement.id)
                 Haptics.shared.notification(.success)
-                
                 showDeleteAlert.toggle()
             } label: {
                 Text("Delete")
