@@ -33,14 +33,16 @@ struct WrappedTextView: UIViewRepresentable {
     
     // garante que as alterações no texto sejam refletidas no binding e para acionar o closure textDidChange.
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text, textDidChange: textDidChange)
+        return Coordinator(self, text: $text, textDidChange: textDidChange)
     }
     
     class Coordinator: NSObject, UITextViewDelegate {
         @Binding var text: String
         let textDidChange: (UITextView) -> Void
-        
-        init(text: Binding<String>, textDidChange: @escaping (UITextView) -> Void) {
+        var parent: WrappedTextView
+
+        init(_ parent: WrappedTextView, text: Binding<String>, textDidChange: @escaping (UITextView) -> Void) {
+            self.parent = parent
             self._text = text
             self.textDidChange = textDidChange
         }
@@ -48,6 +50,14 @@ struct WrappedTextView: UIViewRepresentable {
         func textViewDidChange(_ textView: UITextView) {
             self.text = textView.text
             self.textDidChange(textView)
+        }
+        
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            if text == "\n" {
+                textView.resignFirstResponder() // Perder o foco do campo de texto
+                return false
+            }
+            return true
         }
     }
 }
@@ -72,9 +82,11 @@ struct CustomText: View {
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
                     .limitInputLength(value: $text, length: 60, commaLimit: 7)
+                
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(.rectangleLine)
+                
                 if condition {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)

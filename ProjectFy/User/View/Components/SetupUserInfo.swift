@@ -70,7 +70,7 @@ struct SetupUserInfo: View {
             
             DropDownButton(
                 title: "Availability",
-                textColor: .black,
+                textColor: user.available ? .availableText : .unavailableText,
                 selection: $user.available,
                 menuItems: [
                     MenuItem(name: "Unavailable for projects", tag: false),

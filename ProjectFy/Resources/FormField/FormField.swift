@@ -26,10 +26,12 @@ struct FormField: View {
             TextField(placeholder, text: $text)
                 .limitInputLength(value: $text, length: 19, commaLimit: 30)
                 .accessibilityLabel(textFieldAccessibilityLabel)
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.rectangleLine)
+                .background(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, 30)
+                )
         }
     }
 }
