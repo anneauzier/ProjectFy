@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>232777258745-iisusr0a8q420vh1dt4a8rs9u30hhg6e.apps.googleusercontent.com</string>
+	<string>461830881488-apm6b4fmrbi0lnb4ti9bclglmdkr2fm5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.232777258745-iisusr0a8q420vh1dt4a8rs9u30hhg6e</string>
+	<string>com.googleusercontent.apps.461830881488-apm6b4fmrbi0lnb4ti9bclglmdkr2fm5</string>
 	<key>API_KEY</key>
-	<string>AIzaSyArGXbLenin-IeOCIFbWMhOcRvDmc7YpOQ</string>
+	<string>AIzaSyCsDiLfuBFsjWY7DUCtMCMBf-zjenNWYV0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>232777258745</string>
+	<string>461830881488</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>iagoramoss.ProjectFy</string>
+	<string>com.br.grooup</string>
 	<key>PROJECT_ID</key>
-	<string>projectfy-test</string>
+	<string>grooup-943c5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>projectfy-test.appspot.com</string>
+	<string>grooup-943c5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:232777258745:ios:76bb96fc3670e9a6f73428</string>
+	<string>1:461830881488:ios:2bccc662a0a6bedd171ed5</string>
 </dict>
 </plist>

@@ -50,18 +50,18 @@ extension AdvertisementsView {
                         
                         TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
                             .font(Font.body)
-                            .foregroundColor(.editAdvertisementText)
+                            .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 25)
                         
                         TextField("Name your project...", text: $advertisement.title)
                             .font(Font.largeTitle.bold())
-                            .foregroundColor(.editAdvertisementText)
+                            .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 44)
                         
                         TextField("Describe your project in 1000 characters or less...",
                                   text: $advertisement.description)
                             .font(Font.body)
-                            .foregroundColor(.editAdvertisementText)
+                            .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 54)
                         
                         DropDownButton(
@@ -72,7 +72,7 @@ extension AdvertisementsView {
                                 MenuItem(name: "In progress", tag: true)
                             ]
                         )
-                        .padding(.top, 20)
+                        .padding(.top, 54)
                         
                         Spacer()
                     }

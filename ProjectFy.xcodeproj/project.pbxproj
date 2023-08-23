@@ -42,7 +42,6 @@
 		678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383852A814A0600E459F1 /* AdvertisementProtocol.swift */; };
 		678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */; };
 		6783CC872A8D51EA0050AD39 /* GroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6783CC862A8D51EA0050AD39 /* GroupService.swift */; };
-		6783CC892A8D91C10050AD39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6783CC882A8D91C10050AD39 /* GoogleService-Info.plist */; };
 		67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531E92A7831D500EBD022 /* Advertisement.swift */; };
 		67A531ED2A7831FA00EBD022 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531EC2A7831FA00EBD022 /* User.swift */; };
 		67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A531F22A78327600EBD022 /* ProjectGroup.swift */; };
@@ -73,6 +72,7 @@
 		9FAE4F6E2A82E4430086725F /* TasksGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F6D2A82E4430086725F /* TasksGroupView.swift */; };
 		9FB2765F2A85ED3C00C593EA /* DescriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
+		9FEBE8EF2A969A23005A4C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */; };
 		9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */; };
 		9FFECDEF2A71EBF00053F29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFECDEE2A71EBF00053F29D /* Assets.xcassets */; };
 		9FFECDF22A71EBF00053F29D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFECDF12A71EBF00053F29D /* Preview Assets.xcassets */; };
@@ -111,7 +111,6 @@
 		678383852A814A0600E459F1 /* AdvertisementProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementProtocol.swift; sourceTree = "<group>"; };
 		678383882A814A9C00E459F1 /* AdvertisementMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementMockupService.swift; sourceTree = "<group>"; };
 		6783CC862A8D51EA0050AD39 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
-		6783CC882A8D91C10050AD39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		67A531E92A7831D500EBD022 /* Advertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertisement.swift; sourceTree = "<group>"; };
 		67A531EC2A7831FA00EBD022 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67A531F22A78327600EBD022 /* ProjectGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroup.swift; sourceTree = "<group>"; };
@@ -143,6 +142,7 @@
 		9FAE4F6D2A82E4430086725F /* TasksGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksGroupView.swift; sourceTree = "<group>"; };
 		9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionGroup.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FFECDE72A71EBEF0053F29D /* ProjectFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFyApp.swift; sourceTree = "<group>"; };
 		9FFECDEE2A71EBF00053F29D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -405,8 +405,8 @@
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */,
 				9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */,
-				6783CC882A8D91C10050AD39 /* GoogleService-Info.plist */,
 				9FBAE03E2A8EC0BA003F6424 /* Tools */,
 				673BD3062A8AFE6700DD161F /* FormField */,
 				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
@@ -629,8 +629,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FFECDF22A71EBF00053F29D /* Preview Assets.xcassets in Resources */,
-				6783CC892A8D91C10050AD39 /* GoogleService-Info.plist in Resources */,
 				9FFECDEF2A71EBF00053F29D /* Assets.xcassets in Resources */,
+				9FEBE8EF2A969A23005A4C3C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,10 +855,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = J5QJGKM573;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProjectFy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Grooup!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -871,7 +873,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = iagoramoss.ProjectFy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.br.grooup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -879,7 +881,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -893,10 +895,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
-				DEVELOPMENT_TEAM = A7SRF7ZP35;
+				DEVELOPMENT_TEAM = J5QJGKM573;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProjectFy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Grooup!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -909,7 +913,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = anneauzier.ProjectFy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.br.grooup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -917,7 +921,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

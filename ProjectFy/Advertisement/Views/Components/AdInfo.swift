@@ -64,7 +64,7 @@ extension AdView {
                             Haptics.shared.selection()
                         } label: {
                             Position(user: user, advertisement: advertisement, position: position)
-                        }.padding(.bottom, 20)
+                        }
                         
                         .onChange(of: selectedPosition, perform: { selectedPosition in
                             if selectedPosition != nil {
