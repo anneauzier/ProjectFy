@@ -17,7 +17,7 @@ final class SignInWithAppleService: NSObject, AuthenticationProtocol {
     private var completionHandler: ((Result<SignInResult, Error>) -> Void)?
     
     func signIn() async throws -> SignInResult {
-        var result = try await startSignInWithAppleFlow()
+        let result = try await startSignInWithAppleFlow()
         
         let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                   idToken: result.identityToken,

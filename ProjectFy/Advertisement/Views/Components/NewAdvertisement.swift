@@ -10,174 +10,204 @@ import SwiftUI
 
 extension AdvertisementsView {
     struct NewAdvertisement: View {
-        @Environment(\.dismiss) var dismiss
-        
-        @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
-        @EnvironmentObject var userViewModel: UserViewModel
+        let owner: User
+        var viewModel: AdvertisementsViewModel
         
         @State var advertisement: Advertisement
+        @Binding var dismiss: Bool
+        @Binding var updateAdvertisements: Bool
+        
         @State var presentBackAlert: Bool = false
+        let isEditing: Bool
         
-        var viewModel: AdvertisementsViewModel
-        @Binding var popToRoot: Bool
-        var editingID: String?
-        
-        init(ownerID: String, viewModel: AdvertisementsViewModel, popToRoot: Binding<Bool>, editingID: String?) {
-            self._advertisement = State(initialValue: Advertisement(ownerID: ownerID))
+        init(owner: User, viewModel: AdvertisementsViewModel,
+             dismiss: Binding<Bool>,
+             updateAdvertisements: Binding<Bool>, editingID: String?) {
+            self.owner = owner
             self.viewModel = viewModel
-            self._popToRoot = popToRoot
-            self.editingID = editingID
+            self._dismiss = dismiss
+            self._updateAdvertisements = updateAdvertisements
+            
+            if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
+                self._advertisement = State(initialValue: advertisement)
+                self.isEditing = true
+                
+                return
+            }
+            
+            self._advertisement = State(initialValue: Advertisement(owner: owner))
+            self.isEditing = false
         }
         
         var body: some View {
-            ScrollView {
-                VStack(alignment: .leading) {
-//                    UserInfo(user: userViewModel.user, size: 50)
+            NavigationView {
+                ScrollView {
+                    Divider()
                     
-                    TextField("Adicione tags ao seu projeto...", text: $advertisement.tags)
-                        .padding(.top, 25)
-                    
-                    TextField("Título do Projeto", text: $advertisement.title)
-                        .font(.title)
-                        .padding(.top, 44)
-                    
-                    TextField("Descrição do anúncio...", text: $advertisement.description)
-                        .padding(.top, 54)
-                    
-                    DropDownButton(
-                        title: "Status do projeto",
-                        selection: $advertisement.ongoing,
-                        menuItems: [
-                            MenuItem(name: "Não iniciado", tag: false),
-                            MenuItem(name: "Em andamento", tag: true)
-                        ]
-                    )
-                    .padding(.top, 20)
-                    
-                    Spacer()
+                    VStack(alignment: .leading) {
+                        UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
+                            .padding(.top, -10)
+                        
+                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
+                            .font(Font.body)
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 25)
+                        
+                        TextField("Name your project...", text: $advertisement.title)
+                            .font(Font.largeTitle.bold())
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 44)
+                        
+                        TextField("Describe your project in 1000 characters or less...",
+                                  text: $advertisement.description)
+                            .font(Font.body)
+                            .foregroundColor(.editAdvertisementText)
+                            .padding(.top, 54)
+                        
+                        DropDownButton(
+                            title: "Project status", textColor: .textColorBlue,
+                            selection: $advertisement.ongoing,
+                            menuItems: [
+                                MenuItem(name: "Not started", tag: false),
+                                MenuItem(name: "In progress", tag: true)
+                            ]
+                        )
+                        .padding(.top, 20)
+                        
+                        Spacer()
+                    }
+                    .padding([.horizontal, .top], 16)
                 }
-                .padding([.horizontal, .top], 16)
-            }
-            
-            .onAppear {
-                guard let editingID = editingID else { return }
-                guard let advertisement = viewModel.getAdvertisement(with: editingID) else { return }
+                .navigationBarBackButtonHidden()
+                .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+                .navigationBarTitleDisplayMode(.inline)
                 
-                self.advertisement = advertisement
-            }
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        presentBackAlert = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.backward")
-                            Text("Back")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentBackAlert = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "xmark")
+                                    .font(Font.system(size: 15, weight: .bold))
+                            }
                         }
                     }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            Positions(
+                                owner: owner,
+                                advertisement: $advertisement,
+                                dismiss: $dismiss,
+                                updateAdvertisements: $updateAdvertisements,
+                                isEditing: isEditing
+                            )
+                        } label: {
+                            Text("Next")
+                        }
+                        .disabled(!canContinue())
+                        
+                        .simultaneousGesture(TapGesture().onEnded({ _ in
+                            Haptics.shared.selection()
+                        }))
+                    }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        Positions(
-                            advertisement: $advertisement,
-                            popToRoot: $popToRoot,
-                            isEditing: editingID != nil
-                        )
-                            .environmentObject(advertisementsViewModel)
-                    } label: {
-                        Text("Avançar")
-                    }
-
-                    .simultaneousGesture(TapGesture().onEnded({ _ in
-                        Haptics.shared.selection()
-                    }))
-                }
             }
             
-            .alert("Você deseja mesmo descartar a publicação?", isPresented: $presentBackAlert) {
+            .confirmationDialog("back", isPresented: $presentBackAlert) {
+                Button(role: .destructive) {
+                    presentBackAlert = false
+                    dismiss.toggle()
+                } label: {
+                    Text("Delete draft")
+                }
+                
                 Button(role: .cancel) {
                     presentBackAlert = false
                 } label: {
                     Text("Cancel")
                 }
-
-                Button(role: .destructive) {
-                    dismiss()
-                } label: {
-                    Text("Ok")
-                }
-            } message: {
-                Text("Você perderá todas as informações preenchidas")
             }
-
+        }
+        
+        private func canContinue() -> Bool {
+            return !advertisement.tags.isEmpty
+            && !advertisement.title.isEmpty
+            && !advertisement.description.isEmpty
         }
     }
     
     private struct Positions: View {
         @EnvironmentObject var viewModel: AdvertisementsViewModel
         
+        let owner: User
         @Binding var advertisement: Advertisement
-        @Binding var popToRoot: Bool
+        
+        @Binding var dismiss: Bool
+        @Binding var updateAdvertisements: Bool
         
         let isEditing: Bool
         
         var body: some View {
             ScrollView {
-                VStack {
-                    Text("Criar vagas de projeto")
-                        .font(.title)
+                VStack(alignment: .leading) {
+                    UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
+                        .padding(.bottom, 30)
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in
-                        Position(position: $advertisement.positions[index])
+                        Position(advertisement: $advertisement, position: $advertisement.positions[index])
                     }
                     
-                    HStack {
-                        Button {
-                            newPosition()
-                            Haptics.shared.selection()
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .fill(.blue)
-                                
-                                // TODO: trocar o bold por um que esteja disponível em outras versões do iOS
-                                Image(systemName: "plus")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 24))
-//                                    .fontWeight(.bold)
-                            }
-                            .frame(width: 54, height: 54)
+                    Button {
+                        newPosition()
+                        Haptics.shared.selection()
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(Color.textColorBlue)
+                            
+                            Image(systemName: "plus")
+                                .font(Font.title2.bold())
+                                .foregroundColor(.white)
                         }
+                        .frame(width: 54, height: 54)
+                        .frame(maxWidth: .infinity)
                     }
-                    
-                    Spacer()
+                    .padding(.top, 10)
                 }
                 .padding(.horizontal, 16)
             }
+            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+            
             .onAppear {
                 if advertisement.positions.isEmpty {
                     newPosition()
                 }
             }
+            
             .toolbar {
                 Button {
                     if isEditing {
                         viewModel.editAdvertisement(advertisement)
-                        popToRoot.toggle()
-        
                         Haptics.shared.notification(.success)
+                        
+                        updateAdvertisements.toggle()
+                        dismiss.toggle()
+                        
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
-                    
                     Haptics.shared.notification(.success)
-                    popToRoot.toggle()
+                    
+                    updateAdvertisements.toggle()
+                    dismiss.toggle()
                 } label: {
-                    Text(isEditing ? "Editar" : "Publicar")
+                    Text(isEditing ? "Edit" : "Share")
                 }
+                .disabled(!cantShare())
             }
         }
         
@@ -191,31 +221,62 @@ extension AdvertisementsView {
                 )
             )
         }
+        
+        private func cantShare() -> Bool {
+            return !advertisement.positions.isEmpty &&
+            advertisement.positions.allSatisfy { !$0.title.isEmpty }
+        }
     }
     
     private struct Position: View {
+        @Binding var advertisement: Advertisement
         @Binding var position: ProjectGroup.Position
         
         var body: some View {
-            RoundedRectangleContent(cornerRadius: 20, fillColor: .mint) {
+            RoundedRectangleContent(cornerRadius: 20, fillColor: Color.backgroundRole) {
                 VStack(alignment: .leading) {
-                    Text("Nome da vaga")
-                    TextField("Nome da vaga", text: $position.title)
+                    HStack {
+                        Text("Project role name")
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Button {
+                            advertisement.positions.removeAll(where: { $0.id == position.id })
+                        } label: {
+                            Image("close")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                        }
+                    }
+                    TextField("", text: $position.title)
+                        .placeholder(when: position.title.isEmpty, placeholder: {
+                            Text("Ex: UI/UX Design, Software Engeneer...")
+                                .foregroundColor(.placeholderColor)
+                        }).foregroundColor(.white)
                     
                     Divider()
                     
-                    Text("Descrição da vaga (opcional)")
-                    TextField("Responsabilidades de quem irá assumir...", text: $position.description)
+                    Text("Project role descripition (optional)")
+                        .foregroundColor(.white)
+                    
+                    TextField("", text: $position.description)
+                        .placeholder(when: position.description.isEmpty, placeholder: {
+                            Text("Describe what the person entering this role will do on the project...")
+                                .foregroundColor(.placeholderColor)
+                        }).foregroundColor(.white)
                     
                     Divider()
                     
                     HStack(spacing: 15) {
-                        Text("Quantidade de vagas")
+                        Text("Quantity")
+                            .foregroundColor(.white)
                         
                         Spacer()
                         
                         VacancyButton(position: $position, isPlusButton: false)
                         Text("\(position.vacancies)")
+                            .foregroundColor(.white)
                         VacancyButton(position: $position, isPlusButton: true)
                     }
                 }
@@ -234,11 +295,11 @@ extension AdvertisementsView {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.blue)
+                        .fill(Color.textColorBlue)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
                         .font(.system(size: 12))
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                 }
             }
             .disabled(!isPlusButton && position.vacancies < 2)

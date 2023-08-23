@@ -9,7 +9,7 @@ import Foundation
 
 struct Advertisement: Hashable, Codable {
     let id: String
-    let ownerID: String
+    let owner: User
     
     var title: String
     var description: String
@@ -18,10 +18,11 @@ struct Advertisement: Hashable, Codable {
     var weeklyWorkload: Double?
     var ongoing: Bool
     var tags: String
+    let date = Date()
     
     enum CodingKeys: String, CodingKey {
         case id
-        case ownerID = "owner_id"
+        case owner
         case title
         case description
         case positions
@@ -29,16 +30,17 @@ struct Advertisement: Hashable, Codable {
         case weeklyWorkload = "weekly_workload"
         case ongoing
         case tags
+        case date
     }
     
     struct Application: Hashable, Codable {
+        let id: String
         let position: ProjectGroup.Position
         let user: User
-        let joined: Bool
     }
     
     init(id: String,
-         ownerID: String,
+         owner: User,
          title: String,
          description: String,
          positions: [ProjectGroup.Position],
@@ -48,7 +50,7 @@ struct Advertisement: Hashable, Codable {
          tags: String) {
         self.id = id
         self.title = title
-        self.ownerID = ownerID
+        self.owner = owner
         self.description = description
         self.positions = positions
         self.applications = applications
@@ -57,10 +59,10 @@ struct Advertisement: Hashable, Codable {
         self.tags = tags
     }
     
-    init(ownerID: String) {
+    init(owner: User) {
         self.id = UUID().uuidString
         self.title = ""
-        self.ownerID = ownerID
+        self.owner = owner
         self.description = ""
         self.positions = []
         self.applications = []

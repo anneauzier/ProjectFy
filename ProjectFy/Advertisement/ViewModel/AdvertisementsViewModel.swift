@@ -8,8 +8,9 @@
 import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
+
     @Published var advertisements: [Advertisement] = []
-    @Published var applicationStatus: ApplicationStatus?
+    @Published var applicationStatus: TransactionStatus?
     
     private let service: AdvertisementProtocol
     
@@ -34,6 +35,10 @@ final class AdvertisementsViewModel: ObservableObject {
         return advertisements.first(where: { $0.id == id })
     }
     
+    func getAdvertisements(from userID: String) -> [Advertisement] {
+        return advertisements.filter({ $0.owner.id == userID })
+    }
+    
     func editAdvertisement(_ advertisement: Advertisement) {
         do {
             try service.update(advertisement)
@@ -44,6 +49,14 @@ final class AdvertisementsViewModel: ObservableObject {
     
     func deleteAdvertisement(with id: String) {
         service.delete(with: id)
+    }
+    
+    func deleteAllAdvertisements(from userID: String) {
+        let advertisementsIDs = advertisements.filter({ $0.owner.id == userID }).map(\.id)
+        
+        advertisementsIDs.forEach { [weak self] id in
+            self?.deleteAdvertisement(with: id)
+        }
     }
     
     func apply(user: User, to advertisement: Advertisement, for position: ProjectGroup.Position) {
@@ -63,8 +76,9 @@ final class AdvertisementsViewModel: ObservableObject {
             self.applicationStatus = .completed
         }
     }
-    enum ApplicationStatus {
-        case applying
-        case completed
-    }
+}
+
+enum TransactionStatus {
+    case sending
+    case completed
 }

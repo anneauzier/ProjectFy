@@ -8,21 +8,26 @@
 import Foundation
 
 struct ProjectGroup: Hashable, Codable {
-
+    typealias Member = Advertisement.Application
+    
     let id: String
+    let advertisement: Advertisement
     var name: String
     var description: String
+    var members: [Member]
     let avatar: String
-    let adminID: String
+    var admin: User
     var link: String
-    let tasks: [Task]
+    var tasks: [Task]
     
     enum CodingKeys: String, CodingKey {
         case id
+        case advertisement
         case name
         case description
+        case members
         case avatar
-        case adminID = "admin_id"
+        case admin
         case link
         case tasks
     }
@@ -34,43 +39,69 @@ struct ProjectGroup: Hashable, Codable {
         var vacancies: Int
     }
     
-    struct Task: Hashable, Codable {
+    struct Task: Identifiable, Hashable, Codable {
         let id: String
-        
-        let ownerID: String
-        var taskDescription: String
-        let time: Date
-        
+        let user: User
+        var taskDescription: [String]
+        let date: Date
+ 
         enum CodingKeys: String, CodingKey {
             case id
-            case ownerID = "owner_id"
+            case user
             case taskDescription = "task_description"
-            case time
+            case date
+        }
+        
+        init(user: User) {
+            self.id = UUID().uuidString
+            self.user = user
+            self.taskDescription = []
+            self.date = Date()
         }
     }
     
     init(id: String,
+         advertisement: Advertisement,
          name: String,
          description: String,
+         members: [Member],
          avatar: String,
-         adminID: String,
+         admin: User,
          link: String,
          tasks: [Task]) {
         self.id = id
+        self.advertisement = advertisement
         self.name = name
         self.description = description
+        self.members = members
         self.avatar = avatar
-        self.adminID = adminID
+        self.admin = admin
         self.link = link
         self.tasks = tasks
     }
     
+    init(advertisement: Advertisement) {
+        self.id = UUID().uuidString
+        self.advertisement = advertisement
+        self.name = advertisement.title
+        self.description = advertisement.description
+        self.members = []
+        self.avatar = String.groupAvatar
+        self.admin = advertisement.owner
+        self.link = ""
+        self.tasks = []
+    }
+    
     init() {
         self.id = UUID().uuidString
+        self.advertisement = Advertisement(owner: .init(signInResult: .
+                                                        init(identityToken: "",
+                                                        nonce: "", name: "", email: "")))
         self.name = ""
         self.description = ""
+        self.members = []
         self.avatar = ""
-        self.adminID = ""
+        self.admin = User(signInResult: .init(identityToken: "", nonce: "", name: "", email: ""))
         self.link = ""
         self.tasks = []
     }

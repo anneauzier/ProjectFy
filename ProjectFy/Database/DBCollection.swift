@@ -41,8 +41,8 @@ class DBCollection {
         try document(with: id).setData(from: data)
     }
     
-    func addSnapshotListener<T: Decodable>(completion: @escaping ([T]?) -> Void) {
-        
+    @discardableResult
+    func addSnapshotListener<T: Decodable>(completion: @escaping ([T]?) -> Void) -> ListenerRegistration {
         collection.addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Cannot get \(T.self): \(error)")

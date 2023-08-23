@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct EditUserView: View {
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
+    @State var actionDiscard = false
+    @State var canContinue = false
     @State var editingUser: User
+    
     var isNewUser: Bool
     var viewModel: UserViewModel
-    
-    @State var canContinue = false
     
     init(editingUser: User, isNewUser: Bool = false, viewModel: UserViewModel) {
         self._editingUser = State(initialValue: editingUser)
@@ -26,18 +27,29 @@ struct EditUserView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
+                VStack {
+                    Image(editingUser.avatar)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding([.top, .bottom], 32)
+
+                    SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
+                }
             }
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        dismiss()
+                        if didChangeInfo() {
+                            dismiss()
+                            actionDiscard = false
+                        } else {
+                            actionDiscard = true
+                        }
                     } label: {
-                        Text("Cancelar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Image(systemName: "xmark")
+                            .font(Font.system(size: 15, weight: .bold))
                     }
                 }
                 
@@ -48,17 +60,32 @@ struct EditUserView: View {
                         Haptics.shared.notification(.success)
                         dismiss()
                     } label: {
-                        Text("Salvar")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
-                            .bold()
+                        Text("Save")
+                            .font(.body)
+                            .foregroundColor(.textColorBlue)
                             .opacity(canContinue ? 1 : 0.2)
                     }
                     .disabled(!canContinue)
                 }
             }
-            .navigationTitle("Editar perfil")
+            .confirmationDialog("", isPresented: $actionDiscard, actions: {
+                Button(role: .destructive) {
+                    dismiss()
+                } label: {
+                    Text("Discard Changes")
+                }
+            })
+            .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+    private func didChangeInfo() -> Bool {
+        guard let user = viewModel.user else { return false }
+
+        return editingUser.name == user.name
+        && editingUser.areaExpertise == user.areaExpertise
+        && editingUser.interestTags == user.interestTags
+        && editingUser.region == user.region
+        && editingUser.available == user.available
     }
 }

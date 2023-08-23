@@ -35,9 +35,11 @@ final class AdvertisementService: DBCollection, AdvertisementProtocol {
         runTransaction(on: advertisement.id) {
             var advertisement = advertisement
             
-            let newApplication = Advertisement.Application(position: position, user: user, joined: false)
-            advertisement.applications.append(newApplication)
+            let newApplication = Advertisement.Application(id: UUID().uuidString,
+                                                           position: position,
+                                                           user: user)
             
+            advertisement.applications.append(newApplication)
             return advertisement
         } completion: {
             completion()
