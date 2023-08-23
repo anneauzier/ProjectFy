@@ -16,7 +16,7 @@ struct CustomTextField: View {
     var body: some View {
         ZStack(alignment: .leading) {
             TextField(placeholder, text: $message, onEditingChanged: editingChanged, onCommit: commit)
-                .padding(8)
+                .padding(10)
                 .autocorrectionDisabled(true)
                 .background(
                     RoundedRectangle(cornerRadius: 8)

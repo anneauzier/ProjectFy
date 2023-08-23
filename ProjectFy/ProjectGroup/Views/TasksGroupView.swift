@@ -41,7 +41,6 @@ struct GroupInfo: View {
     let user: User
     let group: ProjectGroup
     
-    
     var body: some View {
         VStack {
             NavigationLink {

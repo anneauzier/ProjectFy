@@ -17,69 +17,71 @@ struct DetailsGroupView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading) {
                 Image("\(group.avatar)")
                     .resizable()
                     .frame(width: 100, height: 100)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .padding([.top, .bottom], 32)
+                    .padding(.top, 20)
                 
-                Group {
-                    Text("Group name")
-                        .font(.headline)
-                        .foregroundColor(.backgroundRole)
-                    Text("\(group.name)")
-                        .font(.body)
-                        .foregroundColor(.backgroundRole)
-
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.rectangleLine)
-                        .padding(.top, -15)
-                        .padding(.bottom, 20)
+                Text("\(group.name)")
+                    .font(Font.title2.bold())
+                    .foregroundColor(.backgroundRole)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 12)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.rectangleLine)
+                    .padding(.top, 20)
+                
+                VStack(alignment: .leading) {
 
                     Text("Group description")
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
+                        .padding(.top, 20)
+                    
                     Text("\(group.description)")
                         .font(.body)
                         .foregroundColor(.backgroundRole)
+                        .padding(.top, 12)
                     
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
-                        .padding(.top, -15)
-                        .padding(.bottom, 20)
- 
+                        .padding(.top, 20)
+                    
                     Text("Link for chat or/and meetings")
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
-                    
+                        .padding(.top, 20)
+
                     if let url = URL(string: group.link) {
                         Link("\(group.link)", destination: url)
+                            .font(.body)
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.fieldColor)
+                            ).padding(.top, 12)
                     } else {
                         Text("No link available")
                             .font(.body)
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.fieldColor)
+                            ).padding(.top, 12)
                     }
-
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.rectangleLine)
-                        .padding(.top, -15)
-                        .padding(.bottom, 20)
                 }
                 
                 Text("\(group.members.count + 1) Participants")
-                    .font(.headline)
+                    .font(.title2.bold())
                     .foregroundColor(.backgroundRole)
-                
-                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
-                    UserInfo(user: group.admin, size: 49, nameColor: .white)
-                        .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
-                        .removePadding()
-                }
-                .frame(height: 88)
-                .padding(.bottom, -12)
+                    .padding(.top, 40)
                 
                 ForEach(group.members.map(\.user), id: \.self) { user in
                     RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
@@ -87,14 +89,12 @@ struct DetailsGroupView: View {
                             .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                             .removePadding()
                     }
-                    .frame(height: 88)
+                    .frame(height: 85)
                 }
-
-            }.padding(.horizontal, 20)
+            }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
             FinalButtons(user: user, group: group)
-                .padding(.top, 60)
-            
+    
         }
         .toolbar {
             if group.admin.id == user.id {
@@ -102,9 +102,8 @@ struct DetailsGroupView: View {
                     goEditGroupView.toggle()
                 } label: {
                     Text("Edit")
-                        .foregroundColor(.backgroundRole)
+                        .foregroundColor(.textColorBlue)
                 }
-                
                 .sheet(isPresented: $goEditGroupView) {
                     EditDetailsGroup(group: group, viewModel: viewModel)
                 }
@@ -152,7 +151,7 @@ extension DetailsGroupView {
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width - 40, height: 56)
-            }
+            }.padding(.top, 110)
         }
     }
 }
