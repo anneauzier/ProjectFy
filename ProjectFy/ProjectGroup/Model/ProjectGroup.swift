@@ -52,10 +52,10 @@ struct ProjectGroup: Hashable, Codable {
             case date
         }
         
-        init(user: User) {
+        init(user: User, description: String) {
             self.id = UUID().uuidString
             self.user = user
-            self.taskDescription = ""
+            self.taskDescription = description
             self.date = Date()
         }
     }

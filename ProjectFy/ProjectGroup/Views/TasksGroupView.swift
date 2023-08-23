@@ -37,7 +37,7 @@ struct TasksGroupView: View {
                 .frame(maxWidth: .infinity)
             }
             
-            TaskField(user: user, group: group, viewModel: viewModel)
+            TaskField(user: user, group: group)
         }
         .onAppear {
             TabBarModifier.hideTabBar()

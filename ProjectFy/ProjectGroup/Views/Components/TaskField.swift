@@ -8,20 +8,12 @@
 import SwiftUI
 
 struct TaskField: View {
-    let user: User
+    @EnvironmentObject var viewModel: GroupViewModel
     
-    @State var group: ProjectGroup
-    @State var task: ProjectGroup.Task
-    var viewModel: GroupViewModel
+    let user: User
+    let group: ProjectGroup
     
     @State var message: String = ""
-    
-    init(user: User, group: ProjectGroup, viewModel: GroupViewModel) {
-        self.user = user
-        self._group = State(initialValue: group)
-        self._task = State(initialValue: ProjectGroup.Task(user: user))
-        self.viewModel = viewModel
-    }
 
     var body: some View {
         VStack {
@@ -35,9 +27,9 @@ struct TaskField: View {
                     .cornerRadius(8)
                 
                 Button {
+                    var task = ProjectGroup.Task(user: user, description: message)
                     viewModel.add(task: task, to: group)
                     
-                    task = ProjectGroup.Task(user: user)
                     message = ""
                 } label: {
                     Image(systemName: "paperplane.fill")
