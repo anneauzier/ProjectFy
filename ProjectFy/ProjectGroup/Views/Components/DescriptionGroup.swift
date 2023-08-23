@@ -13,7 +13,7 @@ extension EditDetailsGroup {
         @State private var height: CGFloat?
         @Binding var groupInfo: ProjectGroup
         
-        let minHeight: CGFloat = 40
+        let minHeight: CGFloat = 30
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -48,9 +48,11 @@ extension EditDetailsGroup {
                 isTextFieldFocused = false
             }
         }
-        
+
         private func textDidChange(_ textView: UITextView) {
-            self.height = max(textView.contentSize.height, minHeight)
+            DispatchQueue.main.async {
+                self.height = max(textView.contentSize.height, minHeight)
+            }
         }
     }
 }

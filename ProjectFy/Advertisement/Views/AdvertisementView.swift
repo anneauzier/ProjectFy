@@ -24,7 +24,7 @@ struct AdvertisementsView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 Divider()
                 if !networking.isConnected {
                     Connectivity(image: Image("networking"),
@@ -73,13 +73,18 @@ struct AdvertisementsView: View {
                     Haptics.shared.selection()
                 } label: {
                     Label("new advertisement", systemImage: "plus")
+                        .font(Font.system(size: 20).bold())
+                        .foregroundColor(.textColorBlue)
                 }
             }
             
             .sheet(isPresented: $presentSheet) {
-                NewAdvertisement(owner: user,
-                                 viewModel: advertisementsViewModel,
-                                 editingID: editingID)
+                NewAdvertisement(
+                    owner: user,
+                    viewModel: advertisementsViewModel,
+                    dismiss: $presentSheet,
+                    editingID: editingID
+                )
             }
             
             .alert("You can't create a new advertisement beacause you are already in  three projects",
@@ -141,16 +146,16 @@ struct AdView: View {
                             Haptics.shared.impact(.rigid)
                             showDeleteAlert.toggle()
                         } label: {
-                            Label("Delete Ad", systemImage: "trash")
+                            Label("Delete announce", systemImage: "trash")
                         }
                     } label: {
                         Label("Options", systemImage: "ellipsis")
                             .labelStyle(.iconOnly)
-                            .imageScale(.large)
+                            .font(Font.system(size: 20).bold())
+                            .tint(.editAdvertisementText)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 10)
-                    .padding(.leading, 27)
+                    .padding(.top, 23)
                 }
             }
             

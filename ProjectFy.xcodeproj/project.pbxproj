@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		671CA5182A94EC8A00CF5109 /* InfoNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA5172A94EC8A00CF5109 /* InfoNotification.swift */; };
+		671CA51A2A9543CD00CF5109 /* MessagingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA5192A9543CD00CF5109 /* MessagingService.swift */; };
 		671FA2AA2A8FB428003684AC /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2A92A8FB428003684AC /* Notification.swift */; };
 		671FA2AE2A8FB762003684AC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2AD2A8FB762003684AC /* NotificationService.swift */; };
 		671FA2B12A8FB792003684AC /* NotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2B02A8FB792003684AC /* NotificationProtocol.swift */; };
@@ -78,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		671CA5172A94EC8A00CF5109 /* InfoNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNotification.swift; sourceTree = "<group>"; };
+		671CA5192A9543CD00CF5109 /* MessagingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingService.swift; sourceTree = "<group>"; };
 		671FA2A92A8FB428003684AC /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		671FA2AD2A8FB762003684AC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		671FA2B02A8FB792003684AC /* NotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationProtocol.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */,
 				9F4390C82A81376500A3A393 /* HomeView.swift */,
 				674982802A857C9800A1C98E /* Utils.swift */,
+				671CA5192A9543CD00CF5109 /* MessagingService.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				67A531F82A7841DD00EBD022 /* AdvertisementView.swift in Sources */,
 				67A531ED2A7831FA00EBD022 /* User.swift in Sources */,
 				674982952A86A8F500A1C98E /* DBCollection.swift in Sources */,
+				671CA51A2A9543CD00CF5109 /* MessagingService.swift in Sources */,
 				671FA2B32A8FBDA1003684AC /* NotificationsViewModel.swift in Sources */,
 				9F4390C92A81376500A3A393 /* HomeView.swift in Sources */,
 				9FAE4F692A82B9BA0086725F /* GroupProtocol.swift in Sources */,
@@ -847,7 +851,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProjectFy/Preview Content\"";
-				DEVELOPMENT_TEAM = J5QJGKM573;
+				DEVELOPMENT_TEAM = A7SRF7ZP35;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProjectFy/Info.plist;

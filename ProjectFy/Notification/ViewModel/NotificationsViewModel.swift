@@ -98,4 +98,12 @@ final class NotificationsViewModel: ObservableObject {
     func delete(with id: String) {
         service.delete(with: id)
     }
+    
+    func deleteAllNotifications() {
+        let notificationsIDs = notifications.map(\.id)
+        
+        notificationsIDs.forEach { [weak self] id in
+            self?.delete(with: id)
+        }
+    }
 }

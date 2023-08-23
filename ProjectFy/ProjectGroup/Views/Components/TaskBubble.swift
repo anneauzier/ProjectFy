@@ -42,6 +42,5 @@ struct TaskBubble: View {
         .cornerRadius(12)
         .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .trailing : .leading)
         .padding(tasks.user.id == currentUserID ? .trailing : .leading)
-        
     }
 }

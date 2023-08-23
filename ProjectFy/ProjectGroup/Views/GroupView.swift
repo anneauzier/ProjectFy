@@ -26,6 +26,13 @@ struct GroupView: View {
                 } label: {
                     EmptyView()
                 }
+                
+                if viewModel.groups.isEmpty {
+                    Connectivity(image: Image("emptyAd"),
+                                 title: "You don't have any \ngroups yet :(",
+                                 description: "Join a group asking for a role in a \nproject announce",
+                                 heightPH: 0.7)
+                }
 
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
@@ -65,10 +72,7 @@ struct GroupView: View {
                             }
 
                             Button(role: .destructive) {
-                                var group = group
-                                
-                                group.members.removeAll(where: { $0.user.id == user.id })
-                                viewModel.editGroup(group)
+                                viewModel.exitOfGroup(user: user, group: group)
                             } label: {
                                 Text("Exit group")
                             }

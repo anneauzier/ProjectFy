@@ -56,7 +56,12 @@ struct EditDetailsGroup: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button {
-                                actionDiscardGroup.toggle()
+                                if didChangeInfo() {
+                                    dismiss()
+                                    actionDiscardGroup = false
+                                } else {
+                                    actionDiscardGroup = true
+                                }
                             } label: {
                                 Image(systemName: "xmark")
                                     .font(Font.system(size: 15, weight: .bold))
@@ -93,5 +98,14 @@ struct EditDetailsGroup: View {
         return groupInfo.name.isEmpty
         || groupInfo.link.isEmpty
         || groupInfo.description.isEmpty
+    }
+    
+    private func didChangeInfo() -> Bool {
+        let groups = viewModel.groups.contains { group in
+            return groupInfo.name == group.name
+            && groupInfo.description == group.description
+            && groupInfo.link == group.link
+        }
+        return groups
     }
 }

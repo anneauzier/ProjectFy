@@ -10,18 +10,19 @@ import SwiftUI
 
 extension AdvertisementsView {
     struct NewAdvertisement: View {
-        @Environment(\.dismiss) var dismiss
-        
         let owner: User
         var viewModel: AdvertisementsViewModel
         
         @State var advertisement: Advertisement
+        @Binding var dismiss: Bool
+        
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
         
-        init(owner: User, viewModel: AdvertisementsViewModel, editingID: String?) {
+        init(owner: User, viewModel: AdvertisementsViewModel, dismiss: Binding<Bool>, editingID: String?) {
             self.owner = owner
             self.viewModel = viewModel
+            self._dismiss = dismiss
             
             if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
                 self._advertisement = State(initialValue: advertisement)
@@ -53,7 +54,8 @@ extension AdvertisementsView {
                             .foregroundColor(.editAdvertisementText)
                             .padding(.top, 44)
                         
-                        TextField("Describe your project in 1000 characters or less...", text: $advertisement.description)
+                        TextField("Describe your project in 1000 characters or less...",
+                                  text: $advertisement.description)
                             .font(Font.body)
                             .foregroundColor(.editAdvertisementText)
                             .padding(.top, 54)
@@ -89,7 +91,12 @@ extension AdvertisementsView {
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
-                            Positions(owner: owner, advertisement: $advertisement, isEditing: isEditing)
+                            Positions(
+                                owner: owner,
+                                advertisement: $advertisement,
+                                dismiss: $dismiss,
+                                isEditing: isEditing
+                            )
                         } label: {
                             Text("Next")
                         }
@@ -106,7 +113,7 @@ extension AdvertisementsView {
             .confirmationDialog("back", isPresented: $presentBackAlert) {
                 Button(role: .destructive) {
                     presentBackAlert = false
-                    dismiss()
+                    dismiss.toggle()
                 } label: {
                     Text("Delete draft")
                 }
@@ -127,11 +134,11 @@ extension AdvertisementsView {
     }
     
     private struct Positions: View {
-        @Environment(\.dismiss) var dismiss
         @EnvironmentObject var viewModel: AdvertisementsViewModel
         
         let owner: User
         @Binding var advertisement: Advertisement
+        @Binding var dismiss: Bool
         let isEditing: Bool
         
         var body: some View {
@@ -141,7 +148,7 @@ extension AdvertisementsView {
                         .padding(.bottom, 30)
                     
                     ForEach(0..<advertisement.positions.count, id: \.self) { index in
-                        Position(position: $advertisement.positions[index])
+                        Position(advertisement: $advertisement, position: $advertisement.positions[index])
                     }
                     
                     Button {
@@ -177,14 +184,14 @@ extension AdvertisementsView {
                         viewModel.editAdvertisement(advertisement)
                         Haptics.shared.notification(.success)
                         
-                        dismiss()
+                        dismiss.toggle()
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
                     
                     Haptics.shared.notification(.success)
-                    dismiss()
+                    dismiss.toggle()
                 } label: {
                     Text(isEditing ? "Edit" : "Share")
                 }
@@ -210,6 +217,7 @@ extension AdvertisementsView {
     }
     
     private struct Position: View {
+        @Binding var advertisement: Advertisement
         @Binding var position: ProjectGroup.Position
         
         var body: some View {
@@ -222,7 +230,7 @@ extension AdvertisementsView {
                         Spacer()
                         
                         Button {
-                            print("EXCLUIR VAGA")
+                            advertisement.positions.removeAll(where: { $0.id == position.id })
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .imageScale(.large)

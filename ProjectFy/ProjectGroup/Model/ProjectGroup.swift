@@ -16,7 +16,7 @@ struct ProjectGroup: Hashable, Codable {
     var description: String
     var members: [Member]
     let avatar: String
-    let admin: User
+    var admin: User
     var link: String
     var tasks: [Task]
     

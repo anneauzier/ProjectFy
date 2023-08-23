@@ -27,13 +27,26 @@ struct EditUserView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
+                VStack {
+                    Image(editingUser.avatar)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding([.top, .bottom], 32)
+
+                    SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
+                }
             }
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        actionDiscard.toggle()
+                        if didChangeInfo() {
+                            dismiss()
+                            actionDiscard = false
+                        } else {
+                            actionDiscard = true
+                        }
                     } label: {
                         Image(systemName: "xmark")
                             .font(Font.system(size: 15, weight: .bold))
@@ -54,16 +67,25 @@ struct EditUserView: View {
                     }
                     .disabled(!canContinue)
                 }
-            }.confirmationDialog("", isPresented: $actionDiscard, actions: {
+            }
+            .confirmationDialog("", isPresented: $actionDiscard, actions: {
                 Button(role: .destructive) {
                     dismiss()
                 } label: {
                     Text("Discard Changes")
                 }
-
             })
-            .navigationTitle("Editar perfil")
+            .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+    private func didChangeInfo() -> Bool {
+        guard let user = viewModel.user else { return false }
+
+        return editingUser.name == user.name
+        && editingUser.areaExpertise == user.areaExpertise
+        && editingUser.interestTags == user.interestTags
+        && editingUser.region == user.region
+        && editingUser.available == user.available
     }
 }

@@ -66,6 +66,33 @@ final class GroupViewModel: ObservableObject {
         }
     }
     
+    func exitOfGroup(user: User, group: ProjectGroup) {
+        var group = group
+        
+        if group.admin.id == user.id {
+            guard let newAdmin = group.members.map(\.user).randomElement() else {
+                return
+            }
+            
+            group.admin = newAdmin
+            group.members.removeAll(where: { $0.user.id == newAdmin.id })
+            
+            editGroup(group)
+            return
+        }
+        
+        group.members.removeAll(where: { $0.user.id == user.id })
+        editGroup(group)
+    }
+    
+    func exitOfAllGroups() {
+        var groupsIDs = groups.map(\.id)
+        
+        groupsIDs.forEach { [weak self] id in
+            self?.deleteGroup(with: id)
+        }
+    }
+    
     func deleteGroup(with id: String) {
         service.delete(with: id)
     }

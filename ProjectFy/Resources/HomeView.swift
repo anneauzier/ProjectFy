@@ -18,6 +18,7 @@ struct HomeView: View {
         if let user = userViewModel.user {
             TabBarView(user: user, isNewUser: $isNewUser)
                 .onAppear {
+                    MessagingService.shared.userID = user.id
                     notificationsViewModel.startListening(with: user.id)
                 }
         } else {
@@ -57,9 +58,11 @@ fileprivate struct TabBarView: View {
                 GroupView(user: user)
                     .tabItem { Label("Group", systemImage: "person.3") }
                 
-                UserView(user: user)
-                    .tabItem { Label("Profile", systemImage: "person.fill") }
-            }
+                NavigationView {
+                    UserView(user: user)
+                }
+                .tabItem { Label("Profile", systemImage: "person.fill") }
+            }.tint(.textColorBlue)
         }
     }
 }
