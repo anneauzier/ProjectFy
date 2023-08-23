@@ -139,7 +139,7 @@ fileprivate struct SetupInitialConfigs: View {
             }.background(
                 Image("LasPageLog")
                     .resizable()
-                    .scaledToFill()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: UIScreen.main.bounds.width)
                     .edgesIgnoringSafeArea(.all)
             )
