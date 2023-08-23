@@ -194,7 +194,9 @@ struct UserView: View {
 }
 
 struct UserAdvertisement: View {
+    @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+    
     let user: User
     
     var body: some View {
@@ -220,7 +222,12 @@ struct UserAdvertisement: View {
                     .padding(.top, 6)
                 
                 ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
-                    AdView.AdInfo(user: user, advertisement: advertisement)
+                    AdView.AdInfo(
+                        user: user,
+                        advertisement: advertisement,
+                        selectedPosition: .constant(nil),
+                        presentSheet: .constant(false)
+                    )
                 }
             }
         }

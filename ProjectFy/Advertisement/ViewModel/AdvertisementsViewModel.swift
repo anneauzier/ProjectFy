@@ -18,12 +18,7 @@ final class AdvertisementsViewModel: ObservableObject {
         self.service = service
         
         service.getAdvertisements { [weak self] advertisements in
-            guard var advertisements = advertisements else { return }
-            
-            advertisements.sort {
-                $0.date < $1.date
-            }
-            
+            guard let advertisements = advertisements else { return }
             self?.advertisements = advertisements
         }
     }

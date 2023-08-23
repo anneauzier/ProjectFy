@@ -13,18 +13,19 @@ struct GroupView: View {
     
     let user: User
     
-    @State var isActive = false
+    @State var isTasksActive = false
+    @State var isDetailsActive = false
     @State var selectedGroup: ProjectGroup?
     
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(isActive: $isActive) {
-                    if let group = selectedGroup {
-                        DetailsGroupView(user: user, group: group)
-                    }
-                } label: {
-                    EmptyView()
+                Link(isActive: $isTasksActive, selectedGroup: $selectedGroup) { group in
+                    TasksGroupView(group: group, user: user)
+                }
+                
+                Link(isActive: $isDetailsActive, selectedGroup: $selectedGroup) { group in
+                    DetailsGroupView(user: user, group: group)
                 }
                 
                 if viewModel.groups.isEmpty {
@@ -36,27 +37,29 @@ struct GroupView: View {
 
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(
-                            destination: TasksGroupView(group: group, user: user),
-                            label: {
-                                HStack {
-                                    Image("\(group.avatar)")
-                                        .resizable()
-                                        .frame(width: 50, height: 50)
-                                    VStack(alignment: .leading) {
-                                        Text("\(group.name)")
-                                            .font(.headline)
-                                            .foregroundColor(.backgroundRole)
-                                        
-                                        let names = group.members.map(\.user.name)
-                                        
-                                        Text("\(names.joined(separator: ", "))")
-                                            .font(.subheadline)
-                                            .foregroundColor(.editAdvertisementText)
-                                    }
+                        
+                        Button {
+                            selectedGroup = group
+                            isTasksActive = true
+                        } label: {
+                            HStack {
+                                Image("\(group.avatar)")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                VStack(alignment: .leading) {
+                                    Text("\(group.name)")
+                                        .font(.headline)
+                                        .foregroundColor(.backgroundRole)
+                                    
+                                    let names = group.members.map(\.user.name)
+                                    
+                                    Text("\(names.joined(separator: ", "))")
+                                        .font(.subheadline)
+                                        .foregroundColor(.editAdvertisementText)
                                 }
                             }
-                        ).swipeActions {
+                        }
+                        .swipeActions {
                             Button(action: {
                                 showActionSheet.toggle()
                             }, label: {
@@ -66,7 +69,7 @@ struct GroupView: View {
                         .confirmationDialog("", isPresented: $showActionSheet, actions: {
                             Button {
                                 selectedGroup = group
-                                isActive = true
+                                isDetailsActive = true
                             } label: {
                                 Label("Group info", systemImage: "info.circle")
                             }
@@ -80,11 +83,42 @@ struct GroupView: View {
                     }
                 }.listStyle(.plain)
 
-            }.navigationViewStyle(.stack)
+            }
+            .navigationViewStyle(.stack)
             .navigationTitle("My Groups")
+            
             .onAppear {
                 TabBarModifier.showTabBar()
             }
+            
+            .onChange(of: viewModel.groups) { groups in
+                guard let group = selectedGroup else { return }
+                guard let updatedGroup = groups.first(where: { $0.id == group.id }) else { return }
+                
+                if updatedGroup == group {
+                    return
+                }
+                
+                selectedGroup = updatedGroup
+            }
+        }
+    }
+    
+    struct Link<Content: View>: View {
+        @Binding var isActive: Bool
+        @Binding var selectedGroup: ProjectGroup?
+        
+        let content: (ProjectGroup) -> Content
+        
+        var body: some View {
+            NavigationLink(isActive: $isActive) {
+                if let group = selectedGroup {
+                    content(group)
+                }
+            } label: {
+                EmptyView()
+            }
+
         }
     }
 }
