@@ -30,7 +30,7 @@ final class NotificationsViewModel: ObservableObject {
             self.notifications.append(contentsOf: notifications)
             
             self.notifications.sort {
-                $0.date < $1.date
+                $0.date > $1.date
             }
         }
     }

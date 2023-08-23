@@ -80,6 +80,7 @@ extension AdvertisementsView {
                 }
                 .navigationBarBackButtonHidden()
                 .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+                .navigationBarTitleDisplayMode(.inline)
                 
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
