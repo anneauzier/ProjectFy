@@ -10,6 +10,7 @@ import AuthenticationServices
 
 struct SignInView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
@@ -31,22 +32,20 @@ struct SignInView: View {
 
             if isDeletingAccount {
                 VStack {
-                    Text("To delete \(Text("your account").foregroundColor(.unavailableText)) you need to log into the app again...")
-                        .font(Font.title2.bold())
+                    Text("We're very sad to know that you want to \("delete".colored(with: .unavailableText)) your account on the app :(")
+                        .font(Font.title.bold())
                         .foregroundColor(.backgroundRole)
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width - 68)
                     
-                    Text("We're very sad to know that you want to delete your account on our app :(")
+                    Text("To \("delete your account".colored(with: .unavailableText)) you need to log into the app again...")
                         .foregroundColor(.editAdvertisementText)
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width - 98)
-                        .padding(.top, 5)
+                        .padding(.top, 20)
                 }
-                .padding(.top, -60)
-                
             } else {
-                Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
+                Text("Find \("people".colored(with: .textColorBlue)) to help you bring your \("ideas".colored(with: .textColorBlue)) into the real world! :D")
                     .multilineTextAlignment(.center)
                     .font(Font.title.bold())
                     .foregroundColor(.signInColor)
@@ -61,7 +60,9 @@ struct SignInView: View {
                 
                 authenticationViewModel.signIn { signInResult in
                     if isDeletingAccount {
+                        dismiss()
                         deleteAllUserData(with: signInResult.identityToken)
+                        
                         return
                     }
                     
@@ -84,12 +85,14 @@ struct SignInView: View {
             }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 .padding(.top, 40)
 
-            Text("By registering you agree to the [Terms and \nConditions](https://rb.gy/so05u) and [Privacy Policy](https://rb.gy/pstx9) of the app.")
-                .font(.body)
-                .foregroundColor(.backgroundRole)
-                .multilineTextAlignment(.center)
-                .frame(width: UIScreen.main.bounds.width - 40)
-                .padding(.top, 20)
+            if !isDeletingAccount {
+                Text("By registering you agree to the [Terms and \nConditions](https://rb.gy/so05u) and [Privacy Policy](https://rb.gy/pstx9) of the app.")
+                    .font(.body)
+                    .foregroundColor(.backgroundRole)
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 40)
+                    .padding(.top, 20)
+            }
         }
         .background(
             Image("groupBackground")
@@ -97,6 +100,7 @@ struct SignInView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width)
                 .edgesIgnoringSafeArea(.all)
+                .opacity(isDeletingAccount ? 0 : 1)
         )
         .padding()
     }

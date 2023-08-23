@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		671CA5182A94EC8A00CF5109 /* InfoNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA5172A94EC8A00CF5109 /* InfoNotification.swift */; };
 		671CA51A2A9543CD00CF5109 /* MessagingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA5192A9543CD00CF5109 /* MessagingService.swift */; };
+		671CA51C2A96958300CF5109 /* String+colored.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671CA51B2A96958300CF5109 /* String+colored.swift */; };
 		671FA2AA2A8FB428003684AC /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2A92A8FB428003684AC /* Notification.swift */; };
 		671FA2AE2A8FB762003684AC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2AD2A8FB762003684AC /* NotificationService.swift */; };
 		671FA2B12A8FB792003684AC /* NotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2B02A8FB792003684AC /* NotificationProtocol.swift */; };
@@ -80,6 +81,7 @@
 /* Begin PBXFileReference section */
 		671CA5172A94EC8A00CF5109 /* InfoNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNotification.swift; sourceTree = "<group>"; };
 		671CA5192A9543CD00CF5109 /* MessagingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingService.swift; sourceTree = "<group>"; };
+		671CA51B2A96958300CF5109 /* String+colored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+colored.swift"; sourceTree = "<group>"; };
 		671FA2A92A8FB428003684AC /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		671FA2AD2A8FB762003684AC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		671FA2B02A8FB792003684AC /* NotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationProtocol.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				674982A52A88012100A1C98E /* String+avatars.swift */,
 				671FA2BA2A9339C4003684AC /* Date+formattedInterval.swift */,
 				9F0ED0D02A91D10900DCBBE4 /* Colors.swift */,
+				671CA51B2A96958300CF5109 /* String+colored.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */,
 				6749829F2A86C15D00A1C98E /* UserService.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
+				671CA51C2A96958300CF5109 /* String+colored.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
 				9F3A8FB42A94717E003A1032 /* Connectivity.swift in Sources */,

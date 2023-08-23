@@ -117,7 +117,7 @@ fileprivate struct SetupInitialConfigs: View {
             VStack(alignment: .center, spacing: 40) {
                 Spacer()
                 
-                Text("    All ready? \nLet's \(Text("grooup!").foregroundColor(.textColorBlue))")
+                Text("    All ready? \nLet's \("grooup!".colored(with: .textColorBlue))")
                     .font(Font.largeTitle.bold())
                     .frame(width: UIScreen.main.bounds.width - 97)
                     
