@@ -25,7 +25,7 @@ struct SignInView: View {
             Image("logo")
                 .resizable()
                 .frame(width: 182, height: 46)
-                .padding(.bottom, 40)
+                .padding(.top, 10)
             
             Spacer()
 
@@ -51,7 +51,7 @@ struct SignInView: View {
                     .font(Font.title.bold())
                     .foregroundColor(.signInColor)
                     .frame(width: UIScreen.main.bounds.width - 90)
-                    .padding(.bottom, 40)
+                    .padding(.top, 40)
             }
             
             Spacer()
@@ -82,16 +82,17 @@ struct SignInView: View {
                     style: colorScheme == .light ? .black : .white
                 )
             }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                .padding(.top, 40)
 
-            Text("Ao se cadastrar você concorda com os \n[Termos e Condições](https://rb.gy/so05u) e com a [Política de \nPrivacidade](https://rb.gy/pstx9) do aplicativo")
+            Text("By registering you agree to the [Terms and \nConditions](https://rb.gy/so05u) and [Privacy Policy](https://rb.gy/pstx9) of the app.")
                 .font(.body)
                 .foregroundColor(.backgroundRole)
                 .multilineTextAlignment(.center)
                 .frame(width: UIScreen.main.bounds.width - 40)
-                .padding([.top, .bottom], 32)
+                .padding(.top, 20)
         }
         .background(
-            Image("grooupfundo")
+            Image("groupBackground")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width)
