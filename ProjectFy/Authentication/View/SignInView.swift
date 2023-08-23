@@ -91,7 +91,7 @@ struct SignInView: View {
                 .padding([.top, .bottom], 32)
         }
         .background(
-            Image("InitialLogPage")
+            Image("grooupfundo")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width)

@@ -18,22 +18,24 @@ struct TasksGroupView: View {
             VStack {
                 GroupInfo(user: user, group: group)
                 
-                if group.tasks.isEmpty {
-                    Text("No tasks available in the group")
-                        .padding()
-                        .font(.body)
-                        .foregroundColor(.editAdvertisementText)
-                } else {
-                    ScrollView {
+                ScrollView {
+                    if group.tasks.isEmpty {
+                        Text("Today")
+                            .padding(8)
+                            .font(.subheadline)
+                            .foregroundColor(.textColorBlue)
+                            .background(Color.backgroundTextBlue)
+                            .cornerRadius(8)
+                    } else {
                         ForEach(group.tasks, id: \.id) { task in
                             TaskBubble(tasks: task, currentUserID: user.id)
                         }
                     }
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
                 }
+                .padding(.top, 10)
+                .frame(maxWidth: .infinity)
             }
-
+            
             TaskField(user: user, group: group, viewModel: viewModel)
         }
         .onAppear {
@@ -74,10 +76,10 @@ struct GroupInfo: View {
                     Image(systemName: "chevron.forward")
                         .foregroundColor(.backgroundRole)
                 }.padding(.horizontal, 15)
-                .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarTitleDisplayMode(.inline)
             }
         }
-
+        
         Divider()
     }
 }

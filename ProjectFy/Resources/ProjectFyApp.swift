@@ -25,6 +25,7 @@ struct ProjectFyApp: App {
     
     init() {
         UIApplication.shared.addTapGestureRecognizer()
+        UITabBar.appearance().backgroundColor = .clear
     }
     
     var body: some Scene {
