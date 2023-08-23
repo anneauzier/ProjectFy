@@ -114,28 +114,31 @@ fileprivate struct SetupInitialConfigs: View {
         @Binding var isNewUser: Bool?
         
         var body: some View {
-            VStack(alignment: .center) {
-                Text("    All ready? \nLet's \(Text("group!").foregroundColor(.textColorBlue))")
+            VStack(alignment: .center, spacing: 40) {
+                Spacer()
+                
+                Text("    All ready? \nLet's \(Text("grooup!").foregroundColor(.textColorBlue))")
                     .font(Font.largeTitle.bold())
                     .frame(width: UIScreen.main.bounds.width - 97)
-                    .padding(.bottom, 40)
-                
+                    
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: UIScreen.main.bounds.width - 144, height: 1)
                     .background(Color.gray.opacity(0.3))
-                    .padding(.bottom, 44)
-                
+                    
                 Button {
                     viewModel.editUser(user)
                     isNewUser = nil
                 } label: {
-                    RoundedRectangleContent(cornerRadius: 16, fillColor: .blue) {
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: .textColorBlue) {
                         Text("Let's go!")
                             .font(Font.headline)
                             .foregroundColor(.white)
                     }
-                }.frame(width: UIScreen.main.bounds.width - 208, height: 56)
+                }
+                .frame(width: UIScreen.main.bounds.width - 208, height: 56)
+                
+                Spacer()
             }.background(
                 Image("LasPageLog")
                     .resizable()

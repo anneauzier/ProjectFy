@@ -71,7 +71,7 @@ final class UserViewModel: ObservableObject {
         if user == nil { user = self.user }
         guard let user = user else { return false }
         
-        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty || user.interestTags.isEmpty {
+        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty {
             return false
         }
         

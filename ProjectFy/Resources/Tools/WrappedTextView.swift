@@ -62,6 +62,8 @@ struct WrappedTextView: UIViewRepresentable {
 
 struct CustomText: View {
     let title: String
+    var optional: Bool = false
+    
     @Binding var text: String
     @State var height: CGFloat?
     @FocusState var isTextFieldFocused: Bool
@@ -72,9 +74,14 @@ struct CustomText: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.backgroundRole)
+            Group {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.backgroundRole) +
+                
+                Text(optional ? " (optional)" : "")
+                    .foregroundColor(.editAdvertisementText)
+            }
             
             ZStack(alignment: .bottom) {
                 WrappedTextView(text: $text, textDidChange: self.textDidChange)

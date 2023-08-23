@@ -259,6 +259,7 @@ extension AdvertisementsView {
                     
                     Text("Project role descripition (optional)")
                         .foregroundColor(.white)
+                    
                     TextField("", text: $position.description)
                         .placeholder(when: position.description.isEmpty, placeholder: {
                             Text("Describe what the person entering this role will do on the project...")
