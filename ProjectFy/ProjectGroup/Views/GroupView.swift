@@ -33,7 +33,6 @@ struct GroupView: View {
                                  description: "Join a group asking for a role in a \nproject announce",
                                  heightPH: 0.7)
                 }
-
                 List {
                     ForEach(viewModel.groups, id: \.self) { group in
                         NavigationLink(

@@ -18,13 +18,20 @@ struct TasksGroupView: View {
             VStack {
                 GroupInfo(user: user, group: group)
                 
-                ScrollView {
-                    ForEach(group.tasks, id: \.id) { task in
-                        TaskBubble(tasks: task, currentUserID: user.id)
+                if group.tasks.isEmpty {
+                    Text("No tasks available in the group")
+                        .padding()
+                        .font(.body)
+                        .foregroundColor(.editAdvertisementText)
+                } else {
+                    ScrollView {
+                        ForEach(group.tasks, id: \.id) { task in
+                            TaskBubble(tasks: task, currentUserID: user.id)
+                        }
                     }
+                    .padding(.top, 10)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(.top, 10)
-                .frame(maxWidth: .infinity)
             }
 
             TaskField(user: user, group: group, viewModel: viewModel)
