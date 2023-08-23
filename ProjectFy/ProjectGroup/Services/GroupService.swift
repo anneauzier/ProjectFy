@@ -30,11 +30,21 @@ final class GroupService: DBCollection, GroupProtocol {
     func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void) {
         runTransaction(on: group.id) {
             var group = group
-            group.members.removeAll(where: { $0.id == member.id })
             
+            group.members.removeAll(where: { $0.id == member.id })
             return group
         } completion: {
             completion()
+        }
+    }
+    
+    func add(task: ProjectGroup.Task, on group: ProjectGroup) {
+        runTransaction(on: group.id) {
+            var group = group
+            
+            group.tasks.append(task)
+            return group
+        } completion: {
         }
     }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TaskField: View {
+    let user: User
+    
     @State var group: ProjectGroup
     @State var task: ProjectGroup.Task
     var viewModel: GroupViewModel
@@ -15,15 +17,10 @@ struct TaskField: View {
     @State var message: String = ""
     
     init(user: User, group: ProjectGroup, viewModel: GroupViewModel) {
+        self.user = user
         self._group = State(initialValue: group)
-        self.viewModel = viewModel
-        
-        if let task = group.tasks.first(where: { $0.user.id == user.id }) {
-            self._task = State(initialValue: task)
-            return
-        }
-        
         self._task = State(initialValue: ProjectGroup.Task(user: user))
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -38,11 +35,10 @@ struct TaskField: View {
                     .cornerRadius(8)
                 
                 Button {
-                    task.taskDescription.append(message)
-                    message = ""
+                    viewModel.add(task: task, to: group)
                     
-                    updateTasks()
-                    viewModel.editGroup(group)
+                    task = ProjectGroup.Task(user: user)
+                    message = ""
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
@@ -54,15 +50,5 @@ struct TaskField: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 4)
         }
-    }
-    
-    private func updateTasks() {
-        if !group.tasks.contains(where: { $0.id == task.id }) {
-            group.tasks.append(task)
-            return
-        }
-        
-        guard let index = group.tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        group.tasks[index] = task
     }
 }

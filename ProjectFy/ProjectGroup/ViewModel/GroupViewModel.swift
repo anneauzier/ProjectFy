@@ -67,6 +67,10 @@ final class GroupViewModel: ObservableObject {
         }
     }
     
+    func add(task: ProjectGroup.Task, to group: ProjectGroup) {
+        service.add(task: task, on: group)
+    }
+    
     func changeAdmin(of group: ProjectGroup) {
         var group = group
         

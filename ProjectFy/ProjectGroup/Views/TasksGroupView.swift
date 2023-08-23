@@ -27,8 +27,9 @@ struct TasksGroupView: View {
                             .background(Color.backgroundTextBlue)
                             .cornerRadius(8)
                     } else {
-                        ForEach(group.tasks, id: \.id) { task in
-                            TaskBubble(tasks: task, currentUserID: user.id)
+                        ForEach(group.members.map(\.user), id: \.id) { user in
+                            let tasks = group.tasks.filter({ $0.user.id == user.id })
+                            TaskBubble(user: user, isMyself: user.id == self.user.id, tasks: tasks)
                         }
                     }
                 }

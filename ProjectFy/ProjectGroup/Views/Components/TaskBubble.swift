@@ -8,27 +8,27 @@
 import SwiftUI
 
 struct TaskBubble: View {
-    var tasks: ProjectGroup.Task
-    var currentUserID: String
+    let user: User
+    let isMyself: Bool
+    var tasks: [ProjectGroup.Task]
     
     var body: some View {
-        VStack(alignment: tasks.user.id == currentUserID ? .trailing : .leading, spacing: 0) {
-            Text("\(tasks.user.name)")
+        VStack(alignment: isMyself ? .trailing : .leading, spacing: 0) {
+            Text(user.name)
                 .padding()
                 .font(.headline)
                 .frame(maxWidth: 288)
                 .foregroundColor(.white)
-                .background(tasks.user.id == currentUserID ? Color.textColorBlue : Color.backgroundRole)
+                .background(isMyself ? Color.textColorBlue : Color.backgroundRole)
             
-            ForEach(tasks.taskDescription, id: \.self) { message in
+            ForEach(tasks, id: \.self) { task in
                 HStack {
-                    Text(message)
+                    Text(task.taskDescription)
                         .padding()
                         .frame(maxWidth: 288)
-                        .background(tasks.user.id == currentUserID ?
-                                    Color.backgroundTextBlue : Color.bubbleColor)
+                        .background(isMyself ? Color.backgroundTextBlue : Color.bubbleColor)
                         .overlay(alignment: .topTrailing) {
-                            Text("\(tasks.date.formatted(.dateTime.hour().minute()))")
+                            Text("\(task.date.formatted(.dateTime.hour().minute()))")
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                                 .padding(.trailing, 10)
@@ -41,8 +41,8 @@ struct TaskBubble: View {
             }
         }
         .cornerRadius(12)
-        .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .trailing : .leading)
-        .padding(tasks.user.id == currentUserID ? .trailing : .leading)
+        .frame(maxWidth: .infinity, alignment: isMyself ? .trailing : .leading)
+        .padding(isMyself ? .trailing : .leading)
 
     }
 }

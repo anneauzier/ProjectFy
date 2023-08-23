@@ -14,5 +14,5 @@ protocol GroupProtocol {
     func update(_ group: ProjectGroup) throws
     func delete(with id: String)
     func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void)
-
+    func add(task: ProjectGroup.Task, on group: ProjectGroup)
 }

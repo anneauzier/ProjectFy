@@ -65,4 +65,7 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
         guard let index = groups.first(where: {$0.id == group.id}) else { return }
 //        groups[index].members.removeAll(where: { $0.id == member.id })
     }
+    
+    func add(task: ProjectGroup.Task, on group: ProjectGroup) {
+    }
 }

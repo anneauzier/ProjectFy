@@ -42,7 +42,7 @@ struct ProjectGroup: Hashable, Codable {
     struct Task: Identifiable, Hashable, Codable {
         let id: String
         let user: User
-        var taskDescription: [String]
+        var taskDescription: String
         let date: Date
  
         enum CodingKeys: String, CodingKey {
@@ -55,7 +55,7 @@ struct ProjectGroup: Hashable, Codable {
         init(user: User) {
             self.id = UUID().uuidString
             self.user = user
-            self.taskDescription = []
+            self.taskDescription = ""
             self.date = Date()
         }
     }
