@@ -20,12 +20,18 @@ struct FormField: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.gray)
+                .foregroundColor(.backgroundRole)
                 .accessibilityLabel(titleAccessibilityLabel)
             
             TextField(placeholder, text: $text)
-                .textFieldStyle(.roundedBorder)
+                .limitInputLength(value: $text, length: 19, commaLimit: 30)
                 .accessibilityLabel(textFieldAccessibilityLabel)
+                .background(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, 30)
+                )
         }
     }
 }

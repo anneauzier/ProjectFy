@@ -1,0 +1,26 @@
+[debug] [2023-08-18T17:31:25.900Z] ----------------------------------------------------------------------
+[debug] [2023-08-18T17:31:25.901Z] Command:       /usr/local/bin/firebase /Users/iagoramos/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase deploy --only functions
+[debug] [2023-08-18T17:31:25.902Z] CLI Version:   12.4.7
+[debug] [2023-08-18T17:31:25.902Z] Platform:      darwin
+[debug] [2023-08-18T17:31:25.903Z] Node Version:  v16.16.0
+[debug] [2023-08-18T17:31:25.908Z] Time:          Fri Aug 18 2023 13:31:25 GMT-0400 (Amazon Standard Time)
+[debug] [2023-08-18T17:31:25.908Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-18T17:31:26.016Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-18T17:31:26.018Z] > authorizing via signed-in user (mirandolaiago@gmail.com)
+[debug] [2023-08-18T17:31:26.018Z] [iam] checking project projectfy-test for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-08-18T17:31:26.021Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/projectfy-test:testIamPermissions [none]
+[debug] [2023-08-18T17:31:26.022Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/projectfy-test:testIamPermissions x-goog-quota-user=projects/projectfy-test
+[debug] [2023-08-18T17:31:26.023Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projectfy-test:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-08-18T17:31:27.235Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/projectfy-test:testIamPermissions 200
+[debug] [2023-08-18T17:31:27.239Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projectfy-test:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-08-18T17:31:27.241Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/projectfy-test/serviceAccounts/projectfy-test@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-08-18T17:31:27.241Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/projectfy-test/serviceAccounts/projectfy-test@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-08-18T17:31:28.634Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/projectfy-test/serviceAccounts/projectfy-test@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-08-18T17:31:28.636Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/projectfy-test/serviceAccounts/projectfy-test@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'projectfy-test'...
+[info] 
+[info] i  deploying functions 
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2023-08-18T17:31:28.649Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/projectfy-test [none]

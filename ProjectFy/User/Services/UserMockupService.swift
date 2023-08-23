@@ -21,8 +21,6 @@ final class UserMockupService: UserProtocol, ObservableObject {
             entryDate: Date(),
             interestTags: "Level Design, Design, Game Design, Programação",
             expertise: .beginner,
-            groups: nil,
-            applications: nil,
             available: true,
             areaExpertise: "iOS Developer"
         )

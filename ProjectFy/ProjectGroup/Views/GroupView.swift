@@ -9,34 +9,124 @@ import SwiftUI
 
 struct GroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    @State private var showActionSheet = false
+    
+    let user: User
+    
+    @State var isTasksActive = false
+    @State var isDetailsActive = false
+    @State var selectedGroup: ProjectGroup?
     
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    ForEach(viewModel.groups, id: \.self) { group in
-                        NavigationLink(destination: TasksGroupView(detailsInfo: group, viewModel: viewModel)) {
-                            HStack {
-                                Image("\(group.avatar)")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                VStack(alignment: .leading) {
-                                    Text("\(group.name)")
-                                        .font(.subheadline)
-//                                    Text("\(group.members.count) participants")
+                Link(isActive: $isTasksActive, selectedGroup: $selectedGroup) { group in
+                    TasksGroupView(group: group, user: user)
+                }
+                
+                Link(isActive: $isDetailsActive, selectedGroup: $selectedGroup) { group in
+                    DetailsGroupView(user: user, group: group)
+                }
+                
+                if viewModel.groups.isEmpty {
+                    Connectivity(image: Image("emptyAd"),
+                                 title: "You don't have any \ngroups yet :(",
+                                 description: "Join a group asking for a role in a \nproject announce",
+                                 heightPH: 0.7)
+                } else {
+                    List {
+                        ForEach(viewModel.groups, id: \.self) { group in
+                            
+                            Button {
+                                selectedGroup = group
+                                isTasksActive = true
+                            } label: {
+                                HStack {
+                                    Image("\(group.avatar)")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                    VStack(alignment: .leading) {
+                                        Text("\(group.name)")
+                                            .font(.headline)
+                                            .foregroundColor(.backgroundRole)
+                                        
+                                        let names = group.members.map(\.user.name)
+                                        
+                                        Text("\(names.joined(separator: ", "))")
+                                            .font(.subheadline)
+                                            .foregroundColor(.editAdvertisementText)
+                                    }
                                 }
                             }
+                            .swipeActions {
+                                Button(action: {
+                                    showActionSheet.toggle()
+                                }, label: {
+                                    Image("points")
+                                }).tint(.backgroundTextBlue)
+                            }
+                            .confirmationDialog("", isPresented: $showActionSheet, actions: {
+                                Button {
+                                    selectedGroup = group
+                                    isDetailsActive = true
+                                } label: {
+                                    Label("Group info", systemImage: "info.circle")
+                                }
+                                
+                                Button(role: .destructive) {
+                                    viewModel.exitOfGroup(user: user, group: group)
+                                } label: {
+                                    Text("Exit group")
+                                }
+                            })
                         }
-                    }
+                    }.listStyle(.plain)
                 }
-            }.navigationTitle("My Groups")
+
+            }
+            .navigationViewStyle(.stack)
+            .navigationTitle("My Groups")
+            
+            .onAppear {
+                TabBarModifier.showTabBar()
+            }
+            
+            .onChange(of: viewModel.groups) { groups in
+                guard let group = selectedGroup else { return }
+                
+                guard let updatedGroup = groups.first(where: { $0.id == group.id }) else {
+                    selectedGroup = nil
+                    
+                    isTasksActive = false
+                    isDetailsActive = false
+                    
+                    return
+                }
+                
+                if updatedGroup == group {
+                    return
+                }
+                
+                selectedGroup = updatedGroup
+            }
         }
     }
-}
+    
+    struct Link<Content: View>: View {
+        @Binding var isActive: Bool
+        @Binding var selectedGroup: ProjectGroup?
+        
+        let content: (ProjectGroup) -> Content
+        
+        var body: some View {
+            NavigationLink(isActive: $isActive) {
+                if let group = selectedGroup {
+                    content(group)
+                }
+            } label: {
+                EmptyView()
+            }
 
-struct GroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupView()
-            .environmentObject(GroupViewModel(service: GroupService()))
+        }
     }
 }

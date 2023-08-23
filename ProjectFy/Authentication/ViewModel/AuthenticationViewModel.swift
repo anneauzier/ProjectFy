@@ -11,7 +11,16 @@ import FirebaseAuth
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
     
+    @Published var isAuthenticated = false
     var authenticationService: AuthenticationProtocol?
+    
+    init() {
+        isAuthenticated = self.getAuthenticatedUser() != nil
+        
+        handleAuthenticationChanges { [weak self] user in
+            self?.isAuthenticated = user != nil
+        }
+    }
     
     func signIn(completion: @escaping (SignInResult) -> Void) {
         guard let authenticationService = authenticationService else {
@@ -39,8 +48,14 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
-    func isAuthenticated() -> Bool {
-        return Auth.auth().currentUser != nil
+    func delete() {
+        guard let user = Auth.auth().currentUser else {
+            print("There's no user authenticated!")
+            return
+        }
+        
+        signOut()
+        user.delete()
     }
     
     func handleAuthenticationChanges(completion: @escaping (FirebaseAuth.User?) -> Void) {

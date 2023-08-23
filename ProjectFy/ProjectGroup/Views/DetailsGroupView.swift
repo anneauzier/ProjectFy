@@ -8,90 +8,157 @@
 import SwiftUI
 
 struct DetailsGroupView: View {
-    
     @EnvironmentObject var viewModel: GroupViewModel
-    let detailsInfo: ProjectGroup
+    
+    let user: User
+    let group: ProjectGroup
+    
+    @State private var goEditGroupView = false
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
-                Image("\(detailsInfo.avatar)")
+        ScrollView(showsIndicators: false) {
+            Divider()
+            VStack(alignment: .leading) {
+                Image("\(group.avatar)")
                     .resizable()
                     .frame(width: 100, height: 100)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 20)
                 
-                Group {
-                    Text("Group's name")
-                    Text("\(detailsInfo.name)")
+                Text("\(group.name)")
+                    .font(Font.title2.bold())
+                    .foregroundColor(.backgroundRole)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 12)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.rectangleLine)
+                    .padding(.top, 20)
+                
+                VStack(alignment: .leading) {
+
+                    Text("Group description")
+                        .font(.headline)
+                        .foregroundColor(.backgroundRole)
+                        .padding(.top, 20)
+                    
+                    Text("\(group.description)")
+                        .font(.body)
+                        .foregroundColor(.backgroundRole)
+                        .padding(.top, 12)
+                    
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, 20)
                     
-                    Text("Description")
-                    Text("\(detailsInfo.description)")
-                    
-                    Divider()
-                    
-                    Text("Link")
-            
-                    Link("\(detailsInfo.link)", destination: URL(string: "\(detailsInfo.link)")!)
+                    Text("Link for chat or/and meetings")
+                        .font(.headline)
+                        .foregroundColor(.backgroundRole)
+                        .padding(.top, 20)
+
+                    if let url = URL(string: group.link) {
+                        Link("\(group.link)", destination: url)
+                            .font(.body)
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.fieldColor)
+                            ).padding(.top, 12)
+                    } else {
+                        Text("No link available")
+                            .font(.body)
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.fieldColor)
+                            ).padding(.top, 12)
+                    }
                 }
-
-                Divider()
                 
-                Text("Participants")
+                Text("\(group.members.count + 1) Participant(s)")
+                    .font(.title2.bold())
+                    .foregroundColor(.backgroundRole)
+                    .padding(.top, 40)
                 
-            }.padding(.horizontal)
+                ForEach(group.members.map(\.user), id: \.self) { user in
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                        UserInfo(user: user, size: 49, nameColor: .white)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
+                            .removePadding()
+                    }
+                    .frame(height: 85)
+                }
+            }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
-            Spacer()
-
-            FinalButtons()
-            
-        }.toolbar {
-            NavigationLink(destination: EditDetailsGroup(groupInfo: detailsInfo, viewModel: viewModel)) {
-                Text("Editar")
-                    .foregroundColor(Color.black)
+            FinalButtons(user: user, group: group)
+        }
+        .toolbar {
+            if group.admin.id == user.id {
+                Button {
+                    goEditGroupView.toggle()
+                } label: {
+                    Text("Edit")
+                        .foregroundColor(.textColorBlue)
+                }
+                .sheet(isPresented: $goEditGroupView) {
+                    EditDetailsGroup(group: group, viewModel: viewModel)
+                }
             }
         }
-    }
-}
-
-struct DetailsGroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        let previewGroup = ProjectGroup(
-            id: "1213",
-            name: "Adventure Game",
-            description: "Lorem Ipsum is simply dummy text.",
-            avatar: "Group2",
-            adminID: "123456",
-            link: "https://trello.com/b/DwEhWYYJ/projectfy",
-            tasks: [])
-        
-        DetailsGroupView(detailsInfo: previewGroup)
-            .environmentObject(GroupViewModel(service: GroupMockupService()))
+        .onAppear {
+            TabBarModifier.hideTabBar()
+        }
     }
 }
 
 extension DetailsGroupView {
     
     struct FinalButtons: View {
+        @EnvironmentObject var viewModel: GroupViewModel
+        
+        let user: User
+        let group: ProjectGroup
+        
         var body: some View {
-            VStack(alignment: .center) {
-                Button {
-                    print("SAI")
-                } label: {
-                    Text("Sair do grupo")
-                        .padding()
-                        .background(Color.black)
+            VStack {
+                if group.admin.id == user.id {
+                    Button {
+                        print("FINALIZAR GRUPO")
+                    } label: {
+                        RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
+                            Text("Finalize project")
+                                .font(Font.headline)
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 }
                 
                 Button {
-                    print("FINALIZEI")
+                    viewModel.exitingStatus = .sending
+                    viewModel.exitOfGroup(user: user, group: group)
                 } label: {
-                    Text("Finalizar projeto")
-                        .padding()
-                        .background(Color.black)
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
+                        VStack {
+                            if viewModel.exitingStatus == .sending {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                            } else {
+                                Text("Exit group")
+                                    .font(Font.headline)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 }
+                
             }
+            .padding(.top, 110)
         }
     }
 }

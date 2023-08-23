@@ -10,19 +10,23 @@ import SwiftUI
 
 struct SetupUserInfo: View {
     @EnvironmentObject var userViewModel: UserViewModel
+    @FocusState var isTextFieldFocused: Bool
     
     @Binding var user: User
     @Binding var canContinue: Bool
+    @State private var height: CGFloat?
+
+    let minHeight: CGFloat = 30
     let isNewUser: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             FormField(
-                title: "Nome",
-                titleAccessibilityLabel: "Seu nome",
-                placeholder: "Digite aqui seu nome",
+                title: "Name",
+                titleAccessibilityLabel: "Name",
+                placeholder: "Your name...",
                 text: $user.name,
-                textFieldAccessibilityLabel: "Digite aqui seu nome"
+                textFieldAccessibilityLabel: "Enter your name here"
             )
             
             if isNewUser {
@@ -33,51 +37,57 @@ struct SetupUserInfo: View {
                     text: $user.username,
                     textFieldAccessibilityLabel: "Type here your username"
                 )
+                .padding(.top, 40)
             }
             
             FormField(
-                title: "Área de conhecimento",
-                titleAccessibilityLabel: "Digite aqui sua área de interesse (Ex: UI/UX)",
-                placeholder: "Digite aqui sua área de interesse (Ex: UI/UX)",
+                title: "Area of interest",
+                titleAccessibilityLabel: "Area of interest",
+                placeholder: "DUI/UX Design, iOS Developer, 3D Modelator...",
                 text: $user.areaExpertise,
-                textFieldAccessibilityLabel: "Digite aqui sua área de interesse"
+                textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
             )
+            .padding(.top, 40)
             
             DropDownButton(
-                title: "Nível de conhecimento",
+                title: "Level of knowledge in the area", textColor: .backgroundRole,
                 selection: $user.expertise,
                 menuItems: User.Expertise.allCases.map({ expertise in
                     MenuItem(name: expertise.rawValue, tag: expertise)
                 })
             )
+            .padding(.top, 40)
             
             FormField(
-                title: "Localização",
-                titleAccessibilityLabel: "Sua localização",
-                placeholder: "State, Country",
+                title: "Your location",
+                titleAccessibilityLabel: "Your location",
+                placeholder: "Your location...",
                 text: $user.region,
-                textFieldAccessibilityLabel: "Digite seu estado e país"
+                textFieldAccessibilityLabel: "Enter your state and country"
             )
+            .padding(.top, 40)
+
+            CustomText(title: "Interests",
+                       optional: true,
+                       text: $user.interestTags,
+                       condition: user.interestTags.isEmpty,
+                       placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
+            .padding(.top, 40)
             
-            FormField(
-                title: "Interesses",
-                titleAccessibilityLabel: "Seus interesses",
-                placeholder: "Seus interesses",
-                text: $user.interestTags,
-                textFieldAccessibilityLabel: "Digite seus interesses"
+            DropDownButton(
+                title: "Availability",
+                textColor: user.available ? .availableText : .unavailableText,
+                selection: $user.available,
+                menuItems: [
+                    MenuItem(name: "Unavailable for projects", tag: false),
+                    MenuItem(name: "Available for projects", tag: true)
+                ]
             )
-            
-            if !isNewUser {
-                Toggle(isOn: $user.available) {
-                    Text("Disponibilidade")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-            }
+            .padding(.top, 35)
             
             Spacer()
             
-        }
+        }.frame(width: UIScreen.main.bounds.width - 40)
         
         .onAppear {
             checkIfCanContinue()
@@ -86,9 +96,7 @@ struct SetupUserInfo: View {
         .onChange(of: user) { _ in
             checkIfCanContinue()
         }
-        
-        .padding(.horizontal, 20)
-        .padding(.top, 20)
+        .padding(.top, 16)
     }
     
     private func checkIfCanContinue() {
@@ -97,5 +105,9 @@ struct SetupUserInfo: View {
         if canContinue != isUserInfoFilled {
             canContinue = isUserInfoFilled
         }
+    }
+
+    private func textDidChange(_ textView: UITextView) {
+        self.height = max(textView.contentSize.height, minHeight)
     }
 }

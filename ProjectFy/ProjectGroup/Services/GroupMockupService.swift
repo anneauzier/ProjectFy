@@ -8,36 +8,46 @@
 import Foundation
 
 final class GroupMockupService: ObservableObject, GroupProtocol {
+    private var listenerCompletion: (([ProjectGroup]?) -> Void)?
     
     private var groups: [ProjectGroup] = [
-        ProjectGroup(id: "1213",
-                     name: "Adventure Game",
-                     description: "Lorem Ipsum is simply dummy text.",
-                     avatar: "Group2",
-                     adminID: "123456",
-                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: []),
-        ProjectGroup(id: "12134",
-                     name: "God Of War - Clone",
-                     description: "Lorem Ipsum is simply dummy text.",
-                     avatar: "Group4",
-                     adminID: "123455",
-                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: []),
-        ProjectGroup(id: "12135",
-                     name: "GTA RJ",
-                     description: "Lorem Ipsum is simply dummy text.",
-                     avatar: "Group5",
-                     adminID: "123454",
-                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
-                     tasks: [])
+//        ProjectGroup(id: "1213",
+//                     advertisement: Advertisement(owner: .ini)
+//                     name: "Adventure Game",
+//                     description: "Lorem Ipsum is simply dummy text.",
+//                     avatar: "Group2",
+//                     adminID: "123456",
+//                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
+//                     tasks: []),
+//        ProjectGroup(id: "12134",
+//                     name: "God Of War - Clone",
+//                     description: "Lorem Ipsum is simply dummy text.",
+//                     avatar: "Group4",
+//                     adminID: "123455",
+//                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
+//                     tasks: []),
+//        ProjectGroup(id: "12135",
+//                     name: "GTA RJ",
+//                     description: "Lorem Ipsum is simply dummy text.",
+//                     avatar: "Group5",
+//                     adminID: "123454",
+//                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
+//                     tasks: [])
     ]
+
+    {
+        didSet {
+            guard let completion = listenerCompletion else { return }
+            getGroups(completion: completion)
+        }
+    }
     
     func create(_ group: ProjectGroup) throws {
         groups.append(group)
     }
     
     func getGroups(completion: @escaping ([ProjectGroup]?) -> Void) {
+        self.listenerCompletion = completion
         completion(groups)
     }
     
@@ -49,5 +59,10 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
     func delete(with id: String) {
         guard let index = groups.firstIndex(where: {$0.id == id}) else { return }
         groups.remove(at: index)
+    }
+    
+    func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void) {
+        guard let index = groups.first(where: {$0.id == group.id}) else { return }
+//        groups[index].members.removeAll(where: { $0.id == member.id })
     }
 }

@@ -7,14 +7,9 @@
 
 import SwiftUI
 import FirebaseCore
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        return true
-    }
-}
+import FirebaseAuth
+import Firebase
+import UserNotifications
 
 @main
 struct ProjectFyApp: App {
@@ -24,29 +19,94 @@ struct ProjectFyApp: App {
     @StateObject var userViewModel = UserViewModel(service: UserService())
     @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
     @StateObject var groupViewModel = GroupViewModel(service: GroupService())
+    @StateObject var notificationsViewModel = NotificationsViewModel(service: NotificationService())
 
     @State var isNewUser: Bool? = true
     
+    init() {
+        UIApplication.shared.addTapGestureRecognizer()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            if authenticationViewModel.isAuthenticated() {
-                HomeView(isNewUser: $isNewUser)
-                    .environmentObject(advertisementsViewModel)
-                    .environmentObject(userViewModel)
-                    .environmentObject(groupViewModel)
-                
+            Group {
+                if authenticationViewModel.isAuthenticated {
+                    HomeView(isNewUser: $isNewUser)
+                    
                     .onAppear {
-                        guard let userID = authenticationViewModel.getAuthenticatedUser()?.uid else {
-                            return
-                        }
+                        guard let user = authenticationViewModel.getAuthenticatedUser() else { return }
                         
-                        userViewModel.setUser(with: userID)
+                        userViewModel.setUser(with: user.uid)
+                        groupViewModel.setUser(with: user.uid)
                     }
-            } else {
-                SignInView(isNewUser: $isNewUser)
-                    .environmentObject(authenticationViewModel)
-                    .environmentObject(userViewModel)
+                } else {
+                    SignInView(isNewUser: $isNewUser)
+                }
             }
+                .environmentObject(authenticationViewModel)
+                .environmentObject(advertisementsViewModel)
+                .environmentObject(userViewModel)
+                .environmentObject(groupViewModel)
+                .environmentObject(notificationsViewModel)
         }
+        
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    let gcmMessageIDKey = "gcm.message_id"
+    
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions:
+                     [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { _, _ in }
+        
+        application.registerForRemoteNotifications()
+        return true
+    }
+    
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        MessagingService.shared.token = fcmToken
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler:
+                                @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([[.banner, .badge, .sound]])
+    }
+
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {}
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        completionHandler()
     }
 }

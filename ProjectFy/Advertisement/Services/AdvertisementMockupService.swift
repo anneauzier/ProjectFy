@@ -12,7 +12,10 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
     private var advertisements = [
         Advertisement(
             id: "1234",
-            ownerID: "1234",
+            owner: User(signInResult: SignInResult(identityToken: UUID().uuidString,
+                                                   nonce: "",
+                                                   name: nil,
+                                                   email: nil)),
             title: "Primeiro Anuncio",
             description: "mock1",
             positions: [
@@ -66,9 +69,13 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
         advertisements[index] = advertisement
     }
     
-    func apply(user: User, to advertisement: Advertisement, for position: ProjectGroup.Position, completion: @escaping () -> Void) {
+    func apply(user: User, to advertisement: Advertisement,
+               for position: ProjectGroup.Position,
+               completion: @escaping () -> Void) {
     }
     
-    func unapply(user: User, of advertisement: Advertisement, from position: ProjectGroup.Position, completion: @escaping () -> Void) {
+    func unapply(user: User, of advertisement: Advertisement,
+                 from position: ProjectGroup.Position,
+                 completion: @escaping () -> Void) {
     }
 }

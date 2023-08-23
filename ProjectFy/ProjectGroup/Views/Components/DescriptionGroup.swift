@@ -8,28 +8,32 @@
 import SwiftUI
 
 extension EditDetailsGroup {
-    
     struct DescriptionGroup: View {
         @FocusState var isTextFieldFocused: Bool
         @State private var height: CGFloat?
         @Binding var groupInfo: ProjectGroup
-
+        
         let minHeight: CGFloat = 30
-    
+        
         var body: some View {
             VStack(alignment: .leading) {
-                Text("Description")
+                Text("Group description")
+                    .font(.headline)
+                    .foregroundColor(.backgroundRole)
+                
                 ZStack(alignment: .bottom) {
                     WrappedTextView(text: $groupInfo.description, textDidChange: self.textDidChange)
                         .focused($isTextFieldFocused)
                         .frame(height: height ?? minHeight)
-                    
+                        .limitInputLength(value: $groupInfo.description, length: 100, commaLimit: 7)
+ 
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.gray.opacity(0.2))
-                    
+                        .foregroundColor(.rectangleLine)
+                        .padding(.bottom, 3)
+                
                     if groupInfo.description.isEmpty {
-                        Text("Digite algo...")
+                        Text("Give a description to the group...")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(.gray.opacity(0.7))
                             .padding(.bottom, 7)
@@ -39,13 +43,16 @@ extension EditDetailsGroup {
                             }
                     }
                 }
-            }.onTapGesture {
+            }
+            .onTapGesture {
                 isTextFieldFocused = false
             }
         }
 
         private func textDidChange(_ textView: UITextView) {
-            self.height = max(textView.contentSize.height, minHeight)
+            DispatchQueue.main.async {
+                self.height = max(textView.contentSize.height, minHeight)
+            }
         }
     }
 }

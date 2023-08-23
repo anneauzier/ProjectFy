@@ -19,8 +19,6 @@ struct User: Hashable, Codable {
     let entryDate: Date
     var interestTags: String
     var expertise: Expertise
-    var groups: [ProjectGroup: ProjectGroup.Position]?
-    let applications: [ProjectGroup.Position]?
     var available: Bool
     var areaExpertise: String
     
@@ -35,8 +33,6 @@ struct User: Hashable, Codable {
         case entryDate
         case interestTags = "interest_tags"
         case expertise
-        case groups
-        case applications
         case available
         case areaExpertise = "area_expertise"
     }
@@ -51,8 +47,6 @@ struct User: Hashable, Codable {
          entryDate: Date,
          interestTags: String,
          expertise: Expertise,
-         groups: [ProjectGroup: ProjectGroup.Position]? = nil,
-         applications: [ProjectGroup.Position]?,
          available: Bool,
          areaExpertise: String
     ) {
@@ -66,8 +60,6 @@ struct User: Hashable, Codable {
         self.entryDate = entryDate
         self.interestTags = interestTags
         self.expertise = expertise
-        self.groups = groups
-        self.applications = applications
         self.available = available
         self.areaExpertise = areaExpertise
     }
@@ -78,13 +70,11 @@ struct User: Hashable, Codable {
         self.username = ""
         self.email = signInResult.email ?? ""
         self.description = ""
-        self.avatar = String.avatars.randomElement() ?? ""
+        self.avatar = String.userAvatar
         self.region = ""
         self.entryDate = Date()
         self.interestTags = ""
         self.expertise = .beginner
-        self.groups = [:]
-        self.applications = []
         self.available = true
         self.areaExpertise = ""
     }

@@ -26,4 +26,15 @@ final class GroupService: DBCollection, GroupProtocol {
             completion(groups)
         }
     }
+    
+    func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void) {
+        runTransaction(on: group.id) {
+            var group = group
+            group.members.removeAll(where: { $0.id == member.id })
+            
+            return group
+        } completion: {
+            completion()
+        }
+    }
 }

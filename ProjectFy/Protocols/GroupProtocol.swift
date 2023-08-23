@@ -9,16 +9,10 @@ import Foundation
 
 protocol GroupProtocol {
 
-//    func getGroups() -> [ProjectGroup]
-//    func getGroup(id: String) -> ProjectGroup?
-//
-//    func createGroup(_ group: ProjectGroup)
-//    func updateGroup(_ group: ProjectGroup)
-//    func deleteGroup(id: String)
-    
     func create(_ group: ProjectGroup) throws
     func getGroups(completion: @escaping ([ProjectGroup]?) -> Void)
     func update(_ group: ProjectGroup) throws
     func delete(with id: String)
+    func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void)
 
 }

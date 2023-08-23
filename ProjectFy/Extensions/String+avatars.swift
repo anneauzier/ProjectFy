@@ -8,13 +8,6 @@
 import Foundation
 
 extension String {
-    static let avatars = {
-        var avatars: [String] = []
-        
-        for avatarIndex in 1...5 {
-            avatars.append("Group\(avatarIndex)")
-        }
-        
-        return avatars
-    }()
+    static let userAvatar = "userPhoto"
+    static let groupAvatar = "groupPhoto"
 }

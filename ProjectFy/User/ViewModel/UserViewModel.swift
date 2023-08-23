@@ -10,25 +10,30 @@ import SwiftUI
 final class UserViewModel: ObservableObject {
     
     @Published private(set) var user: User?
-    private var userID: String?
     
     private var users: [User] = []
     private let service: UserProtocol
+    
+    private var userID: String? {
+        didSet {
+            getUser()
+        }
+    }
     
     init(service: UserProtocol) {
         self.service = service
         
         service.getUsers { [weak self] users in
             guard let self = self, let users = users else { return }
-            
             self.users = users
             
-            guard let userID = self.userID else {
-                return
-            }
-            
-            self.user = users.first(where: { $0.id == userID })
+            self.getUser()
         }
+    }
+    
+    private func getUser() {
+        guard let userID = userID else { return }
+        self.user = users.first(where: { $0.id == userID })
     }
     
     func createUser(_ user: User) {
@@ -55,8 +60,9 @@ final class UserViewModel: ObservableObject {
         }
     }
     
-    func deleteUser(with id: String) {
-        service.delete(with: id)
+    func deleteUser() {
+        guard let userID = user?.id else { return }
+        service.delete(with: userID)
     }
     
     func isUserInfoFilled(_ user: User?) -> Bool {
@@ -65,7 +71,7 @@ final class UserViewModel: ObservableObject {
         if user == nil { user = self.user }
         guard let user = user else { return false }
         
-        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty || user.interestTags.isEmpty {
+        if user.name.isEmpty || user.areaExpertise.isEmpty || user.region.isEmpty {
             return false
         }
         
