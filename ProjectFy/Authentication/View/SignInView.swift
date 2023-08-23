@@ -82,8 +82,8 @@ struct SignInView: View {
                     style: colorScheme == .light ? .black : .white
                 )
             }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
-            
-            Text("Ao se cadastrar você concorda com os [Termos e Condições](https://www.deepl.com/translator) e com a [Política de Privacidade](https://www.deepl.com/translator) do aplicativo")
+
+            Text("Ao se cadastrar você concorda com os \n[Termos e Condições](https://rb.gy/so05u) e com a [Política de \nPrivacidade](https://rb.gy/pstx9) do aplicativo")
                 .font(.body)
                 .foregroundColor(.backgroundRole)
                 .multilineTextAlignment(.center)
@@ -91,7 +91,7 @@ struct SignInView: View {
                 .padding([.top, .bottom], 32)
         }
         .background(
-            Image("InitialLogPage")
+            Image("grooupfundo")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width)

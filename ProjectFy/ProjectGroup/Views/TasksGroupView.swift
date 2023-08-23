@@ -19,14 +19,23 @@ struct TasksGroupView: View {
                 GroupInfo(user: user, group: group)
                 
                 ScrollView {
-                    ForEach(group.tasks, id: \.id) { task in
-                        TaskBubble(tasks: task, currentUserID: user.id)
+                    if group.tasks.isEmpty {
+                        Text("Today")
+                            .padding(8)
+                            .font(.subheadline)
+                            .foregroundColor(.textColorBlue)
+                            .background(Color.backgroundTextBlue)
+                            .cornerRadius(8)
+                    } else {
+                        ForEach(group.tasks, id: \.id) { task in
+                            TaskBubble(tasks: task, currentUserID: user.id)
+                        }
                     }
                 }
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
             }
-
+            
             TaskField(user: user, group: group, viewModel: viewModel)
         }
         .onAppear {
@@ -67,10 +76,10 @@ struct GroupInfo: View {
                     Image(systemName: "chevron.forward")
                         .foregroundColor(.backgroundRole)
                 }.padding(.horizontal, 15)
-                .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarTitleDisplayMode(.inline)
             }
         }
-
+        
         Divider()
     }
 }

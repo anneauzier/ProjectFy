@@ -33,55 +33,55 @@ struct GroupView: View {
                                  title: "You don't have any \ngroups yet :(",
                                  description: "Join a group asking for a role in a \nproject announce",
                                  heightPH: 0.7)
-                }
-
-                List {
-                    ForEach(viewModel.groups, id: \.self) { group in
-                        
-                        Button {
-                            selectedGroup = group
-                            isTasksActive = true
-                        } label: {
-                            HStack {
-                                Image("\(group.avatar)")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                VStack(alignment: .leading) {
-                                    Text("\(group.name)")
-                                        .font(.headline)
-                                        .foregroundColor(.backgroundRole)
-                                    
-                                    let names = group.members.map(\.user.name)
-                                    
-                                    Text("\(names.joined(separator: ", "))")
-                                        .font(.subheadline)
-                                        .foregroundColor(.editAdvertisementText)
-                                }
-                            }
-                        }
-                        .swipeActions {
-                            Button(action: {
-                                showActionSheet.toggle()
-                            }, label: {
-                                Image("points")
-                            }).tint(.backgroundTextBlue)
-                        }
-                        .confirmationDialog("", isPresented: $showActionSheet, actions: {
+                } else {
+                    List {
+                        ForEach(viewModel.groups, id: \.self) { group in
+                            
                             Button {
                                 selectedGroup = group
-                                isDetailsActive = true
+                                isTasksActive = true
                             } label: {
-                                Label("Group info", systemImage: "info.circle")
+                                HStack {
+                                    Image("\(group.avatar)")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                    VStack(alignment: .leading) {
+                                        Text("\(group.name)")
+                                            .font(.headline)
+                                            .foregroundColor(.backgroundRole)
+                                        
+                                        let names = group.members.map(\.user.name)
+                                        
+                                        Text("\(names.joined(separator: ", "))")
+                                            .font(.subheadline)
+                                            .foregroundColor(.editAdvertisementText)
+                                    }
+                                }
                             }
-
-                            Button(role: .destructive) {
-                                viewModel.exitOfGroup(user: user, group: group)
-                            } label: {
-                                Text("Exit group")
+                            .swipeActions {
+                                Button(action: {
+                                    showActionSheet.toggle()
+                                }, label: {
+                                    Image("points")
+                                }).tint(.backgroundTextBlue)
                             }
-                        })
-                    }
-                }.listStyle(.plain)
+                            .confirmationDialog("", isPresented: $showActionSheet, actions: {
+                                Button {
+                                    selectedGroup = group
+                                    isDetailsActive = true
+                                } label: {
+                                    Label("Group info", systemImage: "info.circle")
+                                }
+                                
+                                Button(role: .destructive) {
+                                    viewModel.exitOfGroup(user: user, group: group)
+                                } label: {
+                                    Text("Exit group")
+                                }
+                            })
+                        }
+                    }.listStyle(.plain)
+                }
 
             }
             .navigationViewStyle(.stack)

@@ -57,7 +57,7 @@ struct Notifications: View {
                         } label: {
                             Label("delete", systemImage: "trash")
                                 .labelStyle(.iconOnly)
-                        }
+                        }.tint(.red)
                     }
                 }
             }

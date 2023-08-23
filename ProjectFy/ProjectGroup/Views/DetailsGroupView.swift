@@ -17,6 +17,7 @@ struct DetailsGroupView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
+            Divider()
             VStack(alignment: .leading) {
                 Image("\(group.avatar)")
                     .resizable()

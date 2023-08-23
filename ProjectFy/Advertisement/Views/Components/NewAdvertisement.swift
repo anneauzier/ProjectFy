@@ -20,7 +20,9 @@ extension AdvertisementsView {
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
         
-        init(owner: User, viewModel: AdvertisementsViewModel, dismiss: Binding<Bool>, updateAdvertisements: Binding<Bool>, editingID: String?) {
+        init(owner: User, viewModel: AdvertisementsViewModel,
+             dismiss: Binding<Bool>,
+             updateAdvertisements: Binding<Bool>, editingID: String?) {
             self.owner = owner
             self.viewModel = viewModel
             self._dismiss = dismiss
@@ -241,9 +243,9 @@ extension AdvertisementsView {
                         Button {
                             advertisement.positions.removeAll(where: { $0.id == position.id })
                         } label: {
-                            Image(systemName: "x.circle.fill")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
+                            Image("close")
+                                .resizable()
+                                .frame(width: 30, height: 30)
                         }
                     }
                     TextField("", text: $position.title)
