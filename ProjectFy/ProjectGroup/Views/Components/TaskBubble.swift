@@ -32,6 +32,7 @@ struct TaskBubble: View {
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                                 .padding(.trailing, 10)
+                                .padding(.top, 5)
                         }
                 }
                 Rectangle()
@@ -42,5 +43,6 @@ struct TaskBubble: View {
         .cornerRadius(12)
         .frame(maxWidth: .infinity, alignment: tasks.user.id == currentUserID ? .trailing : .leading)
         .padding(tasks.user.id == currentUserID ? .trailing : .leading)
+
     }
 }

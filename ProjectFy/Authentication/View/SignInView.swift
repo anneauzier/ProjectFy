@@ -23,7 +23,9 @@ struct SignInView: View {
     var body: some View {
         VStack {
             Image("logo")
-                .padding(.bottom, 34)
+                .resizable()
+                .frame(width: 182, height: 46)
+                .padding(.bottom, 40)
             
             Spacer()
 
@@ -45,10 +47,10 @@ struct SignInView: View {
                 
             } else {
                 Text("Find \(Text("people").foregroundColor(.textColorBlue)) to help you bring your \(Text("ideas").foregroundColor(.textColorBlue)) into the real world! :D")
-                    .frame(width: UIScreen.main.bounds.width - 105)
-                    .font(Font.title2.bold())
-                    .foregroundColor(.signInColor)
                     .multilineTextAlignment(.center)
+                    .font(Font.title.bold())
+                    .foregroundColor(.signInColor)
+                    .frame(width: UIScreen.main.bounds.width - 90)
                     .padding(.bottom, 40)
             }
             
@@ -76,17 +78,22 @@ struct SignInView: View {
                 }
             } label: {
                 SignInWithAppleButtonViewRepresentable(
-                    type: .default,
+                    type: .continue,
                     style: colorScheme == .light ? .black : .white
                 )
             }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
-
+            
+            Text("Ao se cadastrar você concorda com os [Termos e Condições](https://www.deepl.com/translator) e com a [Política de Privacidade](https://www.deepl.com/translator) do aplicativo")
+                .font(.body)
+                .foregroundColor(.backgroundRole)
+                .multilineTextAlignment(.center)
+                .frame(width: UIScreen.main.bounds.width - 40)
+                .padding([.top, .bottom], 32)
         }
         .background(
             Image("InitialLogPage")
                 .resizable()
-                .scaledToFill()
-//                .aspectRatio(contentMode: .fill)
+                .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width)
                 .edgesIgnoringSafeArea(.all)
         )

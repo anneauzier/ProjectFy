@@ -78,7 +78,7 @@ struct DetailsGroupView: View {
                     }
                 }
                 
-                Text("\(group.members.count + 1) Participants")
+                Text("\(group.members.count + 1) Participant(s)")
                     .font(.title2.bold())
                     .foregroundColor(.backgroundRole)
                     .padding(.top, 40)

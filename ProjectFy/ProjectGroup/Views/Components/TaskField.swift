@@ -47,7 +47,7 @@ struct TaskField: View {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(10)
-                        .background(message.isEmpty ? Color.gray.opacity(0.2) : Color.textColorBlue)
+                        .background(message.isEmpty ? Color.editAdvertisementText : Color.textColorBlue)
                         .cornerRadius(50)
                 }.disabled(message.isEmpty)
             }

@@ -137,7 +137,7 @@ struct UserView: View {
                     Button {
                         authenticationViewModel.signOut()
                     } label: {
-                        Label("Log out", systemImage: "iphone.and.arrow.forward")
+                        Label("Log out", image: "logout")
                     }
                     Button(role: .destructive) {
                         Haptics.shared.impact(.rigid)
