@@ -8,7 +8,6 @@
 import Foundation
 
 final class GroupMockupService: ObservableObject, GroupProtocol {
-    
     private var listenerCompletion: (([ProjectGroup]?) -> Void)?
     
     private var groups: [ProjectGroup] = [
@@ -60,5 +59,10 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
     func delete(with id: String) {
         guard let index = groups.firstIndex(where: {$0.id == id}) else { return }
         groups.remove(at: index)
+    }
+    
+    func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void) {
+        guard let index = groups.first(where: {$0.id == group.id}) else { return }
+//        groups[index].members.removeAll(where: { $0.id == member.id })
     }
 }

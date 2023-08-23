@@ -94,7 +94,6 @@ struct DetailsGroupView: View {
             }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
             FinalButtons(user: user, group: group)
-    
         }
         .toolbar {
             if group.admin.id == user.id {
@@ -139,16 +138,26 @@ extension DetailsGroupView {
                 }
                 
                 Button {
+                    viewModel.exitingStatus = .sending
                     viewModel.exitOfGroup(user: user, group: group)
                 } label: {
-                    RoundedRectangleContent(cornerRadius: 16, fillColor: Color.unavailableText) {
-                        Text("Exit group")
-                            .font(Font.headline)
-                            .foregroundColor(.white)
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
+                        VStack {
+                            if viewModel.exitingStatus == .sending {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                            } else {
+                                Text("Exit group")
+                                    .font(Font.headline)
+                                    .foregroundColor(.white)
+                            }
+                        }
                     }
+                    .frame(width: UIScreen.main.bounds.width - 40, height: 56)
                 }
-                .frame(width: UIScreen.main.bounds.width - 40, height: 56)
-            }.padding(.top, 110)
+                
+            }
+            .padding(.top, 110)
         }
     }
 }

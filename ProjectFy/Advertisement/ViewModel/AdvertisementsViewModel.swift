@@ -10,7 +10,7 @@ import Foundation
 final class AdvertisementsViewModel: ObservableObject {
 
     @Published var advertisements: [Advertisement] = []
-    @Published var applicationStatus: ApplicationStatus?
+    @Published var applicationStatus: TransactionStatus?
     
     private let service: AdvertisementProtocol
     
@@ -76,9 +76,9 @@ final class AdvertisementsViewModel: ObservableObject {
             self.applicationStatus = .completed
         }
     }
-    
-    enum ApplicationStatus {
-        case applying
-        case completed
-    }
+}
+
+enum TransactionStatus {
+    case sending
+    case completed
 }

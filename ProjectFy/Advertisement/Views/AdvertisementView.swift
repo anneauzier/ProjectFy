@@ -64,6 +64,7 @@ struct AdvertisementsView: View {
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
+                print("change")
                 if didUpdateAdvertisements {
                     updateAdvertisements()
                 }
@@ -120,6 +121,7 @@ struct AdvertisementsView: View {
     private func updateAdvertisements() {
         advertisements = advertisementsViewModel.advertisements.sorted(by: { $0.date > $1.date })
         didUpdateAdvertisements = false
+        print("update")
     }
 }
 
@@ -183,6 +185,7 @@ struct AdView: View {
             AdInfo(
                 user: user,
                 advertisement: advertisement,
+                updateAdvertisements: $updateAdvertisements,
                 selectedPosition: $selectedPosition,
                 presentSheet: $presentPosition
             )
@@ -198,7 +201,7 @@ struct AdView: View {
             
             Button(role: .destructive) {
                 advertisementsViewModel.deleteAdvertisement(with: advertisement.id)
-                updateAdvertisements = true
+                updateAdvertisements.toggle()
                 
                 Haptics.shared.notification(.success)
                 showDeleteAlert.toggle()

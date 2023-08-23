@@ -93,7 +93,15 @@ struct GroupView: View {
             
             .onChange(of: viewModel.groups) { groups in
                 guard let group = selectedGroup else { return }
-                guard let updatedGroup = groups.first(where: { $0.id == group.id }) else { return }
+                
+                guard let updatedGroup = groups.first(where: { $0.id == group.id }) else {
+                    selectedGroup = nil
+                    
+                    isTasksActive = false
+                    isDetailsActive = false
+                    
+                    return
+                }
                 
                 if updatedGroup == group {
                     return

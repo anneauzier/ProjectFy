@@ -15,6 +15,7 @@ extension AdView {
         let user: User
         let advertisement: Advertisement
         
+        @Binding var updateAdvertisements: Bool
         @Binding var selectedPosition: ProjectGroup.Position?
         @Binding var presentSheet: Bool
         
@@ -82,7 +83,8 @@ extension AdView {
                                 PositionDetails(
                                     user: user,
                                     advertisement: advertisement,
-                                    position: position
+                                    position: position,
+                                    updateAdvertisements: $updateAdvertisements
                                 )
                             } else {
                                 Text("Position not found!")
@@ -160,6 +162,7 @@ extension AdView {
         let user: User
         let advertisement: Advertisement
         let position: ProjectGroup.Position
+        @Binding var updateAdvertisements: Bool
         
         @State var presentMaxGroupsAlert = false
         
@@ -254,10 +257,12 @@ extension AdView {
                             return
                         }
                         
-                        advertisementsViewModel.applicationStatus = .applying
+                        advertisementsViewModel.applicationStatus = .sending
                         
                         if hasApplied {
                             advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
+                            updateAdvertisements.toggle()
+                            
                             notificationsViewModel.deleteRequestNotification(userID: user.id,
                                                                              advertisementID: advertisement.id)
                             
@@ -265,6 +270,7 @@ extension AdView {
                         }
                         
                         advertisementsViewModel.apply(user: user, to: advertisement, for: position)
+                        updateAdvertisements.toggle()
                         
                         let application = Advertisement.Application(id: UUID().uuidString,
                                                                     position: position,
@@ -276,7 +282,7 @@ extension AdView {
                     } label: {
                         RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
                             VStack {
-                                if advertisementsViewModel.applicationStatus == .applying {
+                                if advertisementsViewModel.applicationStatus == .sending {
                                     ProgressView()
                                         .progressViewStyle(.circular)
                                 } else {
@@ -285,8 +291,9 @@ extension AdView {
                                         .foregroundColor(.white)
                                 }
                             }
-                        }.frame(maxHeight: 60)
-                         .padding(.top, 20)
+                        }
+                        .frame(maxHeight: 60)
+                        .padding(.top, 20)
                     }
                     .disabled(isDisabled)
                     .buttonStyle(.plain)

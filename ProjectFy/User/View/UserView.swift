@@ -225,6 +225,7 @@ struct UserAdvertisement: View {
                     AdView.AdInfo(
                         user: user,
                         advertisement: advertisement,
+                        updateAdvertisements: .constant(false),
                         selectedPosition: .constant(nil),
                         presentSheet: .constant(false)
                     )

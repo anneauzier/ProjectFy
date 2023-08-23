@@ -10,6 +10,7 @@ import SwiftUI
 final class GroupViewModel: ObservableObject {
     
     @Published var groups: [ProjectGroup] = []
+    @Published var exitingStatus: TransactionStatus?
     
     private let service: GroupProtocol
     private var allGroups: [ProjectGroup] = []
@@ -66,23 +67,33 @@ final class GroupViewModel: ObservableObject {
         }
     }
     
-    func exitOfGroup(user: User, group: ProjectGroup) {
+    func changeAdmin(of group: ProjectGroup) {
         var group = group
         
-        if group.admin.id == user.id {
-            guard let newAdmin = group.members.map(\.user).randomElement() else {
-                return
-            }
-            
-            group.admin = newAdmin
-            group.members.removeAll(where: { $0.user.id == newAdmin.id })
-            
-            editGroup(group)
+        guard let newAdmin = group.members.map(\.user).randomElement() else {
+            service.delete(with: group.id)
             return
         }
         
-        group.members.removeAll(where: { $0.user.id == user.id })
+        group.admin = newAdmin
+        group.members.removeAll(where: { $0.user.id == newAdmin.id })
+        
         editGroup(group)
+    }
+    
+    func exitOfGroup(user: User, group: ProjectGroup) {
+        if group.admin.id == user.id {
+            changeAdmin(of: group)
+            return
+        }
+        
+        guard let member = group.members.first(where: { $0.user.id == user.id }) else { return }
+        
+        service.remove(member: member, from: group) { [weak self] in
+            DispatchQueue.main.async {
+                self?.exitingStatus = .completed
+            }
+        }
     }
     
     func exitOfAllGroups() {
