@@ -15,8 +15,8 @@ extension AdView {
         let user: User
         let advertisement: Advertisement
         
-        @State var presentSheet = false
-        @State var selectedPosition: ProjectGroup.Position?
+        @Binding var selectedPosition: ProjectGroup.Position?
+        @Binding var presentSheet: Bool
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -50,7 +50,6 @@ extension AdView {
                 
                 Text(advertisement.description)
                     .padding(.top, 8)
-//                    .removePadding()
                 
                 Text("Project roles")
                     .font(Font.title.bold())
@@ -80,7 +79,11 @@ extension AdView {
                         
                         .sheet(isPresented: $presentSheet) {
                             if let position = selectedPosition {
-                                PositionDetails(user: user, advertisement: advertisement, position: position)
+                                PositionDetails(
+                                    user: user,
+                                    advertisement: advertisement,
+                                    position: position
+                                )
                             } else {
                                 Text("Position not found!")
                             }
@@ -226,7 +229,7 @@ extension AdView {
                     return false
                 }
                 
-                if !isUserInTheGroup {
+                if advertisement.owner.id != user.id, !isUserInTheGroup {
                     let application = advertisement.applications.first(where: { $0.user.id == user.id })
                     let hasApplied = application != nil
                     
@@ -286,6 +289,7 @@ extension AdView {
                          .padding(.top, 20)
                     }
                     .disabled(isDisabled)
+                    .buttonStyle(.plain)
                     
                     .simultaneousGesture(TapGesture().onEnded({ _ in
                         if isDisabled {

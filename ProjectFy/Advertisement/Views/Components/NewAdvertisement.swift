@@ -15,14 +15,16 @@ extension AdvertisementsView {
         
         @State var advertisement: Advertisement
         @Binding var dismiss: Bool
+        @Binding var updateAdvertisements: Bool
         
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
         
-        init(owner: User, viewModel: AdvertisementsViewModel, dismiss: Binding<Bool>, editingID: String?) {
+        init(owner: User, viewModel: AdvertisementsViewModel, dismiss: Binding<Bool>, updateAdvertisements: Binding<Bool>, editingID: String?) {
             self.owner = owner
             self.viewModel = viewModel
             self._dismiss = dismiss
+            self._updateAdvertisements = updateAdvertisements
             
             if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
                 self._advertisement = State(initialValue: advertisement)
@@ -95,6 +97,7 @@ extension AdvertisementsView {
                                 owner: owner,
                                 advertisement: $advertisement,
                                 dismiss: $dismiss,
+                                updateAdvertisements: $updateAdvertisements,
                                 isEditing: isEditing
                             )
                         } label: {
@@ -138,7 +141,10 @@ extension AdvertisementsView {
         
         let owner: User
         @Binding var advertisement: Advertisement
+        
         @Binding var dismiss: Bool
+        @Binding var updateAdvertisements: Bool
+        
         let isEditing: Bool
         
         var body: some View {
@@ -184,13 +190,16 @@ extension AdvertisementsView {
                         viewModel.editAdvertisement(advertisement)
                         Haptics.shared.notification(.success)
                         
+                        updateAdvertisements.toggle()
                         dismiss.toggle()
+                        
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
-                    
                     Haptics.shared.notification(.success)
+                    
+                    updateAdvertisements.toggle()
                     dismiss.toggle()
                 } label: {
                     Text(isEditing ? "Edit" : "Share")

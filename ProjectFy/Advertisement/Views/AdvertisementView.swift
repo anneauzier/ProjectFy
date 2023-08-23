@@ -16,11 +16,14 @@ struct AdvertisementsView: View {
     @State var advertisements: [Advertisement] = []
     @StateObject private var networking = NetworkManager()
     
-    @State var isLinkActive = false
+    @State var presentSheet = false
     @State var editingID: String?
     
-    @State var presentSheet = false
+    @State var selectedPosition: ProjectGroup.Position?
+    @State var presentPositionSheet = false
+    
     @State var presentMaxGroupsAlert = false
+    @State var didUpdateAdvertisements = false
     
     var body: some View {
         NavigationView {
@@ -43,18 +46,28 @@ struct AdvertisementsView: View {
                                 user: user,
                                 owner: advertisement.owner,
                                 advertisement: advertisement,
-                                editingID: $editingID,
-                                editAdvertisement: $isLinkActive
+                                updateAdvertisements: $didUpdateAdvertisements,
+                                presentPosition: $presentPositionSheet,
+                                selectedPosition: $selectedPosition,
+                                presentSheet: $presentSheet,
+                                editingID: $editingID
                             )
                         }
                     }
                     .padding(.horizontal, 16)
                 }
             }
+            
             .onAppear {
                 editingID = nil
                 updateAdvertisements()
             }
+            
+            .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
+                if didUpdateAdvertisements {
+                    updateAdvertisements()
+                }
+            })
             
             .refreshable {
                 updateAdvertisements()
@@ -83,6 +96,7 @@ struct AdvertisementsView: View {
                     owner: user,
                     viewModel: advertisementsViewModel,
                     dismiss: $presentSheet,
+                    updateAdvertisements: $didUpdateAdvertisements,
                     editingID: editingID
                 )
             }
@@ -104,19 +118,26 @@ struct AdvertisementsView: View {
     }
     
     private func updateAdvertisements() {
-        advertisements = advertisementsViewModel.advertisements
+        advertisements = advertisementsViewModel.advertisements.sorted(by: { $0.date > $1.date })
+        didUpdateAdvertisements = false
     }
 }
 
 struct AdView: View {
-    @EnvironmentObject var viewModel: AdvertisementsViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
     
     let user: User
     let owner: User
     let advertisement: Advertisement
     
+    @Binding var updateAdvertisements: Bool
+    
+    @Binding var presentPosition: Bool
+    @Binding var selectedPosition: ProjectGroup.Position?
+    
+    @Binding var presentSheet: Bool
     @Binding var editingID: String?
-    @Binding var editAdvertisement: Bool
     
     @State var showDeleteAlert: Bool = false
     
@@ -137,7 +158,7 @@ struct AdView: View {
                             editingID = advertisement.id
                             
                             Haptics.shared.selection()
-                            editAdvertisement.toggle()
+                            presentSheet.toggle()
                         } label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         }
@@ -159,23 +180,31 @@ struct AdView: View {
                 }
             }
             
-            AdInfo(user: user, advertisement: advertisement)
-        }.navigationBarTitleDisplayMode(.inline)
+            AdInfo(
+                user: user,
+                advertisement: advertisement,
+                selectedPosition: $selectedPosition,
+                presentSheet: $presentPosition
+            )
+        }
+        .navigationBarTitleDisplayMode(.inline)
         
-            .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
-                Button(role: .cancel) {
-                    showDeleteAlert.toggle()
-                } label: {
-                    Text("Cancel")
-                }
-                
-                Button(role: .destructive) {
-                    viewModel.deleteAdvertisement(with: advertisement.id)
-                    Haptics.shared.notification(.success)
-                    showDeleteAlert.toggle()
-                } label: {
-                    Text("Delete")
-                }
+        .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
+            Button(role: .cancel) {
+                showDeleteAlert.toggle()
+            } label: {
+                Text("Cancel")
             }
+            
+            Button(role: .destructive) {
+                advertisementsViewModel.deleteAdvertisement(with: advertisement.id)
+                updateAdvertisements = true
+                
+                Haptics.shared.notification(.success)
+                showDeleteAlert.toggle()
+            } label: {
+                Text("Delete")
+            }
+        }
     }
 }
