@@ -20,7 +20,9 @@ extension AdvertisementsView {
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
         
-        init(owner: User, viewModel: AdvertisementsViewModel, dismiss: Binding<Bool>, updateAdvertisements: Binding<Bool>, editingID: String?) {
+        init(owner: User, viewModel: AdvertisementsViewModel,
+             dismiss: Binding<Bool>,
+             updateAdvertisements: Binding<Bool>, editingID: String?) {
             self.owner = owner
             self.viewModel = viewModel
             self._dismiss = dismiss
