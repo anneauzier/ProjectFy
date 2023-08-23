@@ -28,9 +28,14 @@ struct TasksGroupView: View {
                             .cornerRadius(8)
                     } else {
                         var members: [User] {
-                            var members = group.members.map(\.user)
-                            members.append(group.admin)
+                            var members = [group.admin]
+                            members.append(contentsOf: group.members.map(\.user))
                             
+                            guard let myIndex = members.firstIndex(where: { $0.id == user.id }) else {
+                                return members
+                            }
+                            
+                            members.append(members.remove(at: myIndex))
                             return members
                         }
                         
