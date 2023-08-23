@@ -36,7 +36,10 @@ struct TasksGroupView: View {
                         
                         ForEach(members, id: \.id) { user in
                             let tasks = group.tasks.filter({ $0.user.id == user.id })
-                            TaskBubble(user: user, isMyself: user.id == self.user.id, tasks: tasks)
+                            
+                            if !tasks.isEmpty {
+                                TaskBubble(user: user, isMyself: user.id == self.user.id, tasks: tasks)
+                            }
                         }
                         .padding(.bottom, 30)
                     }
