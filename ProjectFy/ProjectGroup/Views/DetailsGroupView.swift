@@ -44,6 +44,7 @@ struct DetailsGroupView: View {
                         .padding(.top, 20)
                     
                     Text("\(group.description)")
+                        .fixedSize(horizontal: false, vertical: true)
                         .font(.body)
                         .foregroundColor(.backgroundRole)
                         .padding(.top, 12)
@@ -88,6 +89,7 @@ struct DetailsGroupView: View {
                     UserInfo(user: group.admin, size: 49, nameColor: .white)
                         .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                         .removePadding()
+                        .padding(.vertical, 16)
                 }
                 
                 ForEach(group.members.map(\.user), id: \.self) { user in

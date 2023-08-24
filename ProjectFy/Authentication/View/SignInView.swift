@@ -86,7 +86,7 @@ struct SignInView: View {
                 .padding(.top, 40)
 
             if !isDeletingAccount {
-                Text("By registering you agree to the [Terms and \nConditions](https://rb.gy/so05u) and [Privacy Policy](https://rb.gy/pstx9) of the app.")
+                Text("By registering you agree to the [Terms and \nConditions](https://encurtador.com.br/rBMW8) and [Privacy Policy](https://encurtador.com.br/otJO6) of the app.")
                     .font(.body)
                     .foregroundColor(.backgroundRole)
                     .multilineTextAlignment(.center)
