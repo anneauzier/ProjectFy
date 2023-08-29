@@ -48,11 +48,6 @@ extension AdvertisementsView {
                         UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
                         
-                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
-                            .font(Font.body)
-                            .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 25)
-                        
                         TextField("Name your project...", text: $advertisement.title)
                             .font(Font.largeTitle.bold())
                             .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
@@ -61,18 +56,24 @@ extension AdvertisementsView {
                         TextField("Describe your project in 1000 characters or less...",
                                   text: $advertisement.description)
                             .font(Font.body)
-                            .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
+                            .foregroundColor(
+                                advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 54)
                         
-                        DropDownButton(
-                            title: "Project status", textColor: .textColorBlue,
-                            selection: $advertisement.ongoing,
-                            menuItems: [
-                                MenuItem(name: "Not started", tag: false),
-                                MenuItem(name: "In progress", tag: true)
-                            ]
-                        )
-                        .padding(.top, 54)
+                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
+                            .font(Font.body)
+                            .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
+                            .padding(.top, 25)
+
+//                        DropDownButton(
+//                            title: "Project status", textColor: .textColorBlue,
+//                            selection: $advertisement.ongoing,
+//                            menuItems: [
+//                                MenuItem(name: "Not started", tag: false),
+//                                MenuItem(name: "In progress", tag: true)
+//                            ]
+//                        )
+//                        .padding(.top, 54)
                         
                         Spacer()
                     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
+    @Environment(\.dynamicTypeSize) var sizeCategory
     
     let user: User
     let group: ProjectGroup
@@ -85,21 +86,20 @@ struct DetailsGroupView: View {
                     .foregroundColor(.backgroundRole)
                     .padding(.top, 40)
                 
-                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
-                    UserInfo(user: group.admin, size: 49, nameColor: .white)
-                        .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
-                        .removePadding()
-                        .padding(.vertical, 16)
-                }
-                
-                ForEach(group.members.map(\.user), id: \.self) { user in
                     RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
-                        UserInfo(user: user, size: 49, nameColor: .white)
+                        UserInfo(user: group.admin, size: 49, nameColor: .white)
                             .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                             .removePadding()
+                            .padding(.vertical, 16)
                     }
-                    .frame(height: 85)
-                }
+                    
+                    ForEach(group.members.map(\.user), id: \.self) { user in
+                        RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                            UserInfo(user: user, size: 49, nameColor: .white)
+                                .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
+                                .removePadding()
+                        }.frame(height: 85)
+                    }.padding(.top, sizeCategory.isAccessibilitySize ? 40 : 3)
             }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
             FinalButtons(user: user, group: group)
@@ -135,9 +135,9 @@ extension DetailsGroupView {
             VStack {
                 if group.admin.id == user.id {
                     Button {
-                        print("FINALIZAR GRUPO")
+                        print("======= FINALIZAR GRUPO")
                     } label: {
-                        RoundedRectangleContent(cornerRadius: 16, fillColor: Color.textColorBlue) {
+                        RoundedRectangleContent(cornerRadius: 12, fillColor: Color.textColorBlue) {
                             Text("Finalize project")
                                 .font(Font.headline)
                                 .foregroundColor(.white)
@@ -150,7 +150,7 @@ extension DetailsGroupView {
                     viewModel.exitingStatus = .sending
                     viewModel.exitOfGroup(user: user, group: group)
                 } label: {
-                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
+                    RoundedRectangleContent(cornerRadius: 12, fillColor: Color.unavailableText) {
                         VStack {
                             if viewModel.exitingStatus == .sending {
                                 ProgressView()

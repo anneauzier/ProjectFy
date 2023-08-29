@@ -80,6 +80,7 @@ struct GroupInfo: View {
                         Text("\(group.name)")
                             .font(.headline)
                             .foregroundColor(.backgroundRole)
+                            .multilineTextAlignment(.leading)
                         
                         let names = group.members.map(\.user.name)
                         

@@ -43,24 +43,24 @@ struct UserView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 4) {
-                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
+//                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
                         
                         Text(user.name)
                             .font(Font.title2.bold())
                             .foregroundColor(.backgroundRole)
                             .accessibilityLabel("Username: \(user.name)")
                         
-                        Image(systemName: imageVerify)
-                            .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
+//                        Image(systemName: imageVerify)
+//                            .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
                         
-                        Circle()
-                            .frame(width: 3)
-                            .foregroundColor(.editAdvertisementText)
+//                        Circle()
+//                            .frame(width: 3)
+//                            .foregroundColor(.editAdvertisementText)
                         
-                        Text(user.username)
-                            .font(.body)
-                            .foregroundColor(.editAdvertisementText)
-                            .accessibilityLabel("@\(user.username)")
+//                        Text(user.username)
+//                            .font(.body)
+//                            .foregroundColor(.editAdvertisementText)
+//                            .accessibilityLabel("@\(user.username)")
                     }
                     .padding(.top, 15)
                     
@@ -194,6 +194,7 @@ struct UserView: View {
 }
 
 struct UserAdvertisement: View {
+    @Environment(\.dynamicTypeSize) var sizeCategory
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
     
@@ -212,10 +213,17 @@ struct UserAdvertisement: View {
             Divider()
             
             if advertisementsViewModel.advertisements.isEmpty {
-                Connectivity(image: Image("emptyAd"),
-                             title: "Looks like you haven't \nshared your project \nideas yet :(",
-                             description: "You can start sharing your project \nideas by taping “+” on the home screen",
-                             heightPH: 0.4)
+                if sizeCategory.isAccessibilitySize {
+                    Connectivity(image: Image("emptyAd"),
+                                 title: "Looks like you haven't \nshared your project \nideas yet :(",
+                                 description: "You can start sharing your project \nideas by taping “+” on the home screen",
+                                 heightPH: 0.7)
+                } else {
+                    Connectivity(image: Image("emptyAd"),
+                                 title: "Looks like you haven't \nshared your project \nideas yet :(",
+                                 description: "You can start sharing your project \nideas by taping “+” on the home screen",
+                                 heightPH: 0.42)
+                }
             } else {
                 UserInfo(user: user, size: 49, nameColor: .backgroundRole)
                     .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
