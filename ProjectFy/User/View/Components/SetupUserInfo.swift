@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 struct SetupUserInfo: View {
+
     @EnvironmentObject var userViewModel: UserViewModel
+    @Environment(\.dynamicTypeSize) var sizeCategory
     @FocusState var isTextFieldFocused: Bool
     
     @Binding var user: User
@@ -28,26 +30,24 @@ struct SetupUserInfo: View {
                 text: $user.name,
                 textFieldAccessibilityLabel: "Enter your name here"
             )
-            
-            if isNewUser {
+
+            if sizeCategory.isAccessibilitySize {
                 FormField(
-                    title: "Username",
-                    titleAccessibilityLabel: "Your username",
-                    placeholder: "@",
-                    text: $user.username,
-                    textFieldAccessibilityLabel: "Type here your username"
-                )
-                .padding(.top, 40)
+                    title: "Area of interest",
+                    titleAccessibilityLabel: "Area of interest",
+                    placeholder: "Ex: UI/UX Design...",
+                    text: $user.areaExpertise,
+                    textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
+                ).padding(.top, 40)
+            } else {
+                FormField(
+                    title: "Area of interest",
+                    titleAccessibilityLabel: "Area of interest",
+                    placeholder: "Ex: UI/UX Design, iOS Developer, 3D Modelator...",
+                    text: $user.areaExpertise,
+                    textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
+                ).padding(.top, 40)
             }
-            
-            FormField(
-                title: "Area of interest",
-                titleAccessibilityLabel: "Area of interest",
-                placeholder: "DUI/UX Design, iOS Developer, 3D Modelator...",
-                text: $user.areaExpertise,
-                textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
-            )
-            .padding(.top, 40)
             
             DropDownButton(
                 title: "Level of knowledge in the area", textColor: .backgroundRole,
@@ -66,25 +66,23 @@ struct SetupUserInfo: View {
                 textFieldAccessibilityLabel: "Enter your state and country"
             )
             .padding(.top, 40)
+            
+            if sizeCategory.isAccessibilitySize {
+                CustomText(title: "Interests",
+                           optional: true,
+                           text: $user.interestTags,
+                           condition: user.interestTags.isEmpty,
+                           placeholder: "Ex: Design, Unity...")
+                .padding(.top, 40)
+            } else {
+                CustomText(title: "Interests",
+                           optional: true,
+                           text: $user.interestTags,
+                           condition: user.interestTags.isEmpty,
+                           placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
+                .padding(.top, 40)
+            }
 
-            CustomText(title: "Interests",
-                       optional: true,
-                       text: $user.interestTags,
-                       condition: user.interestTags.isEmpty,
-                       placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
-            .padding(.top, 40)
-            
-            DropDownButton(
-                title: "Availability",
-                textColor: user.available ? .availableText : .unavailableText,
-                selection: $user.available,
-                menuItems: [
-                    MenuItem(name: "Unavailable for projects", tag: false),
-                    MenuItem(name: "Available for projects", tag: true)
-                ]
-            )
-            .padding(.top, 35)
-            
             Spacer()
             
         }.frame(width: UIScreen.main.bounds.width - 40)
@@ -111,3 +109,25 @@ struct SetupUserInfo: View {
         self.height = max(textView.contentSize.height, minHeight)
     }
 }
+
+//            if isNewUser {
+//                FormField(
+//                    title: "Username",
+//                    titleAccessibilityLabel: "Your username",
+//                    placeholder: "@",
+//                    text: $user.username,
+//                    textFieldAccessibilityLabel: "Type here your username"
+//                )
+//                .padding(.top, 40)
+//            }
+
+//            DropDownButton(
+//                title: "Availability",
+//                textColor: user.available ? .availableText : .unavailableText,
+//                selection: $user.available,
+//                menuItems: [
+//                    MenuItem(name: "Unavailable for projects", tag: false),
+//                    MenuItem(name: "Available for projects", tag: true)
+//                ]
+//            )
+//            .padding(.top, 35)

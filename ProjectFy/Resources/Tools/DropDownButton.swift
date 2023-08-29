@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DropDownButton<T: Hashable>: View {
+    @Environment(\.dynamicTypeSize) var sizeCategory
     let title: String
     let textColor: Color
     @Binding var selection: T
@@ -50,10 +51,11 @@ struct DropDownButton<T: Hashable>: View {
             .padding(.top, 5)
             
             .background(
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(.rectangleLine)
-                    .padding(.top, 30)
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, sizeCategory.isAccessibilitySize ? 55 : 30)
+                        .environment(\.dynamicTypeSize, sizeCategory)
             )
             
             .onAppear {

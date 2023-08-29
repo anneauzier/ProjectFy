@@ -18,7 +18,7 @@ struct WrappedTextView: UIViewRepresentable {
         view.isEditable = true
         view.delegate = context.coordinator
         
-        view.font = UIFont.systemFont(ofSize: 16)
+        view.font = UIFont.preferredFont(forTextStyle: .body)
         
         return view
     }
@@ -80,6 +80,7 @@ struct CustomText: View {
                     .foregroundColor(.backgroundRole) +
                 
                 Text(optional ? " (optional)" : "")
+                    .font(.body)
                     .foregroundColor(.editAdvertisementText)
             }
             
@@ -96,7 +97,7 @@ struct CustomText: View {
                 if condition {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(.editAdvertisementText)
+                        .foregroundColor(Color.gray.opacity(0.5))
                         .padding(.bottom, 7)
                         .padding(.leading, 3)
                         .onTapGesture {
