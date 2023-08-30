@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct UserInfo: View {
+    @Environment(\.dynamicTypeSize) var sizeCategory
+
     let user: User
     let size: CGFloat
     let nameColor: Color
@@ -21,20 +23,24 @@ struct UserInfo: View {
                 .frame(width: size, height: size)
             
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 5) {
+                HStack {
                     Text(user.name)
                         .font(Font.headline)
                         .foregroundColor(nameColor)
-                    Text(user.username)
-                        .font(Font.subheadline)
-                        .foregroundColor(.userNameColor)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+//                    Text(user.username)
+//                        .font(Font.subheadline)
+//                        .foregroundColor(.userNameColor)
                 }.scaledToFit()
                 
                 HStack(spacing: 5) {
                     Text(user.areaExpertise)
                         .font(.body)
                         .foregroundColor(nameColor)
-                    
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+
                     Circle()
                         .frame(width: 3, height: 3)
                         .foregroundColor(.editAdvertisementText)
@@ -42,8 +48,11 @@ struct UserInfo: View {
                     Text(user.expertise.rawValue)
                         .font(.subheadline)
                         .foregroundColor(.editAdvertisementText)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                 }.scaledToFit()
             }
-        }.padding(.top, 10)
+        }
+        .padding(.top, 10)
     }
 }

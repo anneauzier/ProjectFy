@@ -64,7 +64,7 @@ struct AdvertisementsView: View {
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
-                print("change")
+//                print("change")
                 if didUpdateAdvertisements {
                     updateAdvertisements()
                 }
@@ -121,7 +121,7 @@ struct AdvertisementsView: View {
     private func updateAdvertisements() {
         advertisements = advertisementsViewModel.advertisements.sorted(by: { $0.date > $1.date })
         didUpdateAdvertisements = false
-        print("update")
+//        print("update")
     }
 }
 

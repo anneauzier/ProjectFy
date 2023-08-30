@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct FormField: View {
+    @Environment(\.dynamicTypeSize) var sizeCategory
+    
     let title: String
     let titleAccessibilityLabel: String
     
@@ -24,13 +26,13 @@ struct FormField: View {
                 .accessibilityLabel(titleAccessibilityLabel)
             
             TextField(placeholder, text: $text)
-                .limitInputLength(value: $text, length: 19, commaLimit: 30)
+                .font(.body)
                 .accessibilityLabel(textFieldAccessibilityLabel)
-                .background(
+                .overlay(
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.rectangleLine)
-                        .padding(.top, 30)
+                        .padding(.top, sizeCategory.isAccessibilitySize ? 55 : 30)
                 )
         }
     }

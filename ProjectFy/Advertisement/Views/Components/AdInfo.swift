@@ -34,20 +34,20 @@ extension AdView {
                     .foregroundColor(.backgroundRole)
                     .padding(.top, 10)
                 
-                HStack {
-                    // if let weeklyWorkload = advertisement.weeklyWorkload {
-                    //  Text("\(weeklyWorkload)h weekly")
-                    // }
-                    
-                    Text(advertisement.ongoing ? "In progress" : "Not started")
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 10)
-                        .font(.subheadline)
-                        .foregroundColor(.textColorYellow)
-                        .background(Color.backgroundTextYellow)
-                        .cornerRadius(8)
-                }
-                .removePadding()
+                //                HStack {
+                //                    // if let weeklyWorkload = advertisement.weeklyWorkload {
+                //                    //  Text("\(weeklyWorkload)h weekly")
+                //                    // }
+                //
+                //                    Text(advertisement.ongoing ? "In progress" : "Not started")
+                //                        .padding(.vertical, 5)
+                //                        .padding(.horizontal, 10)
+                //                        .font(.subheadline)
+                //                        .foregroundColor(.textColorYellow)
+                //                        .background(Color.backgroundTextYellow)
+                //                        .cornerRadius(8)
+                //                }
+                //                .removePadding()
                 
                 Text(advertisement.description)
                     .padding(.top, 8)
@@ -114,6 +114,7 @@ extension AdView {
     }
     
     private struct Position: View {
+        @Environment(\.dynamicTypeSize) var sizeCategory
         @EnvironmentObject var groupViewModel: GroupViewModel
         
         let user: User
@@ -127,30 +128,42 @@ extension AdView {
                         Image(user.avatar)
                             .resizable()
                             .frame(width: 42, height: 42)
-                        
+
                         var usersJoined: Int {
                             guard let group = groupViewModel.getGroup(by: advertisement.id) else {
                                 return 0
                             }
-                            
+
                             return group.members.count
                         }
-                        
-                        Text("\(usersJoined)/\(position.vacancies)")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .scaledToFit()
+                        if sizeCategory.isAccessibilitySize {
+                            Text("\(usersJoined)/\(position.vacancies)")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .lineLimit(nil)
+                        } else {
+                            Text("\(usersJoined)/\(position.vacancies)")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .scaledToFit()
+                        }
                     }
                 }
-                .frame(width: 107)
+//              .frame(width: 107)
+                .frame(width: UIScreen.main.bounds.width * 0.28)
                 .zIndex(1)
-                
+
                 RoundedRectangleContent(cornerRadius: 8, fillColor: Color.roleBackground) {
                     Text(position.title)
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .padding(.leading, sizeCategory.isAccessibilitySize ? 30 : 25)
                 }
-            }.frame(height: 60)
+                .environment(\.dynamicTypeSize, sizeCategory)
+                .frame(height: sizeCategory.isAccessibilitySize ? nil : 70)
+            }
         }
     }
     
@@ -193,13 +206,15 @@ extension AdView {
                     .frame(height: 1)
                     .foregroundColor(.gray.opacity(0.2))
                 
-                Text("What will you do")
-                    .font(Font.title.bold())
-                    .foregroundColor(.backgroundRole)
-                    .padding(.bottom, 5)
-                
-                Text(position.description)
-                    .padding(.top, -5)
+                if !position.description.isEmpty {
+                    Text("What will you do")
+                        .font(Font.title.bold())
+                        .foregroundColor(.backgroundRole)
+                        .padding(.bottom, 5)
+
+                    Text(position.description)
+                        .padding(.top, -5)
+                }
                 
                 if let group = groupViewModel.getGroup(by: advertisement.id) {
                     Text("People who are already in this project role")
@@ -211,13 +226,12 @@ extension AdView {
                     ForEach(group.members.map(\.user), id: \.self) { user in
                         RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
                             UserInfo(user: user, size: 49, nameColor: .white)
-                            // TRATAR ESSA RESPONSIVIDADE DEPOIS
-                                .padding(.trailing, 40)
+                                .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
                                 .removePadding()
                         }.frame(height: 88)
                     }
                 }
-                
+
                 Spacer()
                 
                 var isUserInTheGroup: Bool {
@@ -306,26 +320,26 @@ extension AdView {
                 }
             }.frame(width: UIScreen.main.bounds.width - 40)
             
-            .onDisappear {
-                advertisementsViewModel.applicationStatus = nil
-            }
+                .onDisappear {
+                    advertisementsViewModel.applicationStatus = nil
+                }
             
-            .alert("You can't request to join because you are already in three projects!",
-                   isPresented: $presentMaxGroupsAlert,
-                   actions: {
-                        Button(role: .cancel) {
-                            presentMaxGroupsAlert = false
-                        } label: {
-                            Text("OK")
-                        }
-                   },
-                   message: {
-                        Text("You cannot participate in more than three projects at the same time.")
-                   }
-            )
+                .alert("You can't request to join because you are already in three projects!",
+                       isPresented: $presentMaxGroupsAlert,
+                       actions: {
+                    Button(role: .cancel) {
+                        presentMaxGroupsAlert = false
+                    } label: {
+                        Text("OK")
+                    }
+                },
+                       message: {
+                    Text("You cannot participate in more than three projects at the same time.")
+                }
+                )
             
-            .foregroundColor(.backgroundRole)
-            .padding(.top, 30)
+                .foregroundColor(.backgroundRole)
+                .padding(.top, 30)
         }
     }
 }
@@ -340,9 +354,7 @@ struct RoundedRectangleContent<Content: View>: View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(fillColor)
-            
             content()
         }
-        //        .fixedSize(horizontal: false, vertical: true)
     }
 }

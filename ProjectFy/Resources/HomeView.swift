@@ -39,7 +39,7 @@ fileprivate struct TabBarView: View {
     
     var getUserInfo: Bool {
         user.name.isEmpty ||
-        user.username.isEmpty ||
+//        user.username.isEmpty ||
         user.areaExpertise.isEmpty ||
         user.region.isEmpty
     }

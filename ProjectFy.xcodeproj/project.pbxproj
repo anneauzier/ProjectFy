@@ -394,12 +394,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9F3A8FB22A947150003A1032 /* Placeholders */ = {
+		9F3A8FB22A947150003A1032 /* Placeholder */ = {
 			isa = PBXGroup;
 			children = (
 				9F3A8FB32A94717E003A1032 /* Connectivity.swift */,
 			);
-			path = Placeholders;
+			path = Placeholder;
 			sourceTree = "<group>";
 		};
 		9F4390C52A81316C00A3A393 /* Resources */ = {
@@ -533,7 +533,7 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
-				9F3A8FB22A947150003A1032 /* Placeholders */,
+				9F3A8FB22A947150003A1032 /* Placeholder */,
 				671FA2A82A8FB419003684AC /* Notification */,
 				9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */,
 				9F5C15942A8AAF4E00162E2E /* Info.plist */,

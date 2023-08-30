@@ -25,6 +25,7 @@ struct Connectivity: View {
                 .foregroundColor(.backgroundRole)
                 .frame(width: UIScreen.main.bounds.width - 104)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
                 .padding(.bottom, 5)
             
             Text(description)
@@ -32,6 +33,7 @@ struct Connectivity: View {
                 .foregroundColor(.editAdvertisementText)
                 .frame(width: UIScreen.main.bounds.width - 114)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
         }.frame(height: UIScreen.main.bounds.height * heightPH)
     }
 }
