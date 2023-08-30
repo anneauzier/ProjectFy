@@ -289,22 +289,33 @@ extension AdvertisementsView {
     private struct VacancyButton: View {
         @Binding var position: ProjectGroup.Position
         let isPlusButton: Bool
+        let maxVacancies: Int = 10
         
         var body: some View {
             Button {
-                position.vacancies += isPlusButton ? 1 : -1
+                if isPlusButton {
+                    if position.vacancies < maxVacancies {
+                        position.vacancies += 1
+                    }
+                } else {
+                    if position.vacancies > 0 {
+                        position.vacancies -= 1
+                    }
+                }
             } label: {
                 ZStack {
                     Circle()
                         .fill(Color.textColorBlue)
+                        .opacity(!isPlusButton && position.vacancies == 1 ? 0.3: 1)
+                        .opacity(isPlusButton && position.vacancies == maxVacancies ? 0.3 : 1)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
-                        .font(.system(size: 12))
+                        .font(.system(size: 14))
                         .foregroundColor(.white)
                 }
             }
             .disabled(!isPlusButton && position.vacancies < 2)
-            .frame(width: 19, height: 19)
+            .frame(width: 28, height: 28)
         }
     }
 }
