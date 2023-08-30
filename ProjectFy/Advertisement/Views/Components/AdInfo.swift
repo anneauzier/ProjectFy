@@ -221,7 +221,7 @@ extension AdView {
                 Spacer()
                 
                 var isUserInTheGroup: Bool {
-                    guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                    guard let group = groupViewModel.getGroup(by: position.id) else {
                         return false
                     }
                     
@@ -245,9 +245,17 @@ extension AdView {
                     }
                     
                     let buttonText = hasAppliedForThisPosition ? "Remove request" : "Request to join"
-                    let isDisabled = hasApplied && !hasAppliedForThisPosition
                     
                     let maxGroups = groupViewModel.groups.count >= 3
+                    
+                    var isPositionsFilled: Bool {
+                        guard let group = groupViewModel.getGroup(by: position.id) else { return false }
+                        let membersInThisPosition = group.members.filter({ $0.position.id == position.id }).count
+                        
+                        return position.vacancies >= membersInThisPosition
+                    }
+                    
+                    let isDisabled = (hasApplied && !hasAppliedForThisPosition) || isUserInTheGroup || isPositionsFilled
                     
                     Button {
                         if maxGroups {
