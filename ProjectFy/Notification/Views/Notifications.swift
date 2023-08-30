@@ -17,61 +17,68 @@ struct Notifications: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(notificationsViewModel.notifications, id: \.id) { notification in
-                    VStack {
-                        if let requestNotification = notification as? RequestNotification,
-                           requestNotification.accepted == nil {
-                            
-                            AcceptableNotification(
-                                notification: requestNotification,
-                                viewModel: notificationsViewModel, user: user,
-                                acceptedHandler: { notification in
-                                    acceptAdvertisementRequest(notification: notification)
-                                    deleteAdvertisementApplication(notification: notification)
-                                    
-                                    var acceptedNotification: InfoNotification {
-                                        let targetID = notification.application.user.id
-                                        let advertisement = notification.advertisement
+            if notificationsViewModel.notifications.isEmpty {
+                Connectivity(image: Image("emptyAd"),
+                             title: "You don't have any notifications yet :(",
+                             description: "Join a group asking for a role in a project announce or wait for people to join your project ideas!", heightPH: 0.7)
+                .navigationTitle("Notifications")
+            } else {
+                List {
+                    ForEach(notificationsViewModel.notifications, id: \.id) { notification in
+                        VStack {
+                            if let requestNotification = notification as? RequestNotification,
+                               requestNotification.accepted == nil {
+                                
+                                AcceptableNotification(
+                                    notification: requestNotification,
+                                    viewModel: notificationsViewModel, user: user,
+                                    acceptedHandler: { notification in
+                                        acceptAdvertisementRequest(notification: notification)
+                                        deleteAdvertisementApplication(notification: notification)
                                         
-                                        return InfoNotification(targetID: targetID, advertisement: advertisement)
+                                        var acceptedNotification: InfoNotification {
+                                            let targetID = notification.application.user.id
+                                            let advertisement = notification.advertisement
+                                            
+                                            return InfoNotification(targetID: targetID, advertisement: advertisement)
+                                        }
+                                        
+                                        notificationsViewModel.createNotification(acceptedNotification)
+                                        
+                                        let userID = notification.application.user.id
+                                        
+                                        if groupViewModel.getGroups(from: userID).count >= 3 {
+                                            notificationsViewModel.deleteAllRequests(from: userID)
+                                        }
                                     }
-                                    
-                                    notificationsViewModel.createNotification(acceptedNotification)
-                                    
-                                    let userID = notification.application.user.id
-                                    
-                                    if groupViewModel.getGroups(from: userID).count >= 3 {
-                                        notificationsViewModel.deleteAllRequests(from: userID)
-                                    }
-                                }
-                            )
-                        } else {
-                            NotificationComponent(notification: notification, user: user)
+                                )
+                            } else {
+                                NotificationComponent(notification: notification, user: user)
+                            }
+                        }
+                        
+                        .swipeActions(allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                notificationsViewModel.delete(with: notification.id)
+                            } label: {
+                                Label("delete", systemImage: "trash")
+                                    .labelStyle(.iconOnly)
+                            }.tint(.red)
                         }
                     }
-                    
-                    .swipeActions(allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            notificationsViewModel.delete(with: notification.id)
-                        } label: {
-                            Label("delete", systemImage: "trash")
-                                .labelStyle(.iconOnly)
-                        }.tint(.red)
-                    }
                 }
-            }
-            .listStyle(.plain)
-            .navigationTitle("Notifications")
-            .navigationBarTitleDisplayMode(.inline)
-            
-            .toolbar {
-                Button {
-                    notificationsViewModel.notifications.forEach {
-                        notificationsViewModel.delete(with: $0.id)
+                .listStyle(.plain)
+                .navigationTitle("Notifications")
+                .navigationBarTitleDisplayMode(.inline)
+
+                .toolbar {
+                    Button {
+                        notificationsViewModel.notifications.forEach {
+                            notificationsViewModel.delete(with: $0.id)
+                        }
+                    } label: {
+                        Text("Clear All")
                     }
-                } label: {
-                    Text("Clear All")
                 }
             }
         }
@@ -157,7 +164,7 @@ fileprivate struct AcceptableNotification: View {
                 }
                 .foregroundColor(.textColorBlue)
                 .buttonStyle(.plain)
-
+                
                 Button {
                     notification.accepted = false
                     viewModel.editNotification(notification)

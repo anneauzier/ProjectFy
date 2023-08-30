@@ -13,6 +13,7 @@ struct UserView: View {
     
     @State private var goEditUserView = false
     @State private var showDeleteAlert = false
+    @State private var showLogoutAlert = false
     @State private var presentSignIn = false
     
     var presentUsersProfile: Bool = false
@@ -135,7 +136,7 @@ struct UserView: View {
                     }
                     
                     Button {
-                        authenticationViewModel.signOut()
+                        showLogoutAlert.toggle()
                     } label: {
                         Label("Log out", image: "logout")
                     }
@@ -172,6 +173,26 @@ struct UserView: View {
             }
         } message: {
             Text("Your account and all information, groups and your project announcements will be permanently deleted.")
+                .multilineTextAlignment(.center)
+        }
+        
+        .alert("Do you really want to log out?", isPresented: $showLogoutAlert) {
+            Button(role: .cancel) {
+                showLogoutAlert.toggle()
+            } label: {
+                Text("No, I don't")
+            }
+            
+            Button {
+                Haptics.shared.notification(.success)
+                authenticationViewModel.signOut()
+                showLogoutAlert.toggle()
+            } label: {
+                Text("Yes, I do")
+                    .font(Font.headline)
+            }
+        } message: {
+            Text("You will be returned to the login screen.")
                 .multilineTextAlignment(.leading)
         }
         
