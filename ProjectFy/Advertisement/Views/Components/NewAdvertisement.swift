@@ -306,8 +306,8 @@ extension AdvertisementsView {
                 ZStack {
                     Circle()
                         .fill(Color.textColorBlue)
-                        .opacity(!isPlusButton && position.vacancies == 1 ? 0.3: 1)
-                        .opacity(isPlusButton && position.vacancies == maxVacancies ? 0.3 : 1)
+                        .opacity(!isPlusButton && position.vacancies == 1 ? 0.2 : 1)
+                        .opacity(isPlusButton && position.vacancies == maxVacancies ? 0.2 : 1)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
                         .font(.system(size: 14))

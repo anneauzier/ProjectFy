@@ -176,9 +176,11 @@ struct AdView: View {
                             .labelStyle(.iconOnly)
                             .font(Font.system(size: 20).bold())
                             .tint(.editAdvertisementText)
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 3)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 23)
+//                    .padding(.top, 23)
                 }
             }
             
