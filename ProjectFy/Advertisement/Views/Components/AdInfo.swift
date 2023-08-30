@@ -201,7 +201,7 @@ extension AdView {
                 Text(position.description)
                     .padding(.top, -5)
                 
-                if let group = groupViewModel.getGroup(by: advertisement.id) {
+                if let group = groupViewModel.getGroup(by: position.id) {
                     Text("People who are already in this project role")
                         .font(Font.title.bold())
                         .foregroundColor(.backgroundRole)

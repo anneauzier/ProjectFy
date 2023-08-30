@@ -41,11 +41,11 @@ struct AdvertisementsView: View {
                                  heightPH: 0.7)
                 } else {
                     VStack {
-                        ForEach(advertisements, id: \.self) { advertisement in
+                        ForEach($advertisements, id: \.self) { $advertisement in
                             AdView(
                                 user: user,
                                 owner: advertisement.owner,
-                                advertisement: advertisement,
+                                advertisement: $advertisement,
                                 updateAdvertisements: $didUpdateAdvertisements,
                                 presentPosition: $presentPositionSheet,
                                 selectedPosition: $selectedPosition,
@@ -131,7 +131,7 @@ struct AdView: View {
     
     let user: User
     let owner: User
-    let advertisement: Advertisement
+    @Binding var advertisement: Advertisement
     
     @Binding var updateAdvertisements: Bool
     
