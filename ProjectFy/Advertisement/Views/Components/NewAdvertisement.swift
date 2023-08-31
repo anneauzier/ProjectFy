@@ -31,10 +31,9 @@ extension AdvertisementsView {
             if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
                 self._advertisement = State(initialValue: advertisement)
                 self.isEditing = true
-                
                 return
             }
-            
+
             self._advertisement = State(initialValue: Advertisement(owner: owner))
             self.isEditing = false
         }
@@ -43,11 +42,11 @@ extension AdvertisementsView {
             NavigationView {
                 ScrollView {
                     Divider()
-                    
+
                     VStack(alignment: .leading) {
                         UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
-                        
+                                                
                         TextField("Name your project...", text: $advertisement.title)
                             .font(Font.largeTitle.bold())
                             .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
@@ -65,16 +64,6 @@ extension AdvertisementsView {
                             .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 25)
 
-//                        DropDownButton(
-//                            title: "Project status", textColor: .textColorBlue,
-//                            selection: $advertisement.ongoing,
-//                            menuItems: [
-//                                MenuItem(name: "Not started", tag: false),
-//                                MenuItem(name: "In progress", tag: true)
-//                            ]
-//                        )
-//                        .padding(.top, 54)
-                        
                         Spacer()
                     }
                     .padding([.horizontal, .top], 16)
@@ -114,7 +103,6 @@ extension AdvertisementsView {
                         }))
                     }
                 }
-                
             }
             
             .confirmationDialog("back", isPresented: $presentBackAlert) {
@@ -180,7 +168,7 @@ extension AdvertisementsView {
                 }
                 .padding(.horizontal, 16)
             }
-            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+//            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
             
             .onAppear {
                 if advertisement.positions.isEmpty {

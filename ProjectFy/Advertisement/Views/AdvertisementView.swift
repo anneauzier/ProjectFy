@@ -59,14 +59,18 @@ struct AdvertisementsView: View {
             }
             
             .onAppear {
-                editingID = nil
                 updateAdvertisements()
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
-//                print("change")
                 if didUpdateAdvertisements {
                     updateAdvertisements()
+                }
+            })
+            
+            .onChange(of: presentSheet, perform: { newValue in
+                if !newValue {
+                    editingID = nil
                 }
             })
             
@@ -110,18 +114,15 @@ struct AdvertisementsView: View {
                 } label: {
                     Text("OK")
                 }
-            },
-                   message: {
+            }, message: {
                 Text("you cannot participate in more than three projects at the same time")
-            }
-            )
+            })
         }
     }
     
     private func updateAdvertisements() {
         advertisements = advertisementsViewModel.advertisements.sorted(by: { $0.date > $1.date })
         didUpdateAdvertisements = false
-//        print("update")
     }
 }
 
@@ -158,7 +159,7 @@ struct AdView: View {
                     Menu {
                         Button {
                             editingID = advertisement.id
-                            
+
                             Haptics.shared.selection()
                             presentSheet.toggle()
                         } label: {

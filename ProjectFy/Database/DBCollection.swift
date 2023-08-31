@@ -64,7 +64,7 @@ class DBCollection {
                 do {
                     documents.append(try document.data(as: T.self))
                 } catch {
-                    print("Cannot decode \(self.collection.path) from firestore")
+//                    print("Cannot decode \(self.collection.path) from firestore")
                 }
             }
             
