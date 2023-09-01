@@ -49,17 +49,15 @@ extension AdvertisementsView {
                     VStack(alignment: .leading) {
                         UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
-
+                        
                         CustomWrappedText(text: $advertisement.title,
-                                          condition: advertisement.title.isEmpty,
                                           placeholder: "Name your project...",
                                           textFont: UIFont.systemFont(ofSize: 32, weight: .bold))
                         .font(Font.largeTitle.bold())
                         .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
                         .padding(.top, 44)
-                        
+
                         CustomWrappedText(text: $advertisement.description,
-                            condition: advertisement.description.isEmpty,
                             placeholder: "Describe your project in 1000 characters or less...",
                             textFont: UIFont.preferredFont(forTextStyle: .body))
 

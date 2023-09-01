@@ -12,7 +12,6 @@ struct CustomWrappedText: View {
     @State var height: CGFloat?
     @FocusState var isTextFieldFocused: Bool
     
-    let condition: Bool
     let placeholder: String
     let minHeight: CGFloat = 30
 
@@ -26,7 +25,7 @@ struct CustomWrappedText: View {
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
 
-                if condition {
+                if text.isEmpty {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color.gray.opacity(0.5))

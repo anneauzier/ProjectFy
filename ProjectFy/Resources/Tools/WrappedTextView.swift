@@ -68,8 +68,7 @@ struct CustomText: View {
     @Binding var text: String
     @State var height: CGFloat?
     @FocusState var isTextFieldFocused: Bool
-    
-    let condition: Bool
+
     let placeholder: String
     let minHeight: CGFloat = 30
     
@@ -97,7 +96,7 @@ struct CustomText: View {
                     .frame(height: 1)
                     .foregroundColor(.rectangleLine)
                 
-                if condition {
+                if text.isEmpty {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color.gray.opacity(0.5))

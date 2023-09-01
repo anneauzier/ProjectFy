@@ -26,6 +26,7 @@ struct UserView: View {
                     Rectangle()
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
+                        .offset(y: -16)
                         .foregroundColor(.roleBackground)
                     
                     Image(user.avatar)
@@ -44,24 +45,10 @@ struct UserView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 4) {
-//                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
-                        
                         Text(user.name)
                             .font(Font.title2.bold())
                             .foregroundColor(.backgroundRole)
                             .accessibilityLabel("Username: \(user.name)")
-                        
-//                        Image(systemName: imageVerify)
-//                            .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
-                        
-//                        Circle()
-//                            .frame(width: 3)
-//                            .foregroundColor(.editAdvertisementText)
-                        
-//                        Text(user.username)
-//                            .font(.body)
-//                            .foregroundColor(.editAdvertisementText)
-//                            .accessibilityLabel("@\(user.username)")
                     }
                     .padding(.top, 15)
                     
@@ -82,14 +69,14 @@ struct UserView: View {
                     
                     HStack(spacing: 6) {
                         Image("location")
-                        
+
                         Text(user.region)
                             .font(.body)
                             .foregroundColor(.editAdvertisementText)
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Region \(user.region)")
-                    
+
                 }
                 .padding(.horizontal, 20)
                 
@@ -140,12 +127,14 @@ struct UserView: View {
                     } label: {
                         Label("Log out", image: "logout")
                     }
+
                     Button(role: .destructive) {
                         Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
                         Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
                     }
+
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)

@@ -71,14 +71,12 @@ struct SetupUserInfo: View {
                 CustomText(title: "Interests",
                            optional: true,
                            text: $user.interestTags,
-                           condition: user.interestTags.isEmpty,
                            placeholder: "Ex: Design, Unity...")
                 .padding(.top, 40)
             } else {
                 CustomText(title: "Interests",
                            optional: true,
                            text: $user.interestTags,
-                           condition: user.interestTags.isEmpty,
                            placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
                 .padding(.top, 40)
             }
