@@ -1,5 +1,5 @@
 //
-//  Connectivity.swift
+//  StructurePlaceholder.swift
 //  ProjectFy
 //
 //  Created by Anne Victoria Batista Auzier on 22/08/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Connectivity: View {
+struct StructurePlaceholder: View {
     let image: Image
     let title: String
     let description: String

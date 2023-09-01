@@ -53,9 +53,10 @@
 		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
 		9F3A8FB12A946030003A1032 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB02A946030003A1032 /* CustomTextField.swift */; };
-		9F3A8FB42A94717E003A1032 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB32A94717E003A1032 /* Connectivity.swift */; };
+		9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */; };
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
 		9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */; };
+		9F503D832AA11F2C00BE0933 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F503D822AA11F2C00BE0933 /* CustomAlert.swift */; };
 		9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F3E2A816D9200D64192 /* UserProtocol.swift */; };
 		9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F553F412A816F4600D64192 /* UserMockupService.swift */; };
 		9F5C027B2A855B4200A49EF3 /* WrappedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */; };
@@ -73,6 +74,7 @@
 		9FB2765F2A85ED3C00C593EA /* DescriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
 		9FEBE8EF2A969A23005A4C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */; };
+		9FF1EBD22AA18C1F00422203 /* CustomWrappedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */; };
 		9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */; };
 		9FFECDEF2A71EBF00053F29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFECDEE2A71EBF00053F29D /* Assets.xcassets */; };
 		9FFECDF22A71EBF00053F29D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFECDF12A71EBF00053F29D /* Preview Assets.xcassets */; };
@@ -123,9 +125,10 @@
 		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
 		9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFyDebug.entitlements; sourceTree = "<group>"; };
 		9F3A8FB02A946030003A1032 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		9F3A8FB32A94717E003A1032 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructurePlaceholder.swift; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+tabBarHidden.swift"; sourceTree = "<group>"; };
+		9F503D822AA11F2C00BE0933 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		9F553F3E2A816D9200D64192 /* UserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
 		9F553F412A816F4600D64192 /* UserMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMockupService.swift; sourceTree = "<group>"; };
 		9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedTextView.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionGroup.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWrappedText.swift; sourceTree = "<group>"; };
 		9FFECDE72A71EBEF0053F29D /* ProjectFy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectFy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFyApp.swift; sourceTree = "<group>"; };
 		9FFECDEE2A71EBF00053F29D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -397,7 +401,7 @@
 		9F3A8FB22A947150003A1032 /* Placeholder */ = {
 			isa = PBXGroup;
 			children = (
-				9F3A8FB32A94717E003A1032 /* Connectivity.swift */,
+				9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */,
 			);
 			path = Placeholder;
 			sourceTree = "<group>";
@@ -405,8 +409,8 @@
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9FF1EBD52AA21BE200422203 /* CustomViews */,
 				9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */,
-				9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */,
 				9FBAE03E2A8EC0BA003F6424 /* Tools */,
 				673BD3062A8AFE6700DD161F /* FormField */,
 				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
@@ -451,7 +455,6 @@
 				9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */,
 				9F7F33F82A857E2A00792EE6 /* EditDetailsGroup.swift */,
 				9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */,
-				9F3A8FB02A946030003A1032 /* CustomTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 		9FBAE03E2A8EC0BA003F6424 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */,
 				9F5C027A2A855B4200A49EF3 /* WrappedTextView.swift */,
 				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
 				674982732A82F3E000A1C98E /* DropDownButton.swift */,
@@ -511,6 +515,16 @@
 				9F8F29C42A7977610030958B /* EditUserView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		9FF1EBD52AA21BE200422203 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				9F503D822AA11F2C00BE0933 /* CustomAlert.swift */,
+				9F3A8FB02A946030003A1032 /* CustomTextField.swift */,
+				9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		9FFECDDE2A71EBEF0053F29D = {
@@ -684,7 +698,7 @@
 				671CA51C2A96958300CF5109 /* String+colored.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
-				9F3A8FB42A94717E003A1032 /* Connectivity.swift in Sources */,
+				9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
 				9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */,
@@ -693,6 +707,8 @@
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,
 				673BD3082A8AFE7800DD161F /* FormField.swift in Sources */,
 				671CA5182A94EC8A00CF5109 /* InfoNotification.swift in Sources */,
+				9F503D832AA11F2C00BE0933 /* CustomAlert.swift in Sources */,
+				9FF1EBD22AA18C1F00422203 /* CustomWrappedText.swift in Sources */,
 				67A531F32A78327600EBD022 /* ProjectGroup.swift in Sources */,
 				9F553F3F2A816D9200D64192 /* UserProtocol.swift in Sources */,
 				9F553F422A816F4600D64192 /* UserMockupService.swift in Sources */,

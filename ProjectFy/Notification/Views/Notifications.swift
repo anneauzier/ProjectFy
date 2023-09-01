@@ -13,14 +13,17 @@ struct Notifications: View {
     @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var groupViewModel: GroupViewModel
     
+    @State private var showDeletedNotification = false
+    
     let user: User
     
     var body: some View {
         NavigationView {
             if notificationsViewModel.notifications.isEmpty {
-                Connectivity(image: Image("emptyAd"),
+                StructurePlaceholder(image: Image("emptyAd"),
                              title: "You don't have any notifications yet :(",
-                             description: "Join a group asking for a role in a project announce or wait for people to join your project ideas!", heightPH: 0.7)
+                             description: "Join a group asking for a role in a project announce or wait for people to join your project ideas!",
+                             heightPH: 0.7)
                 .navigationTitle("Notifications")
             } else {
                 List {
@@ -60,6 +63,7 @@ struct Notifications: View {
                         .swipeActions(allowsFullSwipe: true) {
                             Button(role: .destructive) {
                                 notificationsViewModel.delete(with: notification.id)
+//                                showDeletedNotification.toggle()
                             } label: {
                                 Label("delete", systemImage: "trash")
                                     .labelStyle(.iconOnly)
@@ -70,7 +74,7 @@ struct Notifications: View {
                 .listStyle(.plain)
                 .navigationTitle("Notifications")
                 .navigationBarTitleDisplayMode(.inline)
-
+                
                 .toolbar {
                     Button {
                         notificationsViewModel.notifications.forEach {
@@ -78,6 +82,28 @@ struct Notifications: View {
                         }
                     } label: {
                         Text("Clear All")
+                    }
+                    Button {
+                        showDeletedNotification.toggle()
+                    } label: {
+                        Text("Teste")
+                    }
+                }
+                
+                .overlay {
+                    if showDeletedNotification {
+                        CustomAlert(text: "Notification deleted.")
+                            .offset(CGSize(width: 4,
+                                           height: 300))
+                            .transition(.moveFromBottom)
+                            .animation(.spring())
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    withAnimation {
+                                        self.showDeletedNotification.toggle()
+                                    }
+                                }
+                            }
                     }
                 }
             }
@@ -177,5 +203,12 @@ fileprivate struct AcceptableNotification: View {
             }
             .padding(.leading, 20)
         }
+    }
+}
+
+extension AnyTransition {
+    static var moveFromBottom: AnyTransition {
+        AnyTransition.offset(y: UIScreen.main.bounds.height)
+            .combined(with: .move(edge: .bottom))
     }
 }

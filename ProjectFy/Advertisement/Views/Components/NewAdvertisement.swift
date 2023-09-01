@@ -13,9 +13,12 @@ extension AdvertisementsView {
         let owner: User
         var viewModel: AdvertisementsViewModel
         
+        @FocusState var isTextFieldFocused: Bool
         @State var advertisement: Advertisement
         @Binding var dismiss: Bool
         @Binding var updateAdvertisements: Bool
+        @State private var height: CGFloat?
+        let minHeight: CGFloat = 30
         
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
@@ -33,7 +36,7 @@ extension AdvertisementsView {
                 self.isEditing = true
                 return
             }
-
+            
             self._advertisement = State(initialValue: Advertisement(owner: owner))
             self.isEditing = false
         }
@@ -42,28 +45,33 @@ extension AdvertisementsView {
             NavigationView {
                 ScrollView {
                     Divider()
-
+                    
                     VStack(alignment: .leading) {
                         UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
-                                                
-                        TextField("Name your project...", text: $advertisement.title)
-                            .font(Font.largeTitle.bold())
-                            .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 44)
+
+                        CustomWrappedText(text: $advertisement.title,
+                                          condition: advertisement.title.isEmpty,
+                                          placeholder: "Name your project...",
+                                          textFont: UIFont.systemFont(ofSize: 32, weight: .bold))
+                        .font(Font.largeTitle.bold())
+                        .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 44)
                         
-                        TextField("Describe your project in 1000 characters or less...",
-                                  text: $advertisement.description)
-                            .font(Font.body)
-                            .foregroundColor(
-                                advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 54)
+                        CustomWrappedText(text: $advertisement.description,
+                            condition: advertisement.description.isEmpty,
+                            placeholder: "Describe your project in 1000 characters or less...",
+                            textFont: UIFont.preferredFont(forTextStyle: .body))
+
+                        .font(.body)
+                        .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 54)
                         
                         TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
                             .font(Font.body)
                             .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 25)
-
+                        
                         Spacer()
                     }
                     .padding([.horizontal, .top], 16)
@@ -126,6 +134,12 @@ extension AdvertisementsView {
             && !advertisement.title.isEmpty
             && !advertisement.description.isEmpty
         }
+        
+        private func textDidChange(_ textView: UITextView) {
+            DispatchQueue.main.async {
+                self.height = max(textView.contentSize.height, minHeight)
+            }
+        }
     }
     
     private struct Positions: View {
@@ -168,7 +182,7 @@ extension AdvertisementsView {
                 }
                 .padding(.horizontal, 16)
             }
-//            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+            //            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
             
             .onAppear {
                 if advertisement.positions.isEmpty {

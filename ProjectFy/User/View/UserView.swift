@@ -235,12 +235,12 @@ struct UserAdvertisement: View {
             
             if advertisementsViewModel.advertisements.isEmpty {
                 if sizeCategory.isAccessibilitySize {
-                    Connectivity(image: Image("emptyAd"),
+                    StructurePlaceholder(image: Image("emptyAd"),
                                  title: "Looks like you haven't \nshared your project \nideas yet :(",
                                  description: "You can start sharing your project \nideas by taping “+” on the home screen",
                                  heightPH: 0.7)
                 } else {
-                    Connectivity(image: Image("emptyAd"),
+                    StructurePlaceholder(image: Image("emptyAd"),
                                  title: "Looks like you haven't \nshared your project \nideas yet :(",
                                  description: "You can start sharing your project \nideas by taping “+” on the home screen",
                                  heightPH: 0.42)

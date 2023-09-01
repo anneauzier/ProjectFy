@@ -30,12 +30,12 @@ struct AdvertisementsView: View {
             ScrollView(showsIndicators: false) {
                 Divider()
                 if !networking.isConnected {
-                    Connectivity(image: Image("networking"),
+                    StructurePlaceholder(image: Image("networking"),
                                  title: "Sorry, we couldn't load this page :(",
                                  description: "Check your connection to see if there's something wrong",
                                  heightPH: 0.7)
                 } else if advertisementsViewModel.advertisements.isEmpty {
-                    Connectivity(image: Image("emptyAd"),
+                    StructurePlaceholder(image: Image("emptyAd"),
                                  title: "Looks like people \nhaven't shared project \nideas yet :(",
                                  description: "You can start to share your project ideas by taping on “+”",
                                  heightPH: 0.7)
@@ -73,7 +73,7 @@ struct AdvertisementsView: View {
                     editingID = nil
                 }
             })
-            
+
             .refreshable {
                 updateAdvertisements()
             }

@@ -29,7 +29,7 @@ struct GroupView: View {
                 }
                 
                 if viewModel.groups.isEmpty {
-                    Connectivity(image: Image("emptyAd"),
+                    StructurePlaceholder(image: Image("emptyAd"),
                                  title: "You don't have any \ngroups yet :(",
                                  description: "Join a group asking for a role in a \nproject announce",
                                  heightPH: 0.7)
