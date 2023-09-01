@@ -34,9 +34,18 @@ struct ProjectGroup: Hashable, Codable {
     
     struct Position: Hashable, Codable {
         let id: String
+        let advertisementID: String
         var title: String
         var description: String
         var vacancies: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case advertisementID = "advertisement_id"
+            case title
+            case description
+            case vacancies
+        }
     }
     
     struct Task: Identifiable, Hashable, Codable {

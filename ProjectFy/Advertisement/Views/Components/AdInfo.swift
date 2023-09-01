@@ -129,7 +129,7 @@ extension AdView {
                             .frame(width: 42, height: 42)
                         
                         var usersJoined: Int {
-                            guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                            guard let group = groupViewModel.getGroup(by: position.id) else {
                                 return 0
                             }
                             
@@ -266,6 +266,8 @@ extension AdView {
                         }
                         
                         advertisementsViewModel.applicationStatus = .sending
+                        
+                        let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID) ?? self.advertisement
                         
                         if hasApplied {
                             advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
