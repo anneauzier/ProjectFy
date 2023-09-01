@@ -233,6 +233,8 @@ extension AdView {
                 }
                 
                 if advertisement.owner.id != user.id, !isUserInTheGroup {
+                    let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID) ?? self.advertisement
+                    
                     let application = advertisement.applications.first(where: { $0.user.id == user.id })
                     let hasApplied = application != nil
                     
@@ -266,8 +268,6 @@ extension AdView {
                         }
                         
                         advertisementsViewModel.applicationStatus = .sending
-                        
-                        let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID) ?? self.advertisement
                         
                         if hasApplied {
                             advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
