@@ -12,16 +12,16 @@ final class MessagingService: DBCollection {
     static let shared = MessagingService()
     
     private var listener: ListenerRegistration?
-    var token: String?
+    
+    var token: String? {
+        didSet {
+            setupFCMToken()
+        }
+    }
     
     var userID: String? {
         didSet {
-            guard let userID = userID else {
-                listener?.remove()
-                return
-            }
-            
-            saveFCMToken(userID: userID)
+            setupFCMToken()
         }
     }
     
@@ -29,10 +29,17 @@ final class MessagingService: DBCollection {
         super.init(collectionName: "tokens")
     }
     
-    private func saveFCMToken(userID: String) {
+    private func setupFCMToken() {
+        guard let userID = userID, let token = token else {
+            listener?.remove()
+            return
+        }
+        
+        saveFCMToken(userID: userID, token: token)
+    }
+    
+    private func saveFCMToken(userID: String, token: String) {
         listener = addSnapshotListener { [weak self] (tokens: [FCMToken]?) in
-            guard let token = self?.token else { return }
-            
             do {
                 guard var userTokens = tokens?.first(where: { $0.userID == userID }) else {
                     let tokens = FCMToken(userID: userID, tokens: [token])

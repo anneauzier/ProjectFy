@@ -25,28 +25,15 @@ struct FormField: View {
                 .foregroundColor(.backgroundRole)
                 .accessibilityLabel(titleAccessibilityLabel)
             
-            if sizeCategory.isAccessibilitySize {
-                TextField(placeholder, text: $text)
-                    .font(.body)
-                    .accessibilityLabel(textFieldAccessibilityLabel)
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(.rectangleLine)
-                            .padding(.top, 55)
-                    )
-            } else {
-                TextField(placeholder, text: $text)
-                // .limitInputLength(value: $text, length: 19, commaLimit: 30)
-                    .font(.body)
-                    .accessibilityLabel(textFieldAccessibilityLabel)
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(.rectangleLine)
-                            .padding(.top, 30)
-                    )
-            }
+            TextField(placeholder, text: $text)
+                .font(.body)
+                .accessibilityLabel(textFieldAccessibilityLabel)
+                .overlay(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.rectangleLine)
+                        .padding(.top, sizeCategory.isAccessibilitySize ? 55 : 30)
+                )
         }
     }
 }

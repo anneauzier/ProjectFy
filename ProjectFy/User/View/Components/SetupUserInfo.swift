@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SetupUserInfo: View {
-
+    
     @EnvironmentObject var userViewModel: UserViewModel
     @Environment(\.dynamicTypeSize) var sizeCategory
     @FocusState var isTextFieldFocused: Bool
@@ -17,7 +17,7 @@ struct SetupUserInfo: View {
     @Binding var user: User
     @Binding var canContinue: Bool
     @State private var height: CGFloat?
-
+    
     let minHeight: CGFloat = 30
     let isNewUser: Bool
     
@@ -30,24 +30,15 @@ struct SetupUserInfo: View {
                 text: $user.name,
                 textFieldAccessibilityLabel: "Enter your name here"
             )
-
-            if sizeCategory.isAccessibilitySize {
-                FormField(
-                    title: "Area of interest",
-                    titleAccessibilityLabel: "Area of interest",
-                    placeholder: "Ex: UI/UX Design...",
-                    text: $user.areaExpertise,
-                    textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
-                ).padding(.top, 40)
-            } else {
-                FormField(
-                    title: "Area of interest",
-                    titleAccessibilityLabel: "Area of interest",
-                    placeholder: "Ex: UI/UX Design, iOS Developer, 3D Modelator...",
-                    text: $user.areaExpertise,
-                    textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
-                ).padding(.top, 40)
-            }
+            
+            FormField(
+                title: "Area of interest",
+                titleAccessibilityLabel: "Area of interest",
+                placeholder: sizeCategory.isAccessibilitySize ? "Ex: UI/UX Design..." :
+                    "Ex: UI/UX Design, iOS Developer, 3D Modelator..." ,
+                text: $user.areaExpertise,
+                textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
+            ).padding(.top, 40)
             
             DropDownButton(
                 title: "Level of knowledge in the area", textColor: .backgroundRole,
@@ -67,32 +58,25 @@ struct SetupUserInfo: View {
             )
             .padding(.top, 40)
             
-            if sizeCategory.isAccessibilitySize {
-                CustomText(title: "Interests",
-                           optional: true,
-                           text: $user.interestTags,
-                           placeholder: "Ex: Design, Unity...")
-                .padding(.top, 40)
-            } else {
-                CustomText(title: "Interests",
-                           optional: true,
-                           text: $user.interestTags,
-                           placeholder: "Tag your interests, Ex: Design, Unity, iOS...")
-                .padding(.top, 40)
-            }
-
+            CustomText(title: "Interests",
+                       optional: true,
+                       text: $user.interestTags,
+                       placeholder: sizeCategory.isAccessibilitySize ? "Ex: Design, Unity..." :
+                        "Tag your interests, Ex: Design, Unity, iOS...")
+            .padding(.top, 40)
+            
             Spacer()
             
         }.frame(width: UIScreen.main.bounds.width - 40)
         
-        .onAppear {
-            checkIfCanContinue()
-        }
+            .onAppear {
+                checkIfCanContinue()
+            }
         
-        .onChange(of: user) { _ in
-            checkIfCanContinue()
-        }
-        .padding(.top, 16)
+            .onChange(of: user) { _ in
+                checkIfCanContinue()
+            }
+            .padding(.top, 16)
     }
     
     private func checkIfCanContinue() {
@@ -102,7 +86,7 @@ struct SetupUserInfo: View {
             canContinue = isUserInfoFilled
         }
     }
-
+    
     private func textDidChange(_ textView: UITextView) {
         self.height = max(textView.contentSize.height, minHeight)
     }

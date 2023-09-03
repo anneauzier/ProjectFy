@@ -223,17 +223,10 @@ struct UserAdvertisement: View {
             Divider()
             
             if advertisementsViewModel.advertisements.isEmpty {
-                if sizeCategory.isAccessibilitySize {
-                    StructurePlaceholder(image: Image("emptyAd"),
-                                 title: "Looks like you haven't \nshared your project \nideas yet :(",
-                                 description: "You can start sharing your project \nideas by taping “+” on the home screen",
-                                 heightPH: 0.7)
-                } else {
-                    StructurePlaceholder(image: Image("emptyAd"),
-                                 title: "Looks like you haven't \nshared your project \nideas yet :(",
-                                 description: "You can start sharing your project \nideas by taping “+” on the home screen",
-                                 heightPH: 0.42)
-                }
+                StructurePlaceholder(image: Image("emptyAd"),
+                             title: "Looks like you haven't \nshared your project \nideas yet :(",
+                             description: "You can start sharing your project \nideas by taping “+” on the home screen",
+                             heightPH: sizeCategory.isAccessibilitySize ? 0.7 : 0.42)
             } else {
                 UserInfo(user: user, size: 49, nameColor: .backgroundRole)
                     .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)

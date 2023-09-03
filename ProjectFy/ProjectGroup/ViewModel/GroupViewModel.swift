@@ -47,8 +47,12 @@ final class GroupViewModel: ObservableObject {
         return groups.first(where: { $0.id == id })
     }
     
-    func getGroup(by advertisementID: String) -> ProjectGroup? {
-        return allGroups.first(where: { $0.advertisement.id == advertisementID })
+    func getGroup(by positionID: String) -> ProjectGroup? {
+        return allGroups.first { group in
+            group.members.map(\.position).contains { position in
+                position.id == positionID
+            }
+        }
     }
     
     func getGroups(from userID: String) -> [ProjectGroup] {
