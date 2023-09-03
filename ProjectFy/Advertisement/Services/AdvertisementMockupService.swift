@@ -21,12 +21,14 @@ final class AdvertisementMockupService: AdvertisementProtocol, ObservableObject 
             positions: [
                 ProjectGroup.Position(
                     id: UUID().uuidString,
+                    advertisementID: "1234",
                     title: "Level designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
                     vacancies: 3
                 ),
                 ProjectGroup.Position(
                     id: UUID().uuidString,
+                    advertisementID: "1234",
                     title: "Designer",
                     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incid",
                     vacancies: 3

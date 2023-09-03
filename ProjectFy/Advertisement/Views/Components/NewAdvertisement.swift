@@ -216,6 +216,7 @@ extension AdvertisementsView {
             advertisement.positions.append(
                 ProjectGroup.Position(
                     id: UUID().uuidString,
+                    advertisementID: advertisement.id,
                     title: "",
                     description: "",
                     vacancies: 1

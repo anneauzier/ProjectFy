@@ -130,7 +130,7 @@ extension AdView {
                             .frame(width: 42, height: 42)
 
                         var usersJoined: Int {
-                            guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                            guard let group = groupViewModel.getGroup(by: position.id) else {
                                 return 0
                             }
 
@@ -216,7 +216,7 @@ extension AdView {
                         .padding(.top, -5)
                 }
                 
-                if let group = groupViewModel.getGroup(by: advertisement.id) {
+                if let group = groupViewModel.getGroup(by: position.id) {
                     Text("People who are already in this project role")
                         .font(Font.title.bold())
                         .foregroundColor(.backgroundRole)
@@ -235,7 +235,7 @@ extension AdView {
                 Spacer()
                 
                 var isUserInTheGroup: Bool {
-                    guard let group = groupViewModel.getGroup(by: advertisement.id) else {
+                    guard let group = groupViewModel.getGroup(by: position.id) else {
                         return false
                     }
                     
@@ -247,6 +247,8 @@ extension AdView {
                 }
                 
                 if advertisement.owner.id != user.id, !isUserInTheGroup {
+                    let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID) ?? self.advertisement
+                    
                     let application = advertisement.applications.first(where: { $0.user.id == user.id })
                     let hasApplied = application != nil
                     
@@ -259,9 +261,17 @@ extension AdView {
                     }
                     
                     let buttonText = hasAppliedForThisPosition ? "Remove request" : "Request to join"
-                    let isDisabled = hasApplied && !hasAppliedForThisPosition
                     
                     let maxGroups = groupViewModel.groups.count >= 3
+                    
+                    var isPositionsFilled: Bool {
+                        guard let group = groupViewModel.getGroup(by: position.id) else { return false }
+                        let membersInThisPosition = group.members.filter({ $0.position.id == position.id }).count
+                        
+                        return position.vacancies >= membersInThisPosition
+                    }
+                    
+                    let isDisabled = (hasApplied && !hasAppliedForThisPosition) || isUserInTheGroup || isPositionsFilled
                     
                     Button {
                         if maxGroups {
