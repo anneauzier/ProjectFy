@@ -193,18 +193,16 @@ extension AdvertisementsView {
                     if isEditing {
                         viewModel.editAdvertisement(advertisement)
                         Haptics.shared.notification(.success)
-                        
                         updateAdvertisements.toggle()
                         dismiss.toggle()
-                        
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
                     Haptics.shared.notification(.success)
-                    
                     updateAdvertisements.toggle()
                     dismiss.toggle()
+                    
                 } label: {
                     Text(isEditing ? "Edit" : "Share")
                 }

@@ -49,7 +49,6 @@ struct ProjectFyApp: App {
                 .environmentObject(groupViewModel)
                 .environmentObject(notificationsViewModel)
         }
-        
     }
 }
 
