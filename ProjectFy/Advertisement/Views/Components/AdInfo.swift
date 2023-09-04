@@ -232,8 +232,8 @@ extension AdView {
                     return false
                 }
                 
-                if advertisement.owner.id != user.id, !isUserInTheGroup {
-                    let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID) ?? self.advertisement
+                if let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID),
+                   advertisement.owner.id != user.id, !isUserInTheGroup {
                     
                     let application = advertisement.applications.first(where: { $0.user.id == user.id })
                     let hasApplied = application != nil
