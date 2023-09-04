@@ -72,6 +72,7 @@
 		9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F6B2A82C5580086725F /* GroupViewModel.swift */; };
 		9FAE4F6E2A82E4430086725F /* TasksGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F6D2A82E4430086725F /* TasksGroupView.swift */; };
 		9FB2765F2A85ED3C00C593EA /* DescriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */; };
+		9FC497712AA64A88001FA984 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC497702AA64A88001FA984 /* ExpandableText.swift */; };
 		9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD721612A7842FA007A1BA6 /* UserView.swift */; };
 		9FEBE8EF2A969A23005A4C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */; };
 		9FF1EBD22AA18C1F00422203 /* CustomWrappedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */; };
@@ -144,6 +145,7 @@
 		9FAE4F6B2A82C5580086725F /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		9FAE4F6D2A82E4430086725F /* TasksGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksGroupView.swift; sourceTree = "<group>"; };
 		9FB2765E2A85ED3C00C593EA /* DescriptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionGroup.swift; sourceTree = "<group>"; };
+		9FC497702AA64A88001FA984 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 		9FD721612A7842FA007A1BA6 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWrappedText.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 				6749826F2A82C1CB00A1C98E /* Haptics.swift */,
 				674982732A82F3E000A1C98E /* DropDownButton.swift */,
 				9F0ED0D42A92ECB600DCBBE4 /* TextFieldLimitModifer.swift */,
+				9FC497702AA64A88001FA984 /* ExpandableText.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				6749829F2A86C15D00A1C98E /* UserService.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				671CA51C2A96958300CF5109 /* String+colored.swift in Sources */,
+				9FC497712AA64A88001FA984 /* ExpandableText.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
 				9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */,

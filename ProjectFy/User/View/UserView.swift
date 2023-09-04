@@ -23,11 +23,11 @@ struct UserView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 ZStack(alignment: .leading) {
-                    Rectangle()
+                    Image("capa")
+                        .resizable()
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
                         .offset(y: -16)
-                        .foregroundColor(.roleBackground)
                     
                     Image(user.avatar)
                         .resizable()
@@ -132,7 +132,7 @@ struct UserView: View {
                         Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
-                        Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
+                        Label("Delete Account", image: "deleteAccount")
                     }
 
                 } label: {

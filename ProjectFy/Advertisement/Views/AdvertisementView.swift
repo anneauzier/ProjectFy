@@ -132,13 +132,11 @@ struct AdView: View {
     
     let user: User
     let owner: User
+
     @Binding var advertisement: Advertisement
-    
     @Binding var updateAdvertisements: Bool
-    
     @Binding var presentPosition: Bool
     @Binding var selectedPosition: ProjectGroup.Position?
-    
     @Binding var presentSheet: Bool
     @Binding var editingID: String?
     

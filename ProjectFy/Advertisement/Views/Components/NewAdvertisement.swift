@@ -60,13 +60,12 @@ extension AdvertisementsView {
                         CustomWrappedText(text: $advertisement.description,
                             placeholder: "Describe your project in 1000 characters or less...",
                             textFont: UIFont.preferredFont(forTextStyle: .body))
-
                         .font(.body)
-                        .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
                         .padding(.top, 54)
-                        
+                                                
                         TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
-                            .font(Font.body)
+                            .font(.body)
                             .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
                             .padding(.top, 25)
                         
@@ -180,7 +179,6 @@ extension AdvertisementsView {
                 }
                 .padding(.horizontal, 16)
             }
-            //            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
             
             .onAppear {
                 if advertisement.positions.isEmpty {
@@ -236,7 +234,8 @@ extension AdvertisementsView {
             RoundedRectangleContent(cornerRadius: 20, fillColor: Color.backgroundRole) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Project role name")
+                        Text("Role name")
+                            .font(.headline)
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -253,23 +252,30 @@ extension AdvertisementsView {
                         .placeholder(when: position.title.isEmpty, placeholder: {
                             Text("Ex: UI/UX Design, Software Engeneer...")
                                 .foregroundColor(.placeholderColor)
-                        }).foregroundColor(.white)
-                    
-                    Divider()
-                    
-                    Text("Project role descripition (optional)")
+                        }).font(.body)
                         .foregroundColor(.white)
                     
-                    TextField("", text: $position.description)
-                        .placeholder(when: position.description.isEmpty, placeholder: {
-                            Text("Describe what the person entering this role will do on the project...")
-                                .foregroundColor(.placeholderColor)
-                        }).foregroundColor(.white)
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.placeholderColor)
                     
-                    Divider()
+                    Text("Role descripition \(Text("(optional)").foregroundColor(.placeholderColor).font(.body))")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    CustomWrappedText(text: $position.description,
+                                      placeholder: "Describe what the person entering this role will do on the project...",
+                                      textFont: UIFont.preferredFont(forTextStyle: .body))
+                    .font(.body)
+//                    .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
+                
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.placeholderColor)
                     
                     HStack(spacing: 15) {
                         Text("Quantity")
+                            .font(.headline)
                             .foregroundColor(.white)
                         
                         Spacer()

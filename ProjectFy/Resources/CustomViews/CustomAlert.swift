@@ -23,12 +23,6 @@ struct CustomAlert: View {
     }
 }
 
-// struct CustomAlert_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomAlert(text: "notification")
-//    }
-// }
-
 extension AnyTransition {
     static var moveFromBottom: AnyTransition {
         AnyTransition.offset(y: UIScreen.main.bounds.height)

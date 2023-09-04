@@ -20,6 +20,7 @@ struct WrappedTextView: UIViewRepresentable {
         view.delegate = context.coordinator
 
         view.font = textFont
+        view.backgroundColor = .clear
 
         return view
     }

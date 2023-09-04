@@ -14,7 +14,6 @@ struct CustomWrappedText: View {
     
     let placeholder: String
     let minHeight: CGFloat = 30
-
     let textFont: UIFont
 
     var body: some View {
@@ -28,7 +27,6 @@ struct CustomWrappedText: View {
                 if text.isEmpty {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(Color.gray.opacity(0.5))
                         .padding(.bottom, 7)
                         .padding(.leading, 3)
                         .onTapGesture {

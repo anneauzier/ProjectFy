@@ -33,25 +33,11 @@ extension AdView {
                     .font(Font.largeTitle.bold())
                     .foregroundColor(.backgroundRole)
                     .padding(.top, 10)
-                
-                //                HStack {
-                //                    // if let weeklyWorkload = advertisement.weeklyWorkload {
-                //                    //  Text("\(weeklyWorkload)h weekly")
-                //                    // }
-                //
-                //                    Text(advertisement.ongoing ? "In progress" : "Not started")
-                //                        .padding(.vertical, 5)
-                //                        .padding(.horizontal, 10)
-                //                        .font(.subheadline)
-                //                        .foregroundColor(.textColorYellow)
-                //                        .background(Color.backgroundTextYellow)
-                //                        .cornerRadius(8)
-                //                }
-                //                .removePadding()
-                
-                Text(advertisement.description)
+    
+                ExpandableText(text: advertisement.description,
+                               lineLimit: 4, user: user, advertisement: advertisement)
                     .padding(.top, 8)
-                
+
                 Text("Project roles")
                     .font(Font.title.bold())
                     .foregroundColor(.backgroundRole)
@@ -91,14 +77,17 @@ extension AdView {
                             }
                         }
                     }
-                    Divider()
+                    Rectangle()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 6)
+                        .foregroundColor(.rectangleLine)
                 }
                 
             }.frame(width: UIScreen.main.bounds.width - 40)
         }
     }
     
-    private struct Tag: View {
+    struct Tag: View {
         let text: String
         
         var body: some View {
