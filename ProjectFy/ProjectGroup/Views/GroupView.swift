@@ -50,7 +50,15 @@ struct GroupView: View {
                                             .font(.headline)
                                             .foregroundColor(.backgroundRole)
                                         
-                                        let names = group.members.map(\.user.name)
+                                        var names: [String] {
+                                            var names = group.members.map(\.user.name)
+                                            
+                                            names.insert("You", at: 0)
+                                            names.insert(group.admin.name, at: 1)
+                                            
+                                            names.removeAll(where: { $0 == user.name })
+                                            return names
+                                        }
                                         
                                         Text("\(names.joined(separator: ", "))")
                                             .font(.subheadline)
