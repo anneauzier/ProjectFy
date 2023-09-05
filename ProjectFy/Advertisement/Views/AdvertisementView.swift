@@ -179,7 +179,7 @@ struct AdView: View {
                             .padding(.horizontal, 3)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 10)
+                    .padding(.top, 15)
                 }
             }
 

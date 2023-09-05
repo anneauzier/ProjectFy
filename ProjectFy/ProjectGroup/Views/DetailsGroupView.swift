@@ -30,6 +30,7 @@ struct DetailsGroupView: View {
                     .font(Font.title2.bold())
                     .foregroundColor(.backgroundRole)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
                     .padding(.top, 12)
                 
                 Rectangle()

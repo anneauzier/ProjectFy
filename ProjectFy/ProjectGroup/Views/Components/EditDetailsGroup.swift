@@ -46,7 +46,7 @@ struct EditDetailsGroup: View {
                     DescriptionGroup(groupInfo: $groupInfo)
                         .padding(.bottom, 40)
                     
-                    Text("Link for chat or/and meetings")
+                    Text("Link for chat and meetings")
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
                     

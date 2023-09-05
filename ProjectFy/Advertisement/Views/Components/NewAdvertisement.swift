@@ -56,7 +56,7 @@ extension AdvertisementsView {
                                           textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(Font.largeTitle.bold())
                         .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 25)
+                        .padding(.top, 20)
 
                         CustomWrappedText(text: $advertisement.description,
                             placeholder: "Use 1000 characteres or less to describe an project overview or specify conditions and requirements.",
@@ -64,7 +64,7 @@ extension AdvertisementsView {
                                           textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(.body)
                         .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 48)
+                        .padding(.top, 65)
                         
                         CustomWrappedText(text: $advertisement.tags,
                                           placeholder: "Add 10 tags that are related to your project to help interested people find it...",
@@ -72,11 +72,11 @@ extension AdvertisementsView {
                                           textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(.body)
                         .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 48)
+                        .padding(.top, 65)
                         
                         Spacer()
                     }
-                    .padding([.horizontal, .top], 16)
+                    .padding([.horizontal, .top], 20)
                 }
                 .navigationBarBackButtonHidden()
                 .navigationTitle("\(isEditing ? "Edit" : "Create") project")
@@ -207,7 +207,7 @@ extension AdvertisementsView {
                     dismiss.toggle()
                     
                 } label: {
-                    Text(isEditing ? "Edit" : "Share")
+                    Text(isEditing ? "Edit" : "Create")
                 }
                 .disabled(!cantShare())
             }
@@ -255,7 +255,7 @@ extension AdvertisementsView {
                     }
                     TextField("", text: $position.title)
                         .placeholder(when: position.title.isEmpty, placeholder: {
-                            Text("Ex: UI/UX Design, Software Engeneer...")
+                            Text("Ex: UI/UX Design, Software Engineer...")
                                 .foregroundColor(.placeholderColor)
                         }).font(.body)
                         .foregroundColor(.white)
@@ -267,14 +267,16 @@ extension AdvertisementsView {
                     Text("Role descripition \(Text("(optional)").foregroundColor(.placeholderColor).font(.body))")
                         .font(.headline)
                         .foregroundColor(.white)
+                        .padding(.top, 20)
 
                     CustomWrappedText(text: $position.description,
                                       placeholder: "Describe what the person entering this role will do on the project...",
                                       textFont: UIFont.preferredFont(forTextStyle: .body),
                                       textcolor: UIColor.white)
                     .font(.body)
+                    .padding(.top, 5)
                     .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
-                
+                    
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.placeholderColor)
@@ -321,7 +323,7 @@ extension AdvertisementsView {
                         .opacity(isPlusButton && position.vacancies == maxVacancies ? 0.2 : 1)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
-                        .font(.system(size: 14))
+                        .font(.subheadline.bold())
                         .foregroundColor(.white)
                 }
             }

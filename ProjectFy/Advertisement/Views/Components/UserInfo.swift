@@ -17,7 +17,7 @@ struct UserInfo: View {
     
     var body: some View {
         
-        HStack {
+        HStack(spacing: 10) {
             Image(user.avatar)
                 .resizable()
                 .frame(width: size, height: size)
@@ -29,9 +29,6 @@ struct UserInfo: View {
                         .foregroundColor(nameColor)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
-//                    Text(user.username)
-//                        .font(Font.subheadline)
-//                        .foregroundColor(.userNameColor)
                 }.scaledToFit()
                 
                 HStack(spacing: 5) {
