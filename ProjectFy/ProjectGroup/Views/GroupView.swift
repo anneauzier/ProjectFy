@@ -51,12 +51,14 @@ struct GroupView: View {
                                             .foregroundColor(.backgroundRole)
                                         
                                         var names: [String] {
-                                            var names = group.members.map(\.user.name)
+                                            var users = group.members.map(\.user)
                                             
+                                            users.insert(group.admin, at: 0)
+                                            users.removeAll(where: { $0.id == user.id })
+                                            
+                                            var names = users.map(\.name)
                                             names.insert("You", at: 0)
-                                            names.insert(group.admin.name, at: 1)
                                             
-                                            names.removeAll(where: { $0 == user.name })
                                             return names
                                         }
                                         
