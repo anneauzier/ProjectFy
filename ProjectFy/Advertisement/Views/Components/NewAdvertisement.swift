@@ -213,15 +213,15 @@ extension AdvertisementsView {
         }
         
         private func newPosition() {
-            advertisement.positions.append(
-                ProjectGroup.Position(
-                    id: UUID().uuidString,
-                    advertisementID: advertisement.id,
-                    title: "",
-                    description: "",
-                    vacancies: 1
-                )
+            let position = ProjectGroup.Position(
+                id: UUID().uuidString,
+                advertisementID: advertisement.id,
+                title: "",
+                description: "",
+                vacancies: 1
             )
+            
+            advertisement.positions.insert(position, at: 0)
         }
         
         private func cantShare() -> Bool {
