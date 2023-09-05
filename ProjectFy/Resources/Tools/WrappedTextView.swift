@@ -13,6 +13,7 @@ struct WrappedTextView: UIViewRepresentable {
     @Binding var text: String
     let textDidChange: (UITextView) -> Void
     let textFont: UIFont
+    let textcolor: UIColor
     
     func makeUIView(context: Context) -> UITextView { 
         let view = UITextView()
@@ -20,6 +21,7 @@ struct WrappedTextView: UIViewRepresentable {
         view.delegate = context.coordinator
 
         view.font = textFont
+        view.textColor = textcolor
         view.backgroundColor = .clear
 
         return view
@@ -88,7 +90,8 @@ struct CustomText: View {
             ZStack(alignment: .bottom) {
                 WrappedTextView(text: $text,
                                 textDidChange: self.textDidChange,
-                                textFont: UIFont.preferredFont(forTextStyle: .body))
+                                textFont: UIFont.preferredFont(forTextStyle: .body),
+                                textcolor: UIColor(named: "backgroundRole") ?? .black)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
 //                    .limitInputLength(value: $text, length: 100, commaLimit: 7)

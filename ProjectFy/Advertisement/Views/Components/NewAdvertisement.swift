@@ -52,24 +52,27 @@ extension AdvertisementsView {
                         
                         CustomWrappedText(text: $advertisement.title,
                                           placeholder: "Name your project...",
-                                          textFont: UIFont.systemFont(ofSize: 32, weight: .bold))
+                                          textFont: UIFont.systemFont(ofSize: 32, weight: .bold),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(Font.largeTitle.bold())
                         .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 44)
+                        .padding(.top, 25)
 
                         CustomWrappedText(text: $advertisement.description,
-                            placeholder: "Describe your project in 1000 characters or less...",
-                            textFont: UIFont.preferredFont(forTextStyle: .body))
+                            placeholder: "Use 1000 characteres or less to describe an project overview or specify conditions and requirements.",
+                                          textFont: UIFont.preferredFont(forTextStyle: .body),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(.body)
                         .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 54)
+                        .padding(.top, 48)
                         
                         CustomWrappedText(text: $advertisement.tags,
-                                          placeholder: "Add up to 10 tags to your project...",
-                                          textFont: UIFont.preferredFont(forTextStyle: .body))
+                                          placeholder: "Add 10 tags that are related to your project to help interested people find it...",
+                                          textFont: UIFont.preferredFont(forTextStyle: .body),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .font(.body)
                         .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 25)
+                        .padding(.top, 48)
                         
                         Spacer()
                     }
@@ -267,7 +270,8 @@ extension AdvertisementsView {
 
                     CustomWrappedText(text: $position.description,
                                       placeholder: "Describe what the person entering this role will do on the project...",
-                                      textFont: UIFont.preferredFont(forTextStyle: .body))
+                                      textFont: UIFont.preferredFont(forTextStyle: .body),
+                                      textcolor: UIColor.white)
                     .font(.body)
                     .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
                 

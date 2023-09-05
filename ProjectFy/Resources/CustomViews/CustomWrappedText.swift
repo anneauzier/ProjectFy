@@ -15,12 +15,16 @@ struct CustomWrappedText: View {
     let placeholder: String
     let minHeight: CGFloat = 30
     let textFont: UIFont
+    let textcolor: UIColor
 
     var body: some View {
         VStack(alignment: .leading) {
 
             ZStack(alignment: .bottom) {
-                WrappedTextView(text: $text, textDidChange: self.textDidChange, textFont: textFont)
+                WrappedTextView(text: $text,
+                                textDidChange: self.textDidChange,
+                                textFont: textFont,
+                                textcolor: textcolor)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
 

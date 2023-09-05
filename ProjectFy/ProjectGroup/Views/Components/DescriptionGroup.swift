@@ -24,7 +24,8 @@ extension EditDetailsGroup {
                 ZStack(alignment: .bottom) {
                     WrappedTextView(text: $groupInfo.description,
                                     textDidChange: self.textDidChange,
-                                    textFont: UIFont.preferredFont(forTextStyle: .body))
+                                    textFont: UIFont.preferredFont(forTextStyle: .body),
+                                    textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .focused($isTextFieldFocused)
                         .frame(height: height ?? minHeight)
 //                        .limitInputLength(value: $groupInfo.description, length: 100, commaLimit: 7)
