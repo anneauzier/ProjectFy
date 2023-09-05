@@ -52,6 +52,7 @@
 		9F2AC8602A8C175700CBE3A5 /* TaskBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC85F2A8C175700CBE3A5 /* TaskBubble.swift */; };
 		9F2AC8622A8C20D400CBE3A5 /* TaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */; };
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
+		9F38975D2AA76F9D0000E906 /* DetailsAdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F38975C2AA76F9D0000E906 /* DetailsAdvertisementView.swift */; };
 		9F3A8FB12A946030003A1032 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB02A946030003A1032 /* CustomTextField.swift */; };
 		9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */; };
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
@@ -125,6 +126,7 @@
 		9F2AC8612A8C20D400CBE3A5 /* TaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskField.swift; sourceTree = "<group>"; };
 		9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+keyboardControls.swift"; sourceTree = "<group>"; };
 		9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFyDebug.entitlements; sourceTree = "<group>"; };
+		9F38975C2AA76F9D0000E906 /* DetailsAdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsAdvertisementView.swift; sourceTree = "<group>"; };
 		9F3A8FB02A946030003A1032 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructurePlaceholder.swift; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				678383802A7F623D00E459F1 /* NewAdvertisement.swift */,
 				678383762A7C4A3800E459F1 /* UserInfo.swift */,
 				678383782A7C4A5600E459F1 /* AdInfo.swift */,
+				9F38975C2AA76F9D0000E906 /* DetailsAdvertisementView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				674982862A8592A800A1C98E /* AuthenticationProtocol.swift in Sources */,
 				674982A42A86D08300A1C98E /* AdvertisementService.swift in Sources */,
 				674982882A85931A00A1C98E /* SignInWithAppleService.swift in Sources */,
+				9F38975D2AA76F9D0000E906 /* DetailsAdvertisementView.swift in Sources */,
 				9F3A8FB12A946030003A1032 /* CustomTextField.swift in Sources */,
 				9F7F33F92A857E2A00792EE6 /* EditDetailsGroup.swift in Sources */,
 				673BD30B2A8AFEB000DD161F /* SetupUserInfo.swift in Sources */,

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 extension AdView {
+
     struct AdInfo: View {
         @EnvironmentObject var userViewModel: UserViewModel
         
@@ -16,8 +17,8 @@ extension AdView {
         let advertisement: Advertisement
         
         @Binding var updateAdvertisements: Bool
-        @Binding var selectedPosition: ProjectGroup.Position?
-        @Binding var presentSheet: Bool
+//        @Binding var selectedPosition: ProjectGroup.Position?
+//        @Binding var presentSheet: Bool
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -28,66 +29,35 @@ extension AdView {
                         }
                     }
                 }
-                
-                Text(advertisement.title)
-                    .font(Font.largeTitle.bold())
-                    .foregroundColor(.backgroundRole)
-                    .padding(.top, 10)
-    
-                ExpandableText(text: advertisement.description,
-                               lineLimit: 4, user: user, advertisement: advertisement)
-                    .padding(.top, 8)
+                NavigationLink {
+                    DetailsAdvertisementView(updateAdvertisements: $updateAdvertisements,
+                                             text: advertisement.description, user: user,
+                                             advertisement: advertisement)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text(advertisement.title)
+                            .font(Font.largeTitle.bold())
+                            .foregroundColor(.backgroundRole)
+                            .padding(.top, 10)
+                        
+                        ExpandableText(updateAdvertisements: $updateAdvertisements, text: advertisement.description,
+                                       lineLimit: 4, user: user, advertisement: advertisement)
+                        .padding(.top, 8)
+                    }.multilineTextAlignment(.leading)
+                }.foregroundColor(.backgroundRole)
 
-                Text("Project roles")
-                    .font(Font.title.bold())
-                    .foregroundColor(.backgroundRole)
-                    .padding(.top, 15)
-                
-                VStack {
-                    ForEach(advertisement.positions, id: \.self) { position in
-                        Button {
-                            selectedPosition = position
-                            Haptics.shared.selection()
-                        } label: {
-                            Position(user: user, advertisement: advertisement, position: position)
-                        }
-                        
-                        .onChange(of: selectedPosition, perform: { selectedPosition in
-                            if selectedPosition != nil {
-                                presentSheet = true
-                            }
-                        })
-                        
-                        .onChange(of: presentSheet) { presentSheet in
-                            if !presentSheet {
-                                selectedPosition = nil
-                            }
-                        }
-                        
-                        .sheet(isPresented: $presentSheet) {
-                            if let position = selectedPosition {
-                                PositionDetails(
-                                    user: user,
-                                    advertisement: advertisement,
-                                    position: position,
-                                    updateAdvertisements: $updateAdvertisements
-                                )
-                            } else {
-                                Text("Position not found!")
-                            }
-                        }
-                    }
-                    Rectangle()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 6)
-                        .foregroundColor(.rectangleLine)
-                }
+                Rectangle()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 6)
+                    .foregroundColor(.rectangleLine)
+                    .padding(.top, 20)
                 
             }.frame(width: UIScreen.main.bounds.width - 40)
         }
     }
     
     struct Tag: View {
+        
         let text: String
         
         var body: some View {
@@ -102,7 +72,7 @@ extension AdView {
         }
     }
     
-    private struct Position: View {
+    struct Position: View {
         @Environment(\.dynamicTypeSize) var sizeCategory
         @EnvironmentObject var groupViewModel: GroupViewModel
         
@@ -117,12 +87,12 @@ extension AdView {
                         Image(user.avatar)
                             .resizable()
                             .frame(width: 42, height: 42)
-
+                        
                         var usersJoined: Int {
                             guard let group = groupViewModel.getGroup(by: position.id) else {
                                 return 0
                             }
-
+                            
                             return group.members.count
                         }
                         if sizeCategory.isAccessibilitySize {
@@ -138,10 +108,10 @@ extension AdView {
                         }
                     }
                 }
-//              .frame(width: 107)
+                //              .frame(width: 107)
                 .frame(width: UIScreen.main.bounds.width * 0.28)
                 .zIndex(1)
-
+                
                 RoundedRectangleContent(cornerRadius: 8, fillColor: Color.roleBackground) {
                     Text(position.title)
                         .font(.headline)
@@ -156,7 +126,7 @@ extension AdView {
         }
     }
     
-    private struct PositionDetails: View {
+    struct PositionDetails: View {
         @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
         @EnvironmentObject var groupViewModel: GroupViewModel
         @EnvironmentObject var notificationsViewModel: NotificationsViewModel
@@ -200,7 +170,7 @@ extension AdView {
                         .font(Font.title.bold())
                         .foregroundColor(.backgroundRole)
                         .padding(.bottom, 5)
-
+                    
                     Text(position.description)
                         .padding(.top, -5)
                 }
@@ -220,7 +190,7 @@ extension AdView {
                         }.frame(height: 88)
                     }
                 }
-
+                
                 Spacer()
                 
                 var isUserInTheGroup: Bool {

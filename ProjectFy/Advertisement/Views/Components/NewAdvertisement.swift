@@ -63,11 +63,13 @@ extension AdvertisementsView {
                         .font(.body)
                         .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
                         .padding(.top, 54)
-                                                
-                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
-                            .font(.body)
-                            .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 25)
+                        
+                        CustomWrappedText(text: $advertisement.tags,
+                                          placeholder: "Add up to 10 tags to your project...",
+                                          textFont: UIFont.preferredFont(forTextStyle: .body))
+                        .font(.body)
+                        .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 25)
                         
                         Spacer()
                     }
@@ -262,12 +264,12 @@ extension AdvertisementsView {
                     Text("Role descripition \(Text("(optional)").foregroundColor(.placeholderColor).font(.body))")
                         .font(.headline)
                         .foregroundColor(.white)
-                    
+
                     CustomWrappedText(text: $position.description,
                                       placeholder: "Describe what the person entering this role will do on the project...",
                                       textFont: UIFont.preferredFont(forTextStyle: .body))
                     .font(.body)
-//                    .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
+                    .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
                 
                     Rectangle()
                         .frame(height: 1)

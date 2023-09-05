@@ -31,14 +31,14 @@ struct AdvertisementsView: View {
                 Divider()
                 if !networking.isConnected {
                     StructurePlaceholder(image: Image("networking"),
-                                 title: "Sorry, we couldn't load this page :(",
-                                 description: "Check your connection to see if there's something wrong",
-                                 heightPH: 0.7)
+                                         title: "Sorry, we couldn't load this page :(",
+                                         description: "Check your connection to see if there's something wrong",
+                                         heightPH: 0.7)
                 } else if advertisementsViewModel.advertisements.isEmpty {
                     StructurePlaceholder(image: Image("emptyAd"),
-                                 title: "Looks like people \nhaven't shared project \nideas yet :(",
-                                 description: "You can start to share your project ideas by taping on “+”",
-                                 heightPH: 0.7)
+                                         title: "Looks like people \nhaven't shared project \nideas yet :(",
+                                         description: "You can start to share your project ideas by taping on “+”",
+                                         heightPH: 0.7)
                 } else {
                     VStack {
                         ForEach($advertisements, id: \.self) { $advertisement in
@@ -73,7 +73,7 @@ struct AdvertisementsView: View {
                     editingID = nil
                 }
             })
-
+            
             .refreshable {
                 updateAdvertisements()
             }
@@ -132,7 +132,7 @@ struct AdView: View {
     
     let user: User
     let owner: User
-
+    
     @Binding var advertisement: Advertisement
     @Binding var updateAdvertisements: Bool
     @Binding var presentPosition: Bool
@@ -149,7 +149,7 @@ struct AdView: View {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
                     UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
-                }.padding(.top, 3)
+                }.padding(.top, 15)
                 
                 Spacer()
                 
@@ -157,7 +157,7 @@ struct AdView: View {
                     Menu {
                         Button {
                             editingID = advertisement.id
-
+                            
                             Haptics.shared.selection()
                             presentSheet.toggle()
                         } label: {
@@ -179,19 +179,18 @@ struct AdView: View {
                             .padding(.horizontal, 3)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-//                    .padding(.top, 23)
+                    .padding(.top, 10)
                 }
             }
-            
+
             AdInfo(
                 user: user,
                 advertisement: advertisement,
-                updateAdvertisements: $updateAdvertisements,
-                selectedPosition: $selectedPosition,
-                presentSheet: $presentPosition
+                updateAdvertisements: $updateAdvertisements
+//                selectedPosition: $selectedPosition,
+//                presentSheet: $presentPosition
             )
-        }
-        .navigationBarTitleDisplayMode(.inline)
+        }.navigationBarTitleDisplayMode(.inline)
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {

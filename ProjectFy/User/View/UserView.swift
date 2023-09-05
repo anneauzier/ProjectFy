@@ -23,7 +23,7 @@ struct UserView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 ZStack(alignment: .leading) {
-                    Image("capa")
+                    Image("cover")
                         .resizable()
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
@@ -236,9 +236,9 @@ struct UserAdvertisement: View {
                     AdView.AdInfo(
                         user: user,
                         advertisement: advertisement,
-                        updateAdvertisements: .constant(false),
-                        selectedPosition: .constant(nil),
-                        presentSheet: .constant(false)
+                        updateAdvertisements: .constant(false)
+//                        selectedPosition: .constant(nil),
+//                        presentSheet: .constant(false)
                     )
                 }
             }
