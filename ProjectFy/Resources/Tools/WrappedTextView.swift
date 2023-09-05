@@ -12,14 +12,18 @@ struct WrappedTextView: UIViewRepresentable {
     
     @Binding var text: String
     let textDidChange: (UITextView) -> Void
+    let textFont: UIFont
+    let textcolor: UIColor
     
     func makeUIView(context: Context) -> UITextView { 
         let view = UITextView()
         view.isEditable = true
         view.delegate = context.coordinator
-        
-        view.font = UIFont.preferredFont(forTextStyle: .body)
-        
+
+        view.font = textFont
+        view.textColor = textcolor
+        view.backgroundColor = .clear
+
         return view
     }
 
@@ -67,8 +71,7 @@ struct CustomText: View {
     @Binding var text: String
     @State var height: CGFloat?
     @FocusState var isTextFieldFocused: Bool
-    
-    let condition: Bool
+
     let placeholder: String
     let minHeight: CGFloat = 30
     
@@ -85,16 +88,19 @@ struct CustomText: View {
             }
             
             ZStack(alignment: .bottom) {
-                WrappedTextView(text: $text, textDidChange: self.textDidChange)
+                WrappedTextView(text: $text,
+                                textDidChange: self.textDidChange,
+                                textFont: UIFont.preferredFont(forTextStyle: .body),
+                                textcolor: UIColor(named: "backgroundRole") ?? .black)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
-                    .limitInputLength(value: $text, length: 100, commaLimit: 7)
+//                    .limitInputLength(value: $text, length: 100, commaLimit: 7)
                 
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(.rectangleLine)
                 
-                if condition {
+                if text.isEmpty {
                     Text(placeholder)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color.gray.opacity(0.5))

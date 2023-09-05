@@ -61,7 +61,6 @@ struct SetupUserInfo: View {
             CustomText(title: "Interests",
                        optional: true,
                        text: $user.interestTags,
-                       condition: user.interestTags.isEmpty,
                        placeholder: sizeCategory.isAccessibilitySize ? "Ex: Design, Unity..." :
                         "Tag your interests, Ex: Design, Unity, iOS...")
             .padding(.top, 40)

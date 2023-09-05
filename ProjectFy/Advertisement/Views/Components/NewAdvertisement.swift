@@ -13,9 +13,12 @@ extension AdvertisementsView {
         let owner: User
         var viewModel: AdvertisementsViewModel
         
+        @FocusState var isTextFieldFocused: Bool
         @State var advertisement: Advertisement
         @Binding var dismiss: Bool
         @Binding var updateAdvertisements: Bool
+        @State private var height: CGFloat?
+        let minHeight: CGFloat = 30
         
         @State var presentBackAlert: Bool = false
         let isEditing: Bool
@@ -31,7 +34,6 @@ extension AdvertisementsView {
             if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
                 self._advertisement = State(initialValue: advertisement)
                 self.isEditing = true
-                
                 return
             }
             
@@ -48,32 +50,29 @@ extension AdvertisementsView {
                         UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
                             .padding(.top, -10)
                         
-                        TextField("Name your project...", text: $advertisement.title)
-                            .font(Font.largeTitle.bold())
-                            .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 44)
-                        
-                        TextField("Describe your project in 1000 characters or less...",
-                                  text: $advertisement.description)
-                            .font(Font.body)
-                            .foregroundColor(
-                                advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 54)
-                        
-                        TextField("Add up to 10 tags to your project...", text: $advertisement.tags)
-                            .font(Font.body)
-                            .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                            .padding(.top, 25)
+                        CustomWrappedText(text: $advertisement.title,
+                                          placeholder: "Name your project...",
+                                          textFont: UIFont.systemFont(ofSize: 32, weight: .bold),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
+                        .font(Font.largeTitle.bold())
+                        .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 25)
 
-//                        DropDownButton(
-//                            title: "Project status", textColor: .textColorBlue,
-//                            selection: $advertisement.ongoing,
-//                            menuItems: [
-//                                MenuItem(name: "Not started", tag: false),
-//                                MenuItem(name: "In progress", tag: true)
-//                            ]
-//                        )
-//                        .padding(.top, 54)
+                        CustomWrappedText(text: $advertisement.description,
+                            placeholder: "Use 1000 characteres or less to describe an project overview or specify conditions and requirements.",
+                                          textFont: UIFont.preferredFont(forTextStyle: .body),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
+                        .font(.body)
+                        .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 48)
+                        
+                        CustomWrappedText(text: $advertisement.tags,
+                                          placeholder: "Add 10 tags that are related to your project to help interested people find it...",
+                                          textFont: UIFont.preferredFont(forTextStyle: .body),
+                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
+                        .font(.body)
+                        .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
+                        .padding(.top, 48)
                         
                         Spacer()
                     }
@@ -114,7 +113,6 @@ extension AdvertisementsView {
                         }))
                     }
                 }
-                
             }
             
             .confirmationDialog("back", isPresented: $presentBackAlert) {
@@ -137,6 +135,12 @@ extension AdvertisementsView {
             return !advertisement.tags.isEmpty
             && !advertisement.title.isEmpty
             && !advertisement.description.isEmpty
+        }
+        
+        private func textDidChange(_ textView: UITextView) {
+            DispatchQueue.main.async {
+                self.height = max(textView.contentSize.height, minHeight)
+            }
         }
     }
     
@@ -180,7 +184,6 @@ extension AdvertisementsView {
                 }
                 .padding(.horizontal, 16)
             }
-            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
             
             .onAppear {
                 if advertisement.positions.isEmpty {
@@ -193,18 +196,16 @@ extension AdvertisementsView {
                     if isEditing {
                         viewModel.editAdvertisement(advertisement)
                         Haptics.shared.notification(.success)
-                        
                         updateAdvertisements.toggle()
                         dismiss.toggle()
-                        
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
                     Haptics.shared.notification(.success)
-                    
                     updateAdvertisements.toggle()
                     dismiss.toggle()
+                    
                 } label: {
                     Text(isEditing ? "Edit" : "Share")
                 }
@@ -238,7 +239,8 @@ extension AdvertisementsView {
             RoundedRectangleContent(cornerRadius: 20, fillColor: Color.backgroundRole) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Project role name")
+                        Text("Role name")
+                            .font(.headline)
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -255,23 +257,31 @@ extension AdvertisementsView {
                         .placeholder(when: position.title.isEmpty, placeholder: {
                             Text("Ex: UI/UX Design, Software Engeneer...")
                                 .foregroundColor(.placeholderColor)
-                        }).foregroundColor(.white)
-                    
-                    Divider()
-                    
-                    Text("Project role descripition (optional)")
+                        }).font(.body)
                         .foregroundColor(.white)
                     
-                    TextField("", text: $position.description)
-                        .placeholder(when: position.description.isEmpty, placeholder: {
-                            Text("Describe what the person entering this role will do on the project...")
-                                .foregroundColor(.placeholderColor)
-                        }).foregroundColor(.white)
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.placeholderColor)
                     
-                    Divider()
+                    Text("Role descripition \(Text("(optional)").foregroundColor(.placeholderColor).font(.body))")
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    CustomWrappedText(text: $position.description,
+                                      placeholder: "Describe what the person entering this role will do on the project...",
+                                      textFont: UIFont.preferredFont(forTextStyle: .body),
+                                      textcolor: UIColor.white)
+                    .font(.body)
+                    .foregroundColor(position.description.isEmpty ? .placeholderColor : .white)
+                
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.placeholderColor)
                     
                     HStack(spacing: 15) {
                         Text("Quantity")
+                            .font(.headline)
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -290,22 +300,33 @@ extension AdvertisementsView {
     private struct VacancyButton: View {
         @Binding var position: ProjectGroup.Position
         let isPlusButton: Bool
+        let maxVacancies: Int = 10
         
         var body: some View {
             Button {
-                position.vacancies += isPlusButton ? 1 : -1
+                if isPlusButton {
+                    if position.vacancies < maxVacancies {
+                        position.vacancies += 1
+                    }
+                } else {
+                    if position.vacancies > 0 {
+                        position.vacancies -= 1
+                    }
+                }
             } label: {
                 ZStack {
                     Circle()
                         .fill(Color.textColorBlue)
+                        .opacity(!isPlusButton && position.vacancies == 1 ? 0.2 : 1)
+                        .opacity(isPlusButton && position.vacancies == maxVacancies ? 0.2 : 1)
                     
                     Image(systemName: isPlusButton ? "plus" : "minus")
-                        .font(.system(size: 12))
+                        .font(.system(size: 14))
                         .foregroundColor(.white)
                 }
             }
             .disabled(!isPlusButton && position.vacancies < 2)
-            .frame(width: 19, height: 19)
+            .frame(width: 28, height: 28)
         }
     }
 }

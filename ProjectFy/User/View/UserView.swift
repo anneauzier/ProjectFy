@@ -13,6 +13,7 @@ struct UserView: View {
     
     @State private var goEditUserView = false
     @State private var showDeleteAlert = false
+    @State private var showLogoutAlert = false
     @State private var presentSignIn = false
     
     var presentUsersProfile: Bool = false
@@ -22,10 +23,11 @@ struct UserView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 ZStack(alignment: .leading) {
-                    Rectangle()
+                    Image("cover")
+                        .resizable()
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
-                        .foregroundColor(.roleBackground)
+                        .offset(y: -16)
                     
                     Image(user.avatar)
                         .resizable()
@@ -43,24 +45,10 @@ struct UserView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 4) {
-                        //                        let imageVerify = user.available ? "checkmark.seal.fill" : "xmark.seal.fill"
-                        
                         Text(user.name)
                             .font(Font.title2.bold())
                             .foregroundColor(.backgroundRole)
                             .accessibilityLabel("Username: \(user.name)")
-                        
-                        //                        Image(systemName: imageVerify)
-                        //                            .foregroundColor(user.available ? Color.availableText : Color.unavailableText)
-                        
-                        //                        Circle()
-                        //                            .frame(width: 3)
-                        //                            .foregroundColor(.editAdvertisementText)
-                        
-                        //                        Text(user.username)
-                        //                            .font(.body)
-                        //                            .foregroundColor(.editAdvertisementText)
-                        //                            .accessibilityLabel("@\(user.username)")
                     }
                     .padding(.top, 15)
                     
@@ -81,14 +69,14 @@ struct UserView: View {
                     
                     HStack(spacing: 6) {
                         Image("location")
-                        
+
                         Text(user.region)
                             .font(.body)
                             .foregroundColor(.editAdvertisementText)
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Region \(user.region)")
-                    
+
                 }
                 .padding(.horizontal, 20)
                 
@@ -135,16 +123,18 @@ struct UserView: View {
                     }
                     
                     Button {
-                        authenticationViewModel.signOut()
+                        showLogoutAlert.toggle()
                     } label: {
                         Label("Log out", image: "logout")
                     }
+
                     Button(role: .destructive) {
                         Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
-                        Label("Delete Account", systemImage: "person.crop.circle.badge.xmark")
+                        Label("Delete Account", image: "deleteAccount")
                     }
+
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
@@ -172,6 +162,26 @@ struct UserView: View {
             }
         } message: {
             Text("Your account and all information, groups and your project announcements will be permanently deleted.")
+                .multilineTextAlignment(.center)
+        }
+        
+        .alert("Do you really want to log out?", isPresented: $showLogoutAlert) {
+            Button(role: .cancel) {
+                showLogoutAlert.toggle()
+            } label: {
+                Text("No, I don't")
+            }
+            
+            Button {
+                Haptics.shared.notification(.success)
+                authenticationViewModel.signOut()
+                showLogoutAlert.toggle()
+            } label: {
+                Text("Yes, I do")
+                    .font(Font.headline)
+            }
+        } message: {
+            Text("You will be returned to the login screen.")
                 .multilineTextAlignment(.leading)
         }
         
@@ -213,7 +223,7 @@ struct UserAdvertisement: View {
             Divider()
             
             if advertisementsViewModel.advertisements.isEmpty {
-                Connectivity(image: Image("emptyAd"),
+                StructurePlaceholder(image: Image("emptyAd"),
                              title: "Looks like you haven't \nshared your project \nideas yet :(",
                              description: "You can start sharing your project \nideas by taping “+” on the home screen",
                              heightPH: sizeCategory.isAccessibilitySize ? 0.7 : 0.42)
@@ -226,9 +236,9 @@ struct UserAdvertisement: View {
                     AdView.AdInfo(
                         user: user,
                         advertisement: advertisement,
-                        updateAdvertisements: .constant(false),
-                        selectedPosition: .constant(nil),
-                        presentSheet: .constant(false)
+                        updateAdvertisements: .constant(false)
+//                        selectedPosition: .constant(nil),
+//                        presentSheet: .constant(false)
                     )
                 }
             }

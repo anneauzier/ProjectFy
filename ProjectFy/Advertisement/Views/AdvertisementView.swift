@@ -30,15 +30,15 @@ struct AdvertisementsView: View {
             ScrollView(showsIndicators: false) {
                 Divider()
                 if !networking.isConnected {
-                    Connectivity(image: Image("networking"),
-                                 title: "Sorry, we couldn't load this page :(",
-                                 description: "Check your connection to see if there's something wrong",
-                                 heightPH: 0.7)
+                    StructurePlaceholder(image: Image("networking"),
+                                         title: "Sorry, we couldn't load this page :(",
+                                         description: "Check your connection to see if there's something wrong",
+                                         heightPH: 0.7)
                 } else if advertisementsViewModel.advertisements.isEmpty {
-                    Connectivity(image: Image("emptyAd"),
-                                 title: "Looks like people \nhaven't shared project \nideas yet :(",
-                                 description: "You can start to share your project ideas by taping on “+”",
-                                 heightPH: 0.7)
+                    StructurePlaceholder(image: Image("emptyAd"),
+                                         title: "Looks like people \nhaven't shared project \nideas yet :(",
+                                         description: "You can start to share your project ideas by taping on “+”",
+                                         heightPH: 0.7)
                 } else {
                     VStack {
                         ForEach($advertisements, id: \.self) { $advertisement in
@@ -59,14 +59,18 @@ struct AdvertisementsView: View {
             }
             
             .onAppear {
-                editingID = nil
                 updateAdvertisements()
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
-//                print("change")
                 if didUpdateAdvertisements {
                     updateAdvertisements()
+                }
+            })
+            
+            .onChange(of: presentSheet, perform: { newValue in
+                if !newValue {
+                    editingID = nil
                 }
             })
             
@@ -110,18 +114,15 @@ struct AdvertisementsView: View {
                 } label: {
                     Text("OK")
                 }
-            },
-                   message: {
+            }, message: {
                 Text("you cannot participate in more than three projects at the same time")
-            }
-            )
+            })
         }
     }
     
     private func updateAdvertisements() {
         advertisements = advertisementsViewModel.advertisements.sorted(by: { $0.date > $1.date })
         didUpdateAdvertisements = false
-//        print("update")
     }
 }
 
@@ -131,13 +132,11 @@ struct AdView: View {
     
     let user: User
     let owner: User
+    
     @Binding var advertisement: Advertisement
-    
     @Binding var updateAdvertisements: Bool
-    
     @Binding var presentPosition: Bool
     @Binding var selectedPosition: ProjectGroup.Position?
-    
     @Binding var presentSheet: Bool
     @Binding var editingID: String?
     
@@ -150,7 +149,7 @@ struct AdView: View {
                     UserView(presentUsersProfile: true, user: owner)
                 } label: {
                     UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
-                }.padding(.top, 3)
+                }.padding(.top, 15)
                 
                 Spacer()
                 
@@ -176,21 +175,22 @@ struct AdView: View {
                             .labelStyle(.iconOnly)
                             .font(Font.system(size: 20).bold())
                             .tint(.editAdvertisementText)
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 3)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 23)
+                    .padding(.top, 10)
                 }
             }
-            
+
             AdInfo(
                 user: user,
                 advertisement: advertisement,
-                updateAdvertisements: $updateAdvertisements,
-                selectedPosition: $selectedPosition,
-                presentSheet: $presentPosition
+                updateAdvertisements: $updateAdvertisements
+//                selectedPosition: $selectedPosition,
+//                presentSheet: $presentPosition
             )
-        }
-        .navigationBarTitleDisplayMode(.inline)
+        }.navigationBarTitleDisplayMode(.inline)
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
