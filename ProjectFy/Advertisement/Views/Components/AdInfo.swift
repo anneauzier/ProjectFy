@@ -28,6 +28,7 @@ extension AdView {
                             Tag(text: String(tag))
                         }
                     }
+                    .padding(.horizontal, 20)
                 }
                 NavigationLink {
                     DetailsAdvertisementView(updateAdvertisements: $updateAdvertisements,
@@ -43,6 +44,7 @@ extension AdView {
                                        lineLimit: 4, user: user, advertisement: advertisement)
                         
                     }.multilineTextAlignment(.leading)
+                        .padding(.horizontal, 20)
                 }.foregroundColor(.backgroundRole)
                 
                 Rectangle()
@@ -50,8 +52,8 @@ extension AdView {
                     .frame(height: 6)
                     .foregroundColor(.rectangleLine)
                     .padding(.top, 20)
-                
-            }.frame(width: UIScreen.main.bounds.width - 40)
+    
+            }.frame(width: UIScreen.main.bounds.width)
         }
     }
     
@@ -107,7 +109,6 @@ extension AdView {
                         }
                     }
                 }
-                // .frame(width: 107)
                 .frame(width: UIScreen.main.bounds.width * 0.28)
                 .zIndex(1)
                 
@@ -206,7 +207,6 @@ extension AdView {
                         
                         Spacer()
 
-                        
                         var isUserInTheGroup: Bool {
                             guard let group = groupViewModel.getGroup(by: position.id) else {
                                 return false
