@@ -87,7 +87,7 @@ struct DetailsAdvertisementView: View {
                             }
                         }
                     }
-                }.padding(.bottom, 10)
+                }.padding(.bottom, 40)
             }.frame(width: UIScreen.main.bounds.width - 40)
         }
     }
