@@ -194,14 +194,29 @@ extension AdView {
                                             .removePadding()
                                     }.frame(height: 88)
                                 }
-                                
+
                                 Spacer()
                                 
-                                RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
-                                    Text("Joined")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                }.frame(maxHeight: 60)
+                                if group.members.map(\.user).contains(where: { $0.id == user.id }) {
+                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                                        Text("Joined")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }.frame(maxHeight: 60)
+                                }
+                            }
+                        } else {
+                            VStack(alignment: .center) {
+                                Text("People already in this role ")
+                                    .font(Font.title.bold())
+                                    .foregroundColor(.backgroundRole)
+                                    .removePadding()
+                                    .padding(.top, 37)
+                                
+                                StructurePlaceholder(image: Image("emptyAd"),
+                                                     title: "There are no people in this role...",
+                                                     description: "You can request to participate in this role by tapping on the request button below.",
+                                                     heightPH: 0.4)
                             }
                         }
                         
