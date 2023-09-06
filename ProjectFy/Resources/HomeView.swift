@@ -90,7 +90,8 @@ fileprivate struct SetupInitialConfigs: View {
                         .foregroundColor(.editAdvertisementText)
                         .padding(.top, 15)
 
-                }.frame(width: UIScreen.main.bounds.width - 35.9)
+                }
+                .frame(width: UIScreen.main.bounds.width - 33)
                 
                 SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
             }

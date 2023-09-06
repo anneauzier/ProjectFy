@@ -66,9 +66,6 @@ struct GroupView: View {
                                             .font(.subheadline)
                                             .foregroundColor(.editAdvertisementText)
                                     }
-                                    Image(systemName: "chevron.right")
-                                        .resizable()
-
                                 }
                             }
                             .swipeActions {
@@ -76,7 +73,7 @@ struct GroupView: View {
                                     showActionSheet.toggle()
                                 }, label: {
                                     Image("points")
-                                }).tint(.textColorBlue)
+                                }).tint(.backgroundTextBlue)
                             }
                             .confirmationDialog("", isPresented: $showActionSheet, actions: {
                                 Button {

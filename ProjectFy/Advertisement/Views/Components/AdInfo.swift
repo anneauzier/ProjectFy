@@ -49,7 +49,7 @@ extension AdView {
                 
                 Rectangle()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 6)
+                    .frame(height: 10)
                     .foregroundColor(.rectangleLine)
                     .padding(.top, 20)
     
@@ -180,7 +180,7 @@ extension AdView {
                         }
                         
                         if let group = groupViewModel.getGroup(by: position.id) {
-                            VStack {
+                            VStack(alignment: .leading) {
                                 Text("People already in this role ")
                                     .font(Font.title.bold())
                                     .foregroundColor(.backgroundRole)
