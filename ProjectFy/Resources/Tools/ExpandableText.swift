@@ -20,27 +20,25 @@ struct ExpandableText: View {
     var body: some View {
         
         VStack(alignment: .leading) {
+            
             Text((expanded ? text : truncatedText()))
                 .lineLimit(expanded ? nil : lineLimit)
 
             if !expanded && shouldShowReadMore() {
-                NavigationLink(destination: DetailsAdvertisementView(
-                                            updateAdvertisements: $updateAdvertisements,
-                                            text: text, user: user,
-                                            advertisement: advertisement)) {
-                    Text("... See more")
+                    Text(truncatedText() + "...") +
+
+                    Text(" See more")
                         .font(.headline)
                         .foregroundColor(.blue)
                 }
-            }
         }
     }
     
     private func truncatedText() -> String {
-        return String(text.prefix(lineLimit * 40))
+        return String(text.prefix(lineLimit * 30))
     }
     
     private func shouldShowReadMore() -> Bool {
-        return text.count > lineLimit * 40
+        return text.count > lineLimit * 30
     }
 }

@@ -215,7 +215,7 @@ struct UserAdvertisement: View {
             
             Divider()
             
-            Text("My projects")
+            Text("Your projects")
                 .font(Font.headline)
                 .foregroundColor(.backgroundRole)
                 .padding(.vertical, 12)

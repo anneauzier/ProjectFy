@@ -54,7 +54,7 @@ struct AdvertisementsView: View {
                             )
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 20)
                 }
             }
             
@@ -181,7 +181,7 @@ struct AdView: View {
                     .frame(maxHeight: .infinity, alignment: .top)
                     .padding(.top, 15)
                 }
-            }
+            }.padding(.horizontal, 20)
 
             AdInfo(
                 user: user,
@@ -190,7 +190,8 @@ struct AdView: View {
 //                selectedPosition: $selectedPosition,
 //                presentSheet: $presentPosition
             )
-        }.navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationBarTitleDisplayMode(.inline)
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
