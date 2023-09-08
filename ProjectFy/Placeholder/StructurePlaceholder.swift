@@ -19,10 +19,11 @@ struct StructurePlaceholder: View {
                 .resizable()
                 .frame(width: 155, height: 155)
                 .padding(.bottom, 5)
+                .opacity(0.8)
     
             Text(title)
                 .font(Font.title2.bold())
-                .foregroundColor(.backgroundRole)
+                .foregroundColor(.placeholdertitle)
                 .frame(width: UIScreen.main.bounds.width - 104)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
@@ -34,6 +35,9 @@ struct StructurePlaceholder: View {
                 .frame(width: UIScreen.main.bounds.width - 114)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
-        }.frame(height: UIScreen.main.bounds.height * heightPH)
+                .opacity(0.8)
+        }
+        .frame(height: UIScreen.main.bounds.height * heightPH)
     }
 }
+

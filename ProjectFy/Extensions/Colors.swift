@@ -27,4 +27,5 @@ extension Color {
     static let bubbleColor = Color("bubbleColor")
     static let fieldColor = Color("fieldColor")
     static let signInColor = Color("signInColor")
+    static let placeholdertitle = Color("placeholdertitle")
 }

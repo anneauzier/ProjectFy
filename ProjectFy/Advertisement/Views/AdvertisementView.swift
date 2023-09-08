@@ -63,7 +63,7 @@ struct AdvertisementsView: View {
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
-                if didUpdateAdvertisements {
+                if advertisements.isEmpty || didUpdateAdvertisements {
                     updateAdvertisements()
                 }
             })
