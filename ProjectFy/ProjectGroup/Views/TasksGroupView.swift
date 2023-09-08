@@ -82,22 +82,32 @@ struct GroupInfo: View {
                             .foregroundColor(.backgroundRole)
                             .multilineTextAlignment(.leading)
                         
-                        let names = group.members.map(\.user.name)
+                        var names: [String] {
+                            var users = group.members.map(\.user)
+                            
+                            users.insert(group.admin, at: 0)
+                            users.removeAll(where: { $0.id == user.id })
+                            
+                            var names = users.map(\.name)
+                            names.insert("You", at: 0)
+                            
+                            return names
+                        }
                         
                         Text("\(names.joined(separator: ", "))")
                             .font(.subheadline)
                             .foregroundColor(.editAdvertisementText)
                     }
                     
-                    Spacer()
-                    
-                    Image(systemName: "chevron.forward")
-                        .foregroundColor(.backgroundRole)
-                }.padding(.horizontal, 15)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .foregroundColor(.backgroundRole)
+            }.padding(.horizontal, 15)
+                .navigationBarTitleDisplayMode(.inline)
         }
-        
-        Divider()
     }
+    
+    Divider()
+}
 }
