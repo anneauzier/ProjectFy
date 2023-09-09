@@ -27,6 +27,7 @@ struct CustomWrappedText: View {
                                 textcolor: textcolor)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
+                    .limitInputLength(value: $text, length: 280, commaLimit: 7)
 
                 if text.isEmpty {
                     Text(placeholder)

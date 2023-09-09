@@ -34,7 +34,7 @@ struct EditDetailsGroup: View {
                         .foregroundColor(.backgroundRole)
                     
                     TextField("Enter the group name", text: $groupInfo.name)
-                        .limitInputLength(value: $groupInfo.name, length: 19, commaLimit: 7)
+                        .limitInputLength(value: $groupInfo.name, length: 50, commaLimit: 7)
                         .background(
                             Rectangle()
                                 .frame(height: 1)

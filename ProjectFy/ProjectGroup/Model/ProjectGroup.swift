@@ -19,7 +19,6 @@ struct ProjectGroup: Hashable, Codable {
     var admin: User
     var link: String
     var tasks: [Task]
-    var isFinish: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,7 +30,6 @@ struct ProjectGroup: Hashable, Codable {
         case admin
         case link
         case tasks
-        case isFinish
     }
     
     struct Position: Hashable, Codable {

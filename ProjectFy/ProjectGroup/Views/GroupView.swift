@@ -36,7 +36,6 @@ struct GroupView: View {
                 } else {
                     List {
                         ForEach(viewModel.groups, id: \.self) { group in
-                            
                             Button {
                                 selectedGroup = group
                                 isTasksActive = true
