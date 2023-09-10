@@ -40,7 +40,7 @@ extension AdView {
                             .font(Font.largeTitle.bold())
                             .foregroundColor(.backgroundRole)
                         
-                        ExpandableText(updateAdvertisements: $updateAdvertisements, text: advertisement.description,
+                        ExpandableText(text: advertisement.description,
                                        lineLimit: 4, user: user, advertisement: advertisement)
                         
                     }.multilineTextAlignment(.leading)

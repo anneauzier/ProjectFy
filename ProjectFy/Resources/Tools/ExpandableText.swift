@@ -9,9 +9,6 @@ import SwiftUI
 
 struct ExpandableText: View {
     
-    @State private var expanded: Bool = false
-    @Binding var updateAdvertisements: Bool
-    
     var text: String
     let lineLimit: Int
     let user: User
@@ -20,13 +17,14 @@ struct ExpandableText: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            
-            Text((expanded ? text : truncatedText()))
-                .lineLimit(expanded ? nil : lineLimit)
 
-            if !expanded && shouldShowReadMore() {
+            if !shouldShowReadMore() {
+                Text(text)
+                    .font(.body)
+                    .lineLimit(!shouldShowReadMore() ? nil : lineLimit)
+            } else {
                     Text(truncatedText() + "...") +
-
+                    
                     Text(" See more")
                         .font(.headline)
                         .foregroundColor(.blue)
