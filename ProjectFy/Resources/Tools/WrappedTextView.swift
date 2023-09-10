@@ -23,7 +23,7 @@ struct WrappedTextView: UIViewRepresentable {
         view.font = textFont
         view.textColor = textcolor
         view.backgroundColor = .clear
-
+        
         return view
     }
 
@@ -94,7 +94,7 @@ struct CustomText: View {
                                 textcolor: UIColor(named: "backgroundRole") ?? .black)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
-                    .limitInputLength(value: $text, length: 100, commaLimit: 7)
+                    .limitInputLength(value: $text, length: 100)
                 
                 Rectangle()
                     .frame(height: 1)
