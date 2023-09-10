@@ -49,7 +49,7 @@ extension AdView {
                 
                 Rectangle()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 10)
+                    .frame(height: 6)
                     .foregroundColor(.rectangleLine)
                     .padding(.top, 20)
     
