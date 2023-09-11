@@ -17,8 +17,6 @@ extension AdView {
         let advertisement: Advertisement
         
         @Binding var updateAdvertisements: Bool
-//        @Binding var selectedPosition: ProjectGroup.Position?
-//        @Binding var presentSheet: Bool
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -227,7 +225,7 @@ extension AdView {
                         guard let group = groupViewModel.getGroup(by: position.id) else { return false }
                         let membersInThisPosition = group.members.filter({ $0.position.id == position.id }).count
                         
-                        return position.vacancies >= membersInThisPosition
+                        return membersInThisPosition >= position.vacancies
                     }
                     
                     let isDisabled = (hasApplied && !hasAppliedForThisPosition) || isUserInTheGroup || isPositionsFilled

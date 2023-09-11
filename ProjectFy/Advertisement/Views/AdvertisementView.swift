@@ -183,13 +183,7 @@ struct AdView: View {
                 }
             }
 
-            AdInfo(
-                user: user,
-                advertisement: advertisement,
-                updateAdvertisements: $updateAdvertisements
-//                selectedPosition: $selectedPosition,
-//                presentSheet: $presentPosition
-            )
+            AdInfo(user: user, advertisement: advertisement, updateAdvertisements: $updateAdvertisements)
         }.navigationBarTitleDisplayMode(.inline)
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
