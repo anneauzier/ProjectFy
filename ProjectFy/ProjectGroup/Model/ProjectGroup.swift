@@ -19,6 +19,7 @@ struct ProjectGroup: Hashable, Codable {
     var admin: User
     var link: String
     var tasks: [Task]
+    var isFinished: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,6 +31,7 @@ struct ProjectGroup: Hashable, Codable {
         case admin
         case link
         case tasks
+        case isFinished
     }
     
     struct Position: Hashable, Codable {
@@ -77,7 +79,8 @@ struct ProjectGroup: Hashable, Codable {
          avatar: String,
          admin: User,
          link: String,
-         tasks: [Task]) {
+         tasks: [Task],
+         isFinished: Bool) {
         self.id = id
         self.advertisement = advertisement
         self.name = name
@@ -87,6 +90,7 @@ struct ProjectGroup: Hashable, Codable {
         self.admin = admin
         self.link = link
         self.tasks = tasks
+        self.isFinished = isFinished
     }
     
     init(advertisement: Advertisement) {
@@ -99,6 +103,7 @@ struct ProjectGroup: Hashable, Codable {
         self.admin = advertisement.owner
         self.link = ""
         self.tasks = []
+        self.isFinished = false
     }
     
     init() {
@@ -113,5 +118,6 @@ struct ProjectGroup: Hashable, Codable {
         self.admin = User(signInResult: .init(identityToken: "", nonce: "", name: "", email: ""))
         self.link = ""
         self.tasks = []
+        self.isFinished = false
     }
 }

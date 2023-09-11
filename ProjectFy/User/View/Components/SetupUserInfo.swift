@@ -48,7 +48,15 @@ struct SetupUserInfo: View {
                 })
             )
             .padding(.top, 40)
-            
+
+            CustomText(
+                       title: "Tag your interests",
+                       optional: true,
+                       text: $user.interestTags,
+                       placeholder: sizeCategory.isAccessibilitySize ? "Ex: Design, Unity..." :
+                        "Tag your interests, Ex: Design, Unity, iOS...")
+            .padding(.top, 40)
+
             FormField(
                 title: "Your location",
                 titleAccessibilityLabel: "Your location",
@@ -56,13 +64,6 @@ struct SetupUserInfo: View {
                 text: $user.region,
                 textFieldAccessibilityLabel: "Enter your state and country"
             )
-            .padding(.top, 40)
-            
-            CustomText(title: "Interests",
-                       optional: true,
-                       text: $user.interestTags,
-                       placeholder: sizeCategory.isAccessibilitySize ? "Ex: Design, Unity..." :
-                        "Tag your interests, Ex: Design, Unity, iOS...")
             .padding(.top, 40)
             
             Spacer()

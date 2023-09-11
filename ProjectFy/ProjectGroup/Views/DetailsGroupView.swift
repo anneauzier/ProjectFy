@@ -12,7 +12,7 @@ struct DetailsGroupView: View {
     @Environment(\.dynamicTypeSize) var sizeCategory
     
     let user: User
-    let group: ProjectGroup
+    @State var group: ProjectGroup
     
     @State private var goEditGroupView = false
     
@@ -103,7 +103,7 @@ struct DetailsGroupView: View {
                     }.padding(.top, sizeCategory.isAccessibilitySize ? 40 : 3)
             }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
-            FinalButtons(user: user, group: group)
+            FinalButtons(user: user, group: $group)
         }
         .toolbar {
             if group.admin.id == user.id {
@@ -132,20 +132,22 @@ extension DetailsGroupView {
         @State private var showExitAlert = false
         
         let user: User
-        let group: ProjectGroup
+        @Binding var group: ProjectGroup
         
         var body: some View {
             VStack {
-                if group.admin.id == user.id {
-                    Button {
-                        showFinalizeAlert.toggle()
-                    } label: {
-                        RoundedRectangleContent(cornerRadius: 12, fillColor: Color.textColorBlue) {
-                            Text("Finalize project")
-                                .font(Font.headline)
-                                .foregroundColor(.white)
-                        }
-                    }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                if !group.isFinished {
+                    if group.admin.id == user.id {
+                        Button {
+                            showFinalizeAlert.toggle()
+                        } label: {
+                            RoundedRectangleContent(cornerRadius: 12, fillColor: Color.textColorBlue) {
+                                Text("Finalize project")
+                                    .font(Font.headline)
+                                    .foregroundColor(.white)
+                            }
+                        }.frame(width: UIScreen.main.bounds.width - 40, height: 56)
+                    }
                 }
                 
                 Button {
@@ -174,6 +176,7 @@ extension DetailsGroupView {
                     
                     Button(role: .destructive) {
                         showFinalizeAlert.toggle()
+                        group.isFinished = true
                     } label: {
                         Text("Yes, I do")
                     }

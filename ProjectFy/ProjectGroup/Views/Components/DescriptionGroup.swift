@@ -28,7 +28,7 @@ extension EditDetailsGroup {
                                     textcolor: UIColor(named: "backgroundRole") ?? .black)
                         .focused($isTextFieldFocused)
                         .frame(height: height ?? minHeight)
-//                        .limitInputLength(value: $groupInfo.description, length: 100, commaLimit: 7)
+                        .limitInputLength(value: $groupInfo.description, length: 280)
  
                     Rectangle()
                         .frame(height: 1)

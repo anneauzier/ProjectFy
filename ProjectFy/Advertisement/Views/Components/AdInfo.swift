@@ -40,7 +40,7 @@ extension AdView {
                             .font(Font.largeTitle.bold())
                             .foregroundColor(.backgroundRole)
                         
-                        ExpandableText(updateAdvertisements: $updateAdvertisements, text: advertisement.description,
+                        ExpandableText(text: advertisement.description,
                                        lineLimit: 4, user: user, advertisement: advertisement)
                         
                     }.multilineTextAlignment(.leading)
@@ -49,7 +49,7 @@ extension AdView {
                 
                 Rectangle()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 10)
+                    .frame(height: 6)
                     .foregroundColor(.rectangleLine)
                     .padding(.top, 20)
     
@@ -192,7 +192,9 @@ extension AdView {
                                         UserInfo(user: user, size: 49, nameColor: .white)
                                             .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
                                             .removePadding()
-                                    }.frame(height: 88)
+                                    }
+                                    .frame(height: 88)
+                                    .padding(.top, 6)
                                 }
 
                                 Spacer()
