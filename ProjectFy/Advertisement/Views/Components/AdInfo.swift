@@ -91,8 +91,10 @@ extension AdView {
                                 return 0
                             }
                             
-                            return group.members.count
+                            let usersJoined = group.members.map(\.position).filter({ $0.id == position.id })
+                            return usersJoined.count
                         }
+                        
                         if sizeCategory.isAccessibilitySize {
                             Text("\(usersJoined)/\(position.vacancies)")
                                 .font(.headline)
