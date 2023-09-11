@@ -24,6 +24,7 @@ struct Notifications: View {
                              description: "Join a group asking for a role in a project announce or wait for people to join your project ideas!",
                              heightPH: 0.7)
                 .navigationTitle("Notifications")
+
             } else {
                 List {
                     ForEach(notificationsViewModel.notifications, id: \.id) { notification in
@@ -129,7 +130,7 @@ fileprivate struct NotificationComponent: View {
             }
             .font(.subheadline)
             .padding(.leading, 9)
-        }
+        }.padding(.vertical, 8)
     }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension AdView {
-
+    
     struct AdInfo: View {
         @EnvironmentObject var userViewModel: UserViewModel
         
@@ -26,31 +26,32 @@ extension AdView {
                             Tag(text: String(tag))
                         }
                     }
+                    .padding(.horizontal, 20)
                 }
                 NavigationLink {
                     DetailsAdvertisementView(updateAdvertisements: $updateAdvertisements,
                                              text: advertisement.description, user: user,
                                              advertisement: advertisement)
                 } label: {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 20) {
                         Text(advertisement.title)
                             .font(Font.largeTitle.bold())
                             .foregroundColor(.backgroundRole)
-                            .padding(.top, 10)
                         
-                        ExpandableText(updateAdvertisements: $updateAdvertisements, text: advertisement.description,
+                        ExpandableText(text: advertisement.description,
                                        lineLimit: 4, user: user, advertisement: advertisement)
-                        .padding(.top, 8)
+                        
                     }.multilineTextAlignment(.leading)
+                        .padding(.horizontal, 20)
                 }.foregroundColor(.backgroundRole)
-
+                
                 Rectangle()
                     .frame(maxWidth: .infinity)
                     .frame(height: 6)
                     .foregroundColor(.rectangleLine)
                     .padding(.top, 20)
-                
-            }.frame(width: UIScreen.main.bounds.width - 40)
+    
+            }.frame(width: UIScreen.main.bounds.width)
         }
     }
     
@@ -108,7 +109,6 @@ extension AdView {
                         }
                     }
                 }
-                //              .frame(width: 107)
                 .frame(width: UIScreen.main.bounds.width * 0.28)
                 .zIndex(1)
                 
@@ -139,176 +139,209 @@ extension AdView {
         @State var presentMaxGroupsAlert = false
         
         var body: some View {
-            VStack(alignment: .leading) {
-                Text(position.title)
-                    .font(Font.largeTitle.bold())
-                    .foregroundColor(.backgroundRole)
-                
-                var remainingVacancies: Int {
-                    let vacancies = position.vacancies
-                    
-                    guard let group = groupViewModel.getGroup(by: advertisement.id) else {
-                        return vacancies
-                    }
-                    
-                    return vacancies - group.members.count
-                }
-                
-                Text("\(remainingVacancies) remaining vacancies")
-                    .padding(5)
-                    .foregroundColor(.textColorBlue)
-                    .background(Color.backgroundTextBlue)
-                    .cornerRadius(8)
-                    .removePadding()
-                
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(.gray.opacity(0.2))
-                
-                if !position.description.isEmpty {
-                    Text("What will you do")
-                        .font(Font.title.bold())
-                        .foregroundColor(.backgroundRole)
-                        .padding(.bottom, 5)
-                    
-                    Text(position.description)
-                        .padding(.top, -5)
-                }
-                
-                if let group = groupViewModel.getGroup(by: position.id) {
-                    Text("People who are already in this project role")
-                        .font(Font.title.bold())
-                        .foregroundColor(.backgroundRole)
-                        .removePadding()
-                        .padding(.top, 37)
-                    
-                    ForEach(group.members.map(\.user), id: \.self) { user in
-                        RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
-                            UserInfo(user: user, size: 49, nameColor: .white)
-                                .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
-                                .removePadding()
-                        }.frame(height: 88)
-                    }
-                }
-                
-                Spacer()
-                
-                var isUserInTheGroup: Bool {
-                    guard let group = groupViewModel.getGroup(by: position.id) else {
-                        return false
-                    }
-                    
-                    if group.members.map(\.user).contains(where: { $0.id == user.id }) {
-                        return true
-                    }
-                    
-                    return false
-                }
-                
-                if let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID),
-                   advertisement.owner.id != user.id, !isUserInTheGroup {
-                    
-                    let application = advertisement.applications.first(where: { $0.user.id == user.id })
-                    let hasApplied = application != nil
-                    
-                    var hasAppliedForThisPosition: Bool {
-                        if let application = application, application.position.id == position.id {
-                            return true
+            NavigationView {
+                    VStack(alignment: .leading) {
+                        Text(position.title)
+                            .font(Font.largeTitle.bold())
+                            .foregroundColor(.backgroundRole)
+                            .removePadding()
+                        
+                        var remainingVacancies: Int {
+                            let vacancies = position.vacancies
+                            
+                            guard let group = groupViewModel.getGroup(by: position.id) else {
+                                return vacancies
+                            }
+                            
+                            return vacancies - group.members.count
                         }
                         
-                        return false
-                    }
-                    
-                    let buttonText = hasAppliedForThisPosition ? "Remove request" : "Request to join"
-                    
-                    let maxGroups = groupViewModel.groups.count >= 3
-                    
-                    var isPositionsFilled: Bool {
-                        guard let group = groupViewModel.getGroup(by: position.id) else { return false }
-                        let membersInThisPosition = group.members.filter({ $0.position.id == position.id }).count
+                        Text("\(remainingVacancies) remaining vacancies")
+                            .padding(5)
+                            .foregroundColor(.textColorBlue)
+                            .background(Color.backgroundTextBlue)
+                            .cornerRadius(8)
+                            .removePadding()
+                            .padding(.top, 3)
                         
-                        return membersInThisPosition >= position.vacancies
-                    }
-                    
-                    let isDisabled = (hasApplied && !hasAppliedForThisPosition) || isUserInTheGroup || isPositionsFilled
-                    
-                    Button {
-                        if maxGroups {
-                            Haptics.shared.notification(.error)
-                            presentMaxGroupsAlert = true
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(.gray.opacity(0.2))
+                            .padding(.top, 10)
+                        
+                        if !position.description.isEmpty {
+                            Text("What will you do")
+                                .font(Font.title.bold())
+                                .foregroundColor(.backgroundRole)
+                                .padding(.top, 10)
                             
-                            return
+                            Text(position.description)
+                                .padding(.top, 10)
                         }
                         
-                        advertisementsViewModel.applicationStatus = .sending
-                        
-                        if hasApplied {
-                            advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
-                            updateAdvertisements.toggle()
-                            
-                            notificationsViewModel.deleteRequestNotification(userID: user.id,
-                                                                             advertisementID: advertisement.id)
-                            
-                            return
-                        }
-                        
-                        advertisementsViewModel.apply(user: user, to: advertisement, for: position)
-                        updateAdvertisements.toggle()
-                        
-                        let application = Advertisement.Application(id: UUID().uuidString,
-                                                                    position: position,
-                                                                    user: user)
-                        
-                        notificationsViewModel.pushRequestNotification(target: advertisement.owner,
-                                                                       advertisement: advertisement,
-                                                                       application: application)
-                    } label: {
-                        RoundedRectangleContent(cornerRadius: 8, fillColor: Color.textColorBlue) {
-                            VStack {
-                                if advertisementsViewModel.applicationStatus == .sending {
-                                    ProgressView()
-                                        .progressViewStyle(.circular)
-                                } else {
-                                    Text(buttonText)
-                                        .font(.headline)
-                                        .foregroundColor(.white)
+                        if let group = groupViewModel.getGroup(by: position.id) {
+                            VStack(alignment: .leading) {
+                                Text("People already in this role ")
+                                    .font(Font.title.bold())
+                                    .foregroundColor(.backgroundRole)
+                                    .removePadding()
+                                    .padding(.top, 37)
+                                
+                                ForEach(group.members.map(\.user), id: \.self) { user in
+                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                                        UserInfo(user: user, size: 49, nameColor: .white)
+                                            .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
+                                            .removePadding()
+                                    }
+                                    .frame(height: 88)
+                                    .padding(.top, 6)
+                                }
+
+                                Spacer()
+                                
+                                if group.members.map(\.user).contains(where: { $0.id == user.id }) {
+                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                                        Text("Joined")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }.frame(maxHeight: 60)
                                 }
                             }
+                        } else {
+                            VStack(alignment: .center) {
+                                Text("People already in this role ")
+                                    .font(Font.title.bold())
+                                    .foregroundColor(.backgroundRole)
+                                    .removePadding()
+                                    .padding(.top, 37)
+                                
+                                StructurePlaceholder(image: Image("emptyAd"),
+                                                     title: "There are no people in this role...",
+                                                     description: "You can request to participate in this role by tapping on the request button below.",
+                                                     heightPH: 0.4)
+                            }
                         }
-                        .frame(maxHeight: 60)
-                        .padding(.top, 20)
-                    }
-                    .disabled(isDisabled)
-                    .buttonStyle(.plain)
+                        
+                        Spacer()
+
+                        var isUserInTheGroup: Bool {
+                            guard let group = groupViewModel.getGroup(by: position.id) else {
+                                return false
+                            }
+                            
+                            if group.members.map(\.user).contains(where: { $0.id == user.id }) {
+                                return true
+                            }
+                            
+                            return false
+                        }
+                        
+                        if let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID),
+                           advertisement.owner.id != user.id, !isUserInTheGroup {
+                            
+                            let application = advertisement.applications.first(where: { $0.user.id == user.id })
+                            let hasApplied = application != nil
+                            
+                            var hasAppliedForThisPosition: Bool {
+                                if let application = application, application.position.id == position.id {
+                                    return true
+                                }
+                                
+                                return false
+                            }
+                            
+                            let buttonText = hasAppliedForThisPosition ? "Cancel request" : "Request to join"
+                            
+                            let maxGroups = groupViewModel.groups.count >= 3
+                            
+                            var isPositionsFilled: Bool {
+                                guard let group = groupViewModel.getGroup(by: position.id) else { return false }
+                                let membersInThisPosition = group.members.filter({ $0.position.id == position.id }).count
+
+                                return membersInThisPosition >= position.vacancies
+                            }
+                            
+                            let isDisabled = (hasApplied && !hasAppliedForThisPosition)
+                            || isUserInTheGroup || isPositionsFilled
+                            
+                            Button {
+                                if maxGroups {
+                                    Haptics.shared.notification(.error)
+                                    presentMaxGroupsAlert = true
+                                    
+                                    return
+                                }
+                                
+                                advertisementsViewModel.applicationStatus = .sending
+                                
+                                if hasApplied {
+                                    advertisementsViewModel.unapply(user: user, of: advertisement, from: position)
+                                    updateAdvertisements.toggle()
+                                    
+                                    notificationsViewModel.deleteRequestNotification(userID: user.id,
+                                                                                     advertisementID: advertisement.id)
+                                    
+                                    return
+                                }
+                                
+                                advertisementsViewModel.apply(user: user, to: advertisement, for: position)
+                                updateAdvertisements.toggle()
+                                
+                                let application = Advertisement.Application(id: UUID().uuidString,
+                                                                            position: position,
+                                                                            user: user)
+                                
+                                notificationsViewModel.pushRequestNotification(target: advertisement.owner,
+                                                                               advertisement: advertisement,
+                                                                               application: application)
+                            } label: {
+                                RoundedRectangleContent(cornerRadius: 8, fillColor: hasAppliedForThisPosition ?
+                                                        Color.backgroundTextBlue : Color.textColorBlue) {
+                                    VStack {
+                                        if advertisementsViewModel.applicationStatus == .sending {
+                                            ProgressView()
+                                                .progressViewStyle(.circular)
+                                        } else {
+                                            Text(buttonText)
+                                                .font(.headline)
+                                                .foregroundColor(hasAppliedForThisPosition ? .textColorBlue : .white)
+                                        }
+                                    }
+                                }.frame(maxHeight: 60)
+                                 .padding(.top, 20)
+                            }
+                            .disabled(isDisabled)
+                            .buttonStyle(.plain)
+                            
+                            .simultaneousGesture(TapGesture().onEnded({ _ in
+                                if isDisabled {
+                                    Haptics.shared.notification(.error)
+                                }
+                            }))
+                        }
+                    }.frame(width: UIScreen.main.bounds.width - 40)
                     
-                    .simultaneousGesture(TapGesture().onEnded({ _ in
-                        if isDisabled {
-                            Haptics.shared.notification(.error)
+                        .onDisappear {
+                            advertisementsViewModel.applicationStatus = nil
                         }
-                    }))
-                }
-            }.frame(width: UIScreen.main.bounds.width - 40)
-            
-                .onDisappear {
-                    advertisementsViewModel.applicationStatus = nil
-                }
-            
-                .alert("You can't request to join because you are already in three projects!",
-                       isPresented: $presentMaxGroupsAlert,
-                       actions: {
-                    Button(role: .cancel) {
-                        presentMaxGroupsAlert = false
-                    } label: {
-                        Text("OK")
-                    }
-                },
-                       message: {
-                    Text("You cannot participate in more than three projects at the same time.")
-                }
-                )
-            
-                .foregroundColor(.backgroundRole)
-                .padding(.top, 30)
+                    
+                        .alert("You can't request to join because you are already in three projects!",
+                               isPresented: $presentMaxGroupsAlert,
+                               actions: {
+                            Button(role: .cancel) {
+                                presentMaxGroupsAlert = false
+                            } label: {
+                                Text("OK")
+                            }
+                        }, message: {
+                            Text("You cannot participate in more than three projects at the same time.")
+                        })
+                        .foregroundColor(.backgroundRole)
+                        .padding(.top, 30)
+
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle("Role Description")
+            }
         }
     }
 }

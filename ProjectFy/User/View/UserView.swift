@@ -69,44 +69,46 @@ struct UserView: View {
                     
                     HStack(spacing: 6) {
                         Image("location")
-
+                        
                         Text(user.region)
                             .font(.body)
                             .foregroundColor(.editAdvertisementText)
                     }
                     .accessibilityElement(children: .combine)
                     .accessibilityLabel("Region \(user.region)")
-
+                    
                 }
                 .padding(.horizontal, 20)
                 
-                Divider()
-                    .padding(.top, 12)
-                
-                VStack(alignment: .leading) {
-                    Text("Interests")
-                        .font(Font.headline)
-                        .foregroundColor(.backgroundRole)
+                if !user.interestTags.isEmpty {
+                    
+                    Divider()
                         .padding(.top, 12)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            let splitInterests = user.interestTags.split(separator: ",")
-                            ForEach(splitInterests, id: \.self) { interest in
-                                Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
-                                    .padding(5)
-                                    .font(.callout.bold())
-                                    .foregroundColor(.textColorBlue)
-                                    .lineLimit(0)
-                                    .background(Color.backgroundTextBlue)
-                                    .cornerRadius(8)
+                    VStack(alignment: .leading) {
+                        Text("Interests")
+                            .font(Font.headline)
+                            .foregroundColor(.backgroundRole)
+                            .padding(.top, 12)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                let splitInterests = user.interestTags.split(separator: ",")
+                                ForEach(splitInterests, id: \.self) { interest in
+                                    Text("\(interest.trimmingCharacters(in: .whitespacesAndNewlines))")
+                                        .padding(5)
+                                        .font(.callout.bold())
+                                        .foregroundColor(.textColorBlue)
+                                        .lineLimit(0)
+                                        .background(Color.backgroundTextBlue)
+                                        .cornerRadius(8)
+                                }
                             }
                         }
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 15)
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 15)
-                
                 UserAdvertisement(user: user)
             }
         }
@@ -127,14 +129,14 @@ struct UserView: View {
                     } label: {
                         Label("Log out", image: "logout")
                     }
-
+                    
                     Button(role: .destructive) {
                         Haptics.shared.impact(.rigid)
                         showDeleteAlert.toggle()
                     } label: {
                         Label("Delete Account", image: "deleteAccount")
                     }
-
+                    
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
@@ -215,7 +217,7 @@ struct UserAdvertisement: View {
             
             Divider()
             
-            Text("My projects")
+            Text("Your projects")
                 .font(Font.headline)
                 .foregroundColor(.backgroundRole)
                 .padding(.vertical, 12)
@@ -224,9 +226,9 @@ struct UserAdvertisement: View {
             
             if advertisementsViewModel.advertisements.isEmpty {
                 StructurePlaceholder(image: Image("emptyAd"),
-                             title: "Looks like you haven't \nshared your project \nideas yet :(",
-                             description: "You can start sharing your project \nideas by taping “+” on the home screen",
-                             heightPH: sizeCategory.isAccessibilitySize ? 0.7 : 0.42)
+                                     title: "Looks like you haven't \nshared your project \nideas yet :(",
+                                     description: "You can start sharing your project \nideas by taping “+” on the home screen",
+                                     heightPH: sizeCategory.isAccessibilitySize ? 0.7 : 0.42)
             } else {
                 UserInfo(user: user, size: 49, nameColor: .backgroundRole)
                     .frame(maxWidth: UIScreen.main.bounds.width - 40, alignment: .leading)
@@ -237,8 +239,8 @@ struct UserAdvertisement: View {
                         user: user,
                         advertisement: advertisement,
                         updateAdvertisements: .constant(false)
-//                        selectedPosition: .constant(nil),
-//                        presentSheet: .constant(false)
+                        //                        selectedPosition: .constant(nil),
+                        //                        presentSheet: .constant(false)
                     )
                 }
             }

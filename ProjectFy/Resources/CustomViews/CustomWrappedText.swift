@@ -20,25 +20,25 @@ struct CustomWrappedText: View {
     var body: some View {
         VStack(alignment: .leading) {
 
-            ZStack(alignment: .bottom) {
+            ZStack(alignment: .topLeading) {
+                if text.isEmpty {
+                    Text(placeholder)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 4)
+                        .onTapGesture {
+                            isTextFieldFocused = true
+                    }
+                }
+
                 WrappedTextView(text: $text,
                                 textDidChange: self.textDidChange,
                                 textFont: textFont,
                                 textcolor: textcolor)
                     .focused($isTextFieldFocused)
                     .frame(height: height ?? minHeight)
+                    .limitInputLength(value: $text, length: 280)
 
-                if text.isEmpty {
-                    Text(placeholder)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 7)
-                        .padding(.leading, 3)
-                        .onTapGesture {
-                            isTextFieldFocused = true
-                    }
-                }
             }
-            .padding(.top, -3)
         }.onTapGesture {
             isTextFieldFocused = false
         }

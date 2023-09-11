@@ -28,6 +28,7 @@ struct FormField: View {
             TextField(placeholder, text: $text)
                 .font(.body)
                 .accessibilityLabel(textFieldAccessibilityLabel)
+                .limitInputLength(value: $text, length: 100)
                 .overlay(
                     Rectangle()
                         .frame(height: 1)

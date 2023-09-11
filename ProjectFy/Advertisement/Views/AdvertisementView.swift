@@ -54,7 +54,7 @@ struct AdvertisementsView: View {
                             )
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 20)
                 }
             }
             
@@ -63,7 +63,7 @@ struct AdvertisementsView: View {
             }
             
             .onChange(of: advertisementsViewModel.advertisements, perform: { _ in
-                if didUpdateAdvertisements {
+                if advertisements.isEmpty || didUpdateAdvertisements {
                     updateAdvertisements()
                 }
             })
@@ -179,12 +179,13 @@ struct AdView: View {
                             .padding(.horizontal, 3)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 10)
+                    .padding(.top, 15)
                 }
-            }
+            }.padding(.horizontal, 20)
 
             AdInfo(user: user, advertisement: advertisement, updateAdvertisements: $updateAdvertisements)
-        }.navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationBarTitleDisplayMode(.inline)
         
         .alert("Do you really want to delete this project announcement?", isPresented: $showDeleteAlert) {
             Button(role: .cancel) {
