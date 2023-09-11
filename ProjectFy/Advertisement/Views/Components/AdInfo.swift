@@ -192,7 +192,9 @@ extension AdView {
                                         UserInfo(user: user, size: 49, nameColor: .white)
                                             .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
                                             .removePadding()
-                                    }.frame(height: 88)
+                                    }
+                                    .frame(height: 88)
+                                    .padding(.top, 6)
                                 }
 
                                 Spacer()

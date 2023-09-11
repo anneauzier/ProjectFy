@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class GroupViewModel: ObservableObject {
-    
+
     @Published var groups: [ProjectGroup] = []
     @Published var exitingStatus: TransactionStatus?
     

@@ -49,7 +49,7 @@ struct GroupView: View {
                                             .font(.headline)
                                             .foregroundColor(.backgroundRole)
                                         
-                                        if group.isFinish {
+                                        if group.isFinished {
                                             Text("This project was finalized")
                                                 .font(.subheadline)
                                                 .foregroundColor(.editAdvertisementText)

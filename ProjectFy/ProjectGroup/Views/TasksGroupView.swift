@@ -52,7 +52,7 @@ struct TasksGroupView: View {
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
             }
-            if group.isFinish {
+            if group.isFinished {
                 TaskField(user: user, group: group)
                     .disabled(true)
             } else {

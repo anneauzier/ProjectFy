@@ -136,7 +136,7 @@ extension DetailsGroupView {
         
         var body: some View {
             VStack {
-                if !group.isFinish {
+                if !group.isFinished {
                     if group.admin.id == user.id {
                         Button {
                             showFinalizeAlert.toggle()
@@ -176,7 +176,7 @@ extension DetailsGroupView {
                     
                     Button(role: .destructive) {
                         showFinalizeAlert.toggle()
-                        group.isFinish = true
+                        group.isFinished = true
                     } label: {
                         Text("Yes, I do")
                     }
