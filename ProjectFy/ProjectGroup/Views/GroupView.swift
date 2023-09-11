@@ -40,7 +40,7 @@ struct GroupView: View {
                                 selectedGroup = group
                                 isTasksActive = true
                             } label: {
-                                HStack {
+                                HStack(spacing: 10) {
                                     Image("\(group.avatar)")
                                         .resizable()
                                         .frame(width: 50, height: 50)
@@ -49,21 +49,27 @@ struct GroupView: View {
                                             .font(.headline)
                                             .foregroundColor(.backgroundRole)
                                         
-                                        var names: [String] {
-                                            var users = group.members.map(\.user)
+                                        if group.isFinish {
+                                            Text("This project was finalized")
+                                                .font(.subheadline)
+                                                .foregroundColor(.editAdvertisementText)
+                                        } else {
+                                            var names: [String] {
+                                                var users = group.members.map(\.user)
+                                                
+                                                users.insert(group.admin, at: 0)
+                                                users.removeAll(where: { $0.id == user.id })
+                                                
+                                                var names = users.map(\.name)
+                                                names.insert("You", at: 0)
+                                                
+                                                return names
+                                            }
                                             
-                                            users.insert(group.admin, at: 0)
-                                            users.removeAll(where: { $0.id == user.id })
-                                            
-                                            var names = users.map(\.name)
-                                            names.insert("You", at: 0)
-                                            
-                                            return names
+                                            Text("\(names.joined(separator: ", "))")
+                                                .font(.subheadline)
+                                                .foregroundColor(.editAdvertisementText)
                                         }
-                                        
-                                        Text("\(names.joined(separator: ", "))")
-                                            .font(.subheadline)
-                                            .foregroundColor(.editAdvertisementText)
                                     }
                                 }
                             }
