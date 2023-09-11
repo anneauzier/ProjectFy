@@ -1,7 +1,0 @@
-{
-  "aps": {
-    "alert": "teste",
-    "sound": "default",
-    "lunk_url": "https://raywenderlich.com" 
-  }
-}
