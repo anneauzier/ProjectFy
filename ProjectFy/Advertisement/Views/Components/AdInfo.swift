@@ -222,6 +222,7 @@ extension AdView {
                                                      title: "There are no people in this role...",
                                                      description: "You can request to participate in this role by tapping on the request button below.",
                                                      heightPH: 0.4)
+                                .padding(.bottom, 50)
                             }.frame(width: UIScreen.main.bounds.width - 40)
                         }
                         
