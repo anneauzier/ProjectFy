@@ -140,6 +140,7 @@ extension AdView {
         
         var body: some View {
             NavigationView {
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
                         Text(position.title)
                             .font(Font.largeTitle.bold())
@@ -196,7 +197,7 @@ extension AdView {
                                     .frame(height: 88)
                                     .padding(.top, 6)
                                 }
-
+                                
                                 Spacer()
                                 
                                 if group.members.map(\.user).contains(where: { $0.id == user.id }) {
@@ -204,7 +205,8 @@ extension AdView {
                                         Text("Joined")
                                             .font(.headline)
                                             .foregroundColor(.white)
-                                    }.frame(maxHeight: 60)
+                                    }.frame(height: 60)
+                                     .padding(.top, 220)
                                 }
                             }
                         } else {
@@ -214,16 +216,16 @@ extension AdView {
                                     .foregroundColor(.backgroundRole)
                                     .removePadding()
                                     .padding(.top, 37)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 StructurePlaceholder(image: Image("emptyAd"),
                                                      title: "There are no people in this role...",
                                                      description: "You can request to participate in this role by tapping on the request button below.",
                                                      heightPH: 0.4)
-                            }
+                                .padding(.bottom, 50)
+                            }.frame(width: UIScreen.main.bounds.width - 40)
                         }
                         
-                        Spacer()
-
                         var isUserInTheGroup: Bool {
                             guard let group = groupViewModel.getGroup(by: position.id) else {
                                 return false
@@ -235,6 +237,8 @@ extension AdView {
                             
                             return false
                         }
+                        
+                        Spacer()
                         
                         if let advertisement = advertisementsViewModel.getAdvertisement(with: position.advertisementID),
                            advertisement.owner.id != user.id, !isUserInTheGroup {
@@ -263,7 +267,7 @@ extension AdView {
                             
                             let isDisabled = (hasApplied && !hasAppliedForThisPosition)
                             || isUserInTheGroup || isPositionsFilled
-                            
+                                                        
                             Button {
                                 if maxGroups {
                                     Haptics.shared.notification(.error)
@@ -307,8 +311,7 @@ extension AdView {
                                                 .foregroundColor(hasAppliedForThisPosition ? .textColorBlue : .white)
                                         }
                                     }
-                                }.frame(maxHeight: 60)
-                                 .padding(.top, 20)
+                                }.frame(height: 60)
                             }
                             .disabled(isDisabled)
                             .buttonStyle(.plain)
@@ -338,9 +341,9 @@ extension AdView {
                         })
                         .foregroundColor(.backgroundRole)
                         .padding(.top, 30)
-
                         .navigationBarTitleDisplayMode(.inline)
                         .navigationTitle("Role Description")
+                }.frame(width: UIScreen.main.bounds.width)
             }
         }
     }
