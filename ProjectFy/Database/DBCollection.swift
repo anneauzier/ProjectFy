@@ -105,8 +105,6 @@ class DBCollection {
             
             return nil
         }, completion: { (object, error) in
-            completion()
-            
             if let error = error {
                 print("Transaction failed: \(error)")
                 Haptics.shared.notification(.error)
@@ -115,6 +113,8 @@ class DBCollection {
             }
             
             print("Transaction successfully committed!: \(String(describing: object))")
+            completion()
+            
             Haptics.shared.notification(.success)
         })
     }

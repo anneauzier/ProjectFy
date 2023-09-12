@@ -7,16 +7,36 @@
 
 import SwiftUI
 
+// TODO: atualizar ao sair do grupo
+// TODO: atualizar ao finalizar projeto
+
 struct TasksGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
     
     let group: ProjectGroup
     let user: User
+    let refresh: () -> Void
+    
+    @Binding var shouldRefresh: Bool
+    
+    @Binding var isTasksActive: Bool
+    @Binding var isDetailsActive: Bool
     
     var body: some View {
         VStack {
             VStack {
-                GroupInfo(user: user, group: group)
+                GroupLink(isActive: $isDetailsActive, selectedGroup: group) { group in
+                    DetailsGroupView(
+                        user: user,
+                        group: group,
+                        shouldRefresh: $shouldRefresh,
+                        refresh: refresh,
+                        presentTasks: $isTasksActive,
+                        presentDetails: $isDetailsActive
+                    )
+                }
+                
+                GroupInfo(user: user, group: group, isDetailsActive: $isDetailsActive)
                 
                 ScrollView {
                     if group.tasks.isEmpty {
@@ -53,15 +73,23 @@ struct TasksGroupView: View {
                 .frame(maxWidth: .infinity)
             }
             if group.isFinished {
-                TaskField(user: user, group: group)
+                TaskField(user: user, group: group, shouldRefresh: $shouldRefresh)
                     .disabled(true)
             } else {
-                TaskField(user: user, group: group)
+                TaskField(user: user, group: group, shouldRefresh: $shouldRefresh)
             }
             
         }
+        
         .onAppear {
             TabBarModifier.hideTabBar()
+        }
+        
+        .onChange(of: viewModel.groups) { _ in
+            if shouldRefresh {
+                refresh()
+                shouldRefresh.toggle()
+            }
         }
     }
 }
@@ -72,10 +100,21 @@ struct GroupInfo: View {
     let user: User
     let group: ProjectGroup
     
+    @Binding var isDetailsActive: Bool
+    
+    private var transaction: Transaction {
+        var transaction = Transaction()
+        
+        transaction.disablesAnimations = isDetailsActive
+        return transaction
+    }
+    
     var body: some View {
         VStack {
-            NavigationLink {
-                DetailsGroupView(user: user, group: group)
+            Button {
+                withTransaction(transaction) {
+                    isDetailsActive.toggle()
+                }
             } label: {
                 HStack(alignment: .center, spacing: 10) {
                     Image("\(group.avatar)")
@@ -108,8 +147,9 @@ struct GroupInfo: View {
                 
                 Image(systemName: "chevron.forward")
                     .foregroundColor(.backgroundRole)
-            }.padding(.horizontal, 15)
-                .navigationBarTitleDisplayMode(.inline)
+            }
+            .padding(.horizontal, 15)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     

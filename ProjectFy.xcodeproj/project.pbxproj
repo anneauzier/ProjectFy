@@ -19,6 +19,7 @@
 		671FA2BB2A9339C4003684AC /* Date+formattedInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671FA2BA2A9339C4003684AC /* Date+formattedInterval.swift */; };
 		673BD3082A8AFE7800DD161F /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BD3072A8AFE7800DD161F /* FormField.swift */; };
 		673BD30B2A8AFEB000DD161F /* SetupUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BD30A2A8AFEB000DD161F /* SetupUserInfo.swift */; };
+		673D4A3F2AB0E23100239FED /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A3E2AB0E23100239FED /* Refreshable.swift */; };
 		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
 		674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982732A82F3E000A1C98E /* DropDownButton.swift */; };
 		674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 674982782A83E2C500A1C98E /* FirebaseAuth */; };
@@ -95,6 +96,7 @@
 		671FA2BA2A9339C4003684AC /* Date+formattedInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+formattedInterval.swift"; sourceTree = "<group>"; };
 		673BD3072A8AFE7800DD161F /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		673BD30A2A8AFEB000DD161F /* SetupUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupUserInfo.swift; sourceTree = "<group>"; };
+		673D4A3E2AB0E23100239FED /* Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
 		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		674982732A82F3E000A1C98E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		6749827A2A83E47200A1C98E /* ProjectFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFy.entitlements; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 				9F4390C82A81376500A3A393 /* HomeView.swift */,
 				674982802A857C9800A1C98E /* Utils.swift */,
 				671CA5192A9543CD00CF5109 /* MessagingService.swift */,
+				673D4A3E2AB0E23100239FED /* Refreshable.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
 				9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */,
+				673D4A3F2AB0E23100239FED /* Refreshable.swift in Sources */,
 				9F802AC72A84386200003925 /* DetailsGroupView.swift in Sources */,
 				671FA2B62A93392E003684AC /* RequestNotification.swift in Sources */,
 				9F8F29C52A7977610030958B /* EditUserView.swift in Sources */,

@@ -14,7 +14,14 @@ struct DetailsGroupView: View {
     let user: User
     @State var group: ProjectGroup
     
+    @Binding var shouldRefresh: Bool
+    let refresh: () -> Void
+    
+    @Binding var presentTasks: Bool
+    @Binding var presentDetails: Bool
+    
     @State private var goEditGroupView = false
+    
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -103,7 +110,14 @@ struct DetailsGroupView: View {
                     }.padding(.top, sizeCategory.isAccessibilitySize ? 40 : 3)
             }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
-            FinalButtons(user: user, group: $group)
+            FinalButtons(
+                user: user,
+                group: $group,
+                shouldRefresh: $shouldRefresh,
+                refresh: refresh,
+                presentDetails: $presentDetails,
+                presentTasks: $presentTasks
+            )
         }
         .toolbar {
             if group.admin.id == user.id {
@@ -132,7 +146,13 @@ extension DetailsGroupView {
         @State private var showExitAlert = false
         
         let user: User
+        
         @Binding var group: ProjectGroup
+        @Binding var shouldRefresh: Bool
+        let refresh: () -> Void
+        
+        @Binding var presentDetails: Bool
+        @Binding var presentTasks: Bool
         
         var body: some View {
             VStack {
@@ -177,6 +197,9 @@ extension DetailsGroupView {
                     Button(role: .destructive) {
                         showFinalizeAlert.toggle()
                         group.isFinished = true
+                        
+                        viewModel.editGroup(group)
+                        shouldRefresh = true
                     } label: {
                         Text("Yes, I do")
                     }
@@ -205,7 +228,22 @@ extension DetailsGroupView {
                     Text("You won't be able to rejoin the group unless you are request to join a project role again.")
                         .multilineTextAlignment(.center)
                 }
-            }.padding(.top, 110)
+            }
+            .padding(.top, 110)
+            
+            .onChange(of: viewModel.groups) { groups in
+                if let group = viewModel.getGroup(by: group.id) {
+                    refresh()
+                    return
+                }
+                
+                viewModel.exitingStatus = .completed
+                
+                presentDetails = false
+                presentTasks = false
+                
+                refresh()
+            }
         }
     }
 }

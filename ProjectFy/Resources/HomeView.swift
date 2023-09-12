@@ -34,6 +34,8 @@ struct HomeView: View {
 }
 
 fileprivate struct TabBarView: View {
+    @EnvironmentObject var groupViewModel: GroupViewModel
+    
     let user: User
     @Binding var isNewUser: Bool?
     
@@ -54,7 +56,7 @@ fileprivate struct TabBarView: View {
                 Notifications(user: user)
                     .tabItem { Label("Notifications", systemImage: "bell") }
                     
-                GroupView(user: user)
+                GroupView(user: user, viewModel: groupViewModel)
                     .tabItem { Label("Group", systemImage: "person.3") }
                 
                 NavigationView {
