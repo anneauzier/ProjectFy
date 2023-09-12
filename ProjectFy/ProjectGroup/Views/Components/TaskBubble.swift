@@ -17,7 +17,7 @@ struct TaskBubble: View {
             Text(user.name)
                 .padding()
                 .font(.headline)
-                .frame(maxWidth: 288, alignment: isMyself ? .leading : .trailing)
+                .frame(maxWidth: 288, alignment: .leading)
                 .foregroundColor(.white)
                 .background(isMyself ? Color.textColorBlue : Color.backgroundRole)
             
@@ -25,7 +25,7 @@ struct TaskBubble: View {
                 HStack {
                     Text(task.taskDescription)
                         .padding()
-                        .frame(maxWidth: 288, alignment: isMyself ? .leading : .trailing)
+                        .frame(maxWidth: 288, alignment: .leading)
                         .background(isMyself ? Color.backgroundTextBlue : Color.bubbleColor)
                         .overlay(alignment: .topTrailing) {
                             Text("\(task.date.formatted(.dateTime.hour().minute()))")
