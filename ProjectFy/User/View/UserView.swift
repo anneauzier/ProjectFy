@@ -189,7 +189,7 @@ struct UserView: View {
         
         .fullScreenCover(isPresented: $presentSignIn) {
             NavigationView {
-                SignInView(isDeletingAccount: true, isNewUser: .constant(false))
+                SignInView(isNewUser: .constant(false), isDeletingAccount: true)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {

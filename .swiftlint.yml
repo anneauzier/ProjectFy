@@ -18,6 +18,7 @@ disabled_rules:
   - trailing_whitespace
   - no_direct_standard_out_logs
   - private_over_fileprivate
+  - line_length
 
 excluded:
   - Carthage
@@ -54,6 +55,3 @@ custom_rules:
     match_kinds:
     - identifier
     message: "Instead of #filePath, use #fileID."
-  line_length:
-    warning: 250
-    ignores_comments: true
