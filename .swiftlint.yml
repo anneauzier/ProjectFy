@@ -54,3 +54,6 @@ custom_rules:
     match_kinds:
     - identifier
     message: "Instead of #filePath, use #fileID."
+  line_length:
+    warning: 250
+    ignores_comments: true
