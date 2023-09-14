@@ -106,10 +106,10 @@ struct GroupView: View {
                     }
                     
                     if viewModel.groups.isEmpty {
-                        StructurePlaceholder(image: Image("emptyAd"),
+                        CustomPlaceholder(image: Image("emptyAd"),
                                      title: "You don't have any \ngroups yet :(",
                                      description: "Join a group asking for a role in a \nproject announce",
-                                     heightPH: 0.7)
+                                     height: 0.7)
                         .frame(maxWidth: .infinity, alignment: .center)
                     }
                 }

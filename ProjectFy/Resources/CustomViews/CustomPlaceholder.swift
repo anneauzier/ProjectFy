@@ -1,5 +1,5 @@
 //
-//  StructurePlaceholder.swift
+//  CustomPlaceholder.swift
 //  ProjectFy
 //
 //  Created by Anne Victoria Batista Auzier on 22/08/23.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct StructurePlaceholder: View {
+struct CustomPlaceholder: View {
     let image: Image
     let title: String
     let description: String
-    let heightPH: Double
+    let height: Double
     
     var body: some View {
         VStack(alignment: .center) {
@@ -37,7 +37,7 @@ struct StructurePlaceholder: View {
                 .lineLimit(nil)
                 .opacity(0.8)
         }
-        .frame(height: UIScreen.main.bounds.height * heightPH)
+        .frame(height: UIScreen.main.bounds.height * height)
     }
 }
 

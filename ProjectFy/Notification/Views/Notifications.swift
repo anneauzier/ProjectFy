@@ -18,11 +18,11 @@ struct Notifications: View {
     var body: some View {
         NavigationView {
             if notificationsViewModel.notifications.isEmpty {
-                StructurePlaceholder(
+                CustomPlaceholder(
                              image: Image("emptyAd"),
                              title: "You don't have any notifications yet :(",
                              description: "Join a group asking for a role in a project announce or wait for people to join your project ideas!",
-                             heightPH: 0.7)
+                             height: 0.7)
                 .navigationTitle("Notifications")
 
             } else {

@@ -55,7 +55,7 @@
 		9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2AC8652A8D64C000CBE3A5 /* View+keyboardControls.swift */; };
 		9F38975D2AA76F9D0000E906 /* DetailsAdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F38975C2AA76F9D0000E906 /* DetailsAdvertisementView.swift */; };
 		9F3A8FB12A946030003A1032 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB02A946030003A1032 /* CustomTextField.swift */; };
-		9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */; };
+		9F3A8FB42A94717E003A1032 /* CustomPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A8FB32A94717E003A1032 /* CustomPlaceholder.swift */; };
 		9F4390C92A81376500A3A393 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4390C82A81376500A3A393 /* HomeView.swift */; };
 		9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */; };
 		9F503D832AA11F2C00BE0933 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F503D822AA11F2C00BE0933 /* CustomAlert.swift */; };
@@ -130,7 +130,7 @@
 		9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFyDebug.entitlements; sourceTree = "<group>"; };
 		9F38975C2AA76F9D0000E906 /* DetailsAdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsAdvertisementView.swift; sourceTree = "<group>"; };
 		9F3A8FB02A946030003A1032 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructurePlaceholder.swift; sourceTree = "<group>"; };
+		9F3A8FB32A94717E003A1032 /* CustomPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPlaceholder.swift; sourceTree = "<group>"; };
 		9F4390C82A81376500A3A393 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9F495A372A8FF89F00DB8EB9 /* View+tabBarHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+tabBarHidden.swift"; sourceTree = "<group>"; };
 		9F503D822AA11F2C00BE0933 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
@@ -405,14 +405,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9F3A8FB22A947150003A1032 /* Placeholder */ = {
-			isa = PBXGroup;
-			children = (
-				9F3A8FB32A94717E003A1032 /* StructurePlaceholder.swift */,
-			);
-			path = Placeholder;
-			sourceTree = "<group>";
-		};
 		9F4390C52A81316C00A3A393 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,6 +521,7 @@
 		9FF1EBD52AA21BE200422203 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				9F3A8FB32A94717E003A1032 /* CustomPlaceholder.swift */,
 				9F503D822AA11F2C00BE0933 /* CustomAlert.swift */,
 				9F3A8FB02A946030003A1032 /* CustomTextField.swift */,
 				9FF1EBD12AA18C1F00422203 /* CustomWrappedText.swift */,
@@ -556,7 +549,6 @@
 		9FFECDE92A71EBEF0053F29D /* ProjectFy */ = {
 			isa = PBXGroup;
 			children = (
-				9F3A8FB22A947150003A1032 /* Placeholder */,
 				671FA2A82A8FB419003684AC /* Notification */,
 				9F31E8052A8ABDBE009223C1 /* ProjectFyDebug.entitlements */,
 				9F5C15942A8AAF4E00162E2E /* Info.plist */,
@@ -708,7 +700,7 @@
 				9FC497712AA64A88001FA984 /* ExpandableText.swift in Sources */,
 				9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */,
 				9FAE4F6C2A82C5580086725F /* GroupViewModel.swift in Sources */,
-				9F3A8FB42A94717E003A1032 /* StructurePlaceholder.swift in Sources */,
+				9F3A8FB42A94717E003A1032 /* CustomPlaceholder.swift in Sources */,
 				9FFECDEB2A71EBEF0053F29D /* ProjectFyApp.swift in Sources */,
 				674982812A857C9800A1C98E /* Utils.swift in Sources */,
 				9F495A382A8FF89F00DB8EB9 /* View+tabBarHidden.swift in Sources */,

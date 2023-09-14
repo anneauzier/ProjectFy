@@ -30,15 +30,15 @@ struct AdvertisementsView: View {
             ScrollView(showsIndicators: false) {
                 Divider()
                 if !networking.isConnected {
-                    StructurePlaceholder(image: Image("networking"),
+                    CustomPlaceholder(image: Image("networking"),
                                          title: "Sorry, we couldn't load this page :(",
                                          description: "Check your connection to see if there's something wrong",
-                                         heightPH: 0.7)
+                                         height: 0.7)
                 } else if advertisementsViewModel.advertisements.isEmpty {
-                    StructurePlaceholder(image: Image("emptyAd"),
+                    CustomPlaceholder(image: Image("emptyAd"),
                                          title: "Looks like people \nhaven't shared project \nideas yet :(",
                                          description: "You can start to share your project ideas by taping on “+”",
-                                         heightPH: 0.7)
+                                         height: 0.7)
                 } else {
                     VStack {
                         ForEach($advertisements, id: \.self) { $advertisement in

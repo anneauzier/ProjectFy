@@ -17,9 +17,9 @@ struct SignInView: View {
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
     @EnvironmentObject var groupViewModel: GroupViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
-    
-    var isDeletingAccount = false
+
     @Binding var isNewUser: Bool?
+    var isDeletingAccount = false
     
     var body: some View {
         VStack {
@@ -128,8 +128,8 @@ struct SignInView: View {
     }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView(isNewUser: .constant(true))
-    }
-}
+//struct SwiftUIView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignInView(isNewUser: .constant(true))
+//    }
+//}
