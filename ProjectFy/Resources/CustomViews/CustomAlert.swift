@@ -18,7 +18,7 @@ struct CustomAlert: View {
  
         }.frame(width: UIScreen.main.bounds.width - 80, alignment: .leading)
             .padding()
-            .background(Color.black.opacity(0.8))
+            .background(Color.alertColor)
             .cornerRadius(12)
     }
 }
@@ -29,3 +29,9 @@ extension AnyTransition {
             .combined(with: .move(edge: .bottom))
     }
 }
+
+//struct CustomAlert_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CustomAlert(text: "Feedback Test")
+//    }
+//}

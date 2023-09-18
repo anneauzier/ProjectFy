@@ -18,20 +18,6 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
 //                     avatar: "Group2",
 //                     adminID: "123456",
 //                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
-//                     tasks: []),
-//        ProjectGroup(id: "12134",
-//                     name: "God Of War - Clone",
-//                     description: "Lorem Ipsum is simply dummy text.",
-//                     avatar: "Group4",
-//                     adminID: "123455",
-//                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
-//                     tasks: []),
-//        ProjectGroup(id: "12135",
-//                     name: "GTA RJ",
-//                     description: "Lorem Ipsum is simply dummy text.",
-//                     avatar: "Group5",
-//                     adminID: "123454",
-//                     link: "https://trello.com/b/DwEhWYYJ/projectfy",
 //                     tasks: [])
     ]
 
@@ -62,8 +48,7 @@ final class GroupMockupService: ObservableObject, GroupProtocol {
     }
     
     func remove(member: ProjectGroup.Member, from group: ProjectGroup, completion: @escaping () -> Void) {
-        guard let index = groups.first(where: {$0.id == group.id}) else { return }
-//        groups[index].members.removeAll(where: { $0.id == member.id })
+        guard groups.first(where: {$0.id == group.id}) != nil else { return }
     }
     
     func add(task: ProjectGroup.Task, on group: ProjectGroup) {

@@ -1,5 +1,5 @@
 //
-//  DetailsAdvertisementView.swift
+//  DetailsAdView.swift
 //  ProjectFy
 //
 //  Created by Anne Victoria Batista Auzier on 05/09/23.
@@ -7,24 +7,25 @@
 
 import SwiftUI
 
-struct DetailsAdvertisementView: View {
+struct DetailsAdView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
+    
     @State var advertisements: [Advertisement] = []
+    @State var selectedPosition: ProjectGroup.Position?
+    
+    @State var presentSheet = false
+    @State var presentPositionSheet = false
+    @State var presentMaxGroupsAlert = false
+    @State var didUpdateAdvertisements = false
+
+    @State var editingID: String?
+    
     @Binding var updateAdvertisements: Bool
 
     let text: String
     let user: User
     let advertisement: Advertisement
-    
-    @State var presentSheet = false
-    @State var editingID: String?
-    
-    @State var selectedPosition: ProjectGroup.Position?
-    @State var presentPositionSheet = false
-    
-    @State var presentMaxGroupsAlert = false
-    @State var didUpdateAdvertisements = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -35,7 +36,7 @@ struct DetailsAdvertisementView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(advertisement.tags.split(separator: ","), id: \.self) { tag in
-                            AdView.Tag(text: String(tag))
+                            AdItemView.Tag(text: String(tag))
                         }
                     }
                 }
@@ -59,7 +60,7 @@ struct DetailsAdvertisementView: View {
                             selectedPosition = position
                             Haptics.shared.selection()
                         } label: {
-                            AdView.Position(user: user, advertisement: advertisement, position: position)
+                            AdItemView.Position(user: user, advertisement: advertisement, position: position)
                         }
                         
                         .onChange(of: selectedPosition, perform: { selectedPosition in
@@ -76,7 +77,7 @@ struct DetailsAdvertisementView: View {
                         
                         .sheet(isPresented: $presentSheet) {
                             if let position = selectedPosition {
-                                AdView.PositionDetails(
+                                AdItemView.PositionDetails(
                                     user: user,
                                     advertisement: advertisement,
                                     position: position,

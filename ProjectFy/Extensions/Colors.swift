@@ -28,4 +28,5 @@ extension Color {
     static let fieldColor = Color("fieldColor")
     static let signInColor = Color("signInColor")
     static let placeholdertitle = Color("placeholdertitle")
+    static let alertColor = Color("alertColor")
 }

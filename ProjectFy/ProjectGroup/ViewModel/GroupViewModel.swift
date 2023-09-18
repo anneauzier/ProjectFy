@@ -82,7 +82,7 @@ final class GroupViewModel: ObservableObject {
             service.delete(with: group.id)
             return
         }
-        
+
         group.admin = newAdmin
         group.members.removeAll(where: { $0.user.id == newAdmin.id })
         
@@ -105,7 +105,7 @@ final class GroupViewModel: ObservableObject {
     }
     
     func exitOfAllGroups() {
-        var groupsIDs = groups.map(\.id)
+        let groupsIDs = groups.map(\.id)
         
         groupsIDs.forEach { [weak self] id in
             self?.deleteGroup(with: id)

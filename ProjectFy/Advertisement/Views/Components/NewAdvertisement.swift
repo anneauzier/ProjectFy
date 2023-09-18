@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-extension AdvertisementsView {
+extension AdvertisementListView {
     struct NewAdvertisement: View {
         let owner: User
         var viewModel: AdvertisementsViewModel

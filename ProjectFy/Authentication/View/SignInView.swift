@@ -22,7 +22,7 @@ struct SignInView: View {
     var isDeletingAccount = false
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Image("logo")
                 .resizable()
                 .frame(width: 182, height: 46)
@@ -35,15 +35,14 @@ struct SignInView: View {
                     Text("We're very sad to know that you want to \("delete".colored(with: .unavailableText)) your account on the app :(")
                         .font(Font.title.bold())
                         .foregroundColor(.backgroundRole)
-                        .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width - 68)
                     
                     Text("To \("delete your account".colored(with: .unavailableText)) you need to log into the app again...")
                         .foregroundColor(.editAdvertisementText)
-                        .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width - 98)
                         .padding(.top, 20)
-                }
+                }.multilineTextAlignment(.center)
+
             } else {
                 Text("Find \("people".colored(with: .textColorBlue)) to help you bring your \("ideas".colored(with: .textColorBlue)) into the real world! :D")
                     .multilineTextAlignment(.center)
@@ -128,8 +127,8 @@ struct SignInView: View {
     }
 }
 
-//struct SwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignInView(isNewUser: .constant(true))
-//    }
-//}
+struct SwiftUIView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignInView(isNewUser: .constant(true))
+    }
+}

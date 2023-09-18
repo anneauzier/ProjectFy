@@ -50,7 +50,7 @@ fileprivate struct TabBarView: View {
             SetupInitialConfigs(user: user, isNewUser: $isNewUser)
         } else {
             TabView {
-                AdvertisementsView(user: user)
+                AdvertisementListView(user: user)
                     .tabItem { Label("Home", systemImage: "house") }
                 
                 Notifications(user: user)
