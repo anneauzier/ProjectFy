@@ -12,7 +12,6 @@ struct TaskField: View {
     
     let user: User
     let group: ProjectGroup
-    @Binding var shouldRefresh: Bool
     
     @State var message: String = ""
 
@@ -29,10 +28,11 @@ struct TaskField: View {
                 
                 Button {
                     let task = ProjectGroup.Task(user: user, description: message)
+                    
+                    viewModel.refreshGroups()
                     viewModel.add(task: task, to: group)
                     
                     message = ""
-                    shouldRefresh.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)

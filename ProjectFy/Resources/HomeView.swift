@@ -57,7 +57,7 @@ fileprivate struct TabBarView: View {
                 Notifications(user: user)
                     .tabItem { Label("Notifications", systemImage: "bell") }
                     
-                GroupView(user: user, viewModel: groupViewModel)
+                GroupView(user: user)
                     .tabItem { Label("Group", systemImage: "person.3") }
                 
                 NavigationView {

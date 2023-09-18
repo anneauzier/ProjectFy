@@ -8,20 +8,13 @@
 import SwiftUI
 
 struct DetailsGroupView: View {
-    @EnvironmentObject var viewModel: GroupViewModel
     @Environment(\.dynamicTypeSize) var sizeCategory
     
+    @EnvironmentObject var coordinator: Coordinator<GroupsRouter>
+    @EnvironmentObject var viewModel: GroupViewModel
+    
     let user: User
-    @State var group: ProjectGroup
-    
-    @Binding var shouldRefresh: Bool
-    let refresh: () -> Void
-    
-    @Binding var presentTasks: Bool
-    @Binding var presentDetails: Bool
-    
-    @State private var goEditGroupView = false
-    
+    let group: ProjectGroup
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -110,25 +103,15 @@ struct DetailsGroupView: View {
                     }.padding(.top, sizeCategory.isAccessibilitySize ? 40 : 3)
             }.frame(maxWidth: UIScreen.main.bounds.width - 40)
             
-            FinalButtons(
-                user: user,
-                group: $group,
-                shouldRefresh: $shouldRefresh,
-                refresh: refresh,
-                presentDetails: $presentDetails,
-                presentTasks: $presentTasks
-            )
+            FinalButtons(user: user, group: group)
         }
         .toolbar {
             if group.admin.id == user.id {
                 Button {
-                    goEditGroupView.toggle()
+                    coordinator.show(.editGroup(group))
                 } label: {
                     Text("Edit")
                         .foregroundColor(.textColorBlue)
-                }
-                .sheet(isPresented: $goEditGroupView) {
-                    EditDetailsGroup(group: group, viewModel: viewModel)
                 }
             }
         }
@@ -142,17 +125,12 @@ extension DetailsGroupView {
     
     struct FinalButtons: View {
         @EnvironmentObject var viewModel: GroupViewModel
-        @State private var showFinalizeAlert = false
-        @State private var showExitAlert = false
         
         let user: User
+        @State var group: ProjectGroup
         
-        @Binding var group: ProjectGroup
-        @Binding var shouldRefresh: Bool
-        let refresh: () -> Void
-        
-        @Binding var presentDetails: Bool
-        @Binding var presentTasks: Bool
+        @State private var showFinalizeAlert = false
+        @State private var showExitAlert = false
         
         var body: some View {
             VStack {
@@ -198,8 +176,8 @@ extension DetailsGroupView {
                         showFinalizeAlert.toggle()
                         group.isFinished = true
                         
+                        viewModel.refreshGroups()
                         viewModel.editGroup(group)
-                        shouldRefresh = true
                     } label: {
                         Text("Yes, I do")
                     }
@@ -218,7 +196,10 @@ extension DetailsGroupView {
                     
                     Button(role: .destructive) {
                         showExitAlert.toggle()
+                        
                         viewModel.exitingStatus = .sending
+                        viewModel.refreshGroups()
+                        
                         viewModel.exitOfGroup(user: user, group: group)
                     } label: {
                         Text("Yes, I do")
@@ -233,16 +214,10 @@ extension DetailsGroupView {
             
             .onChange(of: viewModel.groups) { groups in
                 if let group = viewModel.getGroup(by: group.id) {
-                    refresh()
                     return
                 }
                 
                 viewModel.exitingStatus = .completed
-                
-                presentDetails = false
-                presentTasks = false
-                
-                refresh()
             }
         }
     }

@@ -48,6 +48,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let self = self else { return }
             
             notificationsViewModel.startListening(with: user.id)
+            groupViewModel.startListening(with: user.id)
             
             let tabBarController = TabBarController(user: user,
                                                     self.userViewModel,

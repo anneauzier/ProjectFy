@@ -13,25 +13,29 @@ final class GroupViewModel: ObservableObject {
     @Published var exitingStatus: TransactionStatus?
     
     private let service: GroupProtocol
-    private var allGroups: [ProjectGroup] = []
     
     private var userID: String?
     
+    private var shouldRefreshGroups = false
+    private var allGroups: [ProjectGroup] = [] {
+        didSet {
+            if (shouldRefreshGroups || groups.isEmpty), let userID = userID {
+                groups = getGroups(from: userID)
+                shouldRefreshGroups = false
+            }
+        }
+    }
+    
     init(service: GroupProtocol) {
         self.service = service
+    }
+    
+    func startListening(with userID: String) {
+        self.userID = userID
         
         service.getGroups { [weak self] groups in
             guard let groups = groups else { return }
-            
             self?.allGroups = groups
-            
-            self?.groups = groups.filter { group in
-                group.members.contains { member in
-                    member.user.id == self?.userID
-                } ||
-                
-                group.admin.id == self?.userID
-            }
         }
     }
     
@@ -44,7 +48,7 @@ final class GroupViewModel: ObservableObject {
     }
     
     func getGroup(with id: String) -> ProjectGroup? {
-        return groups.first(where: { $0.id == id })
+        return allGroups.first(where: { $0.id == id })
     }
     
     func getGroup(by positionID: String) -> ProjectGroup? {
@@ -59,7 +63,9 @@ final class GroupViewModel: ObservableObject {
         return allGroups.filter { group in
             group.members.contains { member in
                 member.user.id == userID
-            }
+            } ||
+            
+            group.admin.id == userID
         }
     }
     
@@ -116,7 +122,7 @@ final class GroupViewModel: ObservableObject {
         service.delete(with: id)
     }
     
-    func setUser(with id: String?) {
-        self.userID = id
+    func refreshGroups() {
+        shouldRefreshGroups = true
     }
 }

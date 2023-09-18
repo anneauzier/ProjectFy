@@ -12,6 +12,7 @@ class TabBarController: UITabBarController {
     
     private var advertisementsCoordinator: Coordinator<AdvertisementsRouter>
     private var notificationsCoordinator: Coordinator<NotificationsRouter>
+    private var groupsCoordinator: Coordinator<GroupsRouter>
     
     private let user: User
     private let environmentObjects: [any ObservableObject]
@@ -22,6 +23,7 @@ class TabBarController: UITabBarController {
 
         advertisementsCoordinator = Coordinator(root: .advertisements(user))
         notificationsCoordinator = Coordinator(root: .notifications(user))
+        groupsCoordinator = Coordinator(root: .groups(user))
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,16 +42,22 @@ class TabBarController: UITabBarController {
         
         let advertisementsViewController = advertisementsCoordinator.navigationController
         let notificationsViewController = notificationsCoordinator.navigationController
+        let groupsViewController = groupsCoordinator.navigationController
         
         advertisementsViewController.tabBarItem = tabBarItem(title: "Home", image: "house", tag: 0)
         notificationsViewController.tabBarItem = tabBarItem(title: "Notifications", image: "bell", tag: 1)
+        groupsViewController.tabBarItem = tabBarItem(title: "Group", image: "person.3", tag: 2)
         
         advertisementsCoordinator.start(environmentObjects: environmentObjects)
         notificationsCoordinator.start(environmentObjects: environmentObjects)
+        groupsCoordinator.start(environmentObjects: environmentObjects)
+        
+        groupsViewController.navigationBar.prefersLargeTitles = true
         
         self.setViewControllers([
             advertisementsViewController,
-            notificationsViewController
+            notificationsViewController,
+            groupsViewController
         ], animated: false)
     }
     

@@ -8,16 +8,11 @@
 import SwiftUI
 
 struct EditDetailsGroup: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var coordinator: Coordinator<GroupsRouter>
+    @EnvironmentObject var viewModel: GroupViewModel
     
     @State var groupInfo: ProjectGroup
     @State var actionDiscardGroup = false
-    var viewModel: GroupViewModel
-    
-    init(group: ProjectGroup, viewModel: GroupViewModel) {
-        self._groupInfo = State(initialValue: group)
-        self.viewModel = viewModel
-    }
     
     var body: some View {
         NavigationView {
@@ -57,7 +52,7 @@ struct EditDetailsGroup: View {
                         ToolbarItem(placement: .cancellationAction) {
                             Button {
                                 if didChangeInfo() {
-                                    dismiss()
+                                    coordinator.dismiss()
                                     actionDiscardGroup = false
                                 } else {
                                     actionDiscardGroup = true
@@ -69,8 +64,10 @@ struct EditDetailsGroup: View {
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             Button {
+                                viewModel.refreshGroups()
                                 viewModel.editGroup(groupInfo)
-                                dismiss()
+                                
+                                coordinator.dismiss()
                             } label: {
                                 Text("Save")
                                     .font(.body)
@@ -82,9 +79,10 @@ struct EditDetailsGroup: View {
                             
                             .disabled(canSave())
                         }
-                    }.confirmationDialog("", isPresented: $actionDiscardGroup, actions: {
+                    }
+                    .confirmationDialog("", isPresented: $actionDiscardGroup, actions: {
                         Button(role: .destructive) {
-                            dismiss()
+                            coordinator.dismiss()
                         } label: {
                             Text("Discard Changes")
                         }

@@ -13,30 +13,13 @@ import SwiftUI
 struct TasksGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
     
-    let group: ProjectGroup
     let user: User
-    let refresh: () -> Void
-    
-    @Binding var shouldRefresh: Bool
-    
-    @Binding var isTasksActive: Bool
-    @Binding var isDetailsActive: Bool
+    let group: ProjectGroup
     
     var body: some View {
         VStack {
             VStack {
-                GroupLink(isActive: $isDetailsActive, selectedGroup: group) { group in
-                    DetailsGroupView(
-                        user: user,
-                        group: group,
-                        shouldRefresh: $shouldRefresh,
-                        refresh: refresh,
-                        presentTasks: $isTasksActive,
-                        presentDetails: $isDetailsActive
-                    )
-                }
-                
-                GroupInfo(user: user, group: group, isDetailsActive: $isDetailsActive)
+                GroupInfo(user: user, group: group)
                 
                 ScrollView {
                     if group.tasks.isEmpty {
@@ -72,49 +55,28 @@ struct TasksGroupView: View {
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity)
             }
-            if group.isFinished {
-                TaskField(user: user, group: group, shouldRefresh: $shouldRefresh)
-                    .disabled(true)
-            } else {
-                TaskField(user: user, group: group, shouldRefresh: $shouldRefresh)
-            }
             
+            TaskField(user: user, group: group)
+                .disabled(group.isFinished)
         }
         
         .onAppear {
             TabBarModifier.hideTabBar()
         }
-        
-        .onChange(of: viewModel.groups) { _ in
-            if shouldRefresh {
-                refresh()
-                shouldRefresh.toggle()
-            }
-        }
     }
 }
 
 struct GroupInfo: View {
+    @EnvironmentObject var coordinator: Coordinator<GroupsRouter>
     @EnvironmentObject var viewModel: GroupViewModel
     
     let user: User
     let group: ProjectGroup
     
-    @Binding var isDetailsActive: Bool
-    
-    private var transaction: Transaction {
-        var transaction = Transaction()
-        
-        transaction.disablesAnimations = isDetailsActive
-        return transaction
-    }
-    
     var body: some View {
         VStack {
             Button {
-                withTransaction(transaction) {
-                    isDetailsActive.toggle()
-                }
+                coordinator.show(.groupDetails(user, group))
             } label: {
                 HStack(alignment: .center, spacing: 10) {
                     Image("\(group.avatar)")

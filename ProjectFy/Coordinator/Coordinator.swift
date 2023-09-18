@@ -81,10 +81,7 @@ class Coordinator<Router: NavigationRouter>: ObservableObject {
     }
     
     func dismiss(animated: Bool = true) {
-        navigationController.dismiss(animated: animated) { [weak self] in
-            guard let firstViewController = self?.navigationController.viewControllers.first else { return }
-            self?.navigationController.viewControllers = [firstViewController]
-        }
+        navigationController.dismiss(animated: animated)
     }
     
     private class ModalNavigationController: UINavigationController {
