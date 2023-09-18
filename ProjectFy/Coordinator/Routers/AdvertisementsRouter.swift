@@ -66,7 +66,7 @@ enum AdvertisementsRouter: NavigationRouter {
                 AdvertisementsView.Positions(owner: owner, advertisement: advertisement, isEditing: isEditing)
                 
             case .profile(let user):
-                UserView(presentUsersProfile: true, user: user)
+                UserView(user: user, presentUsersProfile: true)
             }
         }
     }

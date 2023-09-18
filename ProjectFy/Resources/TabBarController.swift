@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
     private var advertisementsCoordinator: Coordinator<AdvertisementsRouter>
     private var notificationsCoordinator: Coordinator<NotificationsRouter>
     private var groupsCoordinator: Coordinator<GroupsRouter>
+    private var userCoordinator: Coordinator<UserRouter>
     
     private let user: User
     private let environmentObjects: [any ObservableObject]
@@ -24,6 +25,7 @@ class TabBarController: UITabBarController {
         advertisementsCoordinator = Coordinator(root: .advertisements(user))
         notificationsCoordinator = Coordinator(root: .notifications(user))
         groupsCoordinator = Coordinator(root: .groups(user))
+        userCoordinator = Coordinator(root: .user(user))
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,21 +45,25 @@ class TabBarController: UITabBarController {
         let advertisementsViewController = advertisementsCoordinator.navigationController
         let notificationsViewController = notificationsCoordinator.navigationController
         let groupsViewController = groupsCoordinator.navigationController
+        let userViewController = userCoordinator.navigationController
         
         advertisementsViewController.tabBarItem = tabBarItem(title: "Home", image: "house", tag: 0)
         notificationsViewController.tabBarItem = tabBarItem(title: "Notifications", image: "bell", tag: 1)
         groupsViewController.tabBarItem = tabBarItem(title: "Group", image: "person.3", tag: 2)
+        userViewController.tabBarItem = tabBarItem(title: "Home", image: "person.fill", tag: 3)
         
         advertisementsCoordinator.start(environmentObjects: environmentObjects)
         notificationsCoordinator.start(environmentObjects: environmentObjects)
         groupsCoordinator.start(environmentObjects: environmentObjects)
+        userCoordinator.start(environmentObjects: environmentObjects)
         
         groupsViewController.navigationBar.prefersLargeTitles = true
         
         self.setViewControllers([
             advertisementsViewController,
             notificationsViewController,
-            groupsViewController
+            groupsViewController,
+            userViewController
         ], animated: false)
     }
     

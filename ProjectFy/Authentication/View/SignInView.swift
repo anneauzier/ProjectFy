@@ -10,7 +10,9 @@ import AuthenticationServices
 
 struct SignInView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.dismiss) var dismiss
+    
+    @EnvironmentObject var signInCoordinator: Coordinator<SignInRouter>
+    @EnvironmentObject var userCoordinator: Coordinator<UserRouter>
     
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
@@ -18,7 +20,7 @@ struct SignInView: View {
     @EnvironmentObject var groupViewModel: GroupViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
-    var completion: (String) -> () = { _ in }
+    var completion: (User) -> Void = { _ in }
     var isDeletingAccount = false
     
     var body: some View {
@@ -60,14 +62,14 @@ struct SignInView: View {
                 
                 authenticationViewModel.signIn { signInResult in
                     if isDeletingAccount {
-                        dismiss()
+                        userCoordinator.dismiss()
                         deleteAllUserData(with: signInResult.identityToken)
                         
                         return
                     }
                     
                     if let user = userViewModel.getUser(with: signInResult.identityToken) {
-                        completion(user.id)
+                        signInCoordinator.setRootViewController(to: .waitingForUserInfo(completion))
                         return
                     }
                     
@@ -76,8 +78,8 @@ struct SignInView: View {
                     userViewModel.createUser(user)
                     userViewModel.setUser(with: user.id)
                     
-                    authenticationViewModel.isNewUser = true
-                    completion(user.id)
+                    
+                    signInCoordinator.setRootViewController(to: .waitingForUserInfo(completion))
                 }
             } label: {
                 SignInWithAppleButtonViewRepresentable(
@@ -109,7 +111,20 @@ struct SignInView: View {
         .onAppear {
             if let user = authenticationViewModel.getAuthenticatedUser() {
                 userViewModel.setUser(with: user.uid)
-                completion(user.uid)
+                signInCoordinator.setRootViewController(to: .waitingForUserInfo(completion))
+            }
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isDeletingAccount {
+                    Button {
+                        userCoordinator.dismiss()
+                    } label: {
+                        Label("close", systemImage: "xmark")
+                            .labelStyle(.iconOnly)
+                    }
+                }
             }
         }
     }
@@ -139,6 +154,6 @@ struct SignInView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignInView(completion: { _ in })
     }
 }

@@ -15,7 +15,7 @@ struct HomeView: View {
     
     var body: some View {
         if let user = userViewModel.user {
-            TabBarView(user: user, isNewUser: $authenticationViewModel.isNewUser)
+            TabBarView(user: user)
                 .onAppear {
                     MessagingService.shared.userID = user.id
                     notificationsViewModel.startListening(with: user.id)
@@ -36,19 +36,16 @@ fileprivate struct TabBarView: View {
     @EnvironmentObject var groupViewModel: GroupViewModel
     
     let user: User
-    @Binding var isNewUser: Bool
     
     var getUserInfo: Bool {
         user.name.isEmpty ||
         user.areaExpertise.isEmpty ||
         user.region.isEmpty
     }
-    
-//    @StateObject var AdvertisementsCoordinator
 
     var body: some View {
-        if isNewUser, getUserInfo {
-            SetupInitialConfigs(user: user, isNewUser: $isNewUser)
+        if getUserInfo {
+            SetupInitialConfigs(user: user, completion: { _ in })
         } else {
             TabView {
                 AdvertisementsView(user: user)
@@ -69,16 +66,13 @@ fileprivate struct TabBarView: View {
     }
 }
 
-fileprivate struct SetupInitialConfigs: View {
-    @State var user: User
-
-    @Binding var isNewUser: Bool
-    @State var canContinue = false
+struct SetupInitialConfigs: View {
+    @EnvironmentObject var coordinator: Coordinator<SignInRouter>
     
-    init(user: User, isNewUser: Binding<Bool>) {
-        self._user = State(initialValue: user)
-        self._isNewUser = isNewUser
-    }
+    @State var user: User
+    let completion: (User) -> Void
+    
+    @State var canContinue = false
     
     var body: some View {
         NavigationView {
@@ -96,12 +90,12 @@ fileprivate struct SetupInitialConfigs: View {
                 }
                 .frame(width: UIScreen.main.bounds.width - 33)
                 
-                SetupUserInfo(user: $user, canContinue: $canContinue, isNewUser: true)
+                SetupUserInfo(user: $user, canContinue: $canContinue)
             }
             
             .toolbar {
-                NavigationLink {
-                    StartView(user: user, isNewUser: $isNewUser)
+                Button {
+                    coordinator.show(.start(user, completion))
                 } label: {
                     Text("Next")
                 }
@@ -109,46 +103,46 @@ fileprivate struct SetupInitialConfigs: View {
             }
         }
     }
+}
+
+struct StartView: View {
+    @EnvironmentObject var viewModel: UserViewModel
     
-    private struct StartView: View {
-        @EnvironmentObject var viewModel: UserViewModel
-        
-        let user: User
-        @Binding var isNewUser: Bool
-        
-        var body: some View {
-            VStack(alignment: .center, spacing: 40) {
-                Spacer()
+    let user: User
+    let completion: (User) -> Void
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 40) {
+            Spacer()
+            
+            Text("    All ready? \nLet's \("grooup!".colored(with: .textColorBlue))")
+                .font(Font.largeTitle.bold())
+                .frame(width: UIScreen.main.bounds.width - 97)
                 
-                Text("    All ready? \nLet's \("grooup!".colored(with: .textColorBlue))")
-                    .font(Font.largeTitle.bold())
-                    .frame(width: UIScreen.main.bounds.width - 97)
-                    
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: UIScreen.main.bounds.width - 144, height: 1)
-                    .background(Color.gray.opacity(0.3))
-                    
-                Button {
-                    viewModel.editUser(user)
-                    isNewUser = false
-                } label: {
-                    RoundedRectangleContent(cornerRadius: 8, fillColor: .textColorBlue) {
-                        Text("Let's go!")
-                            .font(Font.headline)
-                            .foregroundColor(.white)
-                    }
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: UIScreen.main.bounds.width - 144, height: 1)
+                .background(Color.gray.opacity(0.3))
+                
+            Button {
+                viewModel.editUser(user)
+                completion(user)
+            } label: {
+                RoundedRectangleContent(cornerRadius: 8, fillColor: .textColorBlue) {
+                    Text("Let's go!")
+                        .font(Font.headline)
+                        .foregroundColor(.white)
                 }
-                .frame(width: UIScreen.main.bounds.width - 208, height: 56)
-                
-                Spacer()
-            }.background(
-                Image("LasPageLog")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: UIScreen.main.bounds.width)
-                    .edgesIgnoringSafeArea(.all)
-            )
-        }
+            }
+            .frame(width: UIScreen.main.bounds.width - 208, height: 56)
+            
+            Spacer()
+        }.background(
+            Image("LasPageLog")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width)
+                .edgesIgnoringSafeArea(.all)
+        )
     }
 }

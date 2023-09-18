@@ -8,80 +8,70 @@
 import SwiftUI
 
 struct EditUserView: View {
-
-    @Environment(\.dismiss) var dismiss
-
-    @State var actionDiscard = false
-    @State var canContinue = false
+    @EnvironmentObject var coordinator: Coordinator<UserRouter>
+    @EnvironmentObject var viewModel: UserViewModel
+    
     @State var editingUser: User
     
-    var isNewUser: Bool
-    var viewModel: UserViewModel
-    
-    init(editingUser: User, isNewUser: Bool = false, viewModel: UserViewModel) {
-        self._editingUser = State(initialValue: editingUser)
-        self.isNewUser = isNewUser
-        self.viewModel = viewModel
-    }
+    @State var actionDiscard = false
+    @State var canContinue = false
     
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    Image(editingUser.avatar)
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding([.top, .bottom], 32)
-
-                    SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
+        ScrollView(showsIndicators: false) {
+            VStack {
+                Image(editingUser.avatar)
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding([.top, .bottom], 32)
+                
+                SetupUserInfo(user: $editingUser, canContinue: $canContinue)
+            }
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    if didChangeInfo() {
+                        coordinator.dismiss()
+                        actionDiscard = false
+                    } else {
+                        actionDiscard = true
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(Font.system(size: 15, weight: .bold))
                 }
             }
             
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        if didChangeInfo() {
-                            dismiss()
-                            actionDiscard = false
-                        } else {
-                            actionDiscard = true
-                        }
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(Font.system(size: 15, weight: .bold))
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        viewModel.editUser(editingUser)
-                        
-                        Haptics.shared.notification(.success)
-                        dismiss()
-                    } label: {
-                        Text("Save")
-                            .font(.body)
-                            .foregroundColor(.textColorBlue)
-                            .opacity(canContinue ? 1 : 0.2)
-                    }
-                    .disabled(!canContinue)
-                }
-            }
-            .confirmationDialog("", isPresented: $actionDiscard, actions: {
-                Button(role: .destructive) {
-                    dismiss()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.editUser(editingUser)
+                    
+                    Haptics.shared.notification(.success)
+                    coordinator.dismiss()
                 } label: {
-                    Text("Discard Changes")
+                    Text("Save")
+                        .font(.body)
+                        .foregroundColor(.textColorBlue)
+                        .opacity(canContinue ? 1 : 0.2)
                 }
-            })
-            .navigationTitle("Edit Profile")
-            .navigationBarTitleDisplayMode(.inline)
+                .disabled(!canContinue)
+            }
         }
+        .confirmationDialog("", isPresented: $actionDiscard, actions: {
+            Button(role: .destructive) {
+                coordinator.dismiss()
+            } label: {
+                Text("Discard Changes")
+            }
+        })
+        .navigationTitle("Edit Profile")
+        .navigationBarTitleDisplayMode(.inline)
     }
     private func didChangeInfo() -> Bool {
         guard let user = viewModel.user else { return false }
-
+        
         return editingUser.name == user.name
         && editingUser.areaExpertise == user.areaExpertise
         && editingUser.interestTags == user.interestTags

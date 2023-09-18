@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct SetupUserInfo: View {
-    
-    @EnvironmentObject var userViewModel: UserViewModel
     @Environment(\.dynamicTypeSize) var sizeCategory
-    @FocusState var isTextFieldFocused: Bool
+    @EnvironmentObject var userViewModel: UserViewModel
     
     @Binding var user: User
     @Binding var canContinue: Bool
-    @State private var height: CGFloat?
     
+    @FocusState var isTextFieldFocused: Bool
+    
+    @State private var height: CGFloat?
     let minHeight: CGFloat = 30
-    let isNewUser: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -82,35 +81,10 @@ struct SetupUserInfo: View {
     
     private func checkIfCanContinue() {
         let isUserInfoFilled = userViewModel.isUserInfoFilled(user)
-        
-        if canContinue != isUserInfoFilled {
-            canContinue = isUserInfoFilled
-        }
+        canContinue = isUserInfoFilled
     }
     
     private func textDidChange(_ textView: UITextView) {
         self.height = max(textView.contentSize.height, minHeight)
     }
 }
-
-//            if isNewUser {
-//                FormField(
-//                    title: "Username",
-//                    titleAccessibilityLabel: "Your username",
-//                    placeholder: "@",
-//                    text: $user.username,
-//                    textFieldAccessibilityLabel: "Type here your username"
-//                )
-//                .padding(.top, 40)
-//            }
-
-//            DropDownButton(
-//                title: "Availability",
-//                textColor: user.available ? .availableText : .unavailableText,
-//                selection: $user.available,
-//                menuItems: [
-//                    MenuItem(name: "Unavailable for projects", tag: false),
-//                    MenuItem(name: "Available for projects", tag: true)
-//                ]
-//            )
-//            .padding(.top, 35)

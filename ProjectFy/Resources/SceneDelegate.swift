@@ -43,14 +43,15 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func goToAppFlow(userID: String) {
-        coordinator?.show(.waitingForUserInfo(userViewModel) { [weak self] user in
+    func goToAppFlow(user: User) {
+        coordinator?.show(.waitingForUserInfo { [weak self] user in
             guard let self = self else { return }
             
             notificationsViewModel.startListening(with: user.id)
             groupViewModel.startListening(with: user.id)
             
             let tabBarController = TabBarController(user: user,
+                                                    self.authenticationViewModel,
                                                     self.userViewModel,
                                                     self.advertisementsViewModel,
                                                     self.groupViewModel,

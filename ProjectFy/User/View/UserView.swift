@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct UserView: View {
+    @EnvironmentObject var coordinator: Coordinator<UserRouter>
+    
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     
-    @State private var goEditUserView = false
+    let user: User
+    var presentUsersProfile: Bool = false
+    
     @State private var showDeleteAlert = false
     @State private var showLogoutAlert = false
-    @State private var presentSignIn = false
-    
-    var presentUsersProfile: Bool = false
-    let user: User
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -119,7 +119,7 @@ struct UserView: View {
             if !presentUsersProfile {
                 Menu {
                     Button {
-                        goEditUserView.toggle()
+                        coordinator.show(.editUser(user))
                     } label: {
                         Label("Edit profile", systemImage: "square.and.pencil")
                     }
@@ -141,9 +141,7 @@ struct UserView: View {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
                         .accessibilityLabel("Edital Perfil")
-                }.sheet(isPresented: $goEditUserView, content: {
-                    EditUserView(editingUser: user, viewModel: userViewModel)
-                })
+                }
             }
         }
         
@@ -158,7 +156,7 @@ struct UserView: View {
                 Haptics.shared.notification(.success)
                 
                 showDeleteAlert.toggle()
-                presentSignIn.toggle()
+                coordinator.show(.deleteAccount)
             } label: {
                 Text("Yes, I do")
             }
@@ -185,22 +183,6 @@ struct UserView: View {
         } message: {
             Text("You will be returned to the login screen.")
                 .multilineTextAlignment(.leading)
-        }
-        
-        .fullScreenCover(isPresented: $presentSignIn) {
-            NavigationView {
-                SignInView(isDeletingAccount: true)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                presentSignIn.toggle()
-                            } label: {
-                                Label("close", systemImage: "xmark")
-                                    .labelStyle(.iconOnly)
-                            }
-                        }
-                    }
-            }
         }
     }
 }

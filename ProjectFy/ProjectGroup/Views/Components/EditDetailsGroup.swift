@@ -15,81 +15,79 @@ struct EditDetailsGroup: View {
     @State var actionDiscardGroup = false
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    Image("\(groupInfo.avatar)")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding([.top, .bottom], 32)
-                    
-                    Text("Group name")
-                        .font(.headline)
-                        .foregroundColor(.backgroundRole)
-                    
-                    TextField("Enter the group name", text: $groupInfo.name)
-                        .limitInputLength(value: $groupInfo.name, length: 50)
-                        .background(
-                            Rectangle()
-                                .frame(height: 1)
-                                .foregroundColor(.rectangleLine)
-                                .padding(.top, 30)
-                        )
-                        .padding(.bottom, 40)
-                    
-                    DescriptionGroup(groupInfo: $groupInfo)
-                        .padding(.bottom, 40)
-                    
-                    Text("Link for chat and meetings")
-                        .font(.headline)
-                        .foregroundColor(.backgroundRole)
-                    
-                    CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
-                        
-                }.padding(.horizontal)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button {
-                                if didChangeInfo() {
-                                    coordinator.dismiss()
-                                    actionDiscardGroup = false
-                                } else {
-                                    actionDiscardGroup = true
-                                }
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .font(Font.system(size: 15, weight: .bold))
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button {
-                                viewModel.refreshGroups()
-                                viewModel.editGroup(groupInfo)
-                                
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                Image("\(groupInfo.avatar)")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding([.top, .bottom], 32)
+                
+                Text("Group name")
+                    .font(.headline)
+                    .foregroundColor(.backgroundRole)
+                
+                TextField("Enter the group name", text: $groupInfo.name)
+                    .limitInputLength(value: $groupInfo.name, length: 50)
+                    .background(
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(.rectangleLine)
+                            .padding(.top, 30)
+                    )
+                    .padding(.bottom, 40)
+                
+                DescriptionGroup(groupInfo: $groupInfo)
+                    .padding(.bottom, 40)
+                
+                Text("Link for chat and meetings")
+                    .font(.headline)
+                    .foregroundColor(.backgroundRole)
+                
+                CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
+                
+            }.padding(.horizontal)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            if didChangeInfo() {
                                 coordinator.dismiss()
-                            } label: {
-                                Text("Save")
-                                    .font(.body)
-                                    .foregroundColor(.textColorBlue)
+                                actionDiscardGroup = false
+                            } else {
+                                actionDiscardGroup = true
                             }
-                            .opacity((groupInfo.name.isEmpty ||
-                                      groupInfo.link.isEmpty ||
-                                      groupInfo.description.isEmpty) ? 0.2 : 1.0)
-                            
-                            .disabled(canSave())
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(Font.system(size: 15, weight: .bold))
                         }
                     }
-                    .confirmationDialog("", isPresented: $actionDiscardGroup, actions: {
-                        Button(role: .destructive) {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            viewModel.refreshGroups()
+                            viewModel.editGroup(groupInfo)
+                            
                             coordinator.dismiss()
                         } label: {
-                            Text("Discard Changes")
+                            Text("Save")
+                                .font(.body)
+                                .foregroundColor(.textColorBlue)
                         }
-                    })
-                    .navigationTitle("Edit Group Info")
-                    .navigationBarTitleDisplayMode(.inline)
-            }
+                        .opacity((groupInfo.name.isEmpty ||
+                                  groupInfo.link.isEmpty ||
+                                  groupInfo.description.isEmpty) ? 0.2 : 1.0)
+                        
+                        .disabled(canSave())
+                    }
+                }
+                .confirmationDialog("", isPresented: $actionDiscardGroup, actions: {
+                    Button(role: .destructive) {
+                        coordinator.dismiss()
+                    } label: {
+                        Text("Discard Changes")
+                    }
+                })
+                .navigationTitle("Edit Group Info")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
     private func canSave() -> Bool {

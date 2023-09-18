@@ -84,6 +84,11 @@ class Coordinator<Router: NavigationRouter>: ObservableObject {
         navigationController.dismiss(animated: animated)
     }
     
+    func setRootViewController(to route: Router) {
+        navigationController.viewControllers = []
+        show(route)
+    }
+    
     private class ModalNavigationController: UINavigationController {
         let onDismiss: () -> Void
         

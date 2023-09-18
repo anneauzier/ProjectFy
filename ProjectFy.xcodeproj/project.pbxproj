@@ -28,6 +28,7 @@
 		673D4A4D2AB880DD00239FED /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A4C2AB880DD00239FED /* TabBarController.swift */; };
 		673D4A4F2AB8857000239FED /* NotificationsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A4E2AB8857000239FED /* NotificationsRouter.swift */; };
 		673D4A512AB89AAD00239FED /* GroupsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A502AB89AAD00239FED /* GroupsRouter.swift */; };
+		673D4A532AB8ABB200239FED /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A522AB8ABB200239FED /* UserRouter.swift */; };
 		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
 		674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982732A82F3E000A1C98E /* DropDownButton.swift */; };
 		674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 674982782A83E2C500A1C98E /* FirebaseAuth */; };
@@ -113,6 +114,7 @@
 		673D4A4C2AB880DD00239FED /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		673D4A4E2AB8857000239FED /* NotificationsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsRouter.swift; sourceTree = "<group>"; };
 		673D4A502AB89AAD00239FED /* GroupsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsRouter.swift; sourceTree = "<group>"; };
+		673D4A522AB8ABB200239FED /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		674982732A82F3E000A1C98E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		6749827A2A83E47200A1C98E /* ProjectFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFy.entitlements; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				673D4A4A2AB3700F00239FED /* AdvertisementsRouter.swift */,
 				673D4A4E2AB8857000239FED /* NotificationsRouter.swift */,
 				673D4A502AB89AAD00239FED /* GroupsRouter.swift */,
+				673D4A522AB8ABB200239FED /* UserRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				671FA2B12A8FB792003684AC /* NotificationProtocol.swift in Sources */,
 				671FA2AA2A8FB428003684AC /* Notification.swift in Sources */,
 				673D4A442AB128E000239FED /* Coordinator.swift in Sources */,
+				673D4A532AB8ABB200239FED /* UserRouter.swift in Sources */,
 				678383862A814A0600E459F1 /* AdvertisementProtocol.swift in Sources */,
 				671FA2AE2A8FB762003684AC /* NotificationService.swift in Sources */,
 				9F2AC8662A8D64C000CBE3A5 /* View+keyboardControls.swift in Sources */,
