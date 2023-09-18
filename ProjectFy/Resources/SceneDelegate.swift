@@ -47,6 +47,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         coordinator?.show(.waitingForUserInfo(userViewModel) { [weak self] user in
             guard let self = self else { return }
             
+            notificationsViewModel.startListening(with: user.id)
+            
             let tabBarController = TabBarController(user: user,
                                                     self.userViewModel,
                                                     self.advertisementsViewModel,

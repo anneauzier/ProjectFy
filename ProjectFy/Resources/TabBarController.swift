@@ -11,6 +11,7 @@ import UIKit
 class TabBarController: UITabBarController {
     
     private var advertisementsCoordinator: Coordinator<AdvertisementsRouter>
+    private var notificationsCoordinator: Coordinator<NotificationsRouter>
     
     private let user: User
     private let environmentObjects: [any ObservableObject]
@@ -20,6 +21,7 @@ class TabBarController: UITabBarController {
         self.environmentObjects = environmentObjects
 
         advertisementsCoordinator = Coordinator(root: .advertisements(user))
+        notificationsCoordinator = Coordinator(root: .notifications(user))
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,22 +39,28 @@ class TabBarController: UITabBarController {
         super.viewWillAppear(animated)
         
         let advertisementsViewController = advertisementsCoordinator.navigationController
+        let notificationsViewController = notificationsCoordinator.navigationController
         
-        let advertisementsBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
-        
-        advertisementsViewController.tabBarItem = advertisementsBarItem
+        advertisementsViewController.tabBarItem = tabBarItem(title: "Home", image: "house", tag: 0)
+        notificationsViewController.tabBarItem = tabBarItem(title: "Notifications", image: "bell", tag: 1)
         
         advertisementsCoordinator.start(environmentObjects: environmentObjects)
+        notificationsCoordinator.start(environmentObjects: environmentObjects)
         
         self.setViewControllers([
-            advertisementsViewController
+            advertisementsViewController,
+            notificationsViewController
         ], animated: false)
     }
     
-    func setupTabBar() {
+    private func setupTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
         
         UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
+    private func tabBarItem(title: String, image: String, tag: Int) -> UITabBarItem {
+        UITabBarItem(title: title, image: UIImage(systemName: image), tag: tag)
     }
 }

@@ -12,8 +12,6 @@ enum SignInRouter: NavigationRouter {
     
     case signin((String) -> Void)
     case waitingForUserInfo(UserViewModel, (User) -> Void)
-//    case app
-//    case deleteAccount
     
     var transition: NavigationTransitionStyle {
         switch self {

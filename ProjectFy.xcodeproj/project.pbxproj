@@ -26,6 +26,7 @@
 		673D4A492AB3533900239FED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A482AB3533800239FED /* SceneDelegate.swift */; };
 		673D4A4B2AB3700F00239FED /* AdvertisementsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A4A2AB3700F00239FED /* AdvertisementsRouter.swift */; };
 		673D4A4D2AB880DD00239FED /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A4C2AB880DD00239FED /* TabBarController.swift */; };
+		673D4A4F2AB8857000239FED /* NotificationsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673D4A4E2AB8857000239FED /* NotificationsRouter.swift */; };
 		674982702A82C1CB00A1C98E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6749826F2A82C1CB00A1C98E /* Haptics.swift */; };
 		674982742A82F3E000A1C98E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674982732A82F3E000A1C98E /* DropDownButton.swift */; };
 		674982792A83E2C500A1C98E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 674982782A83E2C500A1C98E /* FirebaseAuth */; };
@@ -109,6 +110,7 @@
 		673D4A482AB3533800239FED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		673D4A4A2AB3700F00239FED /* AdvertisementsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementsRouter.swift; sourceTree = "<group>"; };
 		673D4A4C2AB880DD00239FED /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		673D4A4E2AB8857000239FED /* NotificationsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsRouter.swift; sourceTree = "<group>"; };
 		6749826F2A82C1CB00A1C98E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		674982732A82F3E000A1C98E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		6749827A2A83E47200A1C98E /* ProjectFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectFy.entitlements; sourceTree = "<group>"; };
@@ -261,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				673D4A452AB12D3E00239FED /* Routers */,
-				673D4A412AB1284500239FED /* NavigationRouter.swift */,
 				673D4A432AB128E000239FED /* Coordinator.swift */,
 			);
 			path = Coordinator;
@@ -270,8 +271,10 @@
 		673D4A452AB12D3E00239FED /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				673D4A412AB1284500239FED /* NavigationRouter.swift */,
 				673D4A462AB12D5600239FED /* SignInRouter.swift */,
 				673D4A4A2AB3700F00239FED /* AdvertisementsRouter.swift */,
+				673D4A4E2AB8857000239FED /* NotificationsRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				673D4A4D2AB880DD00239FED /* TabBarController.swift in Sources */,
 				678383892A814A9C00E459F1 /* AdvertisementMockupService.swift in Sources */,
 				67A531EA2A7831D500EBD022 /* Advertisement.swift in Sources */,
+				673D4A4F2AB8857000239FED /* NotificationsRouter.swift in Sources */,
 				9F0ED0D32A9290B600DCBBE4 /* View+placeholder.swift in Sources */,
 				673D4A422AB1284500239FED /* NavigationRouter.swift in Sources */,
 			);
