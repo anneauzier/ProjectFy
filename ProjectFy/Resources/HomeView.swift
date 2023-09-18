@@ -75,32 +75,30 @@ struct SetupInitialConfigs: View {
     @State var canContinue = false
     
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    Text("Hi, stranger! We need some information from you :D")
-                        .font(Font.largeTitle.bold())
-                        .padding(.top, 16)
-                    
-                    Text("Don't worry, you can change these informations later...")
-                        .font(Font.headline)
-                        .foregroundColor(.editAdvertisementText)
-                        .padding(.top, 15)
-
-                }
-                .frame(width: UIScreen.main.bounds.width - 33)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading) {
+                Text("Hi, stranger! We need some information from you :D")
+                    .font(Font.largeTitle.bold())
+                    .padding(.top, 16)
                 
-                SetupUserInfo(user: $user, canContinue: $canContinue)
+                Text("Don't worry, you can change these informations later...")
+                    .font(Font.headline)
+                    .foregroundColor(.editAdvertisementText)
+                    .padding(.top, 15)
+
             }
+            .frame(width: UIScreen.main.bounds.width - 33)
             
-            .toolbar {
-                Button {
-                    coordinator.show(.start(user, completion))
-                } label: {
-                    Text("Next")
-                }
-                .disabled(!canContinue)
+            SetupUserInfo(user: $user, canContinue: $canContinue)
+        }
+        
+        .toolbar {
+            Button {
+                coordinator.show(.start(user, completion))
+            } label: {
+                Text("Next")
             }
+            .disabled(!canContinue)
         }
     }
 }
