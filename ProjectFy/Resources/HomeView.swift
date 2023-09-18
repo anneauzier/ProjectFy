@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
-    @Binding var isNewUser: Bool?
-    
     var body: some View {
         if let user = userViewModel.user {
-            TabBarView(user: user, isNewUser: $isNewUser)
+            TabBarView(user: user, isNewUser: $authenticationViewModel.isNewUser)
                 .onAppear {
                     MessagingService.shared.userID = user.id
                     notificationsViewModel.startListening(with: user.id)
@@ -37,16 +36,18 @@ fileprivate struct TabBarView: View {
     @EnvironmentObject var groupViewModel: GroupViewModel
     
     let user: User
-    @Binding var isNewUser: Bool?
+    @Binding var isNewUser: Bool
     
     var getUserInfo: Bool {
         user.name.isEmpty ||
         user.areaExpertise.isEmpty ||
         user.region.isEmpty
     }
+    
+//    @StateObject var AdvertisementsCoordinator
 
     var body: some View {
-        if let isNewUser = isNewUser, isNewUser, getUserInfo {
+        if isNewUser, getUserInfo {
             SetupInitialConfigs(user: user, isNewUser: $isNewUser)
         } else {
             TabView {
@@ -71,10 +72,10 @@ fileprivate struct TabBarView: View {
 fileprivate struct SetupInitialConfigs: View {
     @State var user: User
 
-    @Binding var isNewUser: Bool?
+    @Binding var isNewUser: Bool
     @State var canContinue = false
     
-    init(user: User, isNewUser: Binding<Bool?>) {
+    init(user: User, isNewUser: Binding<Bool>) {
         self._user = State(initialValue: user)
         self._isNewUser = isNewUser
     }
@@ -113,7 +114,7 @@ fileprivate struct SetupInitialConfigs: View {
         @EnvironmentObject var viewModel: UserViewModel
         
         let user: User
-        @Binding var isNewUser: Bool?
+        @Binding var isNewUser: Bool
         
         var body: some View {
             VStack(alignment: .center, spacing: 40) {
@@ -130,7 +131,7 @@ fileprivate struct SetupInitialConfigs: View {
                     
                 Button {
                     viewModel.editUser(user)
-                    isNewUser = nil
+                    isNewUser = false
                 } label: {
                     RoundedRectangleContent(cornerRadius: 8, fillColor: .textColorBlue) {
                         Text("Let's go!")

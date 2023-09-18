@@ -10,115 +10,88 @@ import SwiftUI
 
 extension AdvertisementsView {
     struct NewAdvertisement: View {
-        let owner: User
-        var viewModel: AdvertisementsViewModel
+        @EnvironmentObject var coordinator: Coordinator<AdvertisementsRouter>
+        @EnvironmentObject var viewModel: AdvertisementsViewModel
         
-        @FocusState var isTextFieldFocused: Bool
+        let owner: User
         @State var advertisement: Advertisement
-        @Binding var dismiss: Bool
-        @Binding var updateAdvertisements: Bool
+        var isEditing = false
+        
         @State private var height: CGFloat?
         let minHeight: CGFloat = 30
         
         @State var presentBackAlert: Bool = false
-        let isEditing: Bool
-        
-        init(owner: User, viewModel: AdvertisementsViewModel,
-             dismiss: Binding<Bool>,
-             updateAdvertisements: Binding<Bool>, editingID: String?) {
-            self.owner = owner
-            self.viewModel = viewModel
-            self._dismiss = dismiss
-            self._updateAdvertisements = updateAdvertisements
-            
-            if let editingID = editingID, let advertisement = viewModel.getAdvertisement(with: editingID) {
-                self._advertisement = State(initialValue: advertisement)
-                self.isEditing = true
-                return
-            }
-            
-            self._advertisement = State(initialValue: Advertisement(owner: owner))
-            self.isEditing = false
-        }
         
         var body: some View {
-            NavigationView {
-                ScrollView {
-                    Divider()
-                    
-                    VStack(alignment: .leading) {
-                        UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
-                            .padding(.top, -10)
-                        
-                        CustomWrappedText(text: $advertisement.title,
-                                          placeholder: "Name your project...",
-                                          textFont: UIFont.systemFont(ofSize: 32, weight: .bold),
-                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
-                        .font(Font.largeTitle.bold())
-                        .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 20)
-
-                        CustomWrappedText(text: $advertisement.description,
-                            placeholder: "Use 1000 characteres or less to describe an project overview or specify conditions and requirements.",
-                                          textFont: UIFont.preferredFont(forTextStyle: .body),
-                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
-                        .font(.body)
-                        .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 65)
-                        
-                        CustomWrappedText(text: $advertisement.tags,
-                                          placeholder: "Add 10 tags that are related to your project to help interested people find it...",
-                                          textFont: UIFont.preferredFont(forTextStyle: .body),
-                                          textcolor: UIColor(named: "backgroundRole") ?? .black)
-                        .font(.body)
-                        .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
-                        .padding(.top, 65)
-                        
-                        Spacer()
-                    }
-                    .padding([.horizontal, .top], 20)
-                }
-                .navigationBarBackButtonHidden()
-                .navigationTitle("\(isEditing ? "Edit" : "Create") project")
-                .navigationBarTitleDisplayMode(.inline)
+            ScrollView {
+                Divider()
                 
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            presentBackAlert = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "xmark")
-                                    .font(Font.system(size: 15, weight: .bold))
-                            }
-                        }
-                    }
+                VStack(alignment: .leading) {
+                    UserInfo(user: owner, size: 49, nameColor: .backgroundRole)
+                        .padding(.top, -10)
                     
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            Positions(
-                                owner: owner,
-                                advertisement: $advertisement,
-                                dismiss: $dismiss,
-                                updateAdvertisements: $updateAdvertisements,
-                                isEditing: isEditing
-                            )
-                        } label: {
-                            Text("Next")
+                    CustomWrappedText(text: $advertisement.title,
+                                      placeholder: "Name your project...",
+                                      textFont: UIFont.systemFont(ofSize: 32, weight: .bold),
+                                      textcolor: UIColor(named: "backgroundRole") ?? .black)
+                    .font(Font.largeTitle.bold())
+                    .foregroundColor(advertisement.title.isEmpty ? .editAdvertisementText : .backgroundRole)
+                    .padding(.top, 20)
+                    
+                    CustomWrappedText(text: $advertisement.description,
+                                      placeholder: "Use 1000 characteres or less to describe an project overview or specify conditions and requirements.",
+                                      textFont: UIFont.preferredFont(forTextStyle: .body),
+                                      textcolor: UIColor(named: "backgroundRole") ?? .black)
+                    .font(.body)
+                    .foregroundColor(advertisement.description.isEmpty ? .editAdvertisementText : .backgroundRole)
+                    .padding(.top, 65)
+                    
+                    CustomWrappedText(text: $advertisement.tags,
+                                      placeholder: "Add 10 tags that are related to your project to help interested people find it...",
+                                      textFont: UIFont.preferredFont(forTextStyle: .body),
+                                      textcolor: UIColor(named: "backgroundRole") ?? .black)
+                    .font(.body)
+                    .foregroundColor(advertisement.tags.isEmpty ? .editAdvertisementText : .backgroundRole)
+                    .padding(.top, 65)
+                    
+                    Spacer()
+                }
+                .padding([.horizontal, .top], 20)
+            }
+            .navigationBarBackButtonHidden()
+            .navigationTitle("\(isEditing ? "Edit" : "Create") project")
+            .navigationBarTitleDisplayMode(.inline)
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentBackAlert = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .font(Font.system(size: 15, weight: .bold))
                         }
-                        .disabled(!canContinue())
-                        
-                        .simultaneousGesture(TapGesture().onEnded({ _ in
-                            Haptics.shared.selection()
-                        }))
                     }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        coordinator.show(.editPositions(owner, $advertisement, isEditing))
+                    } label: {
+                        Text("Next")
+                    }
+                    .disabled(!canContinue())
+                    
+                    .simultaneousGesture(TapGesture().onEnded({ _ in
+                        Haptics.shared.selection()
+                    }))
                 }
             }
             
             .confirmationDialog("back", isPresented: $presentBackAlert) {
                 Button(role: .destructive) {
                     presentBackAlert = false
-                    dismiss.toggle()
+                    coordinator.dismiss()
                 } label: {
                     Text("Delete draft")
                 }
@@ -144,14 +117,12 @@ extension AdvertisementsView {
         }
     }
     
-    private struct Positions: View {
+    struct Positions: View {
+        @EnvironmentObject var coordinator: Coordinator<AdvertisementsRouter>
         @EnvironmentObject var viewModel: AdvertisementsViewModel
         
         let owner: User
         @Binding var advertisement: Advertisement
-        
-        @Binding var dismiss: Bool
-        @Binding var updateAdvertisements: Bool
         
         let isEditing: Bool
         
@@ -196,15 +167,18 @@ extension AdvertisementsView {
                     if isEditing {
                         viewModel.editAdvertisement(advertisement)
                         Haptics.shared.notification(.success)
-                        updateAdvertisements.toggle()
-                        dismiss.toggle()
+                        
+                        viewModel.refreshAdvertisements()
+                        coordinator.dismiss()
+                        
                         return
                     }
                     
                     viewModel.createAdvertisement(advertisement)
                     Haptics.shared.notification(.success)
-                    updateAdvertisements.toggle()
-                    dismiss.toggle()
+                    
+                    viewModel.refreshAdvertisements()
+                    coordinator.dismiss()
                     
                 } label: {
                     Text(isEditing ? "Edit" : "Create")
@@ -268,7 +242,7 @@ extension AdvertisementsView {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, 20)
-
+                    
                     CustomWrappedText(text: $position.description,
                                       placeholder: "Describe what the person entering this role will do on the project...",
                                       textFont: UIFont.preferredFont(forTextStyle: .body),
@@ -310,10 +284,12 @@ extension AdvertisementsView {
                     if position.vacancies < maxVacancies {
                         position.vacancies += 1
                     }
-                } else {
-                    if position.vacancies > 0 {
-                        position.vacancies -= 1
-                    }
+                    
+                    return
+                }
+                
+                if position.vacancies > 0 {
+                    position.vacancies -= 1
                 }
             } label: {
                 ZStack {

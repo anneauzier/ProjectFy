@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct DetailsAdvertisementView: View {
+    @EnvironmentObject var coordinator: Coordinator<AdvertisementsRouter>
+    
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
-    @State var advertisements: [Advertisement] = []
-    @Binding var updateAdvertisements: Bool
 
-    let text: String
     let user: User
     let advertisement: Advertisement
     
@@ -56,35 +55,10 @@ struct DetailsAdvertisementView: View {
                 VStack {
                     ForEach(advertisement.positions, id: \.self) { position in
                         Button {
-                            selectedPosition = position
+                            coordinator.show(.roleDetails(user, advertisement, position))
                             Haptics.shared.selection()
                         } label: {
                             AdView.Position(user: user, advertisement: advertisement, position: position)
-                        }
-                        
-                        .onChange(of: selectedPosition, perform: { selectedPosition in
-                            if selectedPosition != nil {
-                                presentSheet = true
-                            }
-                        })
-                        
-                        .onChange(of: presentSheet) { presentSheet in
-                            if !presentSheet {
-                                selectedPosition = nil
-                            }
-                        }
-                        
-                        .sheet(isPresented: $presentSheet) {
-                            if let position = selectedPosition {
-                                AdView.PositionDetails(
-                                    user: user,
-                                    advertisement: advertisement,
-                                    position: position,
-                                    updateAdvertisements: $updateAdvertisements
-                                )
-                            } else {
-                                Text("Position not found!")
-                            }
                         }
                     }
                 }.padding(.bottom, 40)

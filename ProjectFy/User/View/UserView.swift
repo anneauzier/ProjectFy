@@ -189,7 +189,7 @@ struct UserView: View {
         
         .fullScreenCover(isPresented: $presentSignIn) {
             NavigationView {
-                SignInView(isDeletingAccount: true, isNewUser: .constant(false))
+                SignInView(isDeletingAccount: true)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
@@ -235,13 +235,7 @@ struct UserAdvertisement: View {
                     .padding(.top, 6)
                 
                 ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
-                    AdView.AdInfo(
-                        user: user,
-                        advertisement: advertisement,
-                        updateAdvertisements: .constant(false)
-                        //                        selectedPosition: .constant(nil),
-                        //                        presentSheet: .constant(false)
-                    )
+                    AdView.AdInfo(user: user, advertisement: advertisement)
                 }
             }
         }

@@ -18,8 +18,8 @@ struct SignInView: View {
     @EnvironmentObject var groupViewModel: GroupViewModel
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     
+    var completion: (String) -> () = { _ in }
     var isDeletingAccount = false
-    @Binding var isNewUser: Bool?
     
     var body: some View {
         VStack {
@@ -66,7 +66,8 @@ struct SignInView: View {
                         return
                     }
                     
-                    if userViewModel.getUser(with: signInResult.identityToken) != nil {
+                    if let user = userViewModel.getUser(with: signInResult.identityToken) {
+                        completion(user.id)
                         return
                     }
                     
@@ -75,7 +76,8 @@ struct SignInView: View {
                     userViewModel.createUser(user)
                     userViewModel.setUser(with: user.id)
                     
-                    isNewUser = true
+                    authenticationViewModel.isNewUser = true
+                    completion(user.id)
                 }
             } label: {
                 SignInWithAppleButtonViewRepresentable(
@@ -103,6 +105,13 @@ struct SignInView: View {
                 .opacity(isDeletingAccount ? 0 : 1)
         )
         .padding()
+        
+        .onAppear {
+            if let user = authenticationViewModel.getAuthenticatedUser() {
+                userViewModel.setUser(with: user.uid)
+                completion(user.uid)
+            }
+        }
     }
     
     private struct SignInWithAppleButtonViewRepresentable: UIViewRepresentable {
@@ -130,6 +139,6 @@ struct SignInView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(isNewUser: .constant(true))
+        SignInView()
     }
 }

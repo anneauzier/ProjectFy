@@ -105,7 +105,7 @@ final class GroupViewModel: ObservableObject {
     }
     
     func exitOfAllGroups() {
-        var groupsIDs = groups.map(\.id)
+        let groupsIDs = groups.map(\.id)
         
         groupsIDs.forEach { [weak self] id in
             self?.deleteGroup(with: id)
@@ -116,7 +116,7 @@ final class GroupViewModel: ObservableObject {
         service.delete(with: id)
     }
     
-    func setUser(with id: String) {
+    func setUser(with id: String?) {
         self.userID = id
     }
 }

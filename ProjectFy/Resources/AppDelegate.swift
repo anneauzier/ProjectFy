@@ -1,5 +1,5 @@
 //
-//  ProjectFyApp.swift
+//  AppDelegate.swift
 //  ProjectFy
 //
 //  Created by Anne Victoria Batista Auzier on 26/07/23.
@@ -12,53 +12,15 @@ import Firebase
 import UserNotifications
 
 @main
-struct ProjectFyApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    @StateObject var authenticationViewModel = AuthenticationViewModel()
-    @StateObject var userViewModel = UserViewModel(service: UserService())
-    @StateObject var advertisementsViewModel = AdvertisementsViewModel(service: AdvertisementService())
-    @StateObject var groupViewModel = GroupViewModel(service: GroupService())
-    @StateObject var notificationsViewModel = NotificationsViewModel(service: NotificationService())
-
-    @State var isNewUser: Bool? = true
-    
-    init() {
-        UIApplication.shared.addTapGestureRecognizer()
-    }
-    
-    var body: some Scene {
-        WindowGroup {
-            Group {
-                if authenticationViewModel.isAuthenticated {
-                    HomeView(isNewUser: $isNewUser)
-                    
-                    .onAppear {
-                        guard let user = authenticationViewModel.getAuthenticatedUser() else { return }
-                        
-                        userViewModel.setUser(with: user.uid)
-                        groupViewModel.setUser(with: user.uid)
-                    }
-                } else {
-                    SignInView(isNewUser: $isNewUser)
-                }
-            }
-                .environmentObject(authenticationViewModel)
-                .environmentObject(advertisementsViewModel)
-                .environmentObject(userViewModel)
-                .environmentObject(groupViewModel)
-                .environmentObject(notificationsViewModel)
-        }
-    }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
+final class AppDelegate: NSObject, UIApplicationDelegate {
     
     let gcmMessageIDKey = "gcm.message_id"
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions:
                      [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UIApplication.shared.addTapGestureRecognizer()
+        
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
@@ -69,6 +31,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         return true
+    }
+    
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = SceneDelegate.self
+        
+        return sceneConfig
     }
     
     func application(_ application: UIApplication,

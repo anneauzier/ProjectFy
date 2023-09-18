@@ -12,6 +12,8 @@ import FirebaseAuth
 final class AuthenticationViewModel: ObservableObject {
     
     @Published var isAuthenticated = false
+    @Published var isNewUser = false
+    
     var authenticationService: AuthenticationProtocol?
     
     init() {

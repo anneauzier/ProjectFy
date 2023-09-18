@@ -44,7 +44,7 @@ final class UserViewModel: ObservableObject {
         }
     }
     
-    func setUser(with id: String) {
+    func setUser(with id: String?) {
         userID = id
     }
     

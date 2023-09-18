@@ -8,11 +8,20 @@
 import Foundation
 
 final class AdvertisementsViewModel: ObservableObject {
-
     @Published var advertisements: [Advertisement] = []
     @Published var applicationStatus: TransactionStatus?
     
     private let service: AdvertisementProtocol
+    
+    private var shouldRefreshAdvertisements = false
+    private var allAdvertisements: [Advertisement] = [] {
+        didSet {
+            if shouldRefreshAdvertisements || advertisements.isEmpty {
+                advertisements = allAdvertisements
+                shouldRefreshAdvertisements = false
+            }
+        }
+    }
     
     init(service: AdvertisementProtocol) {
         self.service = service
@@ -21,7 +30,7 @@ final class AdvertisementsViewModel: ObservableObject {
             guard var advertisements = advertisements else { return }
             
             advertisements.sort(by: { $0.date > $1.date })
-            self?.advertisements = advertisements
+            self?.allAdvertisements = advertisements
         }
     }
     
@@ -34,11 +43,11 @@ final class AdvertisementsViewModel: ObservableObject {
     }
     
     func getAdvertisement(with id: String) -> Advertisement? {
-        return advertisements.first(where: { $0.id == id })
+        return allAdvertisements.first(where: { $0.id == id })
     }
     
     func getAdvertisements(from userID: String) -> [Advertisement] {
-        return advertisements.filter({ $0.owner.id == userID })
+        return allAdvertisements.filter({ $0.owner.id == userID })
     }
     
     func editAdvertisement(_ advertisement: Advertisement) {
@@ -54,7 +63,7 @@ final class AdvertisementsViewModel: ObservableObject {
     }
     
     func deleteAllAdvertisements(from userID: String) {
-        let advertisementsIDs = advertisements.filter({ $0.owner.id == userID }).map(\.id)
+        let advertisementsIDs = allAdvertisements.filter({ $0.owner.id == userID }).map(\.id)
         
         advertisementsIDs.forEach { [weak self] id in
             self?.deleteAdvertisement(with: id)
@@ -77,6 +86,10 @@ final class AdvertisementsViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.applicationStatus = .completed
         }
+    }
+    
+    func refreshAdvertisements() {
+        shouldRefreshAdvertisements = true
     }
 }
 
