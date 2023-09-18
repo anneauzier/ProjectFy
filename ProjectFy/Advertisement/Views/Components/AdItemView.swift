@@ -15,7 +15,6 @@ struct AdItemView: View {
     let owner: User
     
     @State var showDeleteAlert: Bool = false
-    @State private var showCustomAlert: Bool = false
     
     @Binding var advertisement: Advertisement
     @Binding var selectedPosition: ProjectGroup.Position?
@@ -23,6 +22,7 @@ struct AdItemView: View {
     @Binding var updateAdvertisements: Bool
     @Binding var presentPosition: Bool
     @Binding var presentNewAdvertisementSheet: Bool
+    @Binding var showCustomAlert: Bool
     
     @Binding var editingID: String?
     
@@ -83,7 +83,7 @@ struct AdItemView: View {
                     
                     Haptics.shared.notification(.success)
                     showDeleteAlert.toggle()
-                    
+                    showCustomAlert.toggle()
                 } label: {
                     Text("Delete")
                 }

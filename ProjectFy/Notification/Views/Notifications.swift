@@ -12,7 +12,9 @@ struct Notifications: View {
     @EnvironmentObject var notificationsViewModel: NotificationsViewModel
     @EnvironmentObject var advertisementViewModel: AdvertisementsViewModel
     @EnvironmentObject var groupViewModel: GroupViewModel
-        
+
+    @State private var showCustomAlert: Bool = false
+
     let user: User
     
     var body: some View {

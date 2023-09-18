@@ -30,8 +30,3 @@ extension AnyTransition {
     }
 }
 
-//struct CustomAlert_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomAlert(text: "Feedback Test")
-//    }
-//}

@@ -21,6 +21,7 @@ struct AdvertisementListView: View {
     @State var presentPositionSheet = false
     @State var presentMaxGroupsAlert = false
     @State var didUpdateAdvertisements = false
+    @State var showCustomAlert: Bool = false
     
     let user: User
     
@@ -48,13 +49,28 @@ struct AdvertisementListView: View {
                                 selectedPosition: $selectedPosition, updateAdvertisements: $didUpdateAdvertisements,
                                 presentPosition: $presentPositionSheet,
                                 presentNewAdvertisementSheet: $presentNewAdvertisementSheet,
-                                editingID: $editingID
+                                showCustomAlert: $showCustomAlert, editingID: $editingID
                             )
                         }
                     }.padding(.horizontal, 20)
                 }
             }
-
+            .overlay {
+                if showCustomAlert {
+                    CustomAlert(text: "Your project ad was deleted!")
+                        .offset(CGSize(width: 0, height: UIScreen.main.bounds.height * 0.35))
+                        .transition(.moveFromBottom)
+                        .animation(.easeOut, value: 1.0)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    self.showCustomAlert.toggle()
+                                }
+                            }
+                        }
+                }
+            }
+            
             .onAppear {
                 updateAdvertisementsByOrder()
             }
