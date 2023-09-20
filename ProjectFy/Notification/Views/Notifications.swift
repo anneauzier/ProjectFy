@@ -61,10 +61,11 @@ struct Notifications: View {
                                 NotificationComponent(notification: notification, user: user)
                             }
                         }
-                        
+    
                         .swipeActions(allowsFullSwipe: true) {
                             Button(role: .destructive) {
                                 notificationsViewModel.delete(with: notification.id)
+                                self.showCustomAlert.toggle()
                             } label: {
                                 Label("delete", systemImage: "trash")
                                     .labelStyle(.iconOnly)
@@ -75,7 +76,22 @@ struct Notifications: View {
                 .listStyle(.plain)
                 .navigationTitle("Notifications")
                 .navigationBarTitleDisplayMode(.inline)
-                
+                .overlay {
+                    if showCustomAlert {
+                        CustomAlert(text: "Notification deleted.")
+                            .offset(CGSize(width: 0, height: UIScreen.main.bounds.height * 0.35))
+                            .transition(.moveFromBottom)
+                            .animation(.easeOut, value: 1.0)
+                            .onAppear {
+                                withAnimation {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        self.showCustomAlert.toggle()
+                                    }
+                                }
+                            }
+                    }
+                }
+
                 .toolbar {
                     Button {
                         notificationsViewModel.notifications.forEach {

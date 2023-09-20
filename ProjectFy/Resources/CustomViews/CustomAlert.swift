@@ -29,4 +29,3 @@ extension AnyTransition {
             .combined(with: .move(edge: .bottom))
     }
 }
-

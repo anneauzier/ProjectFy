@@ -22,7 +22,8 @@ struct GroupView: View {
     }
     
     @State var selectedGroup: ProjectGroup?
-    
+
+    @State private var showCustomAlert = false
     @State private var showActionSheet = false
     @State var isTasksActive = false
     @State var isDetailsActive = false
@@ -98,7 +99,7 @@ struct GroupView: View {
                             Button(role: .destructive) {
                                 viewModel.exitOfGroup(user: user, group: group)
                                 shouldRefresh = true
-                                
+                                self.showCustomAlert.toggle()
                             } label: {
                                 Text("Exit group")
                             }
@@ -120,7 +121,22 @@ struct GroupView: View {
             }
             .navigationViewStyle(.stack)
             .navigationTitle("My Groups")
-            
+            .overlay {
+                if showCustomAlert {
+                    CustomAlert(text: "You've left the group!")
+                        .offset(CGSize(width: 0, height: UIScreen.main.bounds.height * 0.35))
+                        .transition(.moveFromBottom)
+                        .animation(.easeOut, value: 1.0)
+                        .onAppear {
+                            withAnimation {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    self.showCustomAlert.toggle()
+                                }
+                            }
+                        }
+                }
+            }
+
             .onAppear {
                 TabBarModifier.showTabBar()
             }

@@ -40,4 +40,3 @@ struct CustomPlaceholder: View {
         .frame(height: UIScreen.main.bounds.height * height)
     }
 }
-

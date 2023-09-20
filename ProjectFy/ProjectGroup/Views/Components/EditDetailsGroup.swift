@@ -9,9 +9,12 @@ import SwiftUI
 
 struct EditDetailsGroup: View {
     @Environment(\.dismiss) var dismiss
-    
+
+    private let pasteboard = UIPasteboard.general
+
     @State var groupInfo: ProjectGroup
     @State var actionDiscardGroup = false
+    @State private var buttonTextLink: String = "Copy"
     var viewModel: GroupViewModel
     
     init(group: ProjectGroup, viewModel: GroupViewModel) {
@@ -50,9 +53,24 @@ struct EditDetailsGroup: View {
                         .font(.headline)
                         .foregroundColor(.backgroundRole)
                     
-                    CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
-                        
+                    ZStack(alignment: .trailing) {
+                        CustomTextField(message: $groupInfo.link, placeholder: "https://web.whatsapp.com")
+
+                        Button {
+                            copyToClipboard()
+                        } label: {
+                            Label(buttonTextLink, systemImage: "doc.on.doc")
+                                .font(Font.subheadline.bold())
+                                .frame(height: 27)
+                                .padding(5)
+                                .background(Color.textColorBlue)
+                                .cornerRadius(5)
+                                
+                        }.tint(.white)
+                            .controlSize(.regular)
+                    }
                 }.padding(.horizontal)
+
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button {
@@ -94,6 +112,16 @@ struct EditDetailsGroup: View {
             }
         }
     }
+    
+    private func copyToClipboard() {
+        pasteboard.string = self.groupInfo.link
+        buttonTextLink = "Copied"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.buttonTextLink = "Copy"
+        }
+    }
+    
     private func canSave() -> Bool {
         return groupInfo.name.isEmpty
         || groupInfo.link.isEmpty

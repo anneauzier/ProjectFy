@@ -21,7 +21,7 @@ struct AdvertisementListView: View {
     @State var presentPositionSheet = false
     @State var presentMaxGroupsAlert = false
     @State var didUpdateAdvertisements = false
-    @State var showCustomAlert: Bool = false
+    @State private var showCustomAlert: Bool = false
     
     let user: User
     
@@ -34,6 +34,7 @@ struct AdvertisementListView: View {
                                       title: "Sorry, we couldn't load this page :(",
                                       description: "Check your connection to see if there's something wrong",
                                       height: 0.7)
+                    
                 } else if advertisementsViewModel.advertisements.isEmpty {
                     CustomPlaceholder(image: Image("emptyAd"),
                                       title: "Looks like people \nhaven't shared project \nideas yet :(",

@@ -35,7 +35,7 @@ struct SetupUserInfo: View {
                 title: "Area of interest",
                 titleAccessibilityLabel: "Area of interest",
                 placeholder: sizeCategory.isAccessibilitySize ? "Ex: UI/UX Design..." :
-                    "Ex: UI/UX Design, iOS Developer, 3D Modelator..." ,
+                    "Ex: UI/UX Design, iOS Developer, 3D Modelator...",
                 text: $user.areaExpertise,
                 textFieldAccessibilityLabel: "Enter your area of interest here (e.g. UI/UX)"
             ).padding(.top, 40)

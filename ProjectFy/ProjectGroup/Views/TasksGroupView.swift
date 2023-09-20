@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-// TODO: atualizar ao sair do grupo
-// TODO: atualizar ao finalizar projeto
-
 struct TasksGroupView: View {
     @EnvironmentObject var viewModel: GroupViewModel
     
@@ -28,9 +25,8 @@ struct TasksGroupView: View {
                 GroupLink(isActive: $isDetailsActive, selectedGroup: group) { group in
                     DetailsGroupView(
                         user: user,
-                        group: group,
+                        refresh: refresh, group: group,
                         shouldRefresh: $shouldRefresh,
-                        refresh: refresh,
                         presentTasks: $isTasksActive,
                         presentDetails: $isDetailsActive
                     )
