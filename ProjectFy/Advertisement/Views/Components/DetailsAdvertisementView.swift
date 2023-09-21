@@ -8,22 +8,15 @@
 import SwiftUI
 
 struct DetailsAdvertisementView: View {
-    @EnvironmentObject var coordinator: Coordinator<AdvertisementsRouter>
+    @EnvironmentObject var advertisertisementsCoordinator: Coordinator<AdvertisementsRouter>
+    @EnvironmentObject var userCoordinator: Coordinator<UserRouter>
     
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var advertisementsViewModel: AdvertisementsViewModel
 
     let user: User
     let advertisement: Advertisement
-    
-    @State var presentSheet = false
-    @State var editingID: String?
-    
-    @State var selectedPosition: ProjectGroup.Position?
-    @State var presentPositionSheet = false
-    
-    @State var presentMaxGroupsAlert = false
-    @State var didUpdateAdvertisements = false
+    var isUserAdvertisement = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -55,7 +48,14 @@ struct DetailsAdvertisementView: View {
                 VStack {
                     ForEach(advertisement.positions, id: \.self) { position in
                         Button {
-                            coordinator.show(.roleDetails(user, advertisement, position))
+                            if isUserAdvertisement {
+                                userCoordinator.show(.roleDetails(user, advertisement, position))
+                                Haptics.shared.selection()
+                                
+                                return
+                            }
+                            
+                            advertisertisementsCoordinator.show(.roleDetails(user, advertisement, position))
                             Haptics.shared.selection()
                         } label: {
                             AdView.Position(user: user, advertisement: advertisement, position: position)

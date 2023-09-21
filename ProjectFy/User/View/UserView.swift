@@ -217,7 +217,7 @@ struct UserAdvertisement: View {
                     .padding(.top, 6)
                 
                 ForEach(advertisementsViewModel.getAdvertisements(from: user.id), id: \.self) { advertisement in
-                    AdView.AdInfo(user: user, advertisement: advertisement)
+                    AdView.AdInfo(user: user, advertisement: advertisement, isUserAdvertisement: true)
                 }
             }
         }

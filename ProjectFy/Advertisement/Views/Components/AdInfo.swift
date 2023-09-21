@@ -11,11 +11,14 @@ import SwiftUI
 extension AdView {
     
     struct AdInfo: View {
-        @EnvironmentObject var coordinator: Coordinator<AdvertisementsRouter>
+        @EnvironmentObject var advertisementsCoordinator: Coordinator<AdvertisementsRouter>
+        @EnvironmentObject var userCoordinator: Coordinator<UserRouter>
+        
         @EnvironmentObject var userViewModel: UserViewModel
         
         let user: User
         let advertisement: Advertisement
+        var isUserAdvertisement = false
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -29,7 +32,12 @@ extension AdView {
                 }
                 
                 Button {
-                    coordinator.show(.advertisementDetails(user, advertisement))
+                    if isUserAdvertisement {
+                        userCoordinator.show(.advertisementDetails(user, advertisement))
+                        return
+                    }
+                    
+                    advertisementsCoordinator.show(.advertisementDetails(user, advertisement))
                 } label: {
                     VStack(alignment: .leading, spacing: 20) {
                         Text(advertisement.title)

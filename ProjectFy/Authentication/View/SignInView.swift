@@ -109,7 +109,7 @@ struct SignInView: View {
         .padding()
         
         .onAppear {
-            if let user = authenticationViewModel.getAuthenticatedUser() {
+            if let user = authenticationViewModel.getAuthenticatedUser(), !isDeletingAccount {
                 userViewModel.setUser(with: user.uid)
                 signInCoordinator.setRootViewController(to: .waitingForUserInfo(completion))
             }

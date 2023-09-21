@@ -57,6 +57,8 @@ struct LoadingUserInfo: View {
     @EnvironmentObject var userViewModel: UserViewModel
     let completion: (User) -> Void
     
+    @State var isNextRoutePresented = false
+    
     var body: some View {
         Text("Loading user info...")
             .onAppear {
@@ -69,7 +71,9 @@ struct LoadingUserInfo: View {
     }
     
     func showNextRoute(user: User?) {
-        guard let user = user else { return }
+        guard let user = user, !isNextRoutePresented else { return }
+        
+        isNextRoutePresented = true
         
         if shouldFillInfo(user) {
             coordinator.show(.setupInitialConfigs(user, completion))
