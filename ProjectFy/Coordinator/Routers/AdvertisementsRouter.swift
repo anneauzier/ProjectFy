@@ -27,7 +27,7 @@ enum AdvertisementsRouter: NavigationRouter {
             return .push
             
         case .roleDetails:
-            return .presentModally
+            return .multiple(.presentModally)
             
         case .newAdvertisement:
             return .multiple(.presentModally)

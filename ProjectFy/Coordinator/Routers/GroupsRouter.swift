@@ -26,7 +26,7 @@ enum GroupsRouter: NavigationRouter {
             return .push
             
         case .editGroup:
-            return .presentModally
+            return .multiple(.presentModally)
         }
     }
     

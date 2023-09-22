@@ -22,13 +22,13 @@ enum UserRouter: NavigationRouter {
             return .push
             
         case .editUser:
-            return .presentModally
+            return .multiple(.presentModally)
             
         case .advertisementDetails:
             return .push
             
         case .roleDetails:
-            return .presentModally
+            return .multiple(.presentModally)
             
         case .profile:
             return .push
