@@ -19,25 +19,39 @@ struct AdvertisementsView: View {
     @State var presentMaxGroupsAlert = false
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            Divider()
-            if !networking.isConnected {
-                StructurePlaceholder(image: Image("networking"),
-                                     title: "Sorry, we couldn't load this page :(",
-                                     description: "Check your connection to see if there's something wrong",
-                                     heightPH: 0.7)
-            } else if advertisementsViewModel.advertisements.isEmpty {
-                StructurePlaceholder(image: Image("emptyAd"),
-                                     title: "Looks like people \nhaven't shared project \nideas yet :(",
-                                     description: "You can start to share your project ideas by taping on “+”",
-                                     heightPH: 0.7)
-            } else {
-                VStack {
-                    ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
-                        AdView(user: user, advertisement: advertisement)
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                Divider()
+                    .id(0)
+                
+                if !networking.isConnected {
+                    StructurePlaceholder(image: Image("networking"),
+                                         title: "Sorry, we couldn't load this page :(",
+                                         description: "Check your connection to see if there's something wrong",
+                                         heightPH: 0.7)
+                } else if advertisementsViewModel.advertisements.isEmpty {
+                    StructurePlaceholder(image: Image("emptyAd"),
+                                         title: "Looks like people \nhaven't shared project \nideas yet :(",
+                                         description: "You can start to share your project ideas by taping on “+”",
+                                         heightPH: 0.7)
+                } else {
+                    VStack {
+                        ForEach(advertisementsViewModel.advertisements, id: \.self) { advertisement in
+                            AdView(user: user, advertisement: advertisement)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                }
+            }
+            
+            .onChange(of: advertisementsViewModel.shouldScroll) { shouldScroll in
+                if shouldScroll {
+                    advertisementsViewModel.shouldScroll = false
+                    
+                    withAnimation {
+                        proxy.scrollTo(0)
                     }
                 }
-                .padding(.horizontal, 20)
             }
         }
         

@@ -10,6 +10,7 @@ import Foundation
 final class AdvertisementsViewModel: ObservableObject {
     @Published var advertisements: [Advertisement] = []
     @Published var applicationStatus: TransactionStatus?
+    @Published var shouldScroll = false
     
     private let service: AdvertisementProtocol
     

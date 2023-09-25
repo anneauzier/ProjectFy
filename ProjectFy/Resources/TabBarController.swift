@@ -50,7 +50,7 @@ class TabBarController: UITabBarController {
         advertisementsViewController.tabBarItem = tabBarItem(title: "Home", image: "house", tag: 0)
         notificationsViewController.tabBarItem = tabBarItem(title: "Notifications", image: "bell", tag: 1)
         groupsViewController.tabBarItem = tabBarItem(title: "Group", image: "person.3", tag: 2)
-        userViewController.tabBarItem = tabBarItem(title: "Home", image: "person.fill", tag: 3)
+        userViewController.tabBarItem = tabBarItem(title: "Profile", image: "person.fill", tag: 3)
         
         advertisementsCoordinator.start(environmentObjects: environmentObjects)
         notificationsCoordinator.start(environmentObjects: environmentObjects)
@@ -76,5 +76,32 @@ class TabBarController: UITabBarController {
     
     private func tabBarItem(title: String, image: String, tag: Int) -> UITabBarItem {
         UITabBarItem(title: title, image: UIImage(systemName: image), tag: tag)
+    }
+}
+
+extension TabBarController {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        switch item.tag {
+        case 0:
+            if advertisementsCoordinator.navigationController.viewControllers.count > 1 {
+                advertisementsCoordinator.popToRoot()
+                return
+            }
+            
+            guard let viewModel = environmentObjects.compactMap({ $0 as? AdvertisementsViewModel }).first else {
+                return
+            }
+            
+            viewModel.shouldScroll.toggle()
+            
+        case 2:
+            groupsCoordinator.popToRoot()
+            
+        case 3:
+            userCoordinator.popToRoot()
+            
+        default:
+            return
+        }
     }
 }
