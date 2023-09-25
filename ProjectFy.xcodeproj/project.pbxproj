@@ -69,6 +69,7 @@
 		9F82F8D02A94F1ED00A36D5D /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */; };
 		9F8F29C52A7977610030958B /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C42A7977610030958B /* EditUserView.swift */; };
 		9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F29C92A7984730030958B /* UserViewModel.swift */; };
+		9F984D1D2ABCC2260084DE3B /* UIImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F984D1C2ABCC2260084DE3B /* UIImagePickerView.swift */; };
 		9FAE4F642A82B2D10086725F /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F632A82B2D10086725F /* GroupView.swift */; };
 		9FAE4F672A82B49B0086725F /* GroupMockupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F662A82B49B0086725F /* GroupMockupService.swift */; };
 		9FAE4F692A82B9BA0086725F /* GroupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4F682A82B9BA0086725F /* GroupProtocol.swift */; };
@@ -148,6 +149,7 @@
 		9F82F8CF2A94F1ED00A36D5D /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		9F8F29C42A7977610030958B /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		9F8F29C92A7984730030958B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		9F984D1C2ABCC2260084DE3B /* UIImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerView.swift; sourceTree = "<group>"; };
 		9FAE4F632A82B2D10086725F /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		9FAE4F662A82B49B0086725F /* GroupMockupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMockupService.swift; sourceTree = "<group>"; };
 		9FAE4F682A82B9BA0086725F /* GroupProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProtocol.swift; sourceTree = "<group>"; };
@@ -235,14 +237,6 @@
 				671FA2B82A933950003684AC /* Notifications.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		673BD3062A8AFE6700DD161F /* FormField */ = {
-			isa = PBXGroup;
-			children = (
-				673BD3072A8AFE7800DD161F /* FormField.swift */,
-			);
-			path = FormField;
 			sourceTree = "<group>";
 		};
 		673BD3092A8AFE9A00DD161F /* Components */ = {
@@ -421,7 +415,6 @@
 				9FF1EBD52AA21BE200422203 /* CustomViews */,
 				9FEBE8EE2A969A23005A4C3C /* GoogleService-Info.plist */,
 				9FBAE03E2A8EC0BA003F6424 /* Tools */,
-				673BD3062A8AFE6700DD161F /* FormField */,
 				9FFECDEE2A71EBF00053F29D /* Assets.xcassets */,
 				9FFECDEA2A71EBEF0053F29D /* ProjectFyApp.swift */,
 				9F4390C82A81376500A3A393 /* HomeView.swift */,
@@ -516,6 +509,8 @@
 				9F0ED0D42A92ECB600DCBBE4 /* TextFieldLimitModifer.swift */,
 				9FC497702AA64A88001FA984 /* ExpandableText.swift */,
 				9FCCF59C2AB3ACAD006BBCB0 /* RoundedRectangleContent.swift */,
+				673BD3072A8AFE7800DD161F /* FormField.swift */,
+				9F984D1C2ABCC2260084DE3B /* UIImagePickerView.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -707,6 +702,7 @@
 				9F5C027B2A855B4200A49EF3 /* WrappedTextView.swift in Sources */,
 				671FA2BB2A9339C4003684AC /* Date+formattedInterval.swift in Sources */,
 				9FD721622A7842FA007A1BA6 /* UserView.swift in Sources */,
+				9F984D1D2ABCC2260084DE3B /* UIImagePickerView.swift in Sources */,
 				6749829F2A86C15D00A1C98E /* UserService.swift in Sources */,
 				9F8F29CA2A7984730030958B /* UserViewModel.swift in Sources */,
 				671CA51C2A96958300CF5109 /* String+colored.swift in Sources */,
@@ -902,7 +898,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -942,7 +938,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -126,7 +126,7 @@ extension AdItemView {
                                     .padding(.top, 37)
                                 
                                 ForEach(group.members.map(\.user), id: \.self) { user in
-                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.rolesColor) {
                                         UserInfo(user: user, size: 49, nameColor: .white)
                                             .frame(maxWidth: UIScreen.main.bounds.width - 80, alignment: .leading)
                                             .removePadding()
@@ -138,7 +138,7 @@ extension AdItemView {
                                 Spacer()
                                 
                                 if group.members.map(\.user).contains(where: { $0.id == user.id }) {
-                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.rolesColor) {
                                         Text("Joined")
                                             .font(.headline)
                                             .foregroundColor(.white)

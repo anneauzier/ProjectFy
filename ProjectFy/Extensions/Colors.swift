@@ -8,6 +8,7 @@
 import SwiftUI
 
 extension Color {
+
     static let textColorBlue = Color("textColorBlue")
     static let backgroundTextBlue = Color("backgroundTextBlue")
     static let textColorYellow = Color("textColorYellow")
@@ -29,4 +30,8 @@ extension Color {
     static let signInColor = Color("signInColor")
     static let placeholdertitle = Color("placeholdertitle")
     static let alertColor = Color("alertColor")
+    static let rectangleLineDark = Color("rectangleLineDark")
+    static let userBackground = Color("userBackground")
+    static let rolesColor = Color("rolesColor")
+    static let backgroundSystem = Color("backgroundSystem")
 }

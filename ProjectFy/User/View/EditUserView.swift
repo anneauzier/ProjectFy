@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct EditUserView: View {
-
+    
     @Environment(\.dismiss) var dismiss
-
+    
     @State var actionDiscard = false
     @State var canContinue = false
     @State var editingUser: User
+    
+    @State private var image: Image = Image("userPhoto")
+    @State private var showLibrary: Bool = false
     
     var isNewUser: Bool
     var viewModel: UserViewModel
@@ -31,9 +34,25 @@ struct EditUserView: View {
                     Image(editingUser.avatar)
                         .resizable()
                         .frame(width: 100, height: 100)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                        .frame(alignment: .center)
                         .padding([.top, .bottom], 32)
-
+                        .sheet(isPresented: $showLibrary) {
+                            UIImagePickerView(image: self.$image, isPresented: self.$showLibrary)
+                        }
+                        .overlay {
+                            Image(systemName: "pencil")
+                                .foregroundColor(.white)
+                                .background(
+                                    Circle()
+                                        .fill(Color.textColorBlue)
+                                        .frame(width: 36, height: 36)
+                                )
+                                .position(x: 80, y: 120)
+                                .onTapGesture { self.showLibrary = true }
+                        }
+                    
                     SetupUserInfo(user: $editingUser, canContinue: $canContinue, isNewUser: isNewUser)
                 }
             }
@@ -81,7 +100,7 @@ struct EditUserView: View {
     }
     private func didChangeInfo() -> Bool {
         guard let user = viewModel.user else { return false }
-
+        
         return editingUser.name == user.name
         && editingUser.areaExpertise == user.areaExpertise
         && editingUser.interestTags == user.interestTags

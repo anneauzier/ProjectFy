@@ -28,7 +28,7 @@ struct UserView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
                         .offset(y: -16)
-                    
+
                     Image(user.avatar)
                         .resizable()
                         .frame(width: 90, height: 90)
@@ -36,7 +36,7 @@ struct UserView: View {
                         .accessibilityLabel("Profile photo")
                         .background(
                             Circle()
-                                .fill(.white)
+                                .fill(Color.userBackground)
                                 .frame(width: 110, height: 110)
                         )
                         .padding(.leading, 30)

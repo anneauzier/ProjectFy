@@ -48,7 +48,7 @@ extension AdItemView {
                 Rectangle()
                     .frame(maxWidth: .infinity)
                     .frame(height: 6)
-                    .foregroundColor(.rectangleLine)
+                    .foregroundColor(.rectangleLineDark)
                     .padding(.top, 20)
     
             }.frame(width: UIScreen.main.bounds.width)

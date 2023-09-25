@@ -71,7 +71,7 @@ struct AdvertisementListView: View {
                         }
                 }
             }
-            
+
             .onAppear {
                 updateAdvertisementsByOrder()
             }

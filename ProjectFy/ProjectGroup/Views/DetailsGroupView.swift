@@ -92,7 +92,7 @@ struct DetailsGroupView: View {
                     .foregroundColor(.backgroundRole)
                     .padding(.top, 40)
                 
-                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                    RoundedRectangleContent(cornerRadius: 8, fillColor: Color.rolesColor) {
                         UserInfo(user: group.admin, size: 49, nameColor: .white)
                             .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                             .removePadding()
@@ -100,7 +100,7 @@ struct DetailsGroupView: View {
                     }
                     
                     ForEach(group.members.map(\.user), id: \.self) { user in
-                        RoundedRectangleContent(cornerRadius: 8, fillColor: Color.backgroundRole) {
+                        RoundedRectangleContent(cornerRadius: 8, fillColor: Color.rolesColor) {
                             UserInfo(user: user, size: 49, nameColor: .white)
                                 .frame(maxWidth: UIScreen.main.bounds.width - 60, alignment: .leading)
                                 .removePadding()
